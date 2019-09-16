@@ -34,6 +34,7 @@ The string consists of two arguments.
 - Make sure the encoding is ANSI.
 
 #### Tags
+```
 - Game   or parser           - Main game parser (NPCs, AI, story and etc)
 - SFX    or parserSoundFX    - Sound parser
 - PFX    or parserParticleFX - Particle FX parser
@@ -41,6 +42,7 @@ The string consists of two arguments.
 - Camera or parserCamera     - Camera mods parser
 - Menu   or parserMenu       - Menu parser
 - Music  or parserMusic      - Music themes parser
+```
 
 ##### Example of the script:
 ```
