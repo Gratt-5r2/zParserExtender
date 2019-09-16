@@ -261,9 +261,16 @@ namespace Gothic_I_Addon {
     static unsigned char GetVersion()                                               zCall( 0x0071C690 );
     static zCParser* GetParser()                                                    zCall( 0x0071D660 );
 
+    // Union
+    int SaveDat_Union( zSTRING& );
+    void DeclareFuncCall_Union( zSTRING&, int );
+
     // static properties
     static int& enableParsing;
     static zCParser*& cur_parser;
+
+    // Union
+    static bool32 parserMergeMode;
   };
 
 } // namespace Gothic_I_Addon

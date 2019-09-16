@@ -31,6 +31,12 @@
     <Filter Include="Plugin">
       <UniqueIdentifier>{6a8c8225-5d9d-4d0e-baf6-f26c361efd5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\ParserExtender">
+      <UniqueIdentifier>{edcf0a86-f5fd-4df9-bcef-98b87ec4a634}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugin\ParserExtender\Interface">
+      <UniqueIdentifier>{34007381-c4ac-4908-89a7-45e17b6d9e1a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ZenGin\Gothic_I_Classic\staticDef_Ver0.cpp">
@@ -62,6 +68,9 @@
     </ClCompile>
     <ClCompile Include="DllMain.cpp">
       <Filter>Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="ParserExtender.cpp">
+      <Filter>Plugin\ParserExtender</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2569,6 +2578,15 @@
     </ClInclude>
     <ClInclude Include="ZenGin\Gothic_II_Addon\API\zView.h">
       <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ParserExtender.h">
+      <Filter>Plugin\ParserExtender</Filter>
+    </ClInclude>
+    <ClInclude Include="ParserExtender_Header.h">
+      <Filter>Plugin\ParserExtender\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ParserExtender_Source.h">
+      <Filter>Plugin\ParserExtender\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

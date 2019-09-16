@@ -279,7 +279,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GOTHICPLUGIN_EXPORTS;__G1A;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GOTHICPLUGIN_EXPORTS;__G1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -377,7 +377,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GOTHICPLUGIN_EXPORTS;__G1A;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GOTHICPLUGIN_EXPORTS;__G1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -392,6 +392,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="DllMain.cpp" />
+    <ClCompile Include="ParserExtender.cpp" />
     <ClCompile Include="ZenGin\Gothic_II_Addon\classDef_Ver3.cpp" />
     <ClCompile Include="ZenGin\Gothic_II_Addon\staticDef_Ver3.cpp" />
     <ClCompile Include="ZenGin\Gothic_II_Classic\classDef_Ver2.cpp" />
@@ -402,6 +403,9 @@
     <ClCompile Include="ZenGin\Gothic_I_Classic\staticDef_Ver0.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ParserExtender.h" />
+    <ClInclude Include="ParserExtender_Header.h" />
+    <ClInclude Include="ParserExtender_Source.h" />
     <ClInclude Include="UnionAfx.h" />
     <ClInclude Include="ZenGin\Gothic_II_Addon\API\oAiHuman.h" />
     <ClInclude Include="ZenGin\Gothic_II_Addon\API\oAiShoot.h" />

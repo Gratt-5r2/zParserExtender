@@ -1,9 +1,30 @@
 #include "UnionAfx.h"
+#include "ParserExtender.h"
+
+extern bool ParseExternals = false;
 
 void Game_Entry() {
 }
 
 void Game_Init() {
+  ParseExternals = true;
+#ifdef __G1
+  if( Union.GetEngineVersion() == Engine_G1 )
+    Gothic_I_Classic::ParseExternalScripts();
+#endif
+#ifdef __G1A
+  if( Union.GetEngineVersion() == Engine_G1A )
+    Gothic_I_Addon::ParseExternalScripts();
+#endif
+#ifdef __G2
+  if( Union.GetEngineVersion() == Engine_G2 )
+    Gothic_II_Classic::ParseExternalScripts();
+#endif
+#ifdef __G2A
+  if( Union.GetEngineVersion() == Engine_G2A )
+    Gothic_II_Addon::ParseExternalScripts();
+#endif
+  ParseExternals = false;
 }
 
 void Game_Exit() {

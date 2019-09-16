@@ -136,4 +136,5 @@ Current building process will continue.\
 #pragma warning(disable:4731)
 #pragma warning(disable:4166)
 #pragma warning(disable:4200)
+#pragma warning(disable:4552)
 #define _CRT_SECURE_NO_WARNINGS

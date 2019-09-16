@@ -262,9 +262,16 @@ namespace Gothic_II_Classic {
     static unsigned char GetVersion()                                               zCall( 0x0072D5D0 );
     static zCParser* GetParser()                                                    zCall( 0x0072E480 );
 
+    // Union
+    int SaveDat_Union( zSTRING& );
+    void DeclareFuncCall_Union( zSTRING&, int );
+
     // static properties
     static int& enableParsing;
     static zCParser*& cur_parser;
+
+    // Union
+    static bool32 parserMergeMode;
   };
 
 } // namespace Gothic_II_Classic

@@ -125,6 +125,10 @@ namespace Gothic_II_Addon {
     void Show()                                       zCall( 0x007A4510 );
     static int Compare( void const*, void const* )    zCall( 0x007A3260 );
 
+    // Union
+    void Load_Union( zFILE* );
+    bool32 Insert_Union( zCPar_Symbol* );
+
     // static properties
     static zCPar_SymbolTable*& cur_table;
   };
