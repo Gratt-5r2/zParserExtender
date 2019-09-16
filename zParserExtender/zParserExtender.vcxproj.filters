@@ -1,0 +1,2579 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Engine SDK">
+      <UniqueIdentifier>{fed0645d-a261-4bfd-a6db-05b76c6ca7fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine SDK\1. Gothic I">
+      <UniqueIdentifier>{8ae688d0-f012-4090-9f6b-596aa73c5f2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine SDK\2. Gothic Sequel">
+      <UniqueIdentifier>{b237b2d6-9d5b-404f-91c2-51a1f2aa9116}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine SDK\3. Gothic II">
+      <UniqueIdentifier>{51baf81c-3f08-46d5-8e92-54ddd6c41e19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine SDK\4. Gothic II NoTR">
+      <UniqueIdentifier>{989c18e5-e317-40b6-b32c-51d61539f2c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine SDK\3. Gothic II\Headers">
+      <UniqueIdentifier>{f64edacd-ecca-4ff7-a2dc-3e539e8a3275}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine SDK\4. Gothic II NoTR\Headers">
+      <UniqueIdentifier>{8a83fd2c-b4de-4e74-880e-8e830c6c412a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine SDK\2. Gothic Sequel\Headers">
+      <UniqueIdentifier>{dbfe3a93-38b1-4917-8cab-135ef78f0ca4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine SDK\1. Gothic I\Headers">
+      <UniqueIdentifier>{469ecd4f-9e74-49ce-8db6-618b2100025a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugin">
+      <UniqueIdentifier>{6a8c8225-5d9d-4d0e-baf6-f26c361efd5d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ZenGin\Gothic_I_Classic\staticDef_Ver0.cpp">
+      <Filter>Engine SDK\1. Gothic I</Filter>
+    </ClCompile>
+    <ClCompile Include="ZenGin\Gothic_I_Classic\classDef_Ver0.cpp">
+      <Filter>Engine SDK\1. Gothic I</Filter>
+    </ClCompile>
+    <ClCompile Include="ZenGin\Gothic_I_Addon\classDef_Ver1.cpp">
+      <Filter>Engine SDK\2. Gothic Sequel</Filter>
+    </ClCompile>
+    <ClCompile Include="ZenGin\Gothic_I_Addon\staticDef_Ver1.cpp">
+      <Filter>Engine SDK\2. Gothic Sequel</Filter>
+    </ClCompile>
+    <ClCompile Include="ZenGin\Gothic_II_Classic\classDef_Ver2.cpp">
+      <Filter>Engine SDK\3. Gothic II</Filter>
+    </ClCompile>
+    <ClCompile Include="ZenGin\Gothic_II_Classic\staticDef_Ver2.cpp">
+      <Filter>Engine SDK\3. Gothic II</Filter>
+    </ClCompile>
+    <ClCompile Include="ZenGin\Gothic_II_Addon\classDef_Ver3.cpp">
+      <Filter>Engine SDK\4. Gothic II NoTR</Filter>
+    </ClCompile>
+    <ClCompile Include="ZenGin\Gothic_II_Addon\staticDef_Ver3.cpp">
+      <Filter>Engine SDK\4. Gothic II NoTR</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="DllMain.cpp">
+      <Filter>Plugin</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oAiHuman.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oAiShoot.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oAniCtrl.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oBarrier.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oBinkPlayer.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oCollisionObjectMiscChar.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oCsManager.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oCsPlayer.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oCsProps.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oCsTrigger.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oDamage.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oDialog.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oDoc.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oDocumentManager.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oFocus.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oGame.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oGameInfo.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oGameManager.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oGuilds.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oHelp.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oInfo.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oInformationManager.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oInventory.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oItem.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oItemReact.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oLogManager.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oMagFrontier.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oMagic.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oMenu_Help.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oMenu_Main.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oMenu_Status.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oMenuSavegame.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oMission.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oMobInter.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oMusicZone.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oNews.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oNpc.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oNpcMessages.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oNpcStates.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oObjFactory.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oParticleControl.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oPlayerInfo.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oPortals.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oPrototypes.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oRoutine.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oSavegame.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oSpawn.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oSpell.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oSvm.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oSysInfo.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oText.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oTrigger.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oViewDialogInventory.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oViewDialogItem.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oViewDialogItemContainer.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oViewDialogStealContainer.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oViewDialogTrade.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oViewDocument.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oViewDocumentMap.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oViewProgressbar.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oViewStatusbar.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oVisFx.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oVisFx_MultiTarget.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oVob.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oWaynet.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\oWorld.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\z3d.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zAccount.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zAi.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zAiCamera.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zAiCamera_Core.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zAiCamera_Movement.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zAiPlayer.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zAlgebra.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zArchiver.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zArchiver2.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zArchiverGeneric.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zBinkPlayer.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zBsp.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zBuffer.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zBVolume.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zBVolume_Util.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zCCsContext.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zCCsCutscene.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zCCsLib.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zCCsManager.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zCCsPlayer.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zCCsPool.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zCCsProps.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zCollisionDetector.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zCollisionObject.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zCollisionObjectMisc.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zConsole.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zContainer.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zConvexCollision.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zCsCamera.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zDisk.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zDisk_Vdfs.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zEigen.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zEngine.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zError.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zEventMan.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zFile3d.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zFileCsv.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zFlash.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zFonts.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zGameInfo.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zGlobal.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zGrafix.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zInput.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zInput_Const.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zInput_Win32.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zKbSplines.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zLensflare.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zList.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zMacro.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zMaterial.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zMathTools.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zMemory_Base.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zMemory_Generic.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zMemory_Win32.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zMemPool.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zMenu.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zMenu_Item.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zModel.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zMorphMesh.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zMoving.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zMusic.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zMusic_Dm.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zMusicCtrl.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zNet.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zNet_Win32.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zNetEventMan.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zNetHost.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zNetManager.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zNetMessage.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zNetSession.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zNetTypes.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zNetVersion.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zNetVobControl.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zObject.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zOption.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zParser.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zParser_Const.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zParser_Symbol.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zParticle.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zPhysics.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zPlayerGroup.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zPlayerInfo.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zPluecker.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zPolyPool.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zPolyStrip.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zPrime.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zProgMesh.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zPrototypes.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zQueue.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zRayCache.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zRenderer.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zRenderLightContainer.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zRenderManager.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zResource.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zRndD3d.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zRndD3d_Init.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zScanDir.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zSession.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zSky.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zSky_Outdoor.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zSndMss.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zSound.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zSoundMan.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zSparseArray.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zSpyTypes.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zString.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zSysInfo.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zTexConvert.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zTexture.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zThread.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zTools.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zTypes.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zTypes3d.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zVertexBuffer.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zVertexTransform.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zVideo_Win32.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zVideoPlayer.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zView.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zViewBase.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zViewDialog.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zViewDialogChoice.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zViewDraw.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zViewFx.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zViewObject.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zViewPrint.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zViewPrint_Font.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zViewProgressbar.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zViews.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zViewStatusbar.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zVisual.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zVob.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zVobIdentifier.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zVobMisc.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zWaynet.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zWorld.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zWorldInfo.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\API\zZone.h">
+      <Filter>Engine SDK\2. Gothic Sequel\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oAiHuman.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oAiShoot.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oAniCtrl.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oBarrier.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oBinkPlayer.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oCollisionObjectMiscChar.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oCsManager.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oCsPlayer.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oCsProps.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oCsTrigger.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oDamage.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oDialog.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oDoc.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oDocumentManager.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oFocus.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oGame.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oGameInfo.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oGameManager.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oGuilds.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oHelp.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oInfo.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oInformationManager.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oInventory.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oItem.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oItemReact.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oLogManager.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oMagFrontier.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oMagic.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oMenu_Help.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oMenu_Main.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oMenu_Status.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oMenuSavegame.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oMission.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oMobInter.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oMusicZone.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oNews.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oNpc.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oNpcMessages.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oNpcStates.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oObjFactory.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oParticleControl.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oPlayerInfo.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oPortals.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oPrototypes.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oRoutine.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oSavegame.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oSpawn.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oSpell.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oSvm.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oSysInfo.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oText.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oTrigger.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oViewDialogInventory.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oViewDialogItem.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oViewDialogItemContainer.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oViewDialogStealContainer.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oViewDialogTrade.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oViewDocument.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oViewDocumentMap.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oViewProgressbar.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oViewStatusbar.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oVisFx.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oVisFx_MultiTarget.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oVob.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oWaynet.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\oWorld.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\z3d.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zAccount.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zAi.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zAiCamera.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zAiCamera_Core.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zAiCamera_Movement.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zAiPlayer.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zAlgebra.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zArchiver.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zArchiver2.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zArchiverGeneric.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zBinkPlayer.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zBsp.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zBuffer.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zBVolume.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zBVolume_Util.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zCCsContext.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zCCsCutscene.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zCCsLib.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zCCsManager.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zCCsPlayer.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zCCsPool.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zCCsProps.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zCollisionDetector.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zCollisionObject.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zCollisionObjectMisc.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zConsole.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zContainer.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zConvexCollision.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zCsCamera.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zDisk.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zDisk_Vdfs.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zEigen.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zEngine.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zError.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zEventMan.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zFft.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zFile3d.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zFileCsv.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zFlash.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zFonts.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zGameInfo.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zGlobal.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zGrafix.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zInput.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zInput_Const.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zInput_Win32.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zKbSplines.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zLensflare.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zList.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zMacro.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zMaterial.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zMathTools.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zMemory_Base.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zMemory_Generic.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zMemory_Win32.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zMemPool.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zMenu.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zMenu_Item.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zModel.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zMorphMesh.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zMoving.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zMusic.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zMusic_Dm.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zMusicCtrl.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zNet.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zNet_Win32.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zNetEventMan.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zNetHost.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zNetManager.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zNetMessage.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zNetSession.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zNetTypes.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zNetVersion.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zNetVobControl.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zObject.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zOption.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zParser.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zParser_Const.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zParser_Symbol.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zParticle.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zPhysics.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zPlayerGroup.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zPlayerInfo.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zPluecker.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zPolyPool.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zPolyStrip.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zPrime.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zProgMesh.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zPrototypes.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zQueue.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zRayCache.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zRenderer.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zRenderLightContainer.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zRenderManager.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zResource.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zRndD3d.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zRndD3d_Init.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zRndGlide.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zRndGlide_Dib.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zRndGlide_Draw.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zScanDir.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zSession.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zSky.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zSky_Outdoor.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zSndMss.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zSound.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zSoundMan.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zSparseArray.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zSpyTypes.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zString.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zSysInfo.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zTexConvert.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zTexture.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zThread.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zTools.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zTypes.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zTypes3d.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zVertexBuffer.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zVertexTransform.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zVideo_Win32.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zVideoPlayer.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zView.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zViewBase.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zViewDialog.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zViewDialogChoice.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zViewDraw.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zViewFx.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zViewObject.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zViewPrint.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zViewPrint_Font.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zViewProgressbar.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zViews.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zViewStatusbar.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zVisual.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zVob.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zVobIdentifier.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zVobMisc.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zWaynet.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zWorld.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zWorldInfo.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\API\zZone.h">
+      <Filter>Engine SDK\1. Gothic I\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oAiHuman.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oAiShoot.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oAniCtrl.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oBarrier.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oBinkPlayer.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oCollisionObjectMiscChar.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oCsManager.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oCsPlayer.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oCsProps.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oCsTrigger.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oDamage.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oDialog.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oDoc.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oDocumentManager.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oFocus.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oGame.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oGameInfo.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oGameManager.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oGuilds.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oHelp.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oInfo.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oInformationManager.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oInventory.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oItem.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oItemReact.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oLogManager.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oMagFrontier.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oMagic.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oMenu_Help.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oMenu_Main.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oMenu_Status.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oMenuSavegame.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oMission.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oMobInter.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oMusicZone.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oNews.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oNpc.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oNpcMessages.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oNpcStates.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oObjFactory.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oParticleControl.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oPlayerInfo.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oPortals.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oPrototypes.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oRoutine.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oSavegame.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oSpawn.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oSpell.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oSvm.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oSysInfo.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oText.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oTrigger.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oViewDialogInventory.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oViewDialogItem.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oViewDialogItemContainer.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oViewDialogStealContainer.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oViewDialogTrade.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oViewDocument.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oViewDocumentMap.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oViewProgressbar.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oViewStatusbar.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oVisFx.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oVisFx_MultiTarget.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oVob.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oWaynet.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\oWorld.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\z3d.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zAccount.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zAi.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zAiCamera.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zAiCamera_Core.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zAiCamera_Movement.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zAiPlayer.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zAlgebra.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zArchiver.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zArchiver2.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zArchiverGeneric.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zBinkPlayer.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zBsp.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zBuffer.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zBVolume.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zBVolume_Util.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zCCsContext.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zCCsCutscene.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zCCsLib.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zCCsManager.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zCCsPlayer.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zCCsPool.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zCCsProps.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zCollisionDetector.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zCollisionObject.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zCollisionObjectMisc.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zConsole.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zContainer.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zConvexCollision.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zCsCamera.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zDisk.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zDisk_Vdfs.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zEigen.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zEngine.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zError.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zEventMan.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zFft.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zFile3d.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zFileCsv.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zFlash.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zFonts.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zGameInfo.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zGlobal.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zGrafix.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zInput.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zInput_Const.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zInput_Win32.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zKbSplines.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zLensflare.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zList.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zLocal.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zMacro.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zMaterial.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zMathTools.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zMemory_Base.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zMemory_Generic.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zMemory_Win32.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zMemPool.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zMenu.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zMenu_Item.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zModel.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zMorphMesh.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zMoving.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zMusic.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zMusic_Dm.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zMusicCtrl.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zNet.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zNet_Win32.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zNetEventMan.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zNetHost.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zNetManager.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zNetMessage.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zNetSession.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zNetTypes.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zNetVersion.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zNetVobControl.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zObject.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zOption.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zParser.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zParser_Const.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zParser_Symbol.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zParticle.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zPhysics.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zPlayerGroup.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zPlayerInfo.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zPluecker.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zPolyPool.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zPolyStrip.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zPrime.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zProgMesh.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zPrototypes.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zQueue.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zRayCache.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zRenderer.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zRenderLightContainer.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zRenderManager.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zResource.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zRndD3d.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zRndD3d_Init.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zScanDir.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zSession.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zSky.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zSky_Outdoor.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zSndMss.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zSound.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zSoundMan.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zSparseArray.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zSpyTypes.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zString.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zSysInfo.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zTexConvert.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zTexture.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zThread.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zTools.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zTypes.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zTypes3d.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zVertexBuffer.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zVertexTransform.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zVideo_Win32.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zVideoPlayer.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zView.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zViewBase.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zViewDialog.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zViewDialogChoice.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zViewDraw.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zViewFx.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zViewObject.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zViewPrint.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zViewPrint_Font.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zViewProgressbar.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zViews.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zViewStatusbar.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zVisual.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zVob.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zVobIdentifier.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zVobMisc.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zWaynet.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zWorld.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zWorldInfo.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\API\zZone.h">
+      <Filter>Engine SDK\3. Gothic II\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\engineNames_Ver0.hpp">
+      <Filter>Engine SDK\1. Gothic I</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\engineNames_Ver1.hpp">
+      <Filter>Engine SDK\2. Gothic Sequel</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\engineNames_Ver2.hpp">
+      <Filter>Engine SDK\3. Gothic II</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\engineNames_Ver3.hpp">
+      <Filter>Engine SDK\4. Gothic II NoTR</Filter>
+    </ClInclude>
+    <ClInclude Include="UnionAfx.h">
+      <Filter>Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\zGothicAPI.h">
+      <Filter>Engine SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oAiHuman.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oAiShoot.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oAniCtrl.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oBarrier.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oBinkPlayer.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oCollisionObjectMiscChar.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oCsManager.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oCsPlayer.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oCsProps.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oCsTrigger.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oDamage.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oDialog.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oDoc.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oDocumentManager.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oFocus.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oGame.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oGameInfo.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oGameManager.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oGuilds.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oHelp.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oInfo.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oInformationManager.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oInventory.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oItem.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oItemReact.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oLogManager.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oMagFrontier.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oMagic.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oMenu_Help.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oMenu_Main.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oMenu_Status.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oMenuSavegame.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oMission.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oMobInter.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oMusicZone.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oNews.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oNpc.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oNpcMessages.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oNpcStates.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oObjFactory.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oParticleControl.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oPlayerInfo.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oPortals.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oPrototypes.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oRoutine.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oSavegame.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oSpawn.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oSpell.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oSvm.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oSysInfo.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oText.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oTrigger.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oViewDialogInventory.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oViewDialogItem.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oViewDialogItemContainer.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oViewDialogStealContainer.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oViewDialogTrade.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oViewDocument.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oViewDocumentMap.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oViewProgressbar.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oViewStatusbar.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oVisFx.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oVisFx_MultiTarget.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oVob.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oWaynet.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\oWorld.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\z3d.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zAccount.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zAi.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zAiCamera.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zAiCamera_Core.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zAiCamera_Movement.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zAIPlayer.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zAlgebra.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zArchiver.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zArchiver2.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zArchiverGeneric.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zBinkPlayer.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zBsp.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zBuffer.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zBVolume.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zBVolume_Util.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zCCsContext.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zCCsCutscene.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zCCsLib.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zCCsManager.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zCCsPlayer.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zCCsPool.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zCCsProps.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zCollisionDetector.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zCollisionObject.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zCollisionObjectMisc.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zConsole.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zContainer.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zConvexCollision.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zCsCamera.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zDisk.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zDisk_Vdfs.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zEigen.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zEngine.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zError.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zEventMan.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zFft.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zFile3d.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zFileCsv.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zFlash.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zFonts.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zGameInfo.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zGlobal.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zGrafix.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zIncDialogs.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zIncViews.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zInput.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zInput_Const.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zInput_Win32.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zKbSplines.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zLensflare.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zList.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zMacro.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zMaterial.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zMathTools.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zMemory_Base.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zMemory_Generic.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zMemory_Win32.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zMemPool.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zMenu.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zMenu_Item.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zModel.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zMorphMesh.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zMoving.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zMusic.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zMusic_Dm.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zMusicCtrl.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zNet.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zNet_Win32.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zNetEventMan.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zNetHost.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zNetManager.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zNetMessage.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zNetSession.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zNetTypes.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zNetVersion.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zNetVobControl.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zObject.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zOption.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zParser.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zParser_Const.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zParser_Symbol.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zParticle.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zPhysics.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zPlayerGroup.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zPlayerInfo.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zPluecker.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zPolyPool.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zPolyStrip.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zPrime.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zProgMesh.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zPrototypes.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zQueue.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zRayCache.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zRenderer.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zRenderLightContainer.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zRenderManager.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zResource.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zRndD3d.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zRndD3d_Init.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zScanDir.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zSession.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zSky.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zSky_Outdoor.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zSndMss.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zSound.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zSoundMan.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zSparseArray.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zSpyTypes.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zString.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zSysInfo.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zTexConvert.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zTexture.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zThread.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zTools.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zTypes.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zTypes3d.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zVertexBuffer.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zVertexTransform.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zVideo_Win32.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zVideoPlayer.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zViewBase.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zViewDialog.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zViewDialogChoice.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zViewDraw.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zViewFx.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zViewObject.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zViewPrint.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zViewPrint_Font.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zViewProgressbar.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zViews.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zViewStatusbar.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zVisual.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zVob.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zVobIdentifier.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zVobMisc.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zWaynet.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zWorld.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zWorldInfo.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zZone.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\vtable_Ver3.h">
+      <Filter>Engine SDK\4. Gothic II NoTR</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Classic\vtable_Ver2.h">
+      <Filter>Engine SDK\3. Gothic II</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Addon\vtable_Ver1.h">
+      <Filter>Engine SDK\2. Gothic Sequel</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_I_Classic\vtable_Ver0.h">
+      <Filter>Engine SDK\1. Gothic I</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenGin\Gothic_II_Addon\API\zView.h">
+      <Filter>Engine SDK\4. Gothic II NoTR\Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".build_settings.inl">
+      <Filter>Plugin</Filter>
+    </None>
+  </ItemGroup>
+</Project>
