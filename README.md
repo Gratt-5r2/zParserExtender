@@ -5,7 +5,7 @@ Merge or override new scripts for compiled .DAT files.
 
 
 ## Configurations
-Initialize parameters in the Gothic.ini or <YourMod>.ini:
+Initialize parameters in the Gothic.ini or `YourMod`.ini:
 ```ini
 [ZPARSE_EXTENDER]
 LoadScript = Extend.d
