@@ -255,7 +255,6 @@ namespace NAMESPACE {
         continue;
       
       string parName = line.GetWord( " \t", 1 );
-
       zCParser* par = GetParserByName( parName );
       if( !par ) {
         Message::Error( "U: PAR: Undefined parser name: " + parName );
@@ -265,9 +264,7 @@ namespace NAMESPACE {
       par->mergemode = True;
       par->compiled  = False;
       
-
       string fileName = line.Copy(parName.Length(), line.Length() - parName.Length()).Shrink();
-
       if( par->ParseFile( Z fileName ) != 0 ) {
         Message::Error( "U: PAR: Can not parse file: `" + fileName + "`" );
         continue;
