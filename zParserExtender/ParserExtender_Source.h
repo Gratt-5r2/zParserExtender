@@ -229,12 +229,18 @@ namespace NAMESPACE {
 
     return Null;
   }
+  
+
+  void SetEnableParsing(zCParser* par, bool32 enable) {
+    par->mergemode =  enable && IsMergeMode();
+    par->compiled  = !enable;
+  }
 
   void AdjustParsed() {
     for( uint i = 0; i < GetParsed().GetNum(); i++ ) {
-      GetParsed()[i]->CreatePCode();
-      parser->mergemode = False;
-      parser->compiled  = True;
+      zCParser* par = GetParsed()[i];
+      par->CreatePCode();
+      SetEnableParsing( par, False );
     }
 
     GetParsed().Clear();
@@ -261,16 +267,17 @@ namespace NAMESPACE {
         continue;
       }
       
-      par->mergemode = True;
-      par->compiled  = False;
-      
+      SetEnableParsing( par, True );
       string fileName = line.Copy(parName.Length(), line.Length() - parName.Length()).Shrink();
       if( par->ParseFile( Z fileName ) != 0 ) {
+        if( !(GetParsed() & par) )
+          SetEnableParsing( par, False );
+
         Message::Error( "U: PAR: Can not parse file: `" + fileName + "`" );
         continue;
       }
       
-      GetParsed() += par;
+      GetParsed() |= par;
     }
 
     AdjustParsed();

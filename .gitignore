@@ -69,6 +69,8 @@ artifacts/
 *.pidb
 *.svclog
 *.scc
+*.log
+*.tlog
 
 # Chutzpah Test files
 _Chutzpah*
@@ -261,5 +263,5 @@ __pycache__/
 *.pyc
 
 # Build results [2]
-*Release/
-*Debug/
+**/*Release/*
+**/*Debug/*
