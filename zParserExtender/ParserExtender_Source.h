@@ -10,43 +10,35 @@ namespace NAMESPACE {
 
   HOOK Ivk_zCPar_SymbolTable_Load_Union AS( ZCPAR_SYMBOLTABLE_LOAD, &zCPar_SymbolTable::Load_Union );
 
-  struct zTParserExternals {
-    zSTRING ExternalName;
-    int StackAddress;
+  void zCPar_SymbolTable::PostDefineExternal_Union( zCPar_Symbol* external, int index ) {
+    // Restore function & arguments of function
+    zCPar_Symbol* Symbol = external;
+    while( Symbol ) {
+      InsertAt_Union( Symbol, index++ );
+      Symbol = Symbol->next;
 
-    zTParserExternals( zCPar_Symbol* sym ) {
-      ExternalName = sym->name;
-      if( sym->type == zPAR_TYPE_FUNC )
-        sym->GetStackPos( StackAddress, 0 );
-      else
-        StackAddress = (int)sym->GetDataAdr( 0 );
+      if( Symbol == external )
+        break;
     }
+  }
 
-    zTParserExternals() { }
-
-    void RestoreSymbol( zCPar_Symbol* sym ) {
-      if( sym->type == zPAR_TYPE_FUNC )
-        sym->SetStackPos( StackAddress, 0 );
-      else
-        sym->SetDataAdr( (void*)StackAddress );
-    }
-  };
-
-
-
-
-
+  void zCPar_SymbolTable::PostDefineExternal_Union( zCPar_Symbol* external ) {
+    // if externals not found, push object to the end of table
+    PostDefineExternal_Union( external, table.GetNum() );
+  }
 
   void zCPar_SymbolTable::Load_Union( zFILE *f ) {
 
     zCPar_Symbol* Symbol;
-    Array<zTParserExternals> Externals;
+    Array<zCPar_Symbol*> Externals;
 
     if( !IsMergeMode() ) {
       for( int i = 0; i < table.GetNumInList(); i++ ) {
         Symbol = table[i];
-        if( Symbol->HasFlag( zPAR_FLAG_EXTERNAL ) )
+        if( Symbol->HasFlag( zPAR_FLAG_EXTERNAL ) ) {
           Externals += Symbol;
+          table.RemoveIndex( i-- );
+        }
       }
     }
 
@@ -110,17 +102,44 @@ namespace NAMESPACE {
       table.InsertEnd( Symbol );
     }
 
+    //bool export = false;
     // restore external functions
     if( !IsMergeMode() ) {
       for( uint i = 0; i < Externals.GetNum(); i++ ) {
-        Symbol = GetSymbol( Externals[i].ExternalName );
-        if( Symbol ) {
-          Externals[i].RestoreSymbol( Symbol );
+        zCPar_Symbol*& OldExternal = Externals[i];
+        zCPar_Symbol*  NewExternal = GetSymbol( OldExternal->name );
+
+        if( NewExternal ) {
+          int StackAddress;
+          OldExternal->GetStackPos( StackAddress, 0 );
+          NewExternal->SetStackPos( StackAddress, 0 );
+          delete OldExternal;
         }
-        else
-          Message::Warning( "U: PAR: External " + Externals[i].ExternalName + " not found." );
+        else {
+          PostDefineExternal_Union( OldExternal );
+          //Message::Warning( "Restored: " + OldExternal->name );
+
+          //export = true;
+        }
       }
     }
+
+    //if( !export )
+    //  return;
+
+    //CDocument doc;
+    //for( uint i = 0; i < tablesort.GetNum(); i++ ) {
+    //  //doc.InsertLines( table[i]->name );
+    //  doc.InsertLines( table[tablesort[i]]->name );
+    //}
+    //CDocument doc2;
+    //for( uint i = 0; i < tablesort.GetNum(); i++ ) {
+    //  doc2.InsertLines( table[i]->name );
+    //}
+    //doc.WriteToFile( "ExportedSymbols.txt" );
+    //doc2.WriteToFile( "ExportedSymbols2.txt" );
+
+
   }
 
 
@@ -131,6 +150,10 @@ namespace NAMESPACE {
   HOOK Ivk_zCPar_SymbolTable_Insert AS( ZCPAR_SYMBOLTABLE_INSERT, &zCPar_SymbolTable::Insert_Union );
 
   bool32 zCPar_SymbolTable::Insert_Union( zCPar_Symbol* sym ) {
+    return InsertAt_Union( sym, table.GetNum() );
+  }
+
+  bool32 zCPar_SymbolTable::InsertAt_Union( zCPar_Symbol* sym, int pos ) {
     if( !sym )
       return False;
 
@@ -147,11 +170,19 @@ namespace NAMESPACE {
 
     cur_table = this;
 
-    table.InsertEnd( sym );
-    tablesort.InsertSort( table.GetNumInList() - 1 );
+    table.InsertAtPos( sym, pos );
+
+    for( int i = 0; i < tablesort.GetNum(); i++ ) {
+      if( tablesort[i] >= pos )
+        tablesort[i]++;
+
+      if( tablesort[i] >= table.GetNum() )
+        Message::Box(tablesort[i]);
+    }
+    tablesort.InsertSort( pos/*table.GetNumInList() - 1*/ );
     sym->AllocSpace();
 
-    if( !firstsym ) firstsym      = sym;
+    if( !firstsym ) firstsym = sym;
     if( lastsym )   lastsym->next = sym;
     lastsym = sym;
 
@@ -247,6 +278,8 @@ namespace NAMESPACE {
   }
 
   void ParseExternalScripts() {
+    if( LoadScript.IsEmpty() )
+      return;
 
     zoptions->ChangeDir( DIR_SCRIPTS );
 
@@ -281,5 +314,13 @@ namespace NAMESPACE {
     }
 
     AdjustParsed();
+  }
+
+
+
+
+
+  void DefineExternals() {
+
   }
 }

@@ -82,6 +82,22 @@ void Game_Unpause() {
 }
 
 void Game_DefineExternals() {
+#ifdef __G1
+  if( Union.GetEngineVersion() == Engine_G1 )
+    Gothic_I_Classic::DefineExternals();
+#endif
+#ifdef __G1A
+  if( Union.GetEngineVersion() == Engine_G1A )
+    Gothic_I_Addon::DefineExternals();
+#endif
+#ifdef __G2
+  if( Union.GetEngineVersion() == Engine_G2 )
+    Gothic_II_Classic::DefineExternals();
+#endif
+#ifdef __G2A
+  if( Union.GetEngineVersion() == Engine_G2A )
+    Gothic_II_Addon::DefineExternals();
+#endif
 }
 
 CApplication* lpApplication = CApplication::CreateRefApplication (

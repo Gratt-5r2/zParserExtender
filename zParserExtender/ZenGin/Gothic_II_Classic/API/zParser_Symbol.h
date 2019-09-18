@@ -127,6 +127,9 @@ namespace Gothic_II_Classic {
     // Union
     void Load_Union( zFILE* );
     bool32 Insert_Union( zCPar_Symbol* );
+    bool32 InsertAt_Union( zCPar_Symbol* sym, int pos );
+    void PostDefineExternal_Union( zCPar_Symbol* external );
+    void PostDefineExternal_Union( zCPar_Symbol* external, int index );
 
     // static properties
     static zCPar_SymbolTable*& cur_table;
