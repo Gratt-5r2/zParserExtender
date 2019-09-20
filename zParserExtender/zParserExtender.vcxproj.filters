@@ -2588,10 +2588,14 @@
     <ClInclude Include="ParserExtender_Source.h">
       <Filter>Plugin\ParserExtender\Interface</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".build_settings.inl">
       <Filter>Plugin</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
 </Project>
