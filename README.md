@@ -56,14 +56,14 @@ Music	System\NewMusic.d
 ## Daedalus 'while' loop
 
 #### Syntax
-```
-while (expression)
+```cpp
+while (<expression>)
 {
     // to do
     while (true)
     {
         // to do
-        if (expression)
+        if (<expression>)
         {
             break;
         };
