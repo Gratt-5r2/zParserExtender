@@ -1,6 +1,6 @@
 # zParserExtender
 ## - The multiplatform plugin
-Merge or override new scripts for compiled .DAT files.
+Merge or override new scripts for compiled .DAT files, daedalus 'while' loop and new external functions.
 
 
 
@@ -49,4 +49,24 @@ The string consists of two arguments.
 Game	System\NewHumanAI.d
 Game	System\NewItems.d
 Music	System\NewMusic.d
+```
+
+
+
+## Daedalus 'while' loop
+
+#### Syntax
+```cpp
+while (<expression>)
+{
+    // to do
+    while (true)
+    {
+        // to do
+        if (<expression>)
+        {
+            break;
+        };
+    };
+};
 ```
