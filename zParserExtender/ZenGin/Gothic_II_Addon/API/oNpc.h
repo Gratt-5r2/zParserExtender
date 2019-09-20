@@ -1253,7 +1253,7 @@ namespace Gothic_II_Addon {
     int IsVictimAwareOfTheft()                                                                   zCall( 0x00761EF0 );
     void CheckSpecialSituations()                                                                zCall( 0x00761F80 );
     void StopTheft( oCNpc*, int )                                                                zCall( 0x00762160 );
-    void OpenInventory( int )                                                                    zCall( 0x00762250 );
+    void OpenInventory( int = 0 )                                                                zCall( 0x00762250 );
     void CloseInventory()                                                                        zCall( 0x00762410 );
     int OpenSteal()                                                                              zCall( 0x00762430 );
     void CloseSteal()                                                                            zCall( 0x00762950 );

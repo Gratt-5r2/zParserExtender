@@ -156,7 +156,7 @@ namespace Gothic_I_Classic {
     void SwitchCamToNextNpc()                                                    zCall( 0x0065EDD0 );
     int TestKeys( int )                                                          zCall( 0x00660000 );
     int IA_TestWay( int )                                                        zCall( 0x006626A0 );
-    bool IsOnPause()                                                             zInit( singleStep != 0 );
+    bool IsOnPause()                                                             zInit( return singleStep != 0 );
     static int Sort_Routine( TObjectRoutine*, TObjectRoutine* )                  zCall( 0x0063FEB0 );
     static int ConsoleEvalFunc( zSTRING const&, zSTRING& )                       zCall( 0x00641420 );
     virtual int HandleEvent( int )                                               zCall( 0x0065EEE0 );

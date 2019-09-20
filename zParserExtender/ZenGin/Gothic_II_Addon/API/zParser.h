@@ -265,6 +265,9 @@ namespace Gothic_II_Addon {
     // Union
     int SaveDat_Union( zSTRING& );
     void DeclareFuncCall_Union( zSTRING&, int );
+    void ParseBlock_Union();
+    void DeclareWhile_Union();
+    void DeclareBreak_Union();
 
     // static properties
     static int& enableParsing;

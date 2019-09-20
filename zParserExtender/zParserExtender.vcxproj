@@ -392,7 +392,18 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="DllMain.cpp" />
-    <ClCompile Include="ParserExtender.cpp" />
+    <ClCompile Include="ParserExtender.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='G1 Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='G2A Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='G1A Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='G1 Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='G2A Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='G2 Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='G2 Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='G1A Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="ZenGin\Gothic_II_Addon\classDef_Ver3.cpp" />
     <ClCompile Include="ZenGin\Gothic_II_Addon\staticDef_Ver3.cpp" />
     <ClCompile Include="ZenGin\Gothic_II_Classic\classDef_Ver2.cpp" />

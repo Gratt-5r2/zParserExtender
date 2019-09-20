@@ -84,6 +84,10 @@ namespace Gothic_II_Classic {
     static void SetUseInstanceAdr( void* )      zCall( 0x00741C30 );
     static void* GetUseInstance()               zCall( 0x00741C40 );
 
+    // Union
+    zSTRING GetName();
+    void Rename( const zSTRING& newName );
+
     // static properties
     static zCPar_Symbol*& instance_sym;
     static void*& instance_adr;

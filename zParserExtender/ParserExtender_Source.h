@@ -1,30 +1,18 @@
 
 namespace NAMESPACE {
-  
-  // not used
-  bool32 zCParser::parserMergeMode = False;
 
+  HOOK Ivk_zCPar_SymbolTable_Load_Union AS( ZCPAR_SYMBOLTABLE_LOAD, &zCPar_SymbolTable::Load_Union, zCURRENT_GAME );
 
-
-
-
-  HOOK Ivk_zCPar_SymbolTable_Load_Union AS( ZCPAR_SYMBOLTABLE_LOAD, &zCPar_SymbolTable::Load_Union );
-
-  void zCPar_SymbolTable::PostDefineExternal_Union( zCPar_Symbol* external, int index ) {
+  void zCPar_SymbolTable::PostDefineExternal_Union( zCPar_Symbol* external ) {
     // Restore function & arguments of function
     zCPar_Symbol* Symbol = external;
     while( Symbol ) {
-      InsertAt_Union( Symbol, index++ );
+      Insert_Union( Symbol );
       Symbol = Symbol->next;
 
       if( Symbol == external )
         break;
     }
-  }
-
-  void zCPar_SymbolTable::PostDefineExternal_Union( zCPar_Symbol* external ) {
-    // if externals not found, push object to the end of table
-    PostDefineExternal_Union( external, table.GetNum() );
   }
 
   void zCPar_SymbolTable::Load_Union( zFILE *f ) {
@@ -102,7 +90,6 @@ namespace NAMESPACE {
       table.InsertEnd( Symbol );
     }
 
-    //bool export = false;
     // restore external functions
     if( !IsMergeMode() ) {
       for( uint i = 0; i < Externals.GetNum(); i++ ) {
@@ -115,31 +102,10 @@ namespace NAMESPACE {
           NewExternal->SetStackPos( StackAddress, 0 );
           delete OldExternal;
         }
-        else {
+        else
           PostDefineExternal_Union( OldExternal );
-          //Message::Warning( "Restored: " + OldExternal->name );
-
-          //export = true;
-        }
       }
     }
-
-    //if( !export )
-    //  return;
-
-    //CDocument doc;
-    //for( uint i = 0; i < tablesort.GetNum(); i++ ) {
-    //  //doc.InsertLines( table[i]->name );
-    //  doc.InsertLines( table[tablesort[i]]->name );
-    //}
-    //CDocument doc2;
-    //for( uint i = 0; i < tablesort.GetNum(); i++ ) {
-    //  doc2.InsertLines( table[i]->name );
-    //}
-    //doc.WriteToFile( "ExportedSymbols.txt" );
-    //doc2.WriteToFile( "ExportedSymbols2.txt" );
-
-
   }
 
 
@@ -147,21 +113,28 @@ namespace NAMESPACE {
 
 
 
-  HOOK Ivk_zCPar_SymbolTable_Insert AS( ZCPAR_SYMBOLTABLE_INSERT, &zCPar_SymbolTable::Insert_Union );
+  HOOK Ivk_zCPar_SymbolTable_Insert AS( ZCPAR_SYMBOLTABLE_INSERT, &zCPar_SymbolTable::Insert_Union, zCURRENT_GAME );
 
   bool32 zCPar_SymbolTable::Insert_Union( zCPar_Symbol* sym ) {
-    return InsertAt_Union( sym, table.GetNum() );
+    return InsertAt_Union( sym, True );
   }
 
-  bool32 zCPar_SymbolTable::InsertAt_Union( zCPar_Symbol* sym, int pos ) {
+  bool32 zCPar_SymbolTable::InsertAt_Union( zCPar_Symbol* sym, int alloc ) {
     if( !sym )
       return False;
 
     int index = GetIndex( sym->name );
     if( index != Invalid ) {
       if( IsMergeMode() ) {
+        zCPar_Symbol* oldSym = table[index];
+        
         table[index] = sym;
         sym->AllocSpace();
+        
+        oldSym->Rename( oldSym->GetName() + "_OLD" );
+        InsertAt_Union( oldSym, False );
+        
+        cur_table = this;
         return True;
       }
       else
@@ -170,17 +143,11 @@ namespace NAMESPACE {
 
     cur_table = this;
 
-    table.InsertAtPos( sym, pos );
+    table.InsertEnd( sym );
+    tablesort.InsertSort( table.GetNumInList() - 1 );
 
-    for( int i = 0; i < tablesort.GetNum(); i++ ) {
-      if( tablesort[i] >= pos )
-        tablesort[i]++;
-
-      if( tablesort[i] >= table.GetNum() )
-        Message::Box(tablesort[i]);
-    }
-    tablesort.InsertSort( pos/*table.GetNumInList() - 1*/ );
-    sym->AllocSpace();
+    if( alloc )
+      sym->AllocSpace();
 
     if( !firstsym ) firstsym = sym;
     if( lastsym )   lastsym->next = sym;
@@ -189,33 +156,26 @@ namespace NAMESPACE {
     return True;
   }
 
-
-
-
-
-
-  HOOK Ivk_zCParser_SaveDat AS( ZCPARSER_SAVEDAT, &zCParser::SaveDat_Union );
+  HOOK Ivk_zCParser_SaveDat AS( ZCPARSER_SAVEDAT, &zCParser::SaveDat_Union, zCURRENT_GAME );
 
   int zCParser::SaveDat_Union( zSTRING &s ) {
     if( IsCompileDat() )
       return( this->*Ivk_zCParser_SaveDat )( s );
   }
 
+  zSTRING zCPar_Symbol::GetName() {
+    return (Z name).GetWord( "." );
+  }
 
-
-
-
-  // disabled
-  HOOK Ivk_zCParser_DeclareFuncCall AS( ZCPARSER_DECLAREFUNCCALL, &zCParser::DeclareFuncCall_Union, IVK_DISABLED );
-
-  void zCParser::DeclareFuncCall_Union( zSTRING &name, int typematch ) {
-    zCPar_Symbol* Symbol = GetSymbol( name );
-    if( Symbol != Null ) {
-      zCPar_Symbol* SymbolCopied = new zCPar_Symbol( *Symbol );
-      SymbolCopied->name += "_old";
-      symtab.table.Insert( SymbolCopied );
+  void zCPar_Symbol::Rename( const zSTRING& newName ) {
+    zSTRING oldName = GetName();
+    zCPar_Symbol* list = this;
+    while( list ) {
+      list->name.Replace( oldName, newName );
+      list = list->next;
+      if( list == this )
+        break;
     }
-    ( this->*Ivk_zCParser_DeclareFuncCall )( name, typematch );
   }
 
 
@@ -288,6 +248,7 @@ namespace NAMESPACE {
       return Message::Error( "U: PAR: " + LoadScript + " not exists." );
 
     CDocument doc = fileData;
+
     for( uint i = 0; i < doc.GetNum(); i++ ) {
       string& line = doc[i];
       if( line.Shrink().IsEmpty() )
@@ -320,7 +281,98 @@ namespace NAMESPACE {
 
 
 
-  void DefineExternals() {
 
+
+
+
+
+
+
+  HOOK Ivk_zCParser_ParseBlock AS( ZCPARSER_PARSEBLOCK, &zCParser::ParseBlock_Union, zCURRENT_GAME );
+
+  static int op_break_level = 0;
+  static int op_while_enumerator = 0x10000;
+
+#define WHILE_BEGIN op_break_level++, op_while_enumerator += 2
+#define WHILE_END   op_break_level--
+
+  void zCParser::ParseBlock_Union() {
+    zSTRING word;
+	Match( Z "{" );
+    while( pc < pc_stop ) {
+      ReadWord( word );
+      if( word == "VAR" )
+        DeclareVar( False );
+      else if( word == "CONST" )
+        DeclareVar( True );
+      else if( word == "RETURN" )
+        DeclareReturn();
+      else if( word == "IF" )
+        DeclareIf();
+      else if( word == "WHILE" )
+        DeclareWhile_Union();
+      else if( word == "BREAK" )
+        DeclareBreak_Union();
+      else if( word == "}" )
+        return;
+      else
+        DeclareAssign( word );
+      Match( Z ";" );
+    }
+  }
+
+  void zCParser::DeclareWhile_Union() {
+    WHILE_BEGIN;
+
+    int op_while_index_begin = op_while_enumerator + 1;
+    int op_while_index_end   = op_while_enumerator;
+
+    do {
+      // create label of the 'begin' of loop
+      treenode = CreateLeaf( zPAR_TOK_LABEL, treenode );
+      treenode->value = op_while_index_begin;
+
+      // create expression of the condition
+      treenode->SetNext( ParseExpression() );
+      while( treenode->next )
+        treenode = treenode->next;
+      
+      // break from the loop if the expression is 'false'
+      treenode = CreateLeaf( zPAR_TOK_JUMPF, treenode );
+      treenode->value = op_while_index_end;
+
+      // parse body of the loop
+      PrevWord();
+      ParseBlock();
+      ReadWord( aword );
+
+    } while( aword != ";" );
+
+    // return to the 'begin' of loop
+    treenode = CreateLeaf( zPAR_TOK_JUMP, treenode );
+    treenode->value = op_while_index_begin;
+
+    // create 'end' label of the loop
+    treenode = CreateLeaf( zPAR_TOK_LABEL, treenode );
+    treenode->value = op_while_index_end;
+
+    PrevWord();
+
+    WHILE_END;
+  }
+
+  void zCParser::DeclareBreak_Union() {
+    if( op_break_level <= 0 )
+      Error( Z "found empty break operator!", 0 );
+
+    do {
+      // break from top loop
+      treenode = CreateLeaf( zPAR_TOK_JUMP, treenode );
+      treenode->value = op_while_enumerator;
+
+      ReadWord( aword );
+    } while( aword != ";" );
+
+    PrevWord();
   }
 }

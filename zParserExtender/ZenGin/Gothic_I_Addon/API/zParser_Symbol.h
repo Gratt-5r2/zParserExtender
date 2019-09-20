@@ -84,6 +84,10 @@ namespace Gothic_I_Addon {
     static void SetUseInstanceAdr( void* )      zCall( 0x00731E60 );
     static void* GetUseInstance()               zCall( 0x00731E70 );
 
+    // Union
+    zSTRING GetName();
+    void Rename( const zSTRING& newName );
+
     // static properties
     static zCPar_Symbol*& instance_sym;
     static void*& instance_adr;

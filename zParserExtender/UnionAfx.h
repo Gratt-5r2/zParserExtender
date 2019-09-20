@@ -29,6 +29,7 @@ extern "C"
   #include <stdlib.h>
   #include <stdio.h>
   #include <math.h>
+  #include <cmath>
 }
 
 #pragma comment (lib, "Psapi.lib")

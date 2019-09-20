@@ -9,20 +9,28 @@ void Game_Entry() {
 void Game_Init() {
   ParseExternals = true;
 #ifdef __G1
-  if( Union.GetEngineVersion() == Engine_G1 )
+  if( Union.GetEngineVersion() == Engine_G1 ) {
     Gothic_I_Classic::ParseExternalScripts();
+    Gothic_I_Classic::GameInit();
+  }
 #endif
 #ifdef __G1A
-  if( Union.GetEngineVersion() == Engine_G1A )
+  if( Union.GetEngineVersion() == Engine_G1A ) {
     Gothic_I_Addon::ParseExternalScripts();
+    Gothic_I_Addon::GameInit();
+  }
 #endif
 #ifdef __G2
-  if( Union.GetEngineVersion() == Engine_G2 )
+  if( Union.GetEngineVersion() == Engine_G2 ) {
     Gothic_II_Classic::ParseExternalScripts();
+    Gothic_II_Classic::GameInit();
+  }
 #endif
 #ifdef __G2A
-  if( Union.GetEngineVersion() == Engine_G2A )
+  if( Union.GetEngineVersion() == Engine_G2A ) {
     Gothic_II_Addon::ParseExternalScripts();
+    Gothic_II_Addon::GameInit();
+  }
 #endif
   ParseExternals = false;
 }
@@ -31,6 +39,22 @@ void Game_Exit() {
 }
 
 void Game_Loop() {
+#ifdef __G1
+  if( Union.GetEngineVersion() == Engine_G1 )
+    Gothic_I_Classic::GameLoop();
+#endif
+#ifdef __G1A
+  if( Union.GetEngineVersion() == Engine_G1A )
+    Gothic_I_Addon::GameLoop();
+#endif
+#ifdef __G2
+  if( Union.GetEngineVersion() == Engine_G2 )
+    Gothic_II_Classic::GameLoop();
+#endif
+#ifdef __G2A
+  if( Union.GetEngineVersion() == Engine_G2A )
+    Gothic_II_Addon::GameLoop();
+#endif
 }
 
 void Game_SaveBegin() {
