@@ -237,32 +237,36 @@ namespace NAMESPACE {
     GetParsed().Clear();
   }
 
-  void ParseExternalScripts() {
-    if( LoadScript.IsEmpty() )
-      return;
+  static CDocument pluginsExternalScripts;
 
+  void ParseExternalScripts() {
     zoptions->ChangeDir( DIR_SCRIPTS );
 
     string fileData;
-    if( !fileData.ReadFromVdf( LoadScript, VDF_DEFAULT ) )
+    if( !fileData.IsEmpty() || !fileData.ReadFromVdf( LoadScript, VDF_DEFAULT ) )
       return Message::Error( "U: PAR: " + LoadScript + " not exists." );
 
-    CDocument doc = fileData;
+    pluginsExternalScripts.InsertLines( fileData );
 
-    for( uint i = 0; i < doc.GetNum(); i++ ) {
-      string& line = doc[i];
+    for( uint i = 0; i < pluginsExternalScripts.GetNum(); i++ ) {
+      string& line = pluginsExternalScripts[i];
       if( line.Shrink().IsEmpty() )
         continue;
       
       string parName = line.GetWord( " \t", 1 );
+      if( parName.IsEmpty() )
+        continue;
+
       zCParser* par = GetParserByName( parName );
       if( !par ) {
         Message::Error( "U: PAR: Undefined parser name: " + parName );
         continue;
       }
-      
+
       SetEnableParsing( par, True );
       string fileName = line.Copy(parName.Length(), line.Length() - parName.Length()).Shrink();
+      cmd << Col16( CMD_YELLOW ) << "Parsing: " << Col16( CMD_YELLOW | CMD_INT ) << fileName << Col16() << endl;
+
       if( par->ParseFile( Z fileName ) != 0 ) {
         if( !(GetParsed() & par) )
           SetEnableParsing( par, False );
@@ -375,4 +379,216 @@ namespace NAMESPACE {
 
     PrevWord();
   }
+
+
+
+
+
+  
+#if 0
+  static bool32 InventorySortFunc( oCItem* left, oCItem* right );
+
+  // int __cdecl sub_705B80(oCItem *a1, oCItem *a2)
+  HOOK Ivk_InventorySortFunc AS( 0x00705B80, &InventorySortFunc );
+
+  static bool32 InventorySortFunc( oCItem* left, oCItem* right ) {
+    static int scriptSortFunc = parser->GetIndex( "INVENTORYSORTFUNC" );
+    if( scriptSortFunc == Invalid )
+      return Ivk_InventorySortFunc( left, right );
+
+    //parser->stack.PushInt( (int)left );
+    //parser->stack.PushInt( (int)right );
+    cmd << (int)left << tab << left->name << endl;
+    parser->SetInstance( "ITEM", left );
+    int result = *(int*)parser->CallFunc( scriptSortFunc, (int)left );// , (int)right );
+
+    return result;
+  }
+
+
+
+
+
+  HOOK Ivk_zCParser_CallFunc_Union AS( 0x007929F0, &zCParser::CallFunc_Union );
+
+  void* zCParser::CallFunc_Union( int index, ... ) {
+#if 0
+    static int retn = 0;
+
+    byte* argvStack = (byte*)&index + 4;
+
+    zCPar_Symbol* symbol   = symtab.GetSymbol( index );
+    zCPar_Symbol* argument = symbol->next;
+    while( argument ) {
+      switch( argument->type ) {
+        case zPAR_TYPE_INT:
+        {
+          int value = *(int*)argvStack;
+          argument->SetValue( value, 0 );
+          datastack.Push(value);
+          datastack.Push(zPAR_TOK_PUSHINT);
+          argvStack += sizeof( int );
+          break;
+        }
+        
+        case zPAR_TYPE_FLOAT:
+        {
+          int value = *(int*)argvStack;
+          argument->SetValue( value, 0 );
+          datastack.Push(value);
+          datastack.Push(zPAR_TOK_PUSHVAR);
+          argvStack += sizeof( double );
+          break;
+        }
+        
+        case zPAR_TYPE_STRING:
+        {
+          zSTRING value = *(zSTRING*)argvStack;
+          argument->SetValue( value, 0 );
+          void* memory = (int*)argument->GetDataAdr( 0 );
+          datastack.Push((int)memory);
+          datastack.Push(zPAR_TOK_PUSHVAR);
+          argvStack += sizeof( int );
+          break;
+        }
+        
+        case zPAR_TYPE_INSTANCE:
+        {
+          int value = *(int*)argvStack;
+          argument->SetValue( value, 0 );
+          //datastack.Push(value);
+          //datastack.Push(zPAR_TOK_PUSHINST);
+          argvStack += sizeof( int );
+          break;
+        }
+
+        default:
+        {
+          Message::Error( "Unsupported parser type!" );
+        }
+      }
+
+      argument = argument->next;
+      if( argument == symbol )
+        break;
+    }
+
+    curfuncnr = index;
+
+    int pos;
+    symbol->GetStackPos( pos, 0 );
+    DoStack( pos );
+
+    if( symbol->HasFlag( zPAR_FLAG_RETURN ) ) {
+      if( symbol->GetOffset() == zPAR_TYPE_INT ) {
+        retn = PopDataValue();
+      }
+      else if( symbol->GetOffset() == zPAR_TYPE_FLOAT ) {
+        retn = PopDataValue();
+      }
+      else if( symbol->GetOffset() == zPAR_TYPE_INSTANCE ) {
+        retn = PopDataValue();
+      }
+    }
+
+    curfuncnr = Invalid;
+    return &retn;
+#endif
+#if 1
+    static int retval = 0;
+
+    int* adr;
+    int v, i, pos;
+    float f;
+    zSTRING s;
+    va_list args;
+
+    retval = 0;
+    zCPar_Symbol *par, *sym = symtab.GetSymbol( index );
+    if( ( !sym ) || ( sym->type != zPAR_TYPE_FUNC ) ) {
+      Message( zSTRING( "Warning : Engine calls an undefined function. (index : " ) + zSTRING( index ) + " )" );
+      return &retval;
+    }
+
+    // Get Parameters
+    par = sym;
+
+    datastack.Clear();
+
+    va_start( args, index );
+    for( i = 0; i < sym->ele; i++ ) {
+      //par = sym->GetNext();
+      par = GetSymbol( index + i + 1 );
+      switch( par->type ) {
+      //case zPAR_TYPE_INSTANCE:
+      case zPAR_TYPE_INT:	v = va_arg( args, int );
+        //cmd << ">>  " << v << endl;
+        par->SetValue( v, 0 );
+        //par->SetDataAdr( (void*)v );
+        //par->instance_adr = (void*)v;
+        datastack.Push( v );
+        datastack.Push( zPAR_TOK_PUSHINT );
+        break;
+      case zPAR_TYPE_FLOAT:	f = va_arg( args, float );
+        par->SetValue( f, 0 );
+        datastack.Push( f );
+        datastack.Push( zPAR_TOK_PUSHINT );
+        break;
+      case zPAR_TYPE_STRING:	s = (zSTRING)va_arg( args, zSTRING );
+        par->SetValue( s, 0 );
+        adr = (int *)sym->GetDataAdr( 0 );
+        datastack.Push( (int)adr );
+        datastack.Push( zPAR_TOK_PUSHVAR ); // zPAR_TOK_PUSHSTR
+        break;
+      /*case zPAR_TYPE_INSTANCE :	v = va_arg(args,int);
+        par->SetValue( v, 0 );
+        par->SetOffset( v );
+        adr = (int *)sym->GetDataAdr(0);
+        datastack.Push( (int)adr );
+        datastack.Push( zPAR_TOK_PUSHVAR );
+        break;*/
+      case zPAR_TYPE_INSTANCE:	adr = va_arg( args, int* );
+        cmd << ">>  " << (int)adr << endl;
+        //par->SetValue( v, 0 );
+        //par->SetOffset( (int)adr );
+        //datastack.Push( (int)adr );
+        //datastack.Push( zPAR_TOK_PUSHINST );
+
+        datastack.Push( instance_help );
+        //	datastack.Push(zPAR_TOK_PUSHINST);
+        //zCPar_Symbol *sym = symtab.GetSymbol( instance_help );
+        /*if( sym ) */sym->SetOffset( (int)adr );
+
+        break;
+      default:	Message::Error( zSTRING( "Function type not supported. (" + sym->name + ")" ) );
+        break;
+      }
+    }
+    va_end( args );
+
+    curfuncnr = index;
+
+    sym->GetStackPos( pos, 0 );
+    DoStack( pos );
+    // Return Value
+    if( sym->HasFlag( zPAR_FLAG_RETURN ) ) {
+      retval = PopDataValue();
+      // Expect an Int
+      // Use the offset Var as return type -> sym -> SetOffset(type);
+      /*if( sym->GetOffset() == zPAR_TYPE_INT ) {
+        retval = PopDataValue();
+      }
+      else if( sym->GetOffset() == zPAR_TYPE_FLOAT ) {
+        retval = PopDataValue();
+      }
+      else if( sym->GetOffset() == zPAR_TYPE_INSTANCE ) {
+        retval = PopDataValue();
+      }*/
+    }
+
+    curfuncnr = -1;
+    return &retval;
+#endif
+  }
+#endif
 }

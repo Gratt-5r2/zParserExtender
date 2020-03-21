@@ -134,7 +134,6 @@ namespace Gothic_II_Addon {
     bool32 Insert_Union( zCPar_Symbol* );
     bool32 InsertAt_Union( zCPar_Symbol*, int pos );
     void zCPar_SymbolTable::PostDefineExternal_Union( zCPar_Symbol* external );
-    void zCPar_SymbolTable::PostDefineExternal_Union( zCPar_Symbol* external, int index );
 
     // static properties
     static zCPar_SymbolTable*& cur_table;

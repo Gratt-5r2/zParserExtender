@@ -275,6 +275,8 @@ namespace Gothic_II_Addon {
 
     // Union
     static bool32 parserMergeMode;
+    void* __cdecl CallFunc_Union( int, ... );
+    void __cdecl DefineExternal_Union( zSTRING &, int( __cdecl* )( ), int, int, ... );
   };
 
 } // namespace Gothic_II_Addon
