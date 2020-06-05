@@ -16,6 +16,9 @@ namespace Gothic_I_Addon {
     float vertScrY;
 
     zCVertexTransform() {}
+
+    // user API
+    #include "zCVertexTransform.inl"
   };
 
 } // namespace Gothic_I_Addon

@@ -86,6 +86,9 @@ namespace Gothic_I_Addon {
     zMAT4 GetKey( int )                                                 zCall( 0x004943F0 );
     void SetKey( int, zMAT4 )                                           zCall( 0x004944E0 );
     int GetNumKeys()                                                    zCall( 0x00494510 );
+
+    // user API
+    #include "oCTrajectory.inl"
   };
 
   class oCEmitterKey {
@@ -146,6 +149,9 @@ namespace Gothic_I_Addon {
     void Edit()                                      zCall( 0x0049CD50 );
     void SetDefaultByFX( oCVisualFX* )               zCall( 0x004A09C0 );
     static void CreateNewScriptKey( zSTRING const& ) zCall( 0x0049D1C0 );
+
+    // user API
+    #include "oCEmitterKey.inl"
   };
 
   struct zSVisualFXColl {
@@ -154,6 +160,9 @@ namespace Gothic_I_Addon {
     zVEC3 foundNormal;
 
     zSVisualFXColl() {}
+
+    // user API
+    #include "zSVisualFXColl.inl"
   };
 
   class oCVisualFX : public zCEffect {
@@ -315,7 +324,6 @@ namespace Gothic_I_Addon {
     void Edit()                                                                                          zCall( 0x0049C480 );
     void SetupEmitterKeysByVisual()                                                                      zCall( 0x004A0E40 );
     zSTRING const& GetName() const                                                                       zCall( 0x0077F620 );
-    static void operator delete( void*, char const*, char const*, int )                                  zCall( 0x00476FB0 );
     static void RemoveInstancesOfClass( zCClassDef&, int )                                               zCall( 0x0048CF00 );
     static void PreSaveGameProcessing( int )                                                             zCall( 0x0048D100 );
     static void PostSaveGameProcessing()                                                                 zCall( 0x0048D110 );
@@ -329,7 +337,6 @@ namespace Gothic_I_Addon {
     static void EmConsole_ParameterChanged( zSTRING const& )                                             zCall( 0x0049E2D0 );
     static int FxConsole_EvalFunc( zSTRING const&, zSTRING& )                                            zCall( 0x0049E5D0 );
     static int EmConsole_EvalFunc( zSTRING const&, zSTRING& )                                            zCall( 0x0049F400 );
-    static void* operator new( unsigned int, char const*, char const*, int )                             zCall( 0x0077F5E0 );
     virtual zCClassDef* _GetClassDef() const                                                             zCall( 0x0048D640 );
     virtual void Archive( zCArchiver& )                                                                  zCall( 0x0049BAA0 );
     virtual void Unarchive( zCArchiver& )                                                                zCall( 0x0049BAB0 );
@@ -382,13 +389,13 @@ namespace Gothic_I_Addon {
     virtual void Collide( int )                                                                          zCall( 0x00496FC0 );
     virtual void CollisionResponse( zVEC3 const&, int )                                                  zCall( 0x00499300 );
 
-    // compatible with g2 operators style
-    zOperatorNew   ( oCVisualFX, zCEffect )
-    zOperatorDelete( oCVisualFX, zCEffect )
 
     // static properties
     static zCParser*& fxParser;
     static oCVisualFX*& actFX;
+
+    // user API
+    #include "oCVisualFX.inl"
   };
 
   class oCVisualFXAI : public zCAIBase {
@@ -401,6 +408,9 @@ namespace Gothic_I_Addon {
     virtual void DoAI( zCVob*, int& )                            zCall( 0x0049BAC0 );
     virtual void ReportCollisionToAI( zCCollisionReport const& ) zCall( 0x0048F250 );
     virtual void HostVobAddedToWorld( zCVob*, zCWorld* )         zCall( 0x0048F270 );
+
+    // user API
+    #include "oCVisualFXAI.inl"
   };
 
 } // namespace Gothic_I_Addon

@@ -56,6 +56,9 @@ namespace Gothic_II_Classic {
 
     zTEngineStats() {}
     void PrintScreen( int, int ) zCall( 0x00507F40 );
+
+    // user API
+    #include "zTEngineStats.inl"
   };
 
   class zCLineCache {
@@ -68,6 +71,9 @@ namespace Gothic_II_Classic {
       int color;
 
       zTCacheEntry() {}
+
+      // user API
+      #include "zCLineCache_zTCacheEntry.inl"
     };
 
     int numEntries;
@@ -80,6 +86,9 @@ namespace Gothic_II_Classic {
     void Flush( zCViewBase* )                              zCall( 0x00508600 );
     void Line3D( zVEC3 const&, zVEC3 const&, zCOLOR, int ) zCall( 0x005086A0 );
     void LineCS3D( zVEC3 const&, zVEC3 const&, zCOLOR )    zCall( 0x00508AA0 );
+
+    // user API
+    #include "zCLineCache.inl"
   };
 
   struct zTViewportData {
@@ -99,6 +108,9 @@ namespace Gothic_II_Classic {
     float ycenter;
 
     zTViewportData() {}
+
+    // user API
+    #include "zTViewportData.inl"
   };
 
   class zCCamera {
@@ -121,6 +133,9 @@ namespace Gothic_II_Classic {
       zCOLOR color;
 
       zTCamVertSimple() {}
+
+      // user API
+      #include "zCCamera_zTCamVertSimple.inl"
     };
 
     zTPlane frustumplanes[NUM_FRUSTUM_PLANES];
@@ -216,6 +231,9 @@ namespace Gothic_II_Classic {
     // static properties
     static zCCamera*& activeCam;
     static zVEC3& activeCamPos;
+
+    // user API
+    #include "zCCamera.inl"
   };
 
   class zCVertex {
@@ -238,6 +256,9 @@ namespace Gothic_II_Classic {
     zCVertex()                                 zInit( zCVertex_OnInit() );
     void ResetVertexTransform()                zCall( 0x005BEF20 );
     static void ResetVertexTransforms()        zCall( 0x00508E20 );
+
+    // user API
+    #include "zCVertex.inl"
   };
 
   class zCVertFeature {
@@ -252,6 +273,9 @@ namespace Gothic_II_Classic {
 
     void zCVertFeature_OnInit() zCall( 0x00568510 );
     zCVertFeature()             zInit( zCVertFeature_OnInit() );
+
+    // user API
+    #include "zCVertFeature.inl"
   };
 
   class zCPolygon {
@@ -270,6 +294,9 @@ namespace Gothic_II_Classic {
       zTPlane plane;
 
       zSPolySavedValues() {}
+
+      // user API
+      #include "zCPolygon_zSPolySavedValues.inl"
     };
 
     struct zSVertexSavedValues {
@@ -277,6 +304,9 @@ namespace Gothic_II_Classic {
       float offset;
 
       zSVertexSavedValues() {}
+
+      // user API
+      #include "zCPolygon_zSVertexSavedValues.inl"
     };
 
     struct zSFeatureSavedValues {
@@ -286,6 +316,9 @@ namespace Gothic_II_Classic {
       zVEC3 vertNormal;
 
       zSFeatureSavedValues() {}
+
+      // user API
+      #include "zCPolygon_zSFeatureSavedValues.inl"
     };
 
 #pragma pack( push, 1 )
@@ -300,6 +333,9 @@ namespace Gothic_II_Classic {
       unsigned short sectorIndex        : 16;
 
       TFlags() {}
+
+      // user API
+      #include "zCPolygon_TFlags.inl"
     };
 #pragma pack( pop )
 
@@ -414,6 +450,9 @@ namespace Gothic_II_Classic {
     static zCArraySort<zSVertexSavedValues>& morphedVerticesList_Wall;
     static zCArraySort<zSFeatureSavedValues>& morphedFeatureList;
     static zCArray<zSPolySavedValues>& morphedPolysSavedValuesList;
+
+    // user API
+    #include "zCPolygon.inl"
   };
 
   class zCPortal : public zCPolygon {
@@ -433,7 +472,23 @@ namespace Gothic_II_Classic {
 
     // static properties
     static zCMaterial*& portalDummyMaterial;
+
+    // user API
+    #include "zCPortal.inl"
   };
+
+  inline void GetProjection( int& x, int& y, zVEC3 v ) {
+    float fPixelPosX = FLT_MAX;
+    float fPixelPosY = FLT_MAX;
+    zCCamera* pCamera = zCCamera::activeCam;
+    pCamera->Activate();
+    zVEC3 vec = pCamera->camMatrix * v;
+    if( vec[2] > 0 )
+      pCamera->Project( &vec, fPixelPosX, fPixelPosY );
+
+    x = screen->anx( fPixelPosX );
+    y = screen->any( fPixelPosY );
+  }
 
 } // namespace Gothic_II_Classic
 

@@ -25,6 +25,9 @@ namespace Gothic_II_Addon {
     void oSMenuInfoAttribute_OnInit() zCall( 0x004803B0 );
     ~oSMenuInfoAttribute()            zCall( 0x0047FE10 );
     oSMenuInfoAttribute()             zInit( oSMenuInfoAttribute_OnInit() );
+
+    // user API
+    #include "oSMenuInfoAttribute.inl"
   };
 
   struct oSMenuInfoArmor {
@@ -38,6 +41,9 @@ namespace Gothic_II_Addon {
     int actValue;
 
     oSMenuInfoArmor() {}
+
+    // user API
+    #include "oSMenuInfoArmor.inl"
   };
 
   struct oSMenuInfoTalent {
@@ -50,6 +56,9 @@ namespace Gothic_II_Addon {
     void oSMenuInfoTalent_OnInit() zCall( 0x004803F0 );
     ~oSMenuInfoTalent()            zCall( 0x0047FE90 );
     oSMenuInfoTalent()             zInit( oSMenuInfoTalent_OnInit() );
+
+    // user API
+    #include "oSMenuInfoTalent.inl"
   };
 
   class oCMenu_Log : public zCMenu {
@@ -76,6 +85,9 @@ namespace Gothic_II_Addon {
     virtual void ScreenInit()                         zCall( 0x0047B9B0 );
     virtual void ScreenDone()                         zCall( 0x0047BDE0 );
     virtual int ExecCommand( zSTRING const& )         zCall( 0x0047C690 );
+
+    // user API
+    #include "oCMenu_Log.inl"
   };
 
   class oCMenu_Status : public zCMenu {
@@ -98,6 +110,9 @@ namespace Gothic_II_Addon {
     void InitForDisplay()                                             zCall( 0x0047DDC0 );
     virtual int HandleEvent( int )                                    zCall( 0x0047CE00 );
     virtual ~oCMenu_Status()                                          zCall( 0x0047D810 );
+
+    // user API
+    #include "oCMenu_Status.inl"
   };
 
   class oCStatusScreen {
@@ -108,6 +123,9 @@ namespace Gothic_II_Addon {
     oCStatusScreen()             zInit( oCStatusScreen_OnInit() );
     void Show()                  zCall( 0x0047ED60 );
     virtual ~oCStatusScreen()    zCall( 0x0047EB50 );
+
+    // user API
+    #include "oCStatusScreen.inl"
   };
 
   class oCLogScreen {
@@ -118,6 +136,9 @@ namespace Gothic_II_Addon {
     oCLogScreen()             zInit( oCLogScreen_OnInit() );
     void Show()               zCall( 0x0047F3E0 );
     virtual ~oCLogScreen()    zCall( 0x0047F1F0 );
+
+    // user API
+    #include "oCLogScreen.inl"
   };
 
   class oCMapScreen {
@@ -127,6 +148,9 @@ namespace Gothic_II_Addon {
     oCMapScreen()             zInit( oCMapScreen_OnInit() );
     void Show( int )          zCall( 0x0047F9C0 );
     virtual ~oCMapScreen()    zCall( 0x0047F7F0 );
+
+    // user API
+    #include "oCMapScreen.inl"
   };
 
 } // namespace Gothic_II_Addon

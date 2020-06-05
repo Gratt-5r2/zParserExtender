@@ -78,6 +78,9 @@ namespace Gothic_I_Addon {
     zSTRING GetDescriptionRGB() const                                                      zCall( 0x005EEE90 );
     void SetRGB( unsigned char, unsigned char, unsigned char )                             zCall( 0x0061D320 );
     zCOLOR( unsigned char a0, unsigned char a1, unsigned char a2, unsigned char a3 = 255 ) zInit( zCOLOR_OnInit( a0, a1, a2, a3 ));
+
+    // user API
+    #include "zCOLOR.inl"
   };
 
   struct zTPlane {
@@ -96,6 +99,9 @@ namespace Gothic_I_Addon {
     int IntersectionFront( zVEC3 const&, zVEC3 const&, zVEC3& ) const zCall( 0x005EF740 );
     void Calc( zVEC3 const&, zVEC3 const&, zVEC3 const& )             zCall( 0x005EF830 );
     void GetOriginUpRight( zVEC3&, zVEC3&, zVEC3& ) const             zCall( 0x005EF920 );
+
+    // user API
+    #include "zTPlane.inl"
   };
 
 } // namespace Gothic_I_Addon

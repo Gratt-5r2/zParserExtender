@@ -19,6 +19,9 @@ namespace Gothic_II_Classic {
     virtual ~oCMenu_ChgKeys()                    zCall( 0x00478E70 );
     virtual void ScreenInit()                    zCall( 0x004799F0 );
     virtual int ExecCommand( zSTRING const& )    zCall( 0x004790C0 );
+
+    // user API
+    #include "oCMenu_ChgKeys.inl"
   };
 
   class oCMenu_Main : public zCMenu {
@@ -31,6 +34,9 @@ namespace Gothic_II_Classic {
     virtual ~oCMenu_Main()                    zCall( 0x0042E600 );
     virtual void ScreenInit()                 zCall( 0x00478C30 );
     virtual void ScreenDone()                 zCall( 0x00478C40 );
+
+    // user API
+    #include "oCMenu_Main.inl"
   };
 
 } // namespace Gothic_II_Classic

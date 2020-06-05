@@ -19,14 +19,13 @@ namespace Gothic_I_Addon {
     void oCAICamera_OnInit()                                            zCall( 0x00639450 );
     oCAICamera()                                                        zInit( oCAICamera_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x00639F50 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0063A0C0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00639590 );
     virtual ~oCAICamera()                                               zCall( 0x006395E0 );
     virtual void DoAI( zCVob*, int& )                                   zCall( 0x006395F0 );
     virtual int HasAIDetectedCollision()                                zCall( 0x006395A0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCAICamera, zCAIBase )
+    // user API
+    #include "oCAICamera.inl"
   };
 
   class oCAIHuman : public oCAniCtrl_Human {
@@ -97,7 +96,6 @@ namespace Gothic_I_Addon {
     int GetShowAI()                                                     zCall( 0x00638F70 );
     void StartFlyDamage( float, zVEC3& )                                zCall( 0x00639050 );
     static zCObject* _CreateNewInstance()                               zCall( 0x00639CC0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00639D30 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x006320E0 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x00639410 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x00639430 );
@@ -108,13 +106,14 @@ namespace Gothic_I_Addon {
     virtual void AddIgnoreCD( zCVob* )                                  zCall( 0x00638FC0 );
     virtual void SubIgnoreCD( zCVob* )                                  zCall( 0x00638FE0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCAIHuman, oCAniCtrl_Human )
 
     // static properties
     static zSTRING& Cam_Normal;
     static zSTRING& Cam_Run;
     static zSTRING& Cam_Fight;
+
+    // user API
+    #include "oCAIHuman.inl"
   };
 
   class oCAIHuman_Stand : public zCAIBase {
@@ -125,13 +124,12 @@ namespace Gothic_I_Addon {
     void oCAIHuman_Stand_OnInit( zCVob* )                               zCall( 0x00639820 );
     oCAIHuman_Stand( zCVob* a0 )                                        zInit( oCAIHuman_Stand_OnInit( a0 ));
     static zCObject* _CreateNewInstance()                               zCall( 0x0063A2E0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0063A440 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00639950 );
     virtual ~oCAIHuman_Stand()                                          zCall( 0x00639990 );
     virtual void DoAI( zCVob*, int& )                                   zCall( 0x006399A0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCAIHuman_Stand, zCAIBase )
+    // user API
+    #include "oCAIHuman_Stand.inl"
   };
 
 } // namespace Gothic_I_Addon

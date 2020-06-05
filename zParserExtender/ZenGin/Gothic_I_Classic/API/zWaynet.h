@@ -22,13 +22,12 @@ namespace Gothic_I_Classic {
 
     void zCVobWaypoint_OnInit()                                         zCall( 0x00702FB0 );
     zCVobWaypoint()                                                     zInit( zCVobWaypoint_OnInit() );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00662FF0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x007096B0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00702FD0 );
     virtual ~zCVobWaypoint()                                            zCall( 0x00703010 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCVobWaypoint, zCVob )
+    // user API
+    #include "zCVobWaypoint.inl"
   };
 
   class zCWaypoint : public zCObject {
@@ -69,7 +68,6 @@ namespace Gothic_I_Classic {
     zCList<zCWay>& GetWayList()                                         zCall( 0x00706600 );
     void SetWaypointVob( zCVobWaypoint* )                               zCall( 0x00706610 );
     void Draw()                                                         zCall( 0x00706650 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0058C010 );
     static zCObject* _CreateNewInstance()                               zCall( 0x00709EC0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x006D4FE0 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x00706660 );
@@ -77,8 +75,8 @@ namespace Gothic_I_Classic {
     virtual ~zCWaypoint()                                               zCall( 0x00705E80 );
     virtual int CanBeUsed( zCVob const* )                               zCall( 0x00705C60 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCWaypoint, zCObject )
+    // user API
+    #include "zCWaypoint.inl"
   };
 
   class zCWay {
@@ -110,6 +108,9 @@ namespace Gothic_I_Classic {
     virtual int CanJump()                         zCall( 0x00705A10 );
     virtual int CanBeUsed( zCVob const* )         zCall( 0x00705190 );
     virtual int IsObjectOnWay( zCVob const* )     zCall( 0x00704C60 );
+
+    // user API
+    #include "zCWay.inl"
   };
 
   class zCWayNet : public zCObject {
@@ -173,7 +174,6 @@ namespace Gothic_I_Classic {
     void ArchiveOldFormat( zCArchiver& )                                zCall( 0x007072A0 );
     void UnarchiveOldFormat( zCArchiver& )                              zCall( 0x00707A30 );
     void CalcProperties( zCWorld* )                                     zCall( 0x00708B20 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x005F2980 );
     static int SortWpList( zCWaypoint*, zCWaypoint* )                   zCall( 0x00705A20 );
     static int SortOpenList( zCWaypoint*, zCWaypoint* )                 zCall( 0x00706AE0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x0070A110 );
@@ -182,8 +182,8 @@ namespace Gothic_I_Classic {
     virtual void Unarchive( zCArchiver& )                               zCall( 0x00708530 );
     virtual ~zCWayNet()                                                 zCall( 0x007031A0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCWayNet, zCObject )
+    // user API
+    #include "zCWayNet.inl"
   };
 
   class zCRoute {
@@ -207,6 +207,9 @@ namespace Gothic_I_Classic {
     int IsLastTarget()                                zCall( 0x00709080 );
     int GetInterpolatedPosition( float, int, zVEC3& ) zCall( 0x007090A0 );
     virtual ~zCRoute()                                zCall( 0x00708BA0 );
+
+    // user API
+    #include "zCRoute.inl"
   };
 
   class zCVobSpot : public zCVob {
@@ -221,12 +224,11 @@ namespace Gothic_I_Classic {
     int IsAvailable( zCVob* )                                           zCall( 0x00709320 );
     void MarkAsUsed( float, zCVob* )                                    zCall( 0x007094A0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x00709930 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x007099D0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x007092C0 );
     virtual ~zCVobSpot()                                                zCall( 0x00709300 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCVobSpot, zCVob )
+    // user API
+    #include "zCVobSpot.inl"
   };
 
   class zCVobStartpoint : public zCVob {
@@ -235,12 +237,11 @@ namespace Gothic_I_Classic {
 
     zCVobStartpoint() {}
     static zCObject* _CreateNewInstance()                               zCall( 0x00709BE0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00709C70 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00709C90 );
     virtual ~zCVobStartpoint()                                          zCall( 0x00709CD0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCVobStartpoint, zCVob )
+    // user API
+    #include "zCVobStartpoint.inl"
   };
 
 } // namespace Gothic_I_Classic

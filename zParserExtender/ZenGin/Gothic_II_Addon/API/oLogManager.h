@@ -13,6 +13,9 @@ namespace Gothic_II_Addon {
     void Archive( zCArchiver& )   zCall( 0x00663D10 );
     void Unarchive( zCArchiver& ) zCall( 0x00663D30 );
     ~oCLogEntry()                 zCall( 0x00663DF0 );
+
+    // user API
+    #include "oCLogEntry.inl"
   };
 
   class oCLogTopic {
@@ -45,6 +48,9 @@ namespace Gothic_II_Addon {
     // statics
     static char**& ms_strSections;
     static char**& ms_strStati;
+
+    // user API
+    #include "oCLogTopic.inl"
   };
 
   class oCLogManager {
@@ -61,6 +67,9 @@ namespace Gothic_II_Addon {
     void __fastcall Archive( zCArchiver& )          zCall( 0x00663640 );
     void __fastcall Unarchive( zCArchiver& )        zCall( 0x006636B0 );
     static oCLogManager& GetLogManager()            zCall( 0x00663370 );
+
+    // user API
+    #include "oCLogManager.inl"
   };
 
 } // namespace Gothic_II_Addon

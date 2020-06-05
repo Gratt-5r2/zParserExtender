@@ -15,7 +15,7 @@ namespace Gothic_I_Classic {
     int cleared;
     int active;
     zCCutscene* cutscene;
-    zCArray<zCEventMessage*>messageList;
+    zCArray<zCEventMessage*> messageList;
     zCVob* hostVob;
 
     void zCEventManager_OnInit()                                        zCall( 0x006DCCC0 );
@@ -25,7 +25,6 @@ namespace Gothic_I_Classic {
     void KillMessages()                                                 zCall( 0x006DD030 );
     void ShowMessageCommunication( zCVob*, zCVob* )                     zCall( 0x006DDB30 );
     void Print_db( zSTRING const&, zCVob* )                             zCall( 0x006DE5C0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0058BE60 );
     static zCObject* _CreateNewInstance()                               zCall( 0x006DCAE0 );
     static void DoFrameActivity()                                       zCall( 0x006DCC80 );
     static void SetShowMessageCommunication( int )                      zCall( 0x006DDB10 );
@@ -59,13 +58,14 @@ namespace Gothic_I_Classic {
     virtual void SendMessageToHost( zCEventMessage*, zCVob*, zCVob* )   zCall( 0x006DD970 );
     virtual void Delete( zCEventMessage* )                              zCall( 0x006DDFA0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCEventManager, zCObject )
 
     // static properties
     static int& disableEventManagers;
     static zCArray<zCEventManager*>& activeEM;
     static int& showMsgCommunication;
+
+    // user API
+    #include "zCEventManager.inl"
   };
 
 } // namespace Gothic_I_Classic

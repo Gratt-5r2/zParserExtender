@@ -77,6 +77,9 @@ namespace Gothic_I_Classic {
     zSTRING GetDescriptionRGB() const                                                      zCall( 0x005CFEE0 );
     void SetRGB( unsigned char, unsigned char, unsigned char )                             zCall( 0x005FBB40 );
     zCOLOR( unsigned char a0, unsigned char a1, unsigned char a2, unsigned char a3 = 255 ) zInit( zCOLOR_OnInit( a0, a1, a2, a3 ));
+
+    // user API
+    #include "zCOLOR.inl"
   };
 
   struct zTPlane {
@@ -95,6 +98,9 @@ namespace Gothic_I_Classic {
     int IntersectionFront( zVEC3 const&, zVEC3 const&, zVEC3& ) const zCall( 0x005D0690 );
     void Calc( zVEC3 const&, zVEC3 const&, zVEC3 const& )             zCall( 0x005D0770 );
     void GetOriginUpRight( zVEC3&, zVEC3&, zVEC3& ) const             zCall( 0x005D0850 );
+
+    // user API
+    #include "zTPlane.inl"
   };
 
 } // namespace Gothic_I_Classic

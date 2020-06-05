@@ -49,6 +49,9 @@ namespace Gothic_I_Addon {
     zCOptionEntry( zSTRING const& a0, zSTRING const& a1 )       zInit( zCOptionEntry_OnInit( a0, a1 ));
     ~zCOptionEntry()                                            zCall( 0x00462530 );
     void SetValue( zSTRING, int )                               zCall( 0x00464130 );
+
+    // user API
+    #include "zCOptionEntry.inl"
   };
 
   class zCOptionSection {
@@ -60,6 +63,9 @@ namespace Gothic_I_Addon {
     void zCOptionSection_OnInit( zSTRING const& ) zCall( 0x00461E90 );
     zCOptionSection( zSTRING const& a0 )          zInit( zCOptionSection_OnInit( a0 ));
     ~zCOptionSection()                            zCall( 0x00462050 );
+
+    // user API
+    #include "zCOptionSection.inl"
   };
 
   class zCOption {
@@ -120,6 +126,9 @@ namespace Gothic_I_Addon {
     int ParmValueInt( zSTRING const& )                                                        zCall( 0x004679C0 );
     float ParmValueFloat( zSTRING const& )                                                    zCall( 0x00467BB0 );
     virtual ~zCOption()                                                                       zCall( 0x004623B0 );
+
+    // user API
+    #include "zCOption.inl"
   };
 
 } // namespace Gothic_I_Addon

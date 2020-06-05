@@ -67,6 +67,9 @@ namespace Gothic_I_Classic {
     void __fastcall OnExit()                             zCall( 0x0072E360 );
     void __fastcall OnTermination()                      zCall( 0x0072E430 );
     static oCInformationManager& GetInformationManager() zCall( 0x0072ABD0 );
+
+    // user API
+    #include "oCInformationManager.inl"
   };
 
 } // namespace Gothic_I_Classic

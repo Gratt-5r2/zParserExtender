@@ -25,6 +25,9 @@ namespace Gothic_II_Addon {
     zSTRING& GetName()                                                 zCall( 0x004695D0 );
     virtual ~zCScanDirFileHandler()                                    zCall( 0x00468D10 );
     virtual int HandleFile( zSTRING const&, char const*, _finddata_t ) zPureCall;
+
+    // user API
+    #include "zCScanDirFileHandler.inl"
   };
 
   class zCScanDir {
@@ -40,6 +43,9 @@ namespace Gothic_II_Addon {
     virtual ~zCScanDir()                                                      zCall( 0x00469620 );
     virtual void RegisterFileHandler( zCScanDirFileHandler*, zSTRING const& ) zCall( 0x004696B0 );
     virtual void Scan( zSTRING const& )                                       zCall( 0x00469FC0 );
+
+    // user API
+    #include "zCScanDir.inl"
   };
 
 } // namespace Gothic_II_Addon

@@ -37,6 +37,9 @@ namespace Gothic_II_Addon {
     static zCPar_TreeNode* SeekEndTree( zCPar_TreeNode* )                          zCall( 0x00797C90 );
     static zCPar_TreeNode* MakeDyadicNode( zCPar_TreeNode*, int, zCPar_TreeNode* ) zCall( 0x00797CB0 );
     static zCPar_TreeNode* MakeMonadicNode( int, zCPar_TreeNode* )                 zCall( 0x00797D20 );
+
+    // user API
+    #include "zCPar_TreeNode.inl"
   };
 
   class zCPar_File {
@@ -71,6 +74,9 @@ namespace Gothic_II_Addon {
     zCPar_TreeNode* LoadTreeNode( zFILE* )           zCall( 0x0078D990 );
     int LoadTree( zFILE_STATS&, zCPar_SymbolTable& ) zCall( 0x0078DAC0 );
     void DeleteTree()                                zCall( 0x0078DE90 );
+
+    // user API
+    #include "zCPar_File.inl"
   };
 
   class zCParser {
@@ -262,21 +268,12 @@ namespace Gothic_II_Addon {
     static unsigned char GetVersion()                                               zCall( 0x0078D010 );
     static zCParser* GetParser()                                                    zCall( 0x0078DEC0 );
 
-    // Union
-    int SaveDat_Union( zSTRING& );
-    void DeclareFuncCall_Union( zSTRING&, int );
-    void ParseBlock_Union();
-    void DeclareWhile_Union();
-    void DeclareBreak_Union();
-
     // static properties
     static int& enableParsing;
     static zCParser*& cur_parser;
 
-    // Union
-    static bool32 parserMergeMode;
-    void* __cdecl CallFunc_Union( int, ... );
-    void __cdecl DefineExternal_Union( zSTRING &, int( __cdecl* )( ), int, int, ... );
+    // user API
+    #include "zCParser.inl"
   };
 
 } // namespace Gothic_II_Addon

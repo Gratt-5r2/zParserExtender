@@ -44,11 +44,13 @@ namespace Gothic_II_Classic {
     void SetSlot( int )                      zCall( 0x00437080 );
     zSTRING GetGameTime()                    zCall( 0x00437F40 );
     static zCObject* _CreateNewInstance()    zCall( 0x00436620 );
-    static void operator delete( void* )     zCall( 0x00436680 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x00436830 );
     virtual void Archive( zCArchiver& )      zCall( 0x00437470 );
     virtual void Unarchive( zCArchiver& )    zCall( 0x004379C0 );
     virtual ~oCSavegameInfo()                zCall( 0x00437310 );
+
+    // user API
+    #include "oCSavegameInfo.inl"
   };
 
   class oCSavegameManager {
@@ -69,6 +71,9 @@ namespace Gothic_II_Classic {
     void ClearCurrent()                              zCall( 0x00439040 );
     zSTRING GetSlotDirName( int )                    zCall( 0x00439180 );
     virtual ~oCSavegameManager()                     zCall( 0x004383D0 );
+
+    // user API
+    #include "oCSavegameManager.inl"
   };
 
 } // namespace Gothic_II_Classic

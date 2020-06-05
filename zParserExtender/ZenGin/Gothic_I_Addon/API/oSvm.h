@@ -14,6 +14,9 @@ namespace Gothic_I_Addon {
     oCSVMManager()                   zInit( oCSVMManager_OnInit() );
     ~oCSVMManager()                  zCall( 0x007080C0 );
     int GetOU( zSTRING const&, int ) zCall( 0x00708100 );
+
+    // user API
+    #include "oCSVMManager.inl"
   };
 
   class oCSVM {
@@ -27,6 +30,9 @@ namespace Gothic_I_Addon {
     ~oCSVM()                    zCall( 0x00708510 );
     void InitByScript( int )    zCall( 0x00708530 );
     int GetOU( zSTRING const& ) zCall( 0x00708800 );
+
+    // user API
+    #include "oCSVM.inl"
   };
 
 } // namespace Gothic_I_Addon

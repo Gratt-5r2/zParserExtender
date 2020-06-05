@@ -9,6 +9,9 @@ namespace Gothic_II_Addon {
   public:
     int refCtr   : 31;
     int occupied : 1;
+
+    // user API
+    #include "zCSparseArrayManDat.inl"
   };
 
   class zCSparseArrayBase {
@@ -52,6 +55,9 @@ namespace Gothic_II_Addon {
     virtual void Hash( void const*, unsigned long&, unsigned long& ) const zCall( 0x005EF9C0 );
     virtual void ConData( void* ) const                                    zCall( 0x005EF3D0 );
     virtual void DeData( void* ) const                                     zCall( 0x005EF3E0 );
+
+    // user API
+    #include "zCSparseArrayBase.inl"
   };
 
   class zCSparseArrayIterator {
@@ -67,6 +73,9 @@ namespace Gothic_II_Addon {
     void DeRegister()                           zCall( 0x005122F0 );
     operator int()                              zCall( 0x00512490 );
     zCSparseArrayIterator( zCSparseArrayBase& ) zCall( 0x0073B670 );
+
+    // user API
+    #include "zCSparseArrayIterator.inl"
   };
 
   template <class T, class Data>
@@ -179,6 +188,9 @@ namespace Gothic_II_Addon {
     virtual void DestructData( void *data ) const {
       ( (Data*)data )->~Data();
     }
+
+    // user API
+    #include "zCSparseArray.inl"
   };
 
   class zCCacheBase {
@@ -199,6 +211,9 @@ namespace Gothic_II_Addon {
     static int& s_currentFrame;
     static zCCacheBase*& s_anchor;
     static zCCacheBase*& s_run;
+
+    // user API
+    #include "zCCacheBase.inl"
   };
 
   template <class Index, class Data>
@@ -246,6 +261,9 @@ namespace Gothic_II_Addon {
       lastFrameUsed = zCCacheBase::S_GetCurrentFrame();
       return data;
     }
+
+    // user API
+    #include "zCCacheData.inl"
   };
 
 } // namespace Gothic_II_Addon

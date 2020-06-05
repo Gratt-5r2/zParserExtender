@@ -66,6 +66,9 @@ namespace Gothic_II_Classic {
     void LoadBINRec( zCFileBIN& )                                                             zCall( 0x00534B30 );
     static void ReleaseStaticReferences()                                                     zCall( 0x005261E0 );
     static void __fastcall RenderOutdoor( zCBspBase*, zTBBox3D, int, int )                    zCall( 0x0052C540 );
+
+    // user API
+    #include "zCBspBase.inl"
   };
 
   class zCBspNode : public zCBspBase {
@@ -80,6 +83,9 @@ namespace Gothic_II_Classic {
     void zCBspNode_OnInit()              zCall( 0x00529750 );
     zCBspNode()                          zInit( zCBspNode_OnInit() );
     void CalcPlaneSignbits( zCBspTree* ) zCall( 0x0052DB60 );
+
+    // user API
+    #include "zCBspNode.inl"
   };
 
   class zCBspLeaf : public zCBspBase {
@@ -104,6 +110,9 @@ namespace Gothic_II_Classic {
     void __fastcall AddVobsToRenderListOutdoor( zCBspSector*, zTBBox2D const& )         zCall( 0x0052B8F0 );
     void __fastcall RenderLeafIndoor( int )                                             zCall( 0x0052C0A0 );
     void __fastcall TraceRayCollectVobs( zCArray<zCVob*>&, zTBBox3D const&, int ) const zCall( 0x0052E7B0 );
+
+    // user API
+    #include "zCBspLeaf.inl"
   };
 
   class zCBspTree {
@@ -173,6 +182,9 @@ namespace Gothic_II_Classic {
     // static properties
     static int& s_showPortals;
     static int& s_renderAllPortals;
+
+    // user API
+    #include "zCBspTree.inl"
   };
 
   class zTPolyNode {
@@ -183,6 +195,9 @@ namespace Gothic_II_Classic {
     char isCompleteInside;
 
     zTPolyNode() {}
+
+    // user API
+    #include "zTPolyNode.inl"
   };
 
   class zCCBspNode {
@@ -230,6 +245,9 @@ namespace Gothic_II_Classic {
     void CountDepthRec( int, int&, int&, int& )                                    zCall( 0x0053C280 );
     void CountDepth( int&, int&, int& )                                            zCall( 0x0053C2F0 );
     void DescribeTree( int )                                                       zCall( 0x0053C3A0 );
+
+    // user API
+    #include "zCCBspNode.inl"
   };
 
   class zCCBspTree {
@@ -266,6 +284,9 @@ namespace Gothic_II_Classic {
     void AddMesh( zCMesh* )                                  zCall( 0x005381B0 );
     void AddMesh( zCMesh*, zMAT4 const& )                    zCall( 0x005381E0 );
     void BuildTree( float )                                  zCall( 0x005384E0 );
+
+    // user API
+    #include "zCCBspTree.inl"
   };
 
   class zCBspSector {
@@ -275,6 +296,9 @@ namespace Gothic_II_Classic {
       unsigned char alpha;
 
       zTPortalInfo() {}
+
+      // user API
+      #include "zCBspSector_zTPortalInfo.inl"
     };
 
     zSTRING sectorName;
@@ -305,6 +329,9 @@ namespace Gothic_II_Classic {
     static int& s_outdoorPortal;
     static zCArray<zCBspSector*>& s_activeSectorList;
     static zCArray<zTBBox2D>& s_activeOutdoorPortals;
+
+    // user API
+    #include "zCBspSector.inl"
   };
 
   class zCBuildPortal {
@@ -319,6 +346,9 @@ namespace Gothic_II_Classic {
     void zCBuildPortal_OnInit() zCall( 0x0053CBD0 );
     zCBuildPortal()             zInit( zCBuildPortal_OnInit() );
     ~zCBuildPortal()            zCall( 0x0053CC50 );
+
+    // user API
+    #include "zCBuildPortal.inl"
   };
 
 } // namespace Gothic_II_Classic

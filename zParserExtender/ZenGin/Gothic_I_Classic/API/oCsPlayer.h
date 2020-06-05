@@ -13,7 +13,6 @@ namespace Gothic_I_Classic {
 
     void oCCSPlayer_OnInit()                                            zCall( 0x00403750 );
     oCCSPlayer()                                                        zInit( oCCSPlayer_OnInit() );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x004022C0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x004036C0 );
     /* for zCObject num : 21*/
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00403740 );
@@ -21,8 +20,8 @@ namespace Gothic_I_Classic {
     virtual void ProcessCutscene( zCCSCutsceneContext*, zVEC3 const& )  zCall( 0x004037C0 );
     /* for zCCSDebugger num : 7*/
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCCSPlayer, zCCSPlayer )
+    // user API
+    #include "oCCSPlayer.inl"
   };
 
 } // namespace Gothic_I_Classic

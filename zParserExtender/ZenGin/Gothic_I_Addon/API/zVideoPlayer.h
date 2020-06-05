@@ -33,6 +33,9 @@ namespace Gothic_I_Addon {
     virtual float SetSoundVolume( float ) zCall( 0x004712C0 );
     virtual int PlayGotoNextFrame()       zCall( 0x00471760 );
     virtual int PlayWaitNextFrame()       zCall( 0x00471770 );
+
+    // user API
+    #include "zCVideoPlayer.inl"
   };
 
 } // namespace Gothic_I_Addon

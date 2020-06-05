@@ -11,6 +11,9 @@ namespace Gothic_I_Addon {
     zCFile3DS() {}
     void Load3DS( zSTRING const&, zCMesh* ) zCall( 0x0055EAB0 );
     void Save3DS( zSTRING const&, zCMesh* ) zCall( 0x005602F0 );
+
+    // user API
+    #include "zCFile3DS.inl"
   };
 
   class zCFileQuakeBSP {
@@ -21,6 +24,9 @@ namespace Gothic_I_Addon {
     zCFileQuakeBSP()                                       zInit( zCFileQuakeBSP_OnInit() );
     ~zCFileQuakeBSP()                                      zCall( 0x00561F50 );
     void LoadQuakeBSP( zSTRING const&, zCMesh*, zCWorld* ) zCall( 0x00561F70 );
+
+    // user API
+    #include "zCFileQuakeBSP.inl"
   };
 
   class zCFileBIN {
@@ -42,6 +48,9 @@ namespace Gothic_I_Addon {
     int BinReadCompareSrcFileStats()      zCall( 0x005896D0 );
     void BinSkipChunk()                   zCall( 0x0059C330 );
     void BinSetFile( zFILE* )             zCall( 0x00619EA0 );
+
+    // user API
+    #include "zCFileBIN.inl"
   };
 
 } // namespace Gothic_I_Addon

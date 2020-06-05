@@ -34,6 +34,9 @@ namespace Gothic_I_Addon {
     void Load( zCFileBIN& )                 zCall( 0x0059E320 );
     void Save( zCFileBIN& )                 zCall( 0x0059E460 );
     void SetFlagsByString( zSTRING const& ) zCall( 0x005A0440 );
+
+    // user API
+    #include "zCMorphMeshAni.inl"
   };
 
   class zCMorphMeshProto {
@@ -64,6 +67,9 @@ namespace Gothic_I_Addon {
     // static properties
     static int& autoConvertBinaryFile;
     static zCMorphMeshProto*& morphRoot;
+
+    // user API
+    #include "zCMorphMeshProto.inl"
   };
 
   class zCMorphMesh : public zCVisualAnimate {
@@ -90,6 +96,9 @@ namespace Gothic_I_Addon {
       int blendState;
 
       zTMorphAniEntry() {}
+
+      // user API
+      #include "zCMorphMesh_zTMorphAniEntry.inl"
     };
 
     struct zTRandAni {
@@ -102,6 +111,9 @@ namespace Gothic_I_Addon {
       float randAniProbMin;
 
       zTRandAni() {}
+
+      // user API
+      #include "zCMorphMesh_zTRandAni.inl"
     };
 
     zCMorphMeshProto* morphProto;
@@ -133,7 +145,6 @@ namespace Gothic_I_Addon {
     void SetTextureVar( int, int, zSTRING* )                                   zCall( 0x005A2A60 );
     void PrintStatus( int, int )                                               zCall( 0x005A2AB0 );
     static zCObject* _CreateNewInstance()                                      zCall( 0x0059DD60 );
-    static void operator delete( void*, char const*, char const*, int )        zCall( 0x0059DE20 );
     static zCMorphMesh* Load( zSTRING const& )                                 zCall( 0x005A1650 );
     virtual zCClassDef* _GetClassDef() const                                   zCall( 0x0059DE40 );
     virtual ~zCMorphMesh()                                                     zCall( 0x005A1550 );
@@ -152,8 +163,8 @@ namespace Gothic_I_Addon {
     virtual int IsAnimationActive( zSTRING const& )                            zCall( 0x0059E060 );
     virtual zSTRING const* GetAnyAnimation()                                   zCall( 0x005A2460 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCMorphMesh, zCVisualAnimate )
+    // user API
+    #include "zCMorphMesh.inl"
   };
 
   class zCMorphMeshConvertFileHandler : public zCScanDirFileHandler {
@@ -163,6 +174,9 @@ namespace Gothic_I_Addon {
     zCMorphMeshConvertFileHandler()                                    zInit( zCMorphMeshConvertFileHandler_OnInit() );
     virtual ~zCMorphMeshConvertFileHandler()                           zCall( 0x00426B00 );
     virtual int HandleFile( zSTRING const&, char const*, _finddata_t ) zCall( 0x005A3290 );
+
+    // user API
+    #include "zCMorphMeshConvertFileHandler.inl"
   };
 
 } // namespace Gothic_I_Addon

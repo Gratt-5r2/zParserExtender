@@ -14,6 +14,9 @@ namespace Gothic_II_Addon {
     oCWaypoint()                          zInit( oCWaypoint_OnInit() );
     virtual ~oCWaypoint()                 zCall( 0x0077DF50 );
     virtual int CanBeUsed( zCVob const* ) zCall( 0x0077DF60 );
+
+    // user API
+    #include "oCWaypoint.inl"
   };
 
   class oCWay : public zCWay {
@@ -29,6 +32,9 @@ namespace Gothic_II_Addon {
     virtual void Init( zCWaypoint*, zCWaypoint* ) zCall( 0x0077E190 );
     virtual int CanBeUsed( zCVob const* )         zCall( 0x0077E0A0 );
     virtual int IsObjectOnWay( zCVob const* )     zCall( 0x0077E880 );
+
+    // user API
+    #include "oCWay.inl"
   };
 
 } // namespace Gothic_II_Addon

@@ -77,6 +77,9 @@ namespace Gothic_II_Classic {
     static int& s_bHighlightInteractFocus;
     static oCVisualFX*& highLightFX;
     static int& isHighLighted;
+
+    // user API
+    #include "oCNpcFocus.inl"
   };
 
 } // namespace Gothic_II_Classic

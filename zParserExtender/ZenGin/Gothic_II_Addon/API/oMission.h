@@ -37,6 +37,9 @@ namespace Gothic_II_Addon {
     static int SortMissions( void const*, void const* )        zCall( 0x00715140 );
     virtual void Archive( zCArchiver& )                        zCall( 0x007161A0 );
     virtual void Unarchive( zCArchiver& )                      zCall( 0x007161E0 );
+
+    // user API
+    #include "oCMissionManager.inl"
   };
 
   class oCMission {
@@ -46,6 +49,9 @@ namespace Gothic_II_Addon {
       unsigned long vobID;
       int status;
       float startTime;
+
+      // user API
+      #include "oCMission_TMisStatus.inl"
     };
 
     group {
@@ -98,6 +104,9 @@ namespace Gothic_II_Addon {
     int OnTime()                                zCall( 0x00717A70 );
     virtual void Archive( zCArchiver& )         zCall( 0x00717AD0 );
     virtual oCMission* Unarchive( zCArchiver& ) zCall( 0x00717BB0 );
+
+    // user API
+    #include "oCMission.inl"
   };
 
 } // namespace Gothic_II_Addon

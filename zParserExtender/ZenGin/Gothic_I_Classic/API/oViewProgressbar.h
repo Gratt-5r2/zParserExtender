@@ -17,6 +17,9 @@ namespace Gothic_I_Classic {
     virtual void Init()                zCall( 0x00439830 );
     virtual void HandleChange()        zCall( 0x00439870 );
     /* for zCInputCallback num : 1*/
+
+    // user API
+    #include "oCViewGothicProgressBar.inl"
   };
 
 } // namespace Gothic_I_Classic

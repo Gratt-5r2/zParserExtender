@@ -59,6 +59,9 @@ namespace Gothic_I_Classic {
     static zCArray<int>& free_ids;
     static unsigned char& next_id;
     static zCPlayerInfo*& activePlayer;
+
+    // user API
+    #include "zCPlayerInfo.inl"
   };
 
 } // namespace Gothic_I_Classic

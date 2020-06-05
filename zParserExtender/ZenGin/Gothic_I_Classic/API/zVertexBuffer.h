@@ -66,7 +66,6 @@ namespace Gothic_I_Classic {
           zVEC2* texUV3Ptr;
         };
       };
-
     };
 
     struct zTCallbackData {
@@ -74,6 +73,9 @@ namespace Gothic_I_Classic {
       void* recreateLostVBCallbackData;
 
       zTCallbackData() {}
+
+      // user API
+      #include "zCVertexBuffer_zTCallbackData.inl"
     };
 
     unsigned long numVertex;
@@ -89,7 +91,6 @@ namespace Gothic_I_Classic {
     void AddRecreateLostVBCallback( int( __cdecl* )( zCVertexBuffer*, void* ), void* )    zCall( 0x005D0EF0 );
     void RemoveRecreateLostVBCallback( int( __cdecl* )( zCVertexBuffer*, void* ), void* ) zCall( 0x005D1020 );
     int CallRecreateLostVBCallbacks()                                                     zCall( 0x005D1080 );
-    static void operator delete( void*, char const*, char const*, int )                   zCall( 0x00719B20 );
     virtual zCClassDef* _GetClassDef() const                                              zCall( 0x005D0D60 );
     virtual ~zCVertexBuffer()                                                             zCall( 0x005D0E80 );
     virtual int Create( unsigned long, unsigned long, unsigned long )                     zCall( 0x005D0D70 );
@@ -107,11 +108,12 @@ namespace Gothic_I_Classic {
     virtual unsigned long GetIndexListSize()                                              zCall( 0x005D0E30 );
     virtual unsigned short* GetIndexListPtr()                                             zCall( 0x005D0E40 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCVertexBuffer, zCObject )
 
     // static properties
     static unsigned long& s_classCtorCtr;
+
+    // user API
+    #include "zCVertexBuffer.inl"
   };
 
   class zCVertexBufferDyn {
@@ -135,6 +137,9 @@ namespace Gothic_I_Classic {
     ~zCVertexBufferDyn()                                          zCall( 0x005D11F0 );
     void* Lock( unsigned long, unsigned long& )                   zCall( 0x005D1230 );
     void Unlock()                                                 zCall( 0x005D1360 );
+
+    // user API
+    #include "zCVertexBufferDyn.inl"
   };
 
   class zCVertexBufferDyn2 {
@@ -159,6 +164,9 @@ namespace Gothic_I_Classic {
     void ReserveVerts( unsigned long )                             zCall( 0x005D1420 );
     void* Lock( unsigned long& )                                   zCall( 0x005D1440 );
     void Unlock( unsigned long )                                   zCall( 0x005D14A0 );
+
+    // user API
+    #include "zCVertexBufferDyn2.inl"
   };
 
   class zCVertexBufferManager {
@@ -175,6 +183,9 @@ namespace Gothic_I_Classic {
     void UnlockOpenVertexBuffers()                                                                          zCall( 0x005D1890 );
     void StartChangeWorld()                                                                                 zCall( 0x005D1A50 );
     void EndChangeWorld()                                                                                   zCall( 0x005D1A60 );
+
+    // user API
+    #include "zCVertexBufferManager.inl"
   };
 
 } // namespace Gothic_I_Classic

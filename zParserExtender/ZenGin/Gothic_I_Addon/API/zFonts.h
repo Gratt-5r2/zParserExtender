@@ -46,6 +46,9 @@ namespace Gothic_I_Addon {
 
     // static properties
     static zCTextureConvert*& texConv;
+
+    // user API
+    #include "zCFont.inl"
   };
 
   class zCFontMan {
@@ -59,6 +62,9 @@ namespace Gothic_I_Addon {
     int Load( zSTRING const& )       zCall( 0x007174A0 );
     int GetNumber()                  zCall( 0x00717690 );
     zCFont* GetFont( int )           zCall( 0x007176A0 );
+
+    // user API
+    #include "zCFontMan.inl"
   };
 
 } // namespace Gothic_I_Addon

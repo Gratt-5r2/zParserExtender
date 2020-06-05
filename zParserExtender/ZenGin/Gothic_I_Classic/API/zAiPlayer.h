@@ -41,6 +41,9 @@ namespace Gothic_I_Classic {
       float zMV_DCUL_GROUND_ANGLE;
 
       zTConfig() {}
+
+      // user API
+      #include "zCAIPlayer_zTConfig.inl"
     };
 
     struct zTLedgeInfo {
@@ -50,6 +53,9 @@ namespace Gothic_I_Classic {
       float maxMoveForward;
 
       zTLedgeInfo() {}
+
+      // user API
+      #include "zCAIPlayer_zTLedgeInfo.inl"
     };
 
     struct zTBloodVobTrack {
@@ -57,6 +63,9 @@ namespace Gothic_I_Classic {
       float alpha;
 
       zTBloodVobTrack() {}
+
+      // user API
+      #include "zCAIPlayer_zTBloodVobTrack.inl"
     };
 
     zTConfig config;
@@ -163,7 +172,6 @@ namespace Gothic_I_Classic {
     void PrintScreen( int, int, zSTRING ) const                         zCall( 0x00502540 );
     zCModel* GetModel() const                                           zCall( 0x006211D0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x004FCA30 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x004FCAA0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x004FCD00 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x00502300 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x005023F0 );
@@ -173,8 +181,8 @@ namespace Gothic_I_Classic {
     virtual void StartStandAni()                                        zCall( 0x00502220 );
     virtual void StartFallDownAni()                                     zCall( 0x00502240 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCAIPlayer, zCAIBase )
+    // user API
+    #include "zCAIPlayer.inl"
   };
 
 } // namespace Gothic_I_Classic

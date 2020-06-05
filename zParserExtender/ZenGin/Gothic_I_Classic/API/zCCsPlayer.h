@@ -37,7 +37,6 @@ namespace Gothic_I_Classic {
     void DebugResetInfoscreen()                                                zCall( 0x00420110 );
     void DebugAddCutscene( int, zVEC3, int )                                   zCall( 0x00420140 );
     void ToggleDebugInfo()                                                     zCall( 0x00420510 );
-    static void operator delete( void*, char const*, char const*, int )        zCall( 0x0041A1C0 );
     static zCObject* _CreateNewInstance()                                      zCall( 0x0041C480 );
     /* for zCObject num : 21*/
     virtual zCClassDef* _GetClassDef() const                                   zCall( 0x0041C5A0 );
@@ -70,8 +69,8 @@ namespace Gothic_I_Classic {
     virtual void CSDB_StartPlaying( zCCutscene* )                              zCall( 0x0041F390 );
     virtual void CSDB_Stop( zCCutscene* )                                      zCall( 0x0041F3A0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCCSPlayer, zCCSDebugger )
+    // user API
+    #include "zCCSPlayer.inl"
   };
 
 } // namespace Gothic_I_Classic

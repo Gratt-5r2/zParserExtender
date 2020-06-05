@@ -62,6 +62,9 @@ namespace Gothic_I_Classic {
     static bool& s_physical_first;
     static bool& s_vdfsInitialized;
     static zCCriticalSection*& s_criticalSection;
+
+    // user API
+    #include "zFILE_VDFS.inl"
   };
 
 } // namespace Gothic_I_Classic

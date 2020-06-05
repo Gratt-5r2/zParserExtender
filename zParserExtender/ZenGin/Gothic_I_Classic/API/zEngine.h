@@ -82,7 +82,7 @@ using std::ostream;
 #endif
 
 // o2D inventories, dialogs, documents, menu, etc
-#if False
+#if True
   #ifdef __Z2D_B_VER0__
     #define __O2D_B_VER0__
     #include "oViewDialogInventory.h"
@@ -157,7 +157,7 @@ using std::ostream;
 #endif
 
 // ai, physic, portals
-#if False
+#if True
   #ifdef __ZWLD_B_VER0__
     #define __ZAI_B_VER0__
     #include "zAIPlayer.h"
@@ -216,7 +216,7 @@ using std::ostream;
 #endif
 
 // system, memory
-#if False
+#if True
   #ifdef __ZCON_B_VER0__
     #define __ZHELP_B_VER0__
     #include "zMemory_Base.h"
@@ -241,7 +241,7 @@ using std::ostream;
 #endif
 
 // triggers, cutscenes
-#if False
+#if True
   #ifdef __ZWLD_B_VER0__
     #define __ZCS_B_VER0__
     #include "zCCsPool.h"
@@ -254,12 +254,14 @@ using std::ostream;
 #endif
 
 // render
-#if False
+#if True
   #ifdef __ZCON_B_VER0__
     #define __ZRND_B_VER0__
     #include "zScanDir.h"
     #include "zTexture.h"
     #include "zTexConvert.h"
+    //#include "zRndGlide.h"
+    //#include "zRndGlide_Dib.h"
     #include "zMaterial.h"
     #include "zVertexBuffer.h"
     #include "zRndD3d.h"
@@ -270,7 +272,7 @@ using std::ostream;
 #endif
 
 // sound, music
-#if False
+#if True
   #ifdef __ZCON_B_VER0__
     #define __ZSND_B_VER0__
       #include "zVobMisc.h"
@@ -280,7 +282,7 @@ using std::ostream;
 #endif
 
 // video
-#if False
+#if True
   #ifdef __ZCON_B_VER0__
     #define __ZVID_B_VER0__
     #include "zVideo_Win32.h"
@@ -290,7 +292,7 @@ using std::ostream;
 
 
 // collisions
-#if False
+#if True
   #ifdef __ZWLD_B_VER0__
     #define __ZCOLL_B_VER0__
     #include "zPluecker.h"
@@ -303,7 +305,7 @@ using std::ostream;
 #endif
 
 // other
-#if False
+#if True
   #ifdef __ZINIT_B_VER0__
     #define __ZOTHER_B_VER0__
     #include "zEigen.h"

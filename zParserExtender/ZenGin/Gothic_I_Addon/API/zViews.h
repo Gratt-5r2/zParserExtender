@@ -14,6 +14,9 @@ namespace Gothic_I_Addon {
     /* for zCViewBase num : 11*/
     virtual ~zCViewWindow()                                     zCall( 0x00505A10 );
     /* for zCInputCallback num : 1*/
+
+    // user API
+    #include "zCViewWindow.inl"
   };
 
 } // namespace Gothic_I_Addon

@@ -26,6 +26,9 @@ namespace Gothic_I_Classic {
     void Toggle()         zCall( 0x00664160 );
     void Update()         zCall( 0x00664310 );
     void Redraw( zCVob* ) zCall( 0x00664320 );
+
+    // user API
+    #include "oCHelp.inl"
   };
 
 } // namespace Gothic_I_Classic

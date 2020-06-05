@@ -16,6 +16,9 @@ namespace Gothic_II_Classic {
     virtual void Init()                           zCall( 0x00423CE0 );
     virtual void Pack( zCBuffer&, unsigned char ) zCall( 0x00423DA0 );
     virtual void Unpack( zCBuffer& )              zCall( 0x00423DB0 );
+
+    // user API
+    #include "oCGameInfo.inl"
   };
 
 } // namespace Gothic_II_Classic

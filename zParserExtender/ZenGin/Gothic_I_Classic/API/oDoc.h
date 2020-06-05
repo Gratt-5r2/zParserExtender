@@ -34,6 +34,9 @@ namespace Gothic_I_Classic {
 
     // static properties
     static zCView*& posView;
+
+    // user API
+    #include "oCDoc.inl"
   };
 
 } // namespace Gothic_I_Classic

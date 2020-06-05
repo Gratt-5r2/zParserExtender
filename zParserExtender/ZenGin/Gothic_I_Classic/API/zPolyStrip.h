@@ -56,7 +56,6 @@ namespace Gothic_I_Classic {
     void Lightning0Subdivide( zVEC3 const&, zVEC3 const&, float, int )    zCall( 0x0059CF10 );
     void GenerateCPLightning0( zVEC3 const&, zVEC3 const&, float )        zCall( 0x0059D0A0 );
     void GenerateCircle( zTBSphere3D const&, zVEC3 const&, zVEC3 const& ) zCall( 0x0059D1E0 );
-    static void operator delete( void*, char const*, char const*, int )   zCall( 0x00485620 );
     static zCObject* _CreateNewInstance()                                 zCall( 0x0059B5A0 );
     virtual zCClassDef* _GetClassDef() const                              zCall( 0x004C0DC0 );
     virtual ~zCPolyStrip()                                                zCall( 0x0059B770 );
@@ -67,8 +66,8 @@ namespace Gothic_I_Classic {
     virtual void SetVisualUsedBy( zCVob* )                                zCall( 0x0059BB00 );
     virtual void FreeResources()                                          zCall( 0x0059BDE0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCPolyStrip, zCVisual )
+    // user API
+    #include "zCPolyStrip.inl"
   };
 
   class zCLightning : public zCVisual {
@@ -81,6 +80,9 @@ namespace Gothic_I_Classic {
       void Generate_R( zVEC3 const&, zVEC3 const&, float ) zCall( 0x0059D560 );
       virtual int Render( zTRenderContext& )               zCall( 0x0059DBF0 );
       virtual void FreeResources()                         zCall( 0x0059DB20 );
+
+      // user API
+      #include "zCLightning_zCBolt.inl"
     };
 
     zCBolt rootBolt;
@@ -88,6 +90,9 @@ namespace Gothic_I_Classic {
     zCLightning() {}
     void SetProjectionSphere( zTBSphere3D const& ) zCall( 0x0059D4D0 );
     void Generate( zVEC3 const&, zVEC3 const& )    zCall( 0x0059D500 );
+
+    // user API
+    #include "zCLightning.inl"
   };
 
   class zCQuadMark : public zCVisual {
@@ -109,6 +114,9 @@ namespace Gothic_I_Classic {
       float alphaFadeSpeed;
 
       zTEffectParams() {}
+
+      // user API
+      #include "zCQuadMark_zTEffectParams.inl"
     };
 
     struct zTQuadMarkVert {
@@ -116,6 +124,9 @@ namespace Gothic_I_Classic {
       zVEC2 texCoord;
 
       zTQuadMarkVert() {}
+
+      // user API
+      #include "zCQuadMark_zTQuadMarkVert.inl"
     };
 
     struct zTQuadMarkPoly {
@@ -123,6 +134,9 @@ namespace Gothic_I_Classic {
 
       zTQuadMarkPoly() {}
       ~zTQuadMarkPoly() zCall( 0x005ABA40 );
+
+      // user API
+      #include "zCQuadMark_zTQuadMarkPoly.inl"
     };
 
     struct zTQuadMarkAniState {
@@ -138,6 +152,9 @@ namespace Gothic_I_Classic {
       float alpha;
 
       zTQuadMarkAniState() {}
+
+      // user API
+      #include "zCQuadMark_zTQuadMarkAniState.inl"
     };
 
     zCMesh* quadMesh;
@@ -171,7 +188,6 @@ namespace Gothic_I_Classic {
     void CreateQuadMark( zCPolygon*, zVEC3 const&, zVEC2 const&, zTEffectParams* )                  zCall( 0x005ACF20 );
     int GetNumActive()                                                                              zCall( 0x005AD4B0 );
     void ProcessAniTracker()                                                                        zCall( 0x005AD4D0 );
-    static void operator delete( void*, char const*, char const*, int )                             zCall( 0x0046E360 );
     static zCObject* _CreateNewInstance()                                                           zCall( 0x005AB7A0 );
     virtual zCClassDef* _GetClassDef() const                                                        zCall( 0x005AB960 );
     virtual ~zCQuadMark()                                                                           zCall( 0x005ABA60 );
@@ -181,8 +197,8 @@ namespace Gothic_I_Classic {
     virtual zSTRING GetVisualName()                                                                 zCall( 0x005AB980 );
     virtual void SetVisualUsedBy( zCVob* )                                                          zCall( 0x005ABB80 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCQuadMark, zCVisual )
+    // user API
+    #include "zCQuadMark.inl"
   };
 
 } // namespace Gothic_I_Classic

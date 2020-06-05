@@ -15,7 +15,6 @@ namespace Gothic_I_Classic {
     oCViewDialogItem()                                                  zInit( oCViewDialogItem_OnInit() );
     void __fastcall SetItem( oCItem* )                                  zCall( 0x00727140 );
     static zCObject* _CreateNewInstance()                               zCall( 0x00726F80 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00727020 );
     /* for zCObject num : 15*/
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00727040 );
     virtual ~oCViewDialogItem()                                         zCall( 0x007270B0 );
@@ -23,8 +22,8 @@ namespace Gothic_I_Classic {
     /* for zCViewBase num : 8*/
     /* for oCViewDialogItem num : 1*/
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCViewDialogItem, zCViewDialog )
+    // user API
+    #include "oCViewDialogItem.inl"
   };
 
 } // namespace Gothic_I_Classic

@@ -19,11 +19,13 @@ namespace Gothic_II_Classic {
     void oCAICamera_OnInit()                 zCall( 0x00641530 );
     oCAICamera()                             zInit( oCAICamera_OnInit() );
     static zCObject* _CreateNewInstance()    zCall( 0x00641F90 );
-    static void operator delete( void* )     zCall( 0x006420D0 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x00641670 );
     virtual ~oCAICamera()                    zCall( 0x006416C0 );
     virtual void DoAI( zCVob*, int& )        zCall( 0x006416D0 );
     virtual int HasAIDetectedCollision()     zCall( 0x00641680 );
+
+    // user API
+    #include "oCAICamera.inl"
   };
 
   class oCAIHuman : public oCAniCtrl_Human {
@@ -94,7 +96,6 @@ namespace Gothic_II_Classic {
     int GetShowAI()                          zCall( 0x006410B0 );
     void StartFlyDamage( float, zVEC3& )     zCall( 0x00641170 );
     static zCObject* _CreateNewInstance()    zCall( 0x00641D30 );
-    static void operator delete( void* )     zCall( 0x00641D90 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x00638BB0 );
     virtual void Archive( zCArchiver& )      zCall( 0x006414F0 );
     virtual void Unarchive( zCArchiver& )    zCall( 0x00641510 );
@@ -110,6 +111,9 @@ namespace Gothic_II_Classic {
     static zSTRING& Cam_Normal;
     static zSTRING& Cam_Run;
     static zSTRING& Cam_Fight;
+
+    // user API
+    #include "oCAIHuman.inl"
   };
 
   class oCAIHuman_Stand : public zCAIBase {
@@ -120,10 +124,12 @@ namespace Gothic_II_Classic {
     void oCAIHuman_Stand_OnInit( zCVob* )    zCall( 0x00641910 );
     oCAIHuman_Stand( zCVob* a0 )             zInit( oCAIHuman_Stand_OnInit( a0 ));
     static zCObject* _CreateNewInstance()    zCall( 0x006422D0 );
-    static void operator delete( void* )     zCall( 0x006423F0 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x00641A30 );
     virtual ~oCAIHuman_Stand()               zCall( 0x00641A70 );
     virtual void DoAI( zCVob*, int& )        zCall( 0x00641A80 );
+
+    // user API
+    #include "oCAIHuman_Stand.inl"
   };
 
 } // namespace Gothic_II_Classic

@@ -24,6 +24,9 @@ namespace Gothic_I_Classic {
 
     zSKeyMapping() {}
     ~zSKeyMapping() zCall( 0x004C2F20 );
+
+    // user API
+    #include "zSKeyMapping.inl"
   };
 
   struct zSCtrlValue {
@@ -34,6 +37,9 @@ namespace Gothic_I_Classic {
     ~zSCtrlValue()                                zCall( 0x004C58E0 );
     zSCtrlValue& operator =( zSCtrlValue const& ) zCall( 0x004C71A0 );
     zSCtrlValue()                                 zInit( zSCtrlValue_OnInit() );
+
+    // user API
+    #include "zSCtrlValue.inl"
   };
 
   class zCInput {
@@ -83,8 +89,60 @@ namespace Gothic_I_Classic {
     virtual void GetMouseFlipXY( int&, int& )                           zCall( 0x004C2A20 );
     virtual void ProcessInputEvents()                                   zPureCall;
 
+    // other
+    bool GetMouseButtonToggledLeft() {
+      static bool pressed = false;
+      if( !pressed ) {
+        if( GetMouseButtonPressedLeft() ) {
+          pressed = true;
+          return true;
+        }
+      }
+      else {
+        if( !GetMouseButtonPressedLeft() )
+          pressed = false;
+      }
+
+      return false;
+    }
+
+    bool GetMouseButtonToggledMid() {
+      static bool pressed = false;
+      if( !pressed ) {
+        if( GetMouseButtonPressedMid() ) {
+          pressed = true;
+          return true;
+        }
+      }
+      else {
+        if( !GetMouseButtonPressedMid() )
+          pressed = false;
+      }
+
+      return false;
+    }
+
+    bool GetMouseButtonToggledRight() {
+      static bool pressed = false;
+      if( !pressed ) {
+        if( GetMouseButtonPressedRight() ) {
+          pressed = true;
+          return true;
+        }
+      }
+      else {
+        if( !GetMouseButtonPressedRight() )
+          pressed = false;
+      }
+
+      return false;
+    }
+
     // static properties
     static zCArray<zSCtrlValue>& values;
+
+    // user API
+    #include "zCInput.inl"
   };
 
 } // namespace Gothic_I_Classic

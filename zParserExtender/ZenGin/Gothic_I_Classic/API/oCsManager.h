@@ -14,7 +14,6 @@ namespace Gothic_I_Classic {
     void oCCSManager_OnInit()                                           zCall( 0x00401430 );
     oCCSManager()                                                       zInit( oCCSManager_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x004012F0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00401360 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00402170 );
     virtual ~oCCSManager()                                              zCall( 0x00402210 );
     virtual zCEventMessage* CreateMessage( int )                        zCall( 0x004022F0 );
@@ -22,8 +21,8 @@ namespace Gothic_I_Classic {
     virtual zCCSPlayer* CreateCutscenePlayer( zCWorld* )                zCall( 0x00402220 );
     virtual zCCSProps* CreateProperties()                               zCall( 0x00402B50 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCCSManager, zCCSManager )
+    // user API
+    #include "oCCSManager.inl"
   };
 
 } // namespace Gothic_I_Classic

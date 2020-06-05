@@ -18,6 +18,9 @@ namespace Gothic_I_Addon {
 
     // static properties
     static int& size_checked;
+
+    // user API
+    #include "oCTradeManager.inl"
   };
 
   class oCItemReactModule {
@@ -45,6 +48,9 @@ namespace Gothic_I_Addon {
     int StartReaction( int )              zCall( 0x006A1AA0 );
     int GetDataSize()                     zCall( 0x006A1AC0 );
     int GetNpcInstance()                  zCall( 0x006A1AD0 );
+
+    // user API
+    #include "oCItemReactModule.inl"
   };
 
 } // namespace Gothic_I_Addon

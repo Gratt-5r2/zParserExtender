@@ -97,6 +97,9 @@ namespace Gothic_II_Classic {
     bool SearchForSpy()                                                                           zCall( 0x0044DEF0 );
     int GetFilterLevel()                                                                          zCall( 0x00597BD0 );
     virtual ~zERROR()                                                                             zCall( 0x0044BF00 );
+
+    // user API
+    #include "zERROR.inl"
   };
 
 } // namespace Gothic_II_Classic

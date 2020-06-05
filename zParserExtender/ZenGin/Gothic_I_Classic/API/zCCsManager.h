@@ -22,7 +22,7 @@ namespace Gothic_I_Classic {
     int iterB;
     zCArray<zCCSPoolItem*> csPool;
     zCArray<zSTRING> commandStrings;
-    zCArray<zCCSPlayer*>csPlayerList;
+    zCArray<zCCSPlayer*> csPlayerList;
     zCCSLib* src_lib;
     zCCSLib* library;
     int iterator;
@@ -49,7 +49,6 @@ namespace Gothic_I_Classic {
     zSTRING GetShortCom( int )                                          zCall( 0x0041ACA0 );
     void LibForceToLoad()                                               zCall( 0x0041BE70 );
     static zCObject* _CreateNewInstance()                               zCall( 0x00419630 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x004196A0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00419F80 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x0041AE20 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x0041AFF0 );
@@ -82,8 +81,8 @@ namespace Gothic_I_Classic {
     virtual zCCSPoolItem* PoolFindItem( zSTRING& )                      zCall( 0x0041A920 );
     virtual void PoolInsertItem( zCCSPoolItem* )                        zCall( 0x0041A830 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCCSManager, zCObject )
+    // user API
+    #include "zCCSManager.inl"
   };
 
 } // namespace Gothic_I_Classic

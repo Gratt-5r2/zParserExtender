@@ -62,6 +62,9 @@ namespace Gothic_II_Addon {
     void EnlargeBox( zCArray<zCPolygon*> const& )                                                          zCall( 0x0053B280 );
     void CopyPolys( zCArray<unsigned char> const&, zCArray<zCPolygon*> const&, int, zCArray<zCPolygon*>& ) zCall( 0x0053B3F0 );
     void Build( zCArray<zCPolygon*> const&, int )                                                          zCall( 0x0053B550 );
+
+    // user API
+    #include "zCMeshOctreeNode.inl"
   };
 
   class zCRayTurbo {
@@ -75,6 +78,9 @@ namespace Gothic_II_Addon {
     ~zCRayTurbo()                                                      zCall( 0x0053AF50 );
     void CalculateOptimizedPolyList( zCArray<zCPolygon*>& )            zCall( 0x0053AFD0 );
     void TraverseTree( zCArray<zCPolygon*>&, zCMeshOctreeNode const& ) zCall( 0x0053AFF0 );
+
+    // user API
+    #include "zCRayTurbo.inl"
   };
 
   class zCRayTurboAdmin {
@@ -96,6 +102,9 @@ namespace Gothic_II_Addon {
 
     // static properties
     static int& s_iPolyTreshold;
+
+    // user API
+    #include "zCRayTurboAdmin.inl"
   };
 
   class zCBspBase {
@@ -136,6 +145,9 @@ namespace Gothic_II_Addon {
     void LoadBINRec( zCFileBIN& )                                                                          zCall( 0x00537E90 );
     static void ReleaseStaticReferences()                                                                  zCall( 0x00528FD0 );
     static void __fastcall RenderOutdoor( zCBspBase*, zTBBox3D, int, int )                                 zCall( 0x0052F490 );
+
+    // user API
+    #include "zCBspBase.inl"
   };
 
   class zCBspNode : public zCBspBase {
@@ -150,6 +162,9 @@ namespace Gothic_II_Addon {
     void zCBspNode_OnInit()              zCall( 0x0052C6A0 );
     zCBspNode()                          zInit( zCBspNode_OnInit() );
     void CalcPlaneSignbits( zCBspTree* ) zCall( 0x00530AD0 );
+
+    // user API
+    #include "zCBspNode.inl"
   };
 
   class zCBspLeaf : public zCBspBase {
@@ -174,6 +189,9 @@ namespace Gothic_II_Addon {
     void __fastcall AddVobsToRenderListOutdoor( zCBspSector*, zTBBox2D const& )         zCall( 0x0052E840 );
     void __fastcall RenderLeafIndoor( int )                                             zCall( 0x0052EFF0 );
     void __fastcall TraceRayCollectVobs( zCArray<zCVob*>&, zTBBox3D const&, int ) const zCall( 0x00531720 );
+
+    // user API
+    #include "zCBspLeaf.inl"
   };
 
   class zCBspTree {
@@ -244,6 +262,9 @@ namespace Gothic_II_Addon {
     // static properties
     static int& s_showPortals;
     static int& s_renderAllPortals;
+
+    // user API
+    #include "zCBspTree.inl"
   };
 
   class zTPolyNode {
@@ -254,6 +275,9 @@ namespace Gothic_II_Addon {
     char isCompleteInside;
 
     zTPolyNode() {}
+
+    // user API
+    #include "zTPolyNode.inl"
   };
 
   class zCCBspNode {
@@ -301,6 +325,9 @@ namespace Gothic_II_Addon {
     void CountDepthRec( int, int&, int&, int& )                                                 zCall( 0x00541390 );
     void CountDepth( int&, int&, int& )                                                         zCall( 0x00541400 );
     void DescribeTree( int )                                                                    zCall( 0x005414B0 );
+
+    // user API
+    #include "zCCBspNode.inl"
   };
 
   class zCCBspTree {
@@ -337,6 +364,9 @@ namespace Gothic_II_Addon {
     void AddMesh( zCMesh* )                                  zCall( 0x0053D2E0 );
     void AddMesh( zCMesh*, zMAT4 const& )                    zCall( 0x0053D310 );
     void BuildTree( float )                                  zCall( 0x0053D610 );
+
+    // user API
+    #include "zCCBspTree.inl"
   };
 
   class zCBspSector {
@@ -346,6 +376,9 @@ namespace Gothic_II_Addon {
       unsigned char alpha;
 
       zTPortalInfo() {}
+
+      // user API
+      #include "zCBspSector_zTPortalInfo.inl"
     };
 
     zSTRING sectorName;
@@ -376,6 +409,9 @@ namespace Gothic_II_Addon {
     static int& s_outdoorPortal;
     static zCArray<zCBspSector*>& s_activeSectorList;
     static zCArray<zTBBox2D>& s_activeOutdoorPortals;
+
+    // user API
+    #include "zCBspSector.inl"
   };
 
   class zCBuildPortal {
@@ -390,6 +426,9 @@ namespace Gothic_II_Addon {
     void zCBuildPortal_OnInit() zCall( 0x00541CE0 );
     zCBuildPortal()             zInit( zCBuildPortal_OnInit() );
     ~zCBuildPortal()            zCall( 0x00541D60 );
+
+    // user API
+    #include "zCBuildPortal.inl"
   };
 
 } // namespace Gothic_II_Addon

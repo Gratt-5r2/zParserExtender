@@ -22,6 +22,9 @@ namespace Gothic_II_Addon {
 
     oCInfoChoice() {}
     ~oCInfoChoice() zCall( 0x00703E00 );
+
+    // user API
+    #include "oCInfoChoice.inl"
   };
 
   class oCInfo {
@@ -39,6 +42,9 @@ namespace Gothic_II_Addon {
 
       Tpd() {}
       ~Tpd() zCall( 0x007034F0 );
+
+      // user API
+      #include "oCInfo_Tpd.inl"
     };
 #pragma pack( pop )
 
@@ -70,6 +76,9 @@ namespace Gothic_II_Addon {
     virtual void Archive( zCArchiver& )   zCall( 0x00703990 );
     virtual void Unarchive( zCArchiver& ) zCall( 0x007039D0 );
     virtual void RestoreParserInstance()  zCall( 0x00703B00 );
+
+    // user API
+    #include "oCInfo.inl"
   };
 
   class oCInfoManager {
@@ -97,6 +106,9 @@ namespace Gothic_II_Addon {
 
     // static properties
     static int& size_checked;
+
+    // user API
+    #include "oCInfoManager.inl"
   };
 
 } // namespace Gothic_II_Addon

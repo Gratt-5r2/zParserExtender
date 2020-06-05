@@ -25,6 +25,9 @@ namespace Gothic_II_Classic {
     void LeaveWorld( zCPlayerInfo* )          zCall( 0x0046F050 );
     void ShowDebugInfo()                      zCall( 0x0046F090 );
     virtual ~zCWorldInfo()                    zCall( 0x0046EDE0 );
+
+    // user API
+    #include "zCWorldInfo.inl"
   };
 
 } // namespace Gothic_II_Classic

@@ -27,6 +27,9 @@ namespace Gothic_I_Classic {
     };
 
     zTRenderContext() {}
+
+    // user API
+    #include "zTRenderContext.inl"
   };
 
   class zCVisual : public zCObject {
@@ -42,7 +45,6 @@ namespace Gothic_I_Classic {
     zCVisual()                                                                 zInit( zCVisual_OnInit() );
     void AddNextLODVisual( zCVisual* )                                         zCall( 0x005D9F30 );
     void AddEndLODVisual( zCVisual* )                                          zCall( 0x005D9F60 );
-    static void operator delete( void*, char const*, char const*, int )        zCall( 0x0046E340 );
     static void InitVisualSystem()                                             zCall( 0x005DA000 );
     static void CleanupVisualSystem()                                          zCall( 0x005DA1A0 );
     static zCVisual* LoadVisual( zSTRING const& )                              zCall( 0x005DA1F0 );
@@ -65,11 +67,12 @@ namespace Gothic_I_Classic {
     virtual void GetLODVisualAndAlpha( float, zCVisual*&, float& )             zCall( 0x005D9F90 );
     virtual zCVisual* LoadVisualVirtual( zSTRING const& ) const                zCall( 0x004C0DB0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCVisual, zCObject )
 
     // static properties
     static zCArray<zCVisual*>& s_visualClassList;
+
+    // user API
+    #include "zCVisual.inl"
   };
 
   class zCVisualAnimate : public zCVisual {
@@ -86,6 +89,9 @@ namespace Gothic_I_Classic {
     virtual void StopAnimation( zSTRING const& )    zPureCall;
     virtual int IsAnimationActive( zSTRING const& ) zPureCall;
     virtual zSTRING const* GetAnyAnimation()        zPureCall;
+
+    // user API
+    #include "zCVisualAnimate.inl"
   };
 
   class zCDecal : public zCVisual {
@@ -105,7 +111,6 @@ namespace Gothic_I_Classic {
     void SetTexture( zCTexture* )                                       zCall( 0x00542250 );
     void SetDecalDim( float, float )                                    zCall( 0x00542260 );
     static zCObject* _CreateNewInstance()                               zCall( 0x00541CD0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00541DE0 );
     static void CleanupDecals()                                         zCall( 0x00541F80 );
     static void CreateDecalMeshes()                                     zCall( 0x00542000 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00541E00 );
@@ -122,12 +127,13 @@ namespace Gothic_I_Classic {
     virtual zSTRING const* GetFileExtension( int )                      zCall( 0x00542070 );
     virtual zCVisual* LoadVisualVirtual( zSTRING const& ) const         zCall( 0x005420D0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCDecal, zCVisual )
 
     // static properties
     static zCMesh*& decalMesh1Sided;
     static zCMesh*& decalMesh2Sided;
+
+    // user API
+    #include "zCDecal.inl"
   };
 
   class zCMesh : public zCVisual {
@@ -221,7 +227,6 @@ namespace Gothic_I_Classic {
     void RemoveDegeneratePolys()                                                             zCall( 0x0055A660 );
     void CombineLightmaps()                                                                  zCall( 0x0055A810 );
     void LightMesh( zCVobLight&, zMAT4&, zCWorld* )                                          zCall( 0x005FB040 );
-    static void operator delete( void*, char const*, char const*, int )                      zCall( 0x00526210 );
     static zCObject* _CreateNewInstance()                                                    zCall( 0x0054F900 );
     static zCMesh* SearchName( zSTRING const& )                                              zCall( 0x00550130 );
     static zCMesh* Load( zSTRING const& )                                                    zCall( 0x005501A0 );
@@ -243,13 +248,14 @@ namespace Gothic_I_Classic {
     virtual zSTRING const* GetFileExtension( int )                                           zCall( 0x0054FDD0 );
     virtual zCVisual* LoadVisualVirtual( zSTRING const& ) const                              zCall( 0x0054FDF0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCMesh, zCVisual )
 
     // static properties
     static int& s_autoConvertMeshes;
     static int& s_numMeshes;
     static zCMesh*& s_meshRoot;
+
+    // user API
+    #include "zCMesh.inl"
   };
 
 } // namespace Gothic_I_Classic

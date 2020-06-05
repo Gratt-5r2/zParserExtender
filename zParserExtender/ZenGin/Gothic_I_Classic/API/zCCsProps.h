@@ -39,7 +39,6 @@ namespace Gothic_I_Classic {
     zSTRING GetName()                                                   zCall( 0x00406090 );
     zSTRING GetScriptFuncOnStop()                                       zCall( 0x00407400 );
     zCCSProps()                                                         zInit( zCCSProps_OnInit() );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0040E1C0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x004216B0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x004218E0 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x004219E0 );
@@ -52,8 +51,8 @@ namespace Gothic_I_Classic {
     virtual int CheckRange( float )                                     zCall( 0x00421BF0 );
     virtual void PrintDebugInfo()                                       zCall( 0x00421C30 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCCSProps, zCObject )
+    // user API
+    #include "zCCSProps.inl"
   };
 
 } // namespace Gothic_I_Classic

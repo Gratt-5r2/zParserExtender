@@ -32,6 +32,9 @@ namespace Gothic_I_Classic {
     // static properties
     static zCPlayerGroup& allPlayerGroup;
     static zCList<zCPlayerGroup>& group_list;
+
+    // user API
+    #include "zCPlayerGroup.inl"
   };
 
 } // namespace Gothic_I_Classic

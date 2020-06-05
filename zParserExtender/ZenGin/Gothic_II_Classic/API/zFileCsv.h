@@ -32,6 +32,9 @@ namespace Gothic_II_Classic {
     int ReadHeader()                                       zCall( 0x0044F280 );
     int WriteHeader()                                      zCall( 0x0044F460 );
     virtual ~zCFileCSV()                                   zCall( 0x0044E540 );
+
+    // user API
+    #include "zCFileCSV.inl"
   };
 
 } // namespace Gothic_II_Classic

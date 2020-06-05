@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
+    <ProjectConfiguration Include="MP Debug|Win32">
+      <Configuration>MP Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="G1 Debug|Win32">
@@ -37,87 +37,78 @@
       <Configuration>G2A Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
+    <ProjectConfiguration Include="MP Release|Win32">
+      <Configuration>MP Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{fb5bb9c6-9379-422e-9db4-d5463f43b865}</ProjectGuid>
+    <ProjectGuid>{4595ff32-6a71-47e1-a29d-7ea28b2a5d86}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>zParserExtender</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>zParserExtender</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MP Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v100</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G2A Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v100</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G2 Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v100</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G1A Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v100</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G1 Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v100</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MP Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v100</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G2A Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v100</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G2 Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v100</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G1A Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v100</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G1 Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v100</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='MP Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='G2A Debug|Win32'" Label="PropertySheets">
@@ -132,7 +123,7 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='G1 Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='MP Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='G2A Release|Win32'" Label="PropertySheets">
@@ -148,68 +139,68 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MP Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\</OutDir>
-    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(SolutionDir)\$(ProjectName)\ZenGin\Gothic_UserAPI\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G2A Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\</OutDir>
-    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(SolutionDir)\$(ProjectName)\ZenGin\Gothic_UserAPI\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G2 Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\</OutDir>
-    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(SolutionDir)\$(ProjectName)\ZenGin\Gothic_UserAPI\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G1A Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\</OutDir>
-    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(SolutionDir)\$(ProjectName)\ZenGin\Gothic_UserAPI\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G1 Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\</OutDir>
-    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(SolutionDir)\$(ProjectName)\ZenGin\Gothic_UserAPI\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MP Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\</OutDir>
-    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(SolutionDir)\$(ProjectName)\ZenGin\Gothic_UserAPI\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G2A Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\</OutDir>
-    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(SolutionDir)\$(ProjectName)\ZenGin\Gothic_UserAPI\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G2 Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\</OutDir>
-    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(SolutionDir)\$(ProjectName)\ZenGin\Gothic_UserAPI\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G1A Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\</OutDir>
-    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(SolutionDir)\$(ProjectName)\ZenGin\Gothic_UserAPI\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G1 Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\</OutDir>
-    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.1a\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\$(ProjectName)\;$(SolutionDir)\$(ProjectName)\ZenGin\Gothic_UserAPI\;$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Include\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Lib\;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MP Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -217,13 +208,21 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GOTHICPLUGIN_EXPORTS;__G1;__G1A;__G2;__G2A;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
+    <PreBuildEvent>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Build\beforebuild.exe $(SolutionDir)</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='G2A Debug|Win32'">
     <ClCompile>
@@ -233,13 +232,21 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GOTHICPLUGIN_EXPORTS;__G2A;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
+    <PreBuildEvent>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Build\beforebuild.exe $(SolutionDir)</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='G2 Debug|Win32'">
     <ClCompile>
@@ -249,13 +256,21 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GOTHICPLUGIN_EXPORTS;__G2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
+    <PreBuildEvent>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Build\beforebuild.exe $(SolutionDir)</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='G1A Debug|Win32'">
     <ClCompile>
@@ -265,13 +280,21 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GOTHICPLUGIN_EXPORTS;__G1A;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
+    <PreBuildEvent>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Build\beforebuild.exe $(SolutionDir)</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='G1 Debug|Win32'">
     <ClCompile>
@@ -281,15 +304,23 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GOTHICPLUGIN_EXPORTS;__G1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
+    <PreBuildEvent>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Build\beforebuild.exe $(SolutionDir)</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MP Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>
@@ -299,7 +330,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GOTHICPLUGIN_EXPORTS;__G1;__G1A;__G2;__G2A;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -308,6 +340,13 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
+    <PreBuildEvent>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Build\beforebuild.exe $(SolutionDir)</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='G2A Release|Win32'">
     <ClCompile>
@@ -320,6 +359,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GOTHICPLUGIN_EXPORTS;__G2A;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -328,6 +368,13 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
+    <PreBuildEvent>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Build\beforebuild.exe $(SolutionDir)</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='G2 Release|Win32'">
     <ClCompile>
@@ -339,7 +386,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GOTHICPLUGIN_EXPORTS;__G2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -348,6 +396,13 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
+    <PreBuildEvent>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Build\beforebuild.exe $(SolutionDir)</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='G1A Release|Win32'">
     <ClCompile>
@@ -359,7 +414,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GOTHICPLUGIN_EXPORTS;__G1A;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -368,6 +424,13 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
+    <PreBuildEvent>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Build\beforebuild.exe $(SolutionDir)</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='G1 Release|Win32'">
     <ClCompile>
@@ -379,7 +442,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GOTHICPLUGIN_EXPORTS;__G1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -388,36 +452,63 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
+    <PreBuildEvent>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0h\Build\beforebuild.exe $(SolutionDir)</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
     <ClCompile Include="DllMain.cpp" />
-    <ClCompile Include="ParserExtender.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='G1 Release|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='G2A Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='G1A Release|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='G1 Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='G2A Release|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='G2 Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='G2 Release|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='G1A Debug|Win32'">false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="ZenGin\Gothic_II_Addon\classDef_Ver3.cpp" />
-    <ClCompile Include="ZenGin\Gothic_II_Addon\staticDef_Ver3.cpp" />
-    <ClCompile Include="ZenGin\Gothic_II_Classic\classDef_Ver2.cpp" />
-    <ClCompile Include="ZenGin\Gothic_II_Classic\staticDef_Ver2.cpp" />
-    <ClCompile Include="ZenGin\Gothic_I_Addon\classDef_Ver1.cpp" />
-    <ClCompile Include="ZenGin\Gothic_I_Addon\staticDef_Ver1.cpp" />
-    <ClCompile Include="ZenGin\Gothic_I_Classic\classDef_Ver0.cpp" />
-    <ClCompile Include="ZenGin\Gothic_I_Classic\staticDef_Ver0.cpp" />
+    <ClInclude Include="OU.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Plugin.cpp" />
+    <ClCompile Include="Interface.cpp" />
+    <ClCompile Include="ZenGin\Gothic_II_Addon\ClassDeclarators_G2A.cpp" />
+    <ClCompile Include="ZenGin\Gothic_II_Addon\Globals_G2A.cpp" />
+    <ClCompile Include="ZenGin\Gothic_II_Addon\Statics_G2A.cpp" />
+    <ClCompile Include="ZenGin\Gothic_II_Classic\ClassDeclarators_G2.cpp" />
+    <ClCompile Include="ZenGin\Gothic_II_Classic\Globals_G2.cpp" />
+    <ClCompile Include="ZenGin\Gothic_II_Classic\Statics_G2.cpp" />
+    <ClCompile Include="ZenGin\Gothic_I_Addon\ClassDeclarators_G1A.cpp" />
+    <ClCompile Include="ZenGin\Gothic_I_Addon\Globals_G1A.cpp" />
+    <ClCompile Include="ZenGin\Gothic_I_Addon\Statics_G1A.cpp" />
+    <ClCompile Include="ZenGin\Gothic_I_Classic\ClassDeclarators_G1.cpp" />
+    <ClCompile Include="ZenGin\Gothic_I_Classic\Globals_G1.cpp" />
+    <ClCompile Include="ZenGin\Gothic_I_Classic\Statics_G1.cpp" />
+    <ClInclude Include="zExternals.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="zParser.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="zParserExtender.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="zParserExtender.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="zSymbol.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="zSymbolTable.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ParserExtender.h" />
-    <ClInclude Include="ParserExtender_Header.h" />
-    <ClInclude Include="ParserExtender_Source.h" />
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="Plugin.h" />
+    <ClInclude Include="Headers.h" />
+    <ClInclude Include="Sources.h" />
     <ClInclude Include="UnionAfx.h" />
     <ClInclude Include="ZenGin\Gothic_II_Addon\API\oAiHuman.h" />
     <ClInclude Include="ZenGin\Gothic_II_Addon\API\oAiShoot.h" />
@@ -626,8 +717,8 @@
     <ClInclude Include="ZenGin\Gothic_II_Addon\API\zWorld.h" />
     <ClInclude Include="ZenGin\Gothic_II_Addon\API\zWorldInfo.h" />
     <ClInclude Include="ZenGin\Gothic_II_Addon\API\zZone.h" />
-    <ClInclude Include="ZenGin\Gothic_II_Addon\engineNames_Ver3.hpp" />
-    <ClInclude Include="ZenGin\Gothic_II_Addon\vtable_Ver3.h" />
+    <ClInclude Include="ZenGin\Gothic_II_Addon\Names_G2A.hpp" />
+    <ClInclude Include="ZenGin\Gothic_II_Addon\VFTable_G2A.h" />
     <ClInclude Include="ZenGin\Gothic_II_Classic\API\oAiHuman.h" />
     <ClInclude Include="ZenGin\Gothic_II_Classic\API\oAiShoot.h" />
     <ClInclude Include="ZenGin\Gothic_II_Classic\API\oAniCtrl.h" />
@@ -834,8 +925,8 @@
     <ClInclude Include="ZenGin\Gothic_II_Classic\API\zWorld.h" />
     <ClInclude Include="ZenGin\Gothic_II_Classic\API\zWorldInfo.h" />
     <ClInclude Include="ZenGin\Gothic_II_Classic\API\zZone.h" />
-    <ClInclude Include="ZenGin\Gothic_II_Classic\engineNames_Ver2.hpp" />
-    <ClInclude Include="ZenGin\Gothic_II_Classic\vtable_Ver2.h" />
+    <ClInclude Include="ZenGin\Gothic_II_Classic\Names_G2.hpp" />
+    <ClInclude Include="ZenGin\Gothic_II_Classic\VFTable_G2.h" />
     <ClInclude Include="ZenGin\Gothic_I_Addon\API\oAiHuman.h" />
     <ClInclude Include="ZenGin\Gothic_I_Addon\API\oAiShoot.h" />
     <ClInclude Include="ZenGin\Gothic_I_Addon\API\oAniCtrl.h" />
@@ -1040,8 +1131,8 @@
     <ClInclude Include="ZenGin\Gothic_I_Addon\API\zWorld.h" />
     <ClInclude Include="ZenGin\Gothic_I_Addon\API\zWorldInfo.h" />
     <ClInclude Include="ZenGin\Gothic_I_Addon\API\zZone.h" />
-    <ClInclude Include="ZenGin\Gothic_I_Addon\engineNames_Ver1.hpp" />
-    <ClInclude Include="ZenGin\Gothic_I_Addon\vtable_Ver1.h" />
+    <ClInclude Include="ZenGin\Gothic_I_Addon\Names_G1A.hpp" />
+    <ClInclude Include="ZenGin\Gothic_I_Addon\VFTable_G1A.h" />
     <ClInclude Include="ZenGin\Gothic_I_Classic\API\oAiHuman.h" />
     <ClInclude Include="ZenGin\Gothic_I_Classic\API\oAiShoot.h" />
     <ClInclude Include="ZenGin\Gothic_I_Classic\API\oAniCtrl.h" />
@@ -1250,15 +1341,636 @@
     <ClInclude Include="ZenGin\Gothic_I_Classic\API\zWorld.h" />
     <ClInclude Include="ZenGin\Gothic_I_Classic\API\zWorldInfo.h" />
     <ClInclude Include="ZenGin\Gothic_I_Classic\API\zZone.h" />
-    <ClInclude Include="ZenGin\Gothic_I_Classic\engineNames_Ver0.hpp" />
-    <ClInclude Include="ZenGin\Gothic_I_Classic\vtable_Ver0.h" />
+    <ClInclude Include="ZenGin\Gothic_I_Classic\Names_G1.hpp" />
+    <ClInclude Include="ZenGin\Gothic_I_Classic\VFTable_G1.h" />
     <ClInclude Include="ZenGin\zGothicAPI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".build_settings.inl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Resource.rc" />
+    <None Include="ZenGin\Gothic_UserAPI\CGameManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCAIArrow.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCAIArrowBase.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCAICamera.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCAIDrop.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCAIHuman.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCAIHuman_Stand.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCAISound.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCAIVobMove.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCAIVobMoveTorch.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCAniCtrl_Human.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCAniCtrl_Human_oTComboInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCAskBox.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCBarrier.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCBinkPlayer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCCollObjectCharacter.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCCSManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCCSPlayer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCCSProps.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCCSTrigger.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCDoc.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCDocumentManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCDummyVobGenerator.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCEmitterKey.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCGame.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCGameInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCGame_TObjectRoutine.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCGuilds.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCHelp.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCHelpScreen.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCInfoChoice.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCInfoManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCInformationManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCInfo_Tpd.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCItem.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCItemContainer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCItemReactModule.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCLogEntry.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCLogManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCLogScreen.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCLogTopic.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMagFrontier.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMag_Book.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMapScreen.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMenuSavegame.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMenu_ChgKeys.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMenu_Help.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMenu_Log.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMenu_Main.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMenu_Status.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMission.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMissionManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMission_TMisStatus.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMOB.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMobBed.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMobContainer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMobDoor.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMobFire.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMobInter.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMobItemSlot.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMobLadder.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMobLockable.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMobMsg.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMobSwitch.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMobWheel.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMsgAttack.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMsgConversation.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMsgDamage.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMsgMagic.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMsgManipulate.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMsgMovement.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMsgRequest.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMsgState.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMsgUseItem.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCMsgWeapon.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCNews.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCNewsManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCNewsMemory.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCNpc.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCNpcContainer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCNpcFocus.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCNpcInventory.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCNpcMessage.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCNpcTalent.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCNpc_oCNpcTimedOverlay.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCNpc_oSDirectionInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCNpc_oTRobustTrace.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCNpc_States.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCNpc_TActiveInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCObjectFactory.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCObjectGenerator.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCParticleControl.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCPlayerInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCPortalRoom.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCPortalRoomManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCRtnCutscene.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCRtnEntry.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCRtnManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCRtnManager_TRtn_WayBox.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCRtnManager_TRtn_WayBoxLimit.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCSavegameInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCSavegameManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCSkyControler_Barrier.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCSpawnManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCSpell.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCStatusScreen.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCStealContainer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCSVM.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCSVMManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCSystemInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCText.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCTouchDamage.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCTradeManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCTrajectory.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCTriggerChangeLevel.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCTriggerScript.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCViewDialogInventory.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCViewDialogItem.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCViewDialogItemContainer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCViewDialogStealContainer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCViewDialogTrade.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCViewDocument.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCViewDocumentMap.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCViewGothicProgressBar.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCViewStatusBar.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCVisFX_MultiTarget.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCVisualFX.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCVisualFXAI.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCVob.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCWay.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCWaypoint.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCWorld.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCWorldTimer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCZoneMusic.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCZoneMusicDefault.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oCZoneMusicList.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oSMenuInfoArmor.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oSMenuInfoAttribute.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oSMenuInfoTalent.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\oSMenuKey.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\TMobOptPos.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\TNpcAIState.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\TNpcPerc.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\TNpcSlot.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCAccount.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCActiveSnd.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCAIBase.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCAIBaseSound.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCAICamera.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCAIPlayer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCAIPlayer_zTBloodVobTrack.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCAIPlayer_zTConfig.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCAIPlayer_zTLedgeInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCArchiver.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCArchiverBinSafe.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCArchiverFactory.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCArchiverGeneric.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCArchiverGeneric_zTWriteObjectEntry.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCArchiver_zTChunkRecord.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCArray.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCArrayAdapt.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCArraySort.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCBBox3DSorterBase.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCBBox3DSorterBase_zTBoxSortHandle.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCBBox3DSorterBase_zTNode.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCBinkPlayer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCBspBase.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCBspLeaf.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCBspNode.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCBspSector.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCBspSector_zTPortalInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCBspTree.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCBuffer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCBuildPortal.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCacheBase.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCacheData.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCacheIndex.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCallback.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCamera.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCamera_zTCamVertSimple.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCamTrj_KeyFrame.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCBspNode.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCBspTree.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCChecksum.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCChecksum16.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCircleArc3D.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCClassDef.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCodeMaster.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCollisionDetector.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCollisionObject.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCollisionObjectDef.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCollisionReport.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCollObjectBase.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCollObjectBoxBlocker.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCollObjectBoxPassThrough.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCollObjectCharacter.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCollObjectCharacter_zTConfig.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCollObjectCharacter_zTInterferenceReport.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCollObjectCharacter_zTSpatialState.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCollObjectComplex.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCollObjectLevelPolys.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCollObjectPoint.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCollObjectProjectile.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCollObjectUndef.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCConDat.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCConsole.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCConvexCollisionCache.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCConvexPrimitive.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCConvexPrimitiveEllipsoid.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCConvexPrimitiveScaleTrans.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCConvexPrimitiveUnitSphere.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCriticalSection.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCSAtomicBlock.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCSBlock.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCSBlockBase.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCSBlockPosition.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCSCamera.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCSCamera_EventMsg.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCSCamera_EventMsgActivate.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCSCutsceneContext.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCSDebugger.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCSLib.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCSManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCSPlayer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCSProps.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCSSyncBlock.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCubicPolynomial.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCCutscene.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCDecal.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCDrvProperties_MSS.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCDXTCCache_D3D.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCDXTCCache_D3D_zD3D_Entry.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCDXTCCache_D3D_zD3D_SlotHeader.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCEarthquake.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCEffect.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCEventCommon.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCEventCore.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCEventManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCEventMessage.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCEventMover.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCEventMusicControler.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCEventScreenFX.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCEvMsgCutscene.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCFFT.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCFile3DS.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCFileBIN.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCFileCSV.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCFileQuakeBSP.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCFlash.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCFlash_zCBolt.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCFont.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCFontMan.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCFPUControler.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCGameInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCGfx.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCHandleManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCInput.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCInputCallback.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCInput_Win32.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCKBSpline.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCLensFlareFX.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCLensFlareFX_zTVobLightLensFlare.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCLightMap.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCLightning.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCLightning_zCBolt.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCLine2D.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCLineCache.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCLineCache_zTCacheEntry.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCList.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCListSort.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCLivingObjectsState.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMalloc.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMallocGeneric.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMallocWin32Debug.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMapDetailTexture.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMapDetailTexture_zTMapDetailTextureEntry.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMaterial.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMatrixStack.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMemPoolBase.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMemPoolBlock.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMenu.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMenuItem.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMenuItemButton.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMenuItemChoice.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMenuItemInput.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMenuItemList.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMenuItemSlider.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMenuItemText.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMesh.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMeshesPool.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMeshOctreeNode.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMeshPool.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMeshSoftSkin.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMeshSoftSkin_zTNodeWedgeNormal.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMeshSoftSkin_zTWeightEntry.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMessageFilter.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMgcEigenD.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCModel.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCModelAni.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCModelAniActive.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCModelAniEvent.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCModelConvertFileHandler.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCModelMeshLib.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCModelMeshLib_zTNodeMesh.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCModelNode.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCModelNodeInst.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCModelNodeInst_zTNodeAni.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCModelPrototype.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCModelTexAniState.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCModel_zTAniMeshLibEntry.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCModel_zTMdl_NodeVobAttachment.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCModel_zTMdl_StartedVobFX.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCModel_zTMeshLibEntry.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMorphMesh.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMorphMeshAni.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMorphMeshConvertFileHandler.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMorphMeshProto.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMorphMesh_zTMorphAniEntry.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMorphMesh_zTRandAni.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMovementTracker.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMover.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMoverControler.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMoveRecorder.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMoveRecorder_zTMOR_Sample.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMover_zTMov_Keyframe.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMusicControler.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMusicJingle.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMusicJingle_DM.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMusicSystem.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMusicSys_DirectMusic.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMusicSys_Dummy.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMusicTheme.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMusicTheme_DM.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCMutex.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCNet.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCNetEventManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCNetHost.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCNetManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCNetMessage.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCNetMessageQueue.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCNetSession.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCNetStatistics.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCNetVersion.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCNetVobControl.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCOBBox3D.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCOBBox3D_zTBoxSortHandle.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCObject.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCObjectFactory.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCOLOR.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zComplex.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCOption.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCOptionEntry.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCOptionSection.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCOutdoorRainFX.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCOutdoorRainFX_zSCacheElement.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCOutdoorRainFX_zSParticle.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCParser.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCParticleEmitter.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCParticleEmitterVars.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCParticleFX.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCParticleFX_zCStaticPfxList.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPar_DataStack.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPar_File.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPar_Stack.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPar_StringTable.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPar_Symbol.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPar_SymbolTable.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPar_TreeNode.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPatch.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPatchMap.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPathSearch.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPathSearch_zSPathSearchOptions.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPFXControler.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPlayerGroup.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPlayerInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPluecker.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPolygon.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPolygonPool.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPolygon_TFlags.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPolygon_zSFeatureSavedValues.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPolygon_zSPolySavedValues.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPolygon_zSVertexSavedValues.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPolyStrip.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPortal.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPose.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPositionKey.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPQueue.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCPrime.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCProgMeshBuilder.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCProgMeshConvertFileHandler.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCProgMeshProto.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCProgMeshProto_zCSubMesh.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCProgMeshProto_zTLODParams.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCProgMeshProto_zTLODRenderArgs.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCProgMeshProto_zTLODRenderArgsSubMesh.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCQuadMark.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCQuadMark_zTEffectParams.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCQuadMark_zTQuadMarkAniState.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCQuadMark_zTQuadMarkPoly.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCQuadMark_zTQuadMarkVert.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCQuat.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRayCache.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRayCacheElement.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRayTurbo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRayTurboAdmin.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRenderer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRenderer_zTMaterial.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRenderLight.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRenderLightContainer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRenderLightContainer_zTLightScore.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRenderManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCResource.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCResourceManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCResourceManager_zCClassCache.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRigidBody.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRndAlphaSortObject.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRnd_D3D.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRnd_D3D_zD3D_Caps.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRnd_D3D_zD3D_Status.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRnd_Glide.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCRoute.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCScanDir.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCScanDirFileHandler.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSession.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCShader.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCShaderStage.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSkyControler.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSkyControler_Indoor.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSkyControler_Mid.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSkyControler_Outdoor.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSkyControler_Outdoor_zTRainFX.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSkyLayer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSkyLayerData.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSkyPlanet.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSkyState.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSndChannel.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSndFrame.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSndFX_MSS.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSndSys_MSS.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSoundFX.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSoundFXDummy.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSoundManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSoundManager_zCMediumType.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSoundManager_zCSoundEventData.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSoundManager_zCTableEntry.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSoundManager_zTScriptSoundData.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSoundSystem.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSoundSystemDummy.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSoundSystem_zTSound3DParams.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSparseArray.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSparseArrayBase.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSparseArrayIterator.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSparseArrayManDat.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSphereCoordsCache.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSphereCoordsCache_zSAziSphereCoord.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSphereCoordsCache_zSElevSphereCoord.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSphereCoordsCache_zSRangeSphereCoord.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSurfaceCache_D3D.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSurfaceCache_D3D_zCSlotIndex.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSurfaceCache_D3D_zD3D_Entry.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSurfaceCache_D3D_zD3D_SlotHeader.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSyncObject.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCSystemInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTexAniCtrl.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTexConGeneric.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTexture.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTextureConvert.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTextureExchange.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTextureFileFormat.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTextureFileFormatInternal.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTextureFileFormatTGA.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTextureFileFormatTGA_zTTgaHeader.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTextureFileHandler.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTextureInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTex_D3D.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTex_RndGlide.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCThread.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTimer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTouchAnimate.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTouchAnimateSound.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTouchDamage.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTransfer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTransferConstr.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTree.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTrigger.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTriggerBase.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTriggerList.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTriggerTeleport.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTriggerUntouch.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCTriggerWorldStart.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCUnderwaterPFX.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCValueSmooth.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVEC3Smooth.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVertex.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVertexBuffer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVertexBufferDyn.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVertexBufferDyn2.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVertexBufferManager.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVertexBuffer_D3D.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVertexBuffer_zTCallbackData.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVertexFeaturePool.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVertexPool.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVertexTransform.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVertFeature.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVideoPlayer.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCView.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCViewBase.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCViewDialog.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCViewDialogChoice.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCViewDraw.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCViewFont.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCViewFX.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCViewObject.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCViewPrint.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCViewProgressBar.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCViewStatusBar.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCViewText.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCViewText2.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCViewWindow.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVisual.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVisualAnimate.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVob.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobAnimate.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobCallback.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobChar.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobIdentifier.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobLensFlare.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobLevelCompo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobLight.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobLightData.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobLightPreset.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobScreenFX.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobScreenFX_zTScreenFXSet.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobSound.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobSoundDaytime.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobSpot.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobStair.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobStartpoint.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVobWaypoint.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVob_zTCollisionContext.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVob_zTModelLimbColl.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCVolatileMemoryBase.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCWaveData.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCWay.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCWayNet.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCWaypoint.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCWorld.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCWorldInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCWorldPerFrameCallback.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCZone.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCZoneMusic.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCZoneReverb.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCZoneReverbDefault.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCZoneVobFarPlane.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCZoneVobFarPlaneDefault.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCZoneZFog.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zCZoneZFogDefault.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zD3DTEX.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zD3D_alphaPoly.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zD3D_alphaPoly_zD3D_vertexFormat.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zD3D_savedTexture.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zDATE.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zERROR.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zFILE.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zFILE_FILE.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zFILE_INFO.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zFILE_STATS.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zFILE_VDFS.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zList.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zMAT3.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zMAT4.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zPATH.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zRandom_Gauss.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zSCtrlValue.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zSEvasionSearchDesc.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zSEvasionSearchDesc_zSEvasionSearchOptions.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zSKeyMapping.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zSPathSearchResult.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zSPathSearchState.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zSPathSearchState_Internal.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zSRndGlide_AlphaPoly.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zSVisualFXColl.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTAniAttachment.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTBBox2D.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTBBox3D.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTBCylinder3D.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTBSphere3D.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTCSBlockPosition.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTEngineStats.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTErrorMessage.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTLazyMesh.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTMallocProcessStats.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTMallocStats.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTMdl_AniSample.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTMenuItemListElement.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTNetAddress.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTNetBufferInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTNetMessageHeader.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTNetPacket.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTNetStatistics.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTNetTimeout.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTPlane.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTPMEdge.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTPMTriangle.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTPMTriangleEdges.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTPMVertexUpdate.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTPMWedge.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTPolyNode.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTProgressRange.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTRandAni.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTRenderContext.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTRndSimpleVertex.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTRndSurfaceDesc.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTRnd_DeviceInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTRnd_Stats.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTRnd_TexFormatInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTRnd_VidModeInfo.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTTexPalette.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTTraceRayReport.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zTViewportData.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zVEC2.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zVEC3.inl" />
+    <None Include="ZenGin\Gothic_UserAPI\zVEC4.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

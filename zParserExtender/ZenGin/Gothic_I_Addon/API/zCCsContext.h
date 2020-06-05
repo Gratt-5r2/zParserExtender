@@ -59,7 +59,6 @@ namespace Gothic_I_Addon {
     int ReplayCutscene()                                                zCall( 0x0040A520 );
     void ForcedResume()                                                 zCall( 0x0040A660 );
     static zCObject* _CreateNewInstance()                               zCall( 0x004055C0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x004056A0 );
     static int DisablePlayCutscenes( int )                              zCall( 0x004056F0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x004056C0 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x004066D0 );
@@ -87,11 +86,12 @@ namespace Gothic_I_Addon {
     virtual int IsPlaying()                                             zCall( 0x0040A4D0 );
     virtual int IsOutputUnit()                                          zCall( 0x004056E0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCCSCutsceneContext, zCCutscene )
 
     // static properties
     static int& playDisabled;
+
+    // user API
+    #include "zCCSCutsceneContext.inl"
   };
 
   class zCCSDebugger {
@@ -109,6 +109,9 @@ namespace Gothic_I_Addon {
     virtual void CSDB_Warning( zCCSBlockBase*, zSTRING& ) zPureCall;
     virtual void CSDB_StartPlaying( zCCutscene* )         zPureCall;
     virtual void CSDB_Stop( zCCutscene* )                 zPureCall;
+
+    // user API
+    #include "zCCSDebugger.inl"
   };
 
 } // namespace Gothic_I_Addon

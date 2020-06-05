@@ -18,6 +18,9 @@ namespace Gothic_I_Addon {
     virtual int GetStats( zTMallocStats& )                              zCall( 0x00567170 );
     virtual int Init( int )                                             zCall( 0x00567190 );
     virtual int Shutdown()                                              zCall( 0x005671A0 );
+
+    // user API
+    #include "zCMallocGeneric.inl"
   };
 
 } // namespace Gothic_I_Addon

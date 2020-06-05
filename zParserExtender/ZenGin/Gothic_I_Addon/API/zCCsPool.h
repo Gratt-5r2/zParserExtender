@@ -33,7 +33,6 @@ namespace Gothic_I_Addon {
     void ClrFlags( long )                                               zCall( 0x00423880 );
     void SetFlags( long )                                               zCall( 0x004238A0 );
     int HasFlags( long )                                                zCall( 0x004238B0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0041C4A0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x00422D70 );
     /* for zSTRING num : 2*/
     virtual ~zCCSPoolItem()                                             zCall( 0x004231B0 );
@@ -42,9 +41,6 @@ namespace Gothic_I_Addon {
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00422EB0 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x00423280 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x00423300 );
-
-    // compatible with g2 operators style
-    zOperatorDelete( zCCSPoolItem, zCObject )
   };
 
 } // namespace Gothic_I_Addon

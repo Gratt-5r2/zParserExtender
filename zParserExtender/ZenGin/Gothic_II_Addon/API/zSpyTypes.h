@@ -14,6 +14,9 @@ namespace Gothic_II_Addon {
     char position[100];
 
     zTErrorMessage() {}
+
+    // user API
+    #include "zTErrorMessage.inl"
   };
 
 } // namespace Gothic_II_Addon

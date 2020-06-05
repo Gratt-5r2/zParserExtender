@@ -196,6 +196,9 @@ namespace Gothic_I_Addon {
     };
     int GetNumInList() const { return numInArray; };
     BOOL IsEmpty() const { return ( numInArray == 0 ); };
+
+    // user API
+    #include "zCPQueue.inl"
   };
 
   template <class T>
@@ -241,7 +244,6 @@ namespace Gothic_I_Addon {
         next = 0;
       };
     };
-
     void Replace( T *ins ) { data = ins; };
 
     void Insert( T *ins ) {
@@ -300,7 +302,6 @@ namespace Gothic_I_Addon {
     T* operator [] ( int nr ) const {
       return Get( nr );
     };
-
     zCListSort* GetNextInList() const { return next; };
     T* GetData() const { return data; };
 
@@ -335,6 +336,9 @@ namespace Gothic_I_Addon {
     {
       Compare = Cmp;
     };
+
+    // user API
+    #include "zCListSort.inl"
   };
 
   template <class T>
@@ -707,7 +711,6 @@ namespace Gothic_I_Addon {
     {
       this->RemoveAll();
     }
-
   };
 
 } // namespace Gothic_II_Addon

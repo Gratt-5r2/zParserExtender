@@ -18,6 +18,9 @@ namespace Gothic_II_Addon {
     void zCCollisionReport_OnInit() zCall( 0x0054C550 );
     zCCollisionReport()             zInit( zCCollisionReport_OnInit() );
     virtual ~zCCollisionReport()    zCall( 0x0054C570 );
+
+    // user API
+    #include "zCCollisionReport.inl"
   };
 
   class zCCollisionDetector {
@@ -45,6 +48,9 @@ namespace Gothic_II_Addon {
     static unsigned long& s_iCollisionDetectorFrameCtr;
     static int& s_iCurrentCollReport;
     static zCCollisionReport*& s_aoCollReportList;
+
+    // user API
+    #include "zCCollisionDetector.inl"
   };
 
 } // namespace Gothic_II_Addon

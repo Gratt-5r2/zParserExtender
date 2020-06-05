@@ -59,6 +59,9 @@ namespace Gothic_II_Classic {
     zSTRING( long val )                   zInit( zSTRING_OnInit( val ) );
     zSTRING( zSTRING const* val )         zInit( zSTRING_OnInit( val ) );
     virtual ~zSTRING()                    zCall( 0x00401160 );
+    
+    // Special Union string constructor
+    zSTRING( string const& val ) { zSTRING_OnInit( (char const*)val ); }
 
     // Same as union methods
     char& operator[]( unsigned int )        zCall( 0x004453F0 );
@@ -67,7 +70,6 @@ namespace Gothic_II_Classic {
     zSTRING& operator =  ( zSTRING const& ) zCall( 0x00597950 );
     char* ToChar() const                    zCall( 0x004631C0 );
     void Clear()                            zCall( 0x00597AB0 );
-    int Length() const                      zCall( 0x00597B80 );
     bool IsEmpty() const                    zCall( 0x0078AF30 );
     zSTRING& Lower()                        zCall( 0x00469DC0 );
     zSTRING& Upper()                        zCall( 0x00469ED0 );
@@ -78,6 +80,7 @@ namespace Gothic_II_Classic {
     inline operator string()             { return ToChar(); }
     inline operator const string() const { return ToChar(); }
     inline operator const char*() const  { return ToChar(); }
+    inline int Length() const            { return length;   }
 
 #if USING_UNION_STRING_METHODS
 #if !UNPROTECT_ZSTRING_METHODS
@@ -426,8 +429,8 @@ namespace Gothic_II_Classic {
     return zSTRING( s1 ) += s2;
   }
 
-  inline zSTRING& operator += ( const zSTRING& s1, const zSTRING& s2 ) {
-    return s1 += s2;
+  inline zSTRING& operator += ( zSTRING& s1, const zSTRING& s2 ) {
+    return s1.Put( s2, s1.Length() );
   }
 
   // case Insensitive

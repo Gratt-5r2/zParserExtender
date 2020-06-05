@@ -37,6 +37,9 @@ namespace Gothic_I_Addon {
     void TNpcAIState_OnInit() zCall( 0x006F9E20 );
     TNpcAIState()             zInit( TNpcAIState_OnInit() );
     ~TNpcAIState()            zCall( 0x006F9E60 );
+
+    // user API
+    #include "TNpcAIState.inl"
   };
 
   class oCNpc_States {
@@ -110,6 +113,9 @@ namespace Gothic_I_Addon {
     virtual void Unarchive( zCArchiver& )                              zCall( 0x006FD4C0 );
     virtual void PackState( zCBuffer& )                                zCall( 0x006FDA70 );
     virtual void UnpackState( zCBuffer& )                              zCall( 0x006FDAB0 );
+
+    // user API
+    #include "oCNpc_States.inl"
   };
 
 } // namespace Gothic_I_Addon

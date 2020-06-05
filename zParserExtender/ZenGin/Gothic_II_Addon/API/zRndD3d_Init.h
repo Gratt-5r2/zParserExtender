@@ -30,6 +30,9 @@ namespace Gothic_II_Addon {
   public:
     int mode;
     zCTex_D3D* texture;
+
+    // user API
+    #include "zD3DTEX.inl"
   };
 
 } // namespace Gothic_II_Addon

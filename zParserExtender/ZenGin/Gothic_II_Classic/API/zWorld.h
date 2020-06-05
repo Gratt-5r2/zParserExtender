@@ -37,6 +37,9 @@ namespace Gothic_II_Classic {
   public:
 
     zCCallback() {}
+
+    // user API
+    #include "zCCallback.inl"
   };
 
   class zCVobCallback : public zCCallback {
@@ -44,6 +47,9 @@ namespace Gothic_II_Classic {
 
     zCVobCallback() {}
     virtual void HandleVob( zCVob*, void* ) zPureCall;
+
+    // user API
+    #include "zCVobCallback.inl"
   };
 
   class zCWorldPerFrameCallback : public zCCallback {
@@ -51,6 +57,9 @@ namespace Gothic_II_Classic {
     
     virtual void DoWorldPerFrameCallback( zCWorld*, zCCamera* ) zPureCall;
     zCWorldPerFrameCallback() {}
+
+    // user API
+    #include "zCWorldPerFrameCallback.inl"
   };
 
   struct zTTraceRayReport {
@@ -62,6 +71,9 @@ namespace Gothic_II_Classic {
     zCVertex* foundVertex;
 
     zTTraceRayReport() {}
+
+    // user API
+    #include "zTTraceRayReport.inl"
   };
 
   class zCTransferConstr {
@@ -70,6 +82,9 @@ namespace Gothic_II_Classic {
     float formFactor;
 
     zCTransferConstr() {}
+
+    // user API
+    #include "zCTransferConstr.inl"
   };
   
 #pragma pack( push, 1 )
@@ -80,6 +95,9 @@ namespace Gothic_II_Classic {
     unsigned short formFactor;
 
     zCTransfer() {}
+
+    // user API
+    #include "zCTransfer.inl"
   };
   
 #pragma pack( pop )
@@ -100,6 +118,9 @@ namespace Gothic_II_Classic {
     void zCPatch_OnInit() zCall( 0x00624940 );
     zCPatch()             zInit( zCPatch_OnInit() );
     void DoTransfers()    zCall( 0x00627880 );
+
+    // user API
+    #include "zCPatch.inl"
   };
     
 #pragma pack( push, 1 )
@@ -122,6 +143,9 @@ namespace Gothic_II_Classic {
     zCPatchMap() {}
     int CheckRaySurfaceIntersection( zVEC3&, zVEC3&, zVEC3&, zCPolygon*& ) zCall( 0x00624990 );
     ~zCPatchMap()                                                          zCall( 0x00626FE0 );
+
+    // user API
+    #include "zCPatchMap.inl"
   };
     
 #pragma pack( pop )
@@ -278,7 +302,6 @@ namespace Gothic_II_Classic {
     void SetShowTextureStats( int )                                                                                zCall( 0x0062FA20 );
     void SetVobFarClipZScalability( float )                                                                        zCall( 0x0062FA30 );
     zCBspTree* GetBspTree()                                                                                        zCall( 0x006732A0 );
-    static void operator delete( void* )                                                                           zCall( 0x005A6A50 );
     static zCObject* _CreateNewInstance()                                                                          zCall( 0x00618260 );
     static int ActiveZoneListCompare( void const*, void const* )                                                   zCall( 0x00618D20 );
     static int GetWaveAnisEnabled()                                                                                zCall( 0x0062F9F0 );
@@ -319,6 +342,9 @@ namespace Gothic_II_Classic {
     static int& s_bAlternateRenderOrder;
     static int& s_bEnvMappingEnabled;
     static int& s_bAmbientVobsEnabled;
+
+    // user API
+    #include "zCWorld.inl"
   };
 
 } // namespace Gothic_II_Classic

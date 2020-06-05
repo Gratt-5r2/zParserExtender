@@ -14,6 +14,9 @@ namespace Gothic_I_Addon {
       float score;
 
       zTLightScore() {}
+
+      // user API
+      #include "zCRenderLightContainer_zTLightScore.inl"
     };
 
     zCRenderLight lightList[zRENDERLIGHT_LIGHT_MAX];
@@ -34,6 +37,9 @@ namespace Gothic_I_Addon {
     void SetupRendererLights()                                         zCall( 0x005CD920 );
     static int CompareLightScore( void const*, void const* )           zCall( 0x005CC290 );
     static void S_ReleaseVobLightRefs()                                zCall( 0x005CC770 );
+
+    // user API
+    #include "zCRenderLightContainer.inl"
   };
 
 } // namespace Gothic_I_Addon

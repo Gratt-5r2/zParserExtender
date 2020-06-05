@@ -45,6 +45,9 @@ namespace Gothic_II_Classic {
 
     // static properties
     static unsigned long& masterFrameCtr;
+
+    // user API
+    #include "zCTexAniCtrl.inl"
   };
 
   class zCMaterial : public zCObject {
@@ -121,7 +124,6 @@ namespace Gothic_II_Classic {
     void SetMatGroupByString( zSTRING const& )             zCall( 0x0055FFB0 );
     void RefreshAvgColorFromTexture()                      zCall( 0x005601B0 );
     zCTexture* GetAniTexture()                             zCall( 0x00760480 );
-    static void operator delete( void* )                   zCall( 0x004738B0 );
     static zCObject* _CreateNewInstance()                  zCall( 0x0055EB00 );
     static zSTRING const& GetMatGroupString( zTMat_Group ) zCall( 0x0055FEF0 );
     static zCMaterial* SearchName( zSTRING& )              zCall( 0x00560C10 );
@@ -132,6 +134,9 @@ namespace Gothic_II_Classic {
 
     // static properties
     static unsigned char& s_matUsageDefault;
+
+    // user API
+    #include "zCMaterial.inl"
   };
 
 } // namespace Gothic_II_Classic

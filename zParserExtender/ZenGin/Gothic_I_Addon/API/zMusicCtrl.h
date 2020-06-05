@@ -19,7 +19,6 @@ namespace Gothic_I_Addon {
 
     zCEventMusicControler() {}
     static zCObject* _CreateNewInstance()                               zCall( 0x00748230 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x007483F0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00748410 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x007485E0 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x00748610 );
@@ -29,8 +28,8 @@ namespace Gothic_I_Addon {
     virtual zCEventMessage::zTTimeBehavior MD_GetTimeBehavior()         zCall( 0x007485C0 );
     virtual float MD_GetMinTime()                                       zCall( 0x007485D0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCEventMusicControler, zCEventMessage )
+    // user API
+    #include "zCEventMusicControler.inl"
   };
 
   class zCMusicControler : public zCEffect {
@@ -40,14 +39,13 @@ namespace Gothic_I_Addon {
     void zCMusicControler_OnInit()                                      zCall( 0x00748640 );
     zCMusicControler()                                                  zInit( zCMusicControler_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x00747F80 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00748000 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00748020 );
     virtual ~zCMusicControler()                                         zCall( 0x00748690 );
     virtual void OnMessage( zCEventMessage*, zCVob* )                   zCall( 0x007486A0 );
     virtual void ThisVobRemovedFromWorld( zCWorld* )                    zCall( 0x00748700 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCMusicControler, zCEffect )
+    // user API
+    #include "zCMusicControler.inl"
   };
 
 } // namespace Gothic_I_Addon

@@ -15,6 +15,9 @@ namespace Gothic_II_Classic {
     int NumOfAllocatedVertexFeatures;
 
     zCVertexFeaturePool() {}
+
+    // user API
+    #include "zCVertexFeaturePool.inl"
   };
 
   class zCPolygonPool {
@@ -23,6 +26,9 @@ namespace Gothic_II_Classic {
     int NumOfAllocatedPolygon;
 
     zCPolygonPool() {}
+
+    // user API
+    #include "zCPolygonPool.inl"
   };
 
   class zCVertexPool {
@@ -32,6 +38,9 @@ namespace Gothic_II_Classic {
     int NumOfAllocatedVertex;
 
     zCVertexPool() {}
+
+    // user API
+    #include "zCVertexPool.inl"
   };
 
   class zCMeshPool {
@@ -43,6 +52,9 @@ namespace Gothic_II_Classic {
     zCMesh* meshObject;
 
     zCMeshPool() {}
+
+    // user API
+    #include "zCMeshPool.inl"
   };
 
   class zCMeshesPool {
@@ -51,6 +63,9 @@ namespace Gothic_II_Classic {
     GETSmallArrayNative<zCMeshPool*>* pool;
 
     zCMeshesPool() {}
+
+    // user API
+    #include "zCMeshesPool.inl"
   };
 
 } // namespace Gothic_II_Classic

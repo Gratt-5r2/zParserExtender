@@ -186,6 +186,9 @@ namespace Gothic_II_Classic {
     void SetSampledPlayerPos( zVEC3 const& )                                  zCall( 0x004B8D10 );
     zVEC3& GetPlayerFuturePos( float )                                        zCall( 0x004B8D50 );
     static zCMovementTracker* GetTracker()                                    zCall( 0x004B1FA0 );
+
+    // user API
+    #include "zCMovementTracker.inl"
   };
 
 } // namespace Gothic_II_Classic

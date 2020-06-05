@@ -24,7 +24,6 @@ namespace Gothic_I_Classic {
     void SendPingReply( zCPlayerInfo* )                                                         zCall( 0x00456D30 );
     void SendWorldTime()                                                                        zCall( 0x00456D70 );
     static zCObject* _CreateNewInstance()                                                       zCall( 0x00456670 );
-    static void operator delete( void*, char const*, char const*, int )                         zCall( 0x004567D0 );
     virtual zCClassDef* _GetClassDef() const                                                    zCall( 0x004567F0 );
     virtual ~zCNetManager()                                                                     zCall( 0x00456A20 );
     virtual void Process()                                                                      zCall( 0x00456A30 );
@@ -32,8 +31,8 @@ namespace Gothic_I_Classic {
     virtual int HandleNetMessage( zCNetMessage*, unsigned short const&, zCClassDef*, zCWorld* ) zCall( 0x00456B60 );
     virtual void ProcessMessages()                                                              zCall( 0x00456AE0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCNetManager, zCObject )
+    // user API
+    #include "zCNetManager.inl"
   };
 
 } // namespace Gothic_I_Classic

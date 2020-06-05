@@ -12,7 +12,6 @@ namespace Gothic_II_Addon {
 #ifndef SAFE_DELETE
 #define SAFE_DELETE( obj ) if( obj ) { delete obj; obj = 0 }
 #endif
-#define zCLASS_DECLARATION( classname ) static zCClassDef* classDef;
 #define zCall( address ) { XCALL( address ); }
 #define zInit( call ) { if( Union.GetEngineVersion() == Engine_G2A ) call; }
 #define zRTTI( type ) { return type; }
@@ -38,14 +37,28 @@ namespace Gothic_II_Addon {
 #define sqr(a) (a * a)
 
 
-#define CalcAngle(a, b)                 \
-    float angle = atan (SafeDiv(a, b)); \
-    if (a >= 0 && b < 0)                \
-    angle = 180.0f / DEGREE + angle;    \
-    else if (a < 0 && b <= 0)           \
-    angle = 180.0f / DEGREE + angle;    \
-    else if (a <= 0 && b > 0)           \
-    angle = 360.0f / DEGREE + angle;    \
+#define CalcAngle(a, b)                     \
+    if( b == 0.0f ) {                       \
+      if( a == 0.0f )                       \
+        return 0.0f;                        \
+                                            \
+      if( a > 0 )                           \
+        return RAD90;                       \
+      return RAD270;                        \
+     }                                      \
+                                            \
+    if( a == 0.0f ) {                       \
+      if( b > 0.0f )                        \
+        return 0.0f;                        \
+      return RAD180;                        \
+    }                                       \
+                                            \
+    float angle = atan( SafeDiv( a, b ) );  \
+    if( b < 0.0f )                          \
+      angle += RAD180;                      \
+    else if( a < 0.0f )                     \
+      angle += RAD360;                      \
+                                            \
     return angle;
 
 
@@ -56,8 +69,12 @@ namespace Gothic_II_Addon {
     a              = sin(radAngle) * length;  \
     b              = cos(radAngle) * length;  \
     return *this;
-	
 
+
+
+
+  // ZMEMPOOL INTERFACE
+  // memory pool declaration for gothic api containers
 #define zMEMPOOL_DECLARATION_TEMPLATE( classname, address )                                         \
     void *operator new( size_t s ) {                                                                \
       return ((zCMemPoolBase*)address)->Alloc();                                                    \
@@ -77,6 +94,8 @@ namespace Gothic_II_Addon {
     }
 
 
+
+  // memory pool declaration for gothic api classes
 #define zMEMPOOL_DECLARATION( classname, address )                                                  \
     void* operator new( size_t s ){                                                                 \
       return ((zCMemPoolBase*)address)->Alloc();                                                    \
@@ -85,7 +104,7 @@ namespace Gothic_II_Addon {
       ((zCMemPoolBase*)address)->Free( p );                                                         \
     }                                                                                               \
     void* operator new( unsigned int size, const char* classn, const char* file, int l ) {          \
-      zCMemPoolBase::SetMemDebug( classn, file, l);                                                 \
+      zCMemPoolBase::SetMemDebug( classn, file, l );                                                \
       return operator new(size);                                                                    \
     }                                                                                               \
     void  operator delete( void* ptr,const char *classn,const char *file,int line) {                \
@@ -98,7 +117,57 @@ namespace Gothic_II_Addon {
       ((zCMemPoolBase*)address)->PoolAdd( mem, num_objects, free );                                 \
     }
 
-  
+
+
+  // ZOBJECT INTERFACE
+  // class declaration for gothic api zobject classes
+#define zCLASS_DECLARATION( className )                               \
+  static zCClassDef* classDef;                                        \
+  void* className::operator new( size_t size ) {                      \
+    void* mem = ::operator new( size );                               \
+  zCClassDef::ObjectCreated( (zCObject*)mem, className::classDef );   \
+  return mem;                                                         \
+  };                                                                  \
+  void className::operator delete( void* mem ) {                      \
+    zCClassDef::ObjectDeleted( (zCObject*)mem, className::classDef ); \
+    ::operator delete( mem );                                         \
+  };
+
+
+
+  // class declaration for union zobject classes
+#define zCLASS_UNION_DECLARATION( className )                \
+  static zCClassDef* className::classDef;                    \
+  static zCObject* className::_CreateNewInstance( void );    \
+  virtual zCClassDef* className::_GetClassDef( void ) const; \
+  void* className::operator new(size_t size);                \
+  void className::operator delete(void* mem);
+
+
+  // class definition for union zobject classes
+#define zCLASS_UNION_DEFINITION( className, baseClassName, classFlags, archiveVersion )                                                         \
+  zCClassDef* className::classDef = !CHECK_THIS_ENGINE ? Null :                                                                                 \
+                                    new zCClassDef( #className, #baseClassName, className::_CreateNewInstance, sizeof( className ), 0, 0, "" ); \
+  zCObject* className::_CreateNewInstance( void ) {                                                                                             \
+    return new className;                                                                                                                       \
+  }                                                                                                                                             \
+  zCClassDef* className::_GetClassDef( void ) const {                                                                                           \
+    return className::classDef;                                                                                                                 \
+  };                                                                                                                                            \
+  void* className::operator new( size_t size ) {                                                                                                \
+    void* mem = ::operator new( size );                                                                                                         \
+  zCClassDef::ObjectCreated( (zCObject*)mem, className::classDef );                                                                             \
+  return mem;                                                                                                                                   \
+  };                                                                                                                                            \
+  void className::operator delete( void* mem ) {                                                                                                \
+    zCClassDef::ObjectDeleted( (zCObject*)mem, className::classDef );                                                                           \
+    ::operator delete( mem );                                                                                                                   \
+  };
+
+
+
+  // COLLISION INTERFACE
+  // class declaration for gothic api collision object classes
 #define zCOLLISION_OBJECT_DECLARATION( className )                    \
     static zCCollisionObjectDef* className::S_GetCollObjClass(void) { \
       return className::s_oCollObjClass;                              \
@@ -106,17 +175,7 @@ namespace Gothic_II_Addon {
     static zCCollisionObjectDef* className::s_oCollObjClass; 
 
 
-#define zCLASS_UNION_DECLARATION( className )                \
-  static  zCClassDef* className::classDef;                   \
-  static  zCObject*   className::_CreateNewInstance( void ); \
-  virtual zCClassDef* className::_GetClassDef( void ) const { return className::classDef; };
-
-
-#define zCLASS_UNION_DEFINITION( className, baseClassName, classFlags, archiveVersion )                                                       \
-  zCClassDef* className::classDef = new zCClassDef( #className, #baseClassName, className::_CreateNewInstance, sizeof(className), 0, 0, "" ); \
-  zCObject*  className::_CreateNewInstance ( void ) { return new className; }
-
-
+  // class declaration for union collision object classes
 #define zCOLLISION_OBJECT_UNION_DECLARATION( className )                                                           \
   static  zCCollisionObjectDef* className::S_GetCollObjClass(void)      { return &(className::s_oCollObjClass); }; \
   virtual zCCollisionObjectDef* className::GetCollObjClass(void) const  { return &(className::s_oCollObjClass); }; \
@@ -124,6 +183,7 @@ namespace Gothic_II_Addon {
   static  zCCollisionObject*    className::_CreateNewInstance(void);
 
 
+  // class definition for union collision object classes
 #define zCOLLISION_OBJECT_UNION_DEFINITION( className, isVolatile )                           \
   zCCollisionObjectDef className::s_oCollObjClass(isVolatile, className::_CreateNewInstance); \
   zCCollisionObject* className::_CreateNewInstance(void) {                                    \

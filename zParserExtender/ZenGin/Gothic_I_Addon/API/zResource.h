@@ -32,6 +32,9 @@ namespace Gothic_I_Addon {
       void InsertRes( zCResource* ) zCall( 0x005D4790 );
       void RemoveRes( zCResource* ) zCall( 0x005D47F0 );
       void TouchRes( zCResource* )  zCall( 0x005D4860 );
+
+      // user API
+      #include "zCResourceManager_zCClassCache.inl"
     };
 
     zCArray<zCClassCache> classCacheList;
@@ -72,6 +75,9 @@ namespace Gothic_I_Addon {
     void PrintStatusDebug()                            zCall( 0x005D3E40 );
     virtual ~zCResourceManager()                       zCall( 0x005D2DE0 );
     virtual unsigned long ThreadProc()                 zCall( 0x005D3A90 );
+
+    // user API
+    #include "zCResourceManager.inl"
   };
 
   class zCResource : public zCObject {
@@ -105,6 +111,9 @@ namespace Gothic_I_Addon {
     virtual int ReleaseResourceData()                             zCall( 0x005D2BF0 );
     virtual unsigned long GetResSizeBytes()                       zCall( 0x005D2C00 );
     virtual void GetCacheConfig( unsigned long&, unsigned long& ) zCall( 0x005D2C10 );
+
+    // user API
+    #include "zCResource.inl"
   };
 
 } // namespace Gothic_I_Addon

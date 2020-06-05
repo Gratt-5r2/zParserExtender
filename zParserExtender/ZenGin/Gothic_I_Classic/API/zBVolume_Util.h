@@ -29,6 +29,9 @@ namespace Gothic_I_Classic {
         return activeList[i];
       }
       zCArray<VOB*> activeList;
+
+      // user API
+      #include "zCOBBox3D_zTBoxSortHandle.inl"
     };
 
     virtual ~zCVobBBox3DSorter() {

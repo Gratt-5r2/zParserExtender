@@ -73,7 +73,6 @@ namespace Gothic_II_Addon {
     void PackToBuffer( zCBuffer&, zCEventManager* )                                 zCall( 0x00605730 );
     unsigned short GetSubType() const                                               zCall( 0x00674290 );
     static zCObject* _CreateNewInstance()                                           zCall( 0x005FCEF0 );
-    static void operator delete( void* )                                            zCall( 0x005FD050 );
     static void AnalyzeMessageID( unsigned long, unsigned short&, unsigned short& ) zCall( 0x006056F0 );
     static zCEventMessage* CreateFromID( unsigned long )                            zCall( 0x00605710 );
     static zCEventMessage* CreateFromBuffer( zCBuffer&, zCEventManager* )           zCall( 0x00605780 );
@@ -101,6 +100,9 @@ namespace Gothic_II_Addon {
     virtual float MD_GetMinTime()                                                   zCall( 0x004020A0 );
     virtual void Pack( zCBuffer&, zCEventManager* )                                 zCall( 0x004020B0 );
     virtual void Unpack( zCBuffer&, zCEventManager* )                               zCall( 0x004020C0 );
+
+    // user API
+    #include "zCEventMessage.inl"
   };
 
   class zCEventCore : public zCEventMessage {
@@ -126,7 +128,6 @@ namespace Gothic_II_Addon {
 
     zCEventCore() {}
     void Clear()                                      zCall( 0x006060C0 );
-    static void operator delete( void* )              zCall( 0x00402110 );
     static zCObject* _CreateNewInstance()             zCall( 0x005FD250 );
     virtual zCClassDef* _GetClassDef() const          zCall( 0x00402130 );
     virtual void Archive( zCArchiver& )               zCall( 0x006064F0 );
@@ -137,6 +138,9 @@ namespace Gothic_II_Addon {
     virtual zSTRING MD_GetSubTypeString( int )        zCall( 0x006062F0 );
     virtual void Pack( zCBuffer&, zCEventManager* )   zCall( 0x00606120 );
     virtual void Unpack( zCBuffer&, zCEventManager* ) zCall( 0x006061D0 );
+
+    // user API
+    #include "zCEventCore.inl"
   };
 
   class zCVob : public zCObject {
@@ -173,6 +177,9 @@ namespace Gothic_II_Addon {
 
       zTCollisionContext() {}
       ~zTCollisionContext() zCall( 0x0061F490 );
+
+      // user API
+      #include "zCVob_zTCollisionContext.inl"
     };
 
     struct zTModelLimbColl {
@@ -184,6 +191,9 @@ namespace Gothic_II_Addon {
       void zTModelLimbColl_OnInit() zCall( 0x00603A20 );
       zTModelLimbColl()             zInit( zTModelLimbColl_OnInit() );
       ~zTModelLimbColl()            zCall( 0x00603A50 );
+
+      // user API
+      #include "zCVob_zTModelLimbColl.inl"
     };
 
     zCTree<zCVob>* globalVobTreeNode;
@@ -373,7 +383,6 @@ namespace Gothic_II_Addon {
     zTVobType GetVobType() const                                                                                  zCall( 0x006CFFD0 );
     void SetDrawBBox3D( int )                                                                                     zCall( 0x006CFFE0 );
     void SetCollDet( int )                                                                                        zCall( 0x006D0000 );
-    static void operator delete( void* )                                                                          zCall( 0x0043D180 );
     static zCObject* _CreateNewInstance()                                                                         zCall( 0x005FD940 );
     static void InitVobSystem()                                                                                   zCall( 0x005FE6E0 );
     static void CleanupVobSystem()                                                                                zCall( 0x005FE800 );
@@ -428,6 +437,9 @@ namespace Gothic_II_Addon {
     static int& s_showHelperVisuals;
     static int& s_enableAnimations;
     static zCCollisionDetector*& s_poCollisionDetector;
+
+    // user API
+    #include "zCVob.inl"
   };
 
   class zCVobLightData {
@@ -465,6 +477,9 @@ namespace Gothic_II_Addon {
     zCVobLightData()                           zInit( zCVobLightData_OnInit() );
     ~zCVobLightData()                          zCall( 0x0060A9F0 );
     void SetRange( float, int )                zCall( 0x0060AA60 );
+
+    // user API
+    #include "zCVobLightData.inl"
   };
 
   class zCVobLightPreset : public zCObject {
@@ -476,11 +491,13 @@ namespace Gothic_II_Addon {
 
     zCVobLightPreset() {}
     static zCObject* _CreateNewInstance()    zCall( 0x005FD520 );
-    static void operator delete( void* )     zCall( 0x005FD670 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x005FD690 );
     virtual void Archive( zCArchiver& )      zCall( 0x00609790 );
     virtual void Unarchive( zCArchiver& )    zCall( 0x006097C0 );
     virtual ~zCVobLightPreset()              zCall( 0x005FD6D0 );
+
+    // user API
+    #include "zCVobLightPreset.inl"
   };
 
   class zCVobLight : public zCVob {
@@ -498,7 +515,6 @@ namespace Gothic_II_Addon {
     void AddThisToPresetList( zSTRING const& ) const                                      zCall( 0x00608910 );
     int SetByPreset( zSTRING const& )                                                     zCall( 0x00608BE0 );
     int SetByPresetInUse()                                                                zCall( 0x00608E60 );
-    static void operator delete( void* )                                                  zCall( 0x0048DDA0 );
     static zCObject* _CreateNewInstance()                                                 zCall( 0x00607C60 );
     static void CleanupVobLight()                                                         zCall( 0x00607FE0 );
     static zCOLOR SumLightsAtPositionWS( zCArray<zCVobLight*> const&, zVEC3 const&, int ) zCall( 0x00608410 );
@@ -516,6 +532,9 @@ namespace Gothic_II_Addon {
     // static properties
     static zCArray<zCVobLightPreset*>& lightPresetList;
     static int& renderLightVisuals;
+
+    // user API
+    #include "zCVobLight.inl"
   };
 
   class zCVobLevelCompo : public zCVob {
@@ -526,7 +545,6 @@ namespace Gothic_II_Addon {
     zCVobLevelCompo()                        zInit( zCVobLevelCompo_OnInit() );
     int HasIdentityTrafo() const             zCall( 0x006052E0 );
     static zCObject* _CreateNewInstance()    zCall( 0x005FDB90 );
-    static void operator delete( void* )     zCall( 0x005FDC10 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x005FDC30 );
     virtual void Archive( zCArchiver& )      zCall( 0x00605360 );
     virtual void Unarchive( zCArchiver& )    zCall( 0x00605410 );
@@ -536,6 +554,9 @@ namespace Gothic_II_Addon {
 
     // static properties
     static int& unarcIgnoreVisuals;
+
+    // user API
+    #include "zCVobLevelCompo.inl"
   };
 
 } // namespace Gothic_II_Addon

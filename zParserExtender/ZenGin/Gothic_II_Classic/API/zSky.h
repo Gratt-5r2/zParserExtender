@@ -19,6 +19,9 @@ namespace Gothic_II_Classic {
     void CreateParticles()                 zCall( 0x005D9F40 );
     virtual ~zCUnderwaterPFX()             zCall( 0x005D9160 );
     virtual int Render( zTRenderContext& ) zCall( 0x005D9B20 );
+
+    // user API
+    #include "zCUnderwaterPFX.inl"
   };
 
   class zCSkyControler : public zCObject {
@@ -83,6 +86,9 @@ namespace Gothic_II_Classic {
     // static properties
     static zCSkyControler*& s_activeSkyControler;
     static int& s_skyEffectsEnabled;
+
+    // user API
+    #include "zCSkyControler.inl"
   };
 
   class zCSkyControler_Mid : public zCSkyControler {
@@ -129,6 +135,9 @@ namespace Gothic_II_Classic {
     virtual void UpdateWorldDependencies()               zPureCall;
     virtual void RenderSkyPre()                          zCall( 0x005D92B0 );
     virtual void RenderSkyPost( int )                    zCall( 0x005D9380 );
+
+    // user API
+    #include "zCSkyControler_Mid.inl"
   };
 
   class zCSkyControler_Indoor : public zCSkyControler_Mid {
@@ -142,7 +151,6 @@ namespace Gothic_II_Classic {
     void zCSkyControler_Indoor_OnInit()          zCall( 0x005D9880 );
     zCSkyControler_Indoor()                      zInit( zCSkyControler_Indoor_OnInit() );
     static zCObject* _CreateNewInstance()        zCall( 0x005D8580 );
-    static void operator delete( void* )         zCall( 0x005D8770 );
     virtual zCClassDef* _GetClassDef() const     zCall( 0x005D8790 );
     virtual ~zCSkyControler_Indoor()             zCall( 0x005D8820 );
     virtual void SetTime( float )                zCall( 0x005D9920 );
@@ -160,6 +168,9 @@ namespace Gothic_II_Classic {
     virtual void UpdateWorldDependencies()       zCall( 0x005D87E0 );
     virtual void RenderSkyPre()                  zCall( 0x005D9A70 );
     virtual void RenderSkyPost( int )            zCall( 0x005D9B10 );
+
+    // user API
+    #include "zCSkyControler_Indoor.inl"
   };
 
 } // namespace Gothic_II_Classic

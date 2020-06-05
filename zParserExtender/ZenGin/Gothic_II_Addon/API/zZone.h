@@ -20,6 +20,9 @@ namespace Gothic_II_Addon {
       void* data;
 
       zTNode() {}
+
+      // user API
+      #include "zCBBox3DSorterBase_zTNode.inl"
     };
 
     class zTBoxSortHandle {
@@ -35,6 +38,9 @@ namespace Gothic_II_Addon {
       virtual void AddActive( void* ) zPureCall;
       virtual void DelActive( void* ) zPureCall;
       virtual void ClearActive()      zCall( 0x00620010 );
+
+      // user API
+      #include "zCBBox3DSorterBase_zTBoxSortHandle.inl"
     };
 
     zCArray<zTBoxSortHandle*> handles;
@@ -60,6 +66,9 @@ namespace Gothic_II_Addon {
 
     static zCBBox3DSorterBase*& s_currentSorter;
     static int& s_currentDimension;
+
+    // user API
+    #include "zCBBox3DSorterBase.inl"
   };
 
   class zCZone : public zCVob {
@@ -84,6 +93,9 @@ namespace Gothic_II_Addon {
     virtual zCClassDef* GetZoneMotherClass( void ) const                                               zCall( 0x00637170 );
     virtual zCClassDef* GetDefaultZoneClass( void ) const                                              zCall( 0x00639760 );
     virtual zSTRING GetDebugDescString( void )                                                         zCall( 0x0063C400 );
+
+    // user API
+    #include "zCZone.inl"
   };
 
   class zCZoneZFog : public zCZone {
@@ -100,7 +112,6 @@ namespace Gothic_II_Addon {
     zCZoneZFog()                                                                                       zInit( zCZoneZFog_OnInit() );
     float GetActiveRange( float )                                                                      zCall( 0x0063C700 );
     float GetSkyFadeWeight()                                                                           zCall( 0x0063C750 );
-    static void operator delete( void* )                                                               zCall( 0x00637180 );
     static zCObject* _CreateNewInstance()                                                              zCall( 0x0063A6F0 );
     virtual zCClassDef* _GetClassDef( void ) const                                                     zCall( 0x0063A7E0 );
     virtual void Archive( zCArchiver& )                                                                zCall( 0x0063CBB0 );
@@ -108,6 +119,9 @@ namespace Gothic_II_Addon {
     virtual ~zCZoneZFog( void )                                                                        zCall( 0x0063C690 );
     virtual void ProcessZoneList( zCArraySort<zCZone*> const&, zCArraySort<zCZone*> const&, zCWorld* ) zCall( 0x0063C7A0 );
     virtual zCClassDef* GetDefaultZoneClass( void ) const                                              zCall( 0x0063C790 );
+
+    // user API
+    #include "zCZoneZFog.inl"
   };
 
   class zCZoneZFogDefault : public zCZoneZFog {
@@ -115,12 +129,14 @@ namespace Gothic_II_Addon {
     zCLASS_DECLARATION( zCZoneZFogDefault )
 
     zCZoneZFogDefault() {}
-    static void operator delete( void* )           zCall( 0x006371A0 );
     static zCObject* _CreateNewInstance()          zCall( 0x0063A9E0 );
     virtual zCClassDef* _GetClassDef( void ) const zCall( 0x006371C0 );
     virtual void Unarchive( zCArchiver& )          zCall( 0x0063CD30 );
     virtual ~zCZoneZFogDefault( void )             zCall( 0x00638FD0 );
     virtual void ThisVobAddedToWorld( zCWorld* )   zCall( 0x0063CD00 );
+
+    // user API
+    #include "zCZoneZFogDefault.inl"
   };
 
   class zCZoneReverb : public zCZone {
@@ -135,7 +151,6 @@ namespace Gothic_II_Addon {
     zCZoneReverb()                                                                                     zInit( zCZoneReverb_OnInit() );
     float GetActiveWeight()                                                                            zCall( 0x0063F670 );
     static zCObject* _CreateNewInstance()                                                              zCall( 0x00639680 );
-    static void operator delete( void* )                                                               zCall( 0x00639770 );
     virtual zCClassDef* _GetClassDef( void ) const                                                     zCall( 0x00639790 );
     virtual void Archive( zCArchiver& )                                                                zCall( 0x0063F7E0 );
     virtual void Unarchive( zCArchiver& )                                                              zCall( 0x0063FA50 );
@@ -143,6 +158,9 @@ namespace Gothic_II_Addon {
     virtual void ProcessZoneList( zCArraySort<zCZone*> const&, zCArraySort<zCZone*> const&, zCWorld* ) zCall( 0x0063F6D0 );
     virtual zCClassDef* GetDefaultZoneClass( void ) const                                              zCall( 0x0063F6C0 );
     virtual zSTRING GetDebugDescString( void )                                                         zCall( 0x0063F4F0 );
+
+    // user API
+    #include "zCZoneReverb.inl"
   };
 
   class zCZoneReverbDefault : public zCZoneReverb {
@@ -151,12 +169,14 @@ namespace Gothic_II_Addon {
 
     zCZoneReverbDefault() {}
     static zCObject* _CreateNewInstance()                                                              zCall( 0x00639990 );
-    static void operator delete( void* )                                                               zCall( 0x00639A50 );
     virtual zCClassDef* _GetClassDef( void ) const                                                     zCall( 0x00639A70 );
     virtual void Unarchive( zCArchiver& )                                                              zCall( 0x0063FB40 );
     virtual ~zCZoneReverbDefault( void )                                                               zCall( 0x00639AC0 );
     virtual void ThisVobAddedToWorld( zCWorld* )                                                       zCall( 0x0063FB00 );
     virtual void ProcessZoneList( zCArraySort<zCZone*> const&, zCArraySort<zCZone*> const&, zCWorld* ) zCall( 0x00639A80 );
+
+    // user API
+    #include "zCZoneReverbDefault.inl"
   };
 
   class zCZoneMusic : public zCZone {
@@ -165,7 +185,6 @@ namespace Gothic_II_Addon {
 
     zCZoneMusic() {}
     static zCObject* _CreateNewInstance()          zCall( 0x0063A380 );
-    static void operator delete( void* )           zCall( 0x0063A430 );
     static int SetAutochange( int )                zCall( 0x0063FC10 );
     static void GetAutochange( int* )              zCall( 0x0063FC30 );
     virtual zCClassDef* _GetClassDef( void ) const zCall( 0x0063A450 );
@@ -173,6 +192,9 @@ namespace Gothic_II_Addon {
 
     static int& s_autochange;
     static int& s_canruleautochange;
+
+    // user API
+    #include "zCZoneMusic.inl"
   };
 
   class zCZoneVobFarPlane : public zCZone {
@@ -186,13 +208,15 @@ namespace Gothic_II_Addon {
     zCZoneVobFarPlane()                                                                                zInit( zCZoneVobFarPlane_OnInit() );
     float GetActiveFarZ( float )                                                                       zCall( 0x0063CF40 );
     static zCObject* _CreateNewInstance()                                                              zCall( 0x00639D20 );
-    static void operator delete( void* )                                                               zCall( 0x00639DE0 );
     virtual zCClassDef* _GetClassDef( void ) const                                                     zCall( 0x00639E00 );
     virtual void Archive( zCArchiver& )                                                                zCall( 0x0063D090 );
     virtual void Unarchive( zCArchiver& )                                                              zCall( 0x0063D0F0 );
     virtual ~zCZoneVobFarPlane( void )                                                                 zCall( 0x0063CED0 );
     virtual void ProcessZoneList( zCArraySort<zCZone*> const&, zCArraySort<zCZone*> const&, zCWorld* ) zCall( 0x0063CFA0 );
     virtual zCClassDef* GetDefaultZoneClass( void ) const                                              zCall( 0x0063CF90 );
+
+    // user API
+    #include "zCZoneVobFarPlane.inl"
   };
 
   class zCZoneVobFarPlaneDefault : public zCZoneVobFarPlane {
@@ -201,11 +225,13 @@ namespace Gothic_II_Addon {
 
     zCZoneVobFarPlaneDefault() {}
     static zCObject* _CreateNewInstance()          zCall( 0x0063A000 );
-    static void operator delete( void* )           zCall( 0x0063A0C0 );
     virtual zCClassDef* _GetClassDef( void ) const zCall( 0x0063A0E0 );
     virtual void Unarchive( zCArchiver& )          zCall( 0x0063D1E0 );
     virtual ~zCZoneVobFarPlaneDefault( void )      zCall( 0x0063A120 );
     virtual void ThisVobAddedToWorld( zCWorld* )   zCall( 0x0063D190 );
+
+    // user API
+    #include "zCZoneVobFarPlaneDefault.inl"
   };
 
   class zCVobSound : public zCZone {
@@ -257,7 +283,6 @@ namespace Gothic_II_Addon {
     void StartSound( int )                                                                             zCall( 0x0063E040 );
     void StopSound()                                                                                   zCall( 0x0063E1D0 );
     static zCObject* _CreateNewInstance()                                                              zCall( 0x0063ACC0 );
-    static void operator delete( void* )                                                               zCall( 0x0063AD20 );
     virtual zCClassDef* _GetClassDef( void ) const                                                     zCall( 0x0063D4F0 );
     virtual void Archive( zCArchiver& )                                                                zCall( 0x0063E3D0 );
     virtual void Unarchive( zCArchiver& )                                                              zCall( 0x0063E540 );
@@ -271,6 +296,9 @@ namespace Gothic_II_Addon {
     virtual void ProcessZoneList( zCArraySort<zCZone*> const&, zCArraySort<zCZone*> const&, zCWorld* ) zCall( 0x0063E8D0 );
     virtual zSTRING GetDebugDescString( void )                                                         zCall( 0x0063D640 );
     virtual void DoSoundUpdate( float )                                                                zCall( 0x0063E210 );
+
+    // user API
+    #include "zCVobSound.inl"
   };
 
   class zCVobSoundDaytime : public zCVobSound {
@@ -288,7 +316,6 @@ namespace Gothic_II_Addon {
     void ActivateSection( int )                          zCall( 0x0063EDE0 );
     int CalcTimeFrac( float, float, float, float& )      zCall( 0x0063EEC0 );
     static zCObject* _CreateNewInstance()                zCall( 0x0063AF30 );
-    static void operator delete( void* )                 zCall( 0x0063AFF0 );
     virtual zCClassDef* _GetClassDef( void ) const       zCall( 0x0063B010 );
     virtual void Archive( zCArchiver& )                  zCall( 0x0063F270 );
     virtual void Unarchive( zCArchiver& )                zCall( 0x0063F2E0 );
@@ -296,6 +323,9 @@ namespace Gothic_II_Addon {
     virtual zCClassDef* GetZoneMotherClass( void ) const zCall( 0x0063B020 );
     virtual zSTRING GetDebugDescString( void )           zCall( 0x0063EC40 );
     virtual void DoSoundUpdate( float )                  zCall( 0x0063EF50 );
+
+    // user API
+    #include "zCVobSoundDaytime.inl"
   };
 
 } // namespace Gothic_II_Addon

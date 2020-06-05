@@ -60,6 +60,9 @@ namespace Gothic_I_Classic {
     public:
       zCVisual* visual;
       int nodeIndex;
+
+      // user API
+      #include "zCModelMeshLib_zTNodeMesh.inl"
     };
 
     zCArray<zTNodeMesh> meshNodeList;
@@ -78,9 +81,7 @@ namespace Gothic_I_Classic {
     void BuildFromModel( zCModel* )                                                         zCall( 0x0057FE70 );
     void SaveMDM( zCModelPrototype* )                                                       zCall( 0x005800D0 );
     void SaveMDM( zCFileBIN&, zCModelPrototype* )                                           zCall( 0x005802E0 );
-    static void operator delete( void*, char const*, char const*, int )                     zCall( 0x00564990 );
     static zCObject* _CreateNewInstance()                                                   zCall( 0x00569FA0 );
-    static void* operator new( unsigned int, char const*, char const*, int )                zCall( 0x0057F390 );
     static unsigned long GetMDMFileVersion()                                                zCall( 0x005800A0 );
     static int LoadMDM( zSTRING const&, zCModelPrototype*, zCModel*, zCModelMeshLib** )     zCall( 0x00580780 );
     static int LoadMDM_Try( zSTRING const&, zCModelPrototype*, zCModel*, zCModelMeshLib** ) zCall( 0x00580B00 );
@@ -89,9 +90,8 @@ namespace Gothic_I_Classic {
     virtual zCClassDef* _GetClassDef() const                                                zCall( 0x005649B0 );
     virtual ~zCModelMeshLib()                                                               zCall( 0x0057F4A0 );
 
-    // compatible with g2 operators style
-    zOperatorNew   ( zCModelMeshLib, zCObject )
-    zOperatorDelete( zCModelMeshLib, zCObject )
+    // user API
+    #include "zCModelMeshLib.inl"
   };
 
   class zCModelAniEvent {
@@ -113,6 +113,9 @@ namespace Gothic_I_Classic {
     ~zCModelAniEvent()            zCall( 0x0056DB20 );
     void Save( zCFileBIN& ) const zCall( 0x0056DC00 );
     void Load( zCFileBIN& )       zCall( 0x0056DD60 );
+
+    // user API
+    #include "zCModelAniEvent.inl"
   };
 
   class zCModelNode {
@@ -134,6 +137,9 @@ namespace Gothic_I_Classic {
     zCModelNode( zCModelNode const& a0 )          zInit( zCModelNode_OnInit( a0 ));
     ~zCModelNode()                                zCall( 0x0056A3E0 );
     void SetNodeVisualS( zCVisual* )              zCall( 0x0056A480 );
+
+    // user API
+    #include "zCModelNode.inl"
   };
 
 #pragma pack( push, 1 )
@@ -145,6 +151,9 @@ namespace Gothic_I_Classic {
     // static properties
     static float& samplePosScaler;
     static float& samplePosRangeMin;
+
+    // user API
+    #include "zTMdl_AniSample.inl"
   };
 #pragma pack( pop )
 
@@ -223,12 +232,11 @@ namespace Gothic_I_Classic {
     zTMdl_AniType GetAniType() const                                    zCall( 0x0057E370 );
     int GetAniID() const                                                zCall( 0x006211C0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x0055D1E0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0055D250 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x0056AA10 );
     virtual ~zCModelAni()                                               zCall( 0x0056AA50 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCModelAni, zCObject )
+    // user API
+    #include "zCModelAni.inl"
   };
 
   class zCModelPrototype {
@@ -332,6 +340,9 @@ namespace Gothic_I_Classic {
     static int& s_autoConvertAnis;
     static int& s_autoConvertMeshes;
     static zCModelPrototype*& s_modelRoot;
+
+    // user API
+    #include "zCModelPrototype.inl"
   };
 
   class zCModelAniActive {
@@ -366,6 +377,9 @@ namespace Gothic_I_Classic {
     void SetProgressPercent( float )        zCall( 0x0055D510 );
     void SetActFrame( float )               zCall( 0x0055D560 );
     void DoCombineAni( zCModel*, int, int ) zCall( 0x00565D30 );
+
+    // user API
+    #include "zCModelAniActive.inl"
   };
 
   class zCModelTexAniState {
@@ -392,6 +406,9 @@ namespace Gothic_I_Classic {
     void AddTexListFromMesh( zCMesh*, zCArray<zCTexture*>& )              zCall( 0x0055DC70 );
     void AddTexListFromProgMesh( zCProgMeshProto*, zCArray<zCTexture*>& ) zCall( 0x0055DDF0 );
     void FinishTexList( zCArray<zCTexture*>& )                            zCall( 0x0055DF60 );
+
+    // user API
+    #include "zCModelTexAniState.inl"
   };
 
 #pragma pack( push, 1 )
@@ -411,6 +428,9 @@ namespace Gothic_I_Classic {
       zCQuat quat;
 
       zTNodeAni() {}
+
+      // user API
+      #include "zCModelNodeInst_zTNodeAni.inl"
     };
 
     zCModelNodeInst* parentNode;
@@ -442,6 +462,9 @@ namespace Gothic_I_Classic {
     void AddToNodeAniWeight( int, float )                    zCall( 0x00565630 );
     void CalcBlending( zCModel* )                            zCall( 0x005656A0 );
     int GetNodeAniListIndex( zCModelAniActive const* ) const zCall( 0x00565830 );
+
+    // user API
+    #include "zCModelNodeInst.inl"
   };
 #pragma pack( pop )
 
@@ -450,6 +473,9 @@ namespace Gothic_I_Classic {
     int prob;
 
     zTRandAni() {}
+
+    // user API
+    #include "zTRandAni.inl"
   };
 
   struct zTAniAttachment {
@@ -461,6 +487,9 @@ namespace Gothic_I_Classic {
     void zTAniAttachment_OnInit() zCall( 0x00568AB0 );
     ~zTAniAttachment()            zCall( 0x00568A90 );
     zTAniAttachment()             zInit( zTAniAttachment_OnInit() );
+
+    // user API
+    #include "zTAniAttachment.inl"
   };
 
   class zCModel : public zCVisualAnimate {
@@ -482,24 +511,36 @@ namespace Gothic_I_Classic {
     public:
       zCVob* vob;
       zCModelNodeInst* mnode;
+
+      // user API
+      #include "zCModel_zTMdl_NodeVobAttachment.inl"
     };
 
     struct zTMdl_StartedVobFX {
     public:
       zCVob* vob;
       float vobFXHandle;
+
+      // user API
+      #include "zCModel_zTMdl_StartedVobFX.inl"
     };
 
     struct zTAniMeshLibEntry {
     public:
       zCModelAniActive* ani;
       zCModelMeshLib* meshLib;
+
+      // user API
+      #include "zCModel_zTAniMeshLibEntry.inl"
     };
 
     struct zTMeshLibEntry {
     public:
       zCModelTexAniState texAniState;
       zCModelMeshLib* meshLib;
+
+      // user API
+      #include "zCModel_zTMeshLibEntry.inl"
     };
 
     int numActiveAnis;
@@ -625,7 +666,6 @@ namespace Gothic_I_Classic {
     void SetRandAniFreq( int, float )                                                                               zCall( 0x005690F0 );
     void __fastcall RecalcRootPosLocal( int )                                                                       zCall( 0x00569110 );
     static zCObject* _CreateNewInstance()                                                                           zCall( 0x0055CC90 );
-    static void operator delete( void*, char const*, char const*, int )                                             zCall( 0x0055CDF0 );
     static int AniAttachmentCompare( void const*, void const* )                                                     zCall( 0x00568AC0 );
     virtual zCClassDef* _GetClassDef() const                                                                        zCall( 0x0055CE10 );
     virtual ~zCModel()                                                                                              zCall( 0x0055E4F0 );
@@ -645,11 +685,12 @@ namespace Gothic_I_Classic {
     virtual int IsAnimationActive( zSTRING const& )                                                                 zCall( 0x0055CEF0 );
     virtual zSTRING const* GetAnyAnimation()                                                                        zCall( 0x00561050 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCModel, zCVisualAnimate )
 
     // static properties
     static int& s_drawSkeleton;
+
+    // user API
+    #include "zCModel.inl"
   };
 
   class zCModelConvertFileHandler : public zCScanDirFileHandler {
@@ -659,6 +700,9 @@ namespace Gothic_I_Classic {
     zCModelConvertFileHandler()                                        zInit( zCModelConvertFileHandler_OnInit() );
     virtual ~zCModelConvertFileHandler()                               zCall( 0x00424090 );
     virtual int HandleFile( zSTRING const&, char const*, _finddata_t ) zCall( 0x00581D30 );
+
+    // user API
+    #include "zCModelConvertFileHandler.inl"
   };
 
 } // namespace Gothic_I_Classic

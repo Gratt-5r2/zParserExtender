@@ -16,6 +16,9 @@ namespace Gothic_I_Classic {
     int distance;
     oCNpc* npc;
     zSTRING nodeName;
+
+    // user API
+    #include "TMobOptPos.inl"
   };
 
   class oCMOB : public oCVob {
@@ -48,7 +51,6 @@ namespace Gothic_I_Classic {
     void Hit( int )                                                                          zCall( 0x0067B040 );
     void InsertInIgnoreList( zCVob* )                                                        zCall( 0x0067B2D0 );
     void RemoveFromIgnoreList( zCVob* )                                                      zCall( 0x0067B300 );
-    static void operator delete( void*, char const*, char const*, int )                      zCall( 0x006517F0 );
     static zCObject* _CreateNewInstance()                                                    zCall( 0x00677470 );
     virtual zCClassDef* _GetClassDef() const                                                 zCall( 0x0067A840 );
     virtual void Archive( zCArchiver& )                                                      zCall( 0x0067B3A0 );
@@ -70,8 +72,8 @@ namespace Gothic_I_Classic {
     virtual void Destroy()                                                                   zCall( 0x0067B050 );
     virtual int AllowDiscardingOfSubtree()                                                   zCall( 0x0067BB00 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCMOB, oCVob )
+    // user API
+    #include "oCMOB.inl"
   };
 
   class oCMobInter : public oCMOB {
@@ -119,7 +121,6 @@ namespace Gothic_I_Classic {
     int IsAvailable( oCNpc* )                                           zCall( 0x0067F570 );
     void MarkAsUsed( float, zCVob* )                                    zCall( 0x0067F5D0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x006776D0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00677740 );
     static int SetAllMobsToState( oCWorld*, zSTRING const&, int )       zCall( 0x0067BB10 );
     static void TraverseMobs( zCTree<zCVob>*, zSTRING const&, int )     zCall( 0x0067BB40 );
     static void TriggerAllMobsToTmpState( zCWorld* )                    zCall( 0x0067BC90 );
@@ -160,8 +161,8 @@ namespace Gothic_I_Classic {
     virtual void SendCallOnStateFunc( oCNpc*, int )                     zCall( 0x0067F140 );
     virtual TMobOptPos* SearchFreePosition( oCNpc* )                    zCall( 0x0067CD60 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCMobInter, oCMOB )
+    // user API
+    #include "oCMobInter.inl"
   };
 
   class oCMobBed : public oCMobInter {
@@ -171,15 +172,14 @@ namespace Gothic_I_Classic {
     void oCMobBed_OnInit()                                              zCall( 0x00681470 );
     oCMobBed()                                                          zInit( oCMobBed_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x00677950 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00677AC0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00677AE0 );
     virtual ~oCMobBed()                                                 zCall( 0x00681590 );
     virtual void StartInteraction( oCNpc* )                             zCall( 0x00681760 );
     virtual void OnBeginStateChange( oCNpc*, int, int )                 zCall( 0x00681770 );
     virtual void OnEndStateChange( oCNpc*, int, int )                   zCall( 0x00681780 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCMobBed, oCMobInter )
+    // user API
+    #include "oCMobBed.inl"
   };
 
   class oCMobSwitch : public oCMobInter {
@@ -189,14 +189,13 @@ namespace Gothic_I_Classic {
     void oCMobSwitch_OnInit()                                           zCall( 0x006817E0 );
     oCMobSwitch()                                                       zInit( oCMobSwitch_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x00677CE0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00677E10 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00677E30 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x00681AD0 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x00681B70 );
     virtual ~oCMobSwitch()                                              zCall( 0x00681900 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCMobSwitch, oCMobInter )
+    // user API
+    #include "oCMobSwitch.inl"
   };
 
   class oCMobItemSlot : public oCMobInter {
@@ -209,7 +208,6 @@ namespace Gothic_I_Classic {
     void oCMobItemSlot_OnInit()                                         zCall( 0x00685E00 );
     oCMobItemSlot()                                                     zInit( oCMobItemSlot_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x00679890 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00679930 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00679950 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x006863B0 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x00686480 );
@@ -221,8 +219,8 @@ namespace Gothic_I_Classic {
     virtual int PlaceItem( oCItem* )                                    zCall( 0x006860A0 );
     virtual oCItem* RemoveItem()                                        zCall( 0x00686340 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCMobItemSlot, oCMobInter )
+    // user API
+    #include "oCMobItemSlot.inl"
   };
 
   class oCMobLockable : public oCMobInter {
@@ -255,6 +253,9 @@ namespace Gothic_I_Classic {
     virtual void Lock( oCNpc* )                              zCall( 0x00683400 );
     virtual void Unlock( oCNpc*, int )                       zCall( 0x00682CC0 );
     virtual int PickLock( oCNpc*, char )                     zCall( 0x00682990 );
+
+    // user API
+    #include "oCMobLockable.inl"
   };
 
   class oCMobContainer : public oCMobLockable {
@@ -268,7 +269,6 @@ namespace Gothic_I_Classic {
     void oCMobContainer_OnInit()                                        zCall( 0x006837F0 );
     oCMobContainer()                                                    zInit( oCMobContainer_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x00678210 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00678760 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00678780 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x006844D0 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x00684670 );
@@ -284,8 +284,8 @@ namespace Gothic_I_Classic {
     virtual oCItem* Remove( oCItem*, int )                              zCall( 0x00683F40 );
     virtual void CreateContents( zSTRING const& )                       zCall( 0x00684050 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCMobContainer, oCMobLockable )
+    // user API
+    #include "oCMobContainer.inl"
   };
 
   class oCMobDoor : public oCMobLockable {
@@ -297,7 +297,6 @@ namespace Gothic_I_Classic {
     void oCMobDoor_OnInit()                                             zCall( 0x006848F0 );
     oCMobDoor()                                                         zInit( oCMobDoor_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x00679050 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00679220 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00679240 );
     virtual ~oCMobDoor()                                                zCall( 0x00684AF0 );
     virtual zSTRING GetScemeName()                                      zCall( 0x00684CA0 );
@@ -305,8 +304,8 @@ namespace Gothic_I_Classic {
     virtual void Open( oCNpc* )                                         zCall( 0x00679250 );
     virtual void Close( oCNpc* )                                        zCall( 0x00679260 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCMobDoor, oCMobLockable )
+    // user API
+    #include "oCMobDoor.inl"
   };
 
   class oCMobFire : public oCMobInter {
@@ -321,7 +320,6 @@ namespace Gothic_I_Classic {
     oCMobFire()                                                         zInit( oCMobFire_OnInit() );
     void DeleteEffects()                                                zCall( 0x00680E80 );
     static zCObject* _CreateNewInstance()                               zCall( 0x00679460 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00679670 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00679690 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x00681280 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x00681390 );
@@ -333,8 +331,8 @@ namespace Gothic_I_Classic {
     virtual void PreSave()                                              zCall( 0x00681220 );
     virtual void PostSave()                                             zCall( 0x00681360 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCMobFire, oCMobInter )
+    // user API
+    #include "oCMobFire.inl"
   };
 
   class oCMobWheel : public oCMobInter {
@@ -344,15 +342,14 @@ namespace Gothic_I_Classic {
     void oCMobWheel_OnInit()                                            zCall( 0x00684ED0 );
     oCMobWheel()                                                        zInit( oCMobWheel_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x00678980 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00678AC0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00678AE0 );
     virtual ~oCMobWheel()                                               zCall( 0x006853E0 );
     virtual void OnTrigger( zCVob*, zCVob* )                            zCall( 0x00685000 );
     virtual void OnUntrigger( zCVob*, zCVob* )                          zCall( 0x00685110 );
     virtual void Interact( oCNpc*, int, int, int, int, int )            zCall( 0x00685210 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCMobWheel, oCMobInter )
+    // user API
+    #include "oCMobWheel.inl"
   };
 
   class oCMobLadder : public oCMobInter {
@@ -362,7 +359,6 @@ namespace Gothic_I_Classic {
     void oCMobLadder_OnInit()                                           zCall( 0x006855B0 );
     oCMobLadder()                                                       zInit( oCMobLadder_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x00678CE0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00678E20 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00678E40 );
     virtual ~oCMobLadder()                                              zCall( 0x006856E0 );
     virtual int DoFocusCheckBBox()                                      zCall( 0x00678E50 );
@@ -372,8 +368,8 @@ namespace Gothic_I_Classic {
     virtual int CanChangeState( oCNpc*, int, int )                      zCall( 0x00685A50 );
     virtual TMobOptPos* SearchFreePosition( oCNpc* )                    zCall( 0x00685AB0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCMobLadder, oCMobInter )
+    // user API
+    #include "oCMobLadder.inl"
   };
 
   class oCDummyVobGenerator : public zCVob {
@@ -383,13 +379,12 @@ namespace Gothic_I_Classic {
     void oCDummyVobGenerator_OnInit()                                   zCall( 0x00686570 );
     oCDummyVobGenerator()                                               zInit( oCDummyVobGenerator_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x00679B50 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00679C10 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00679C30 );
     virtual ~oCDummyVobGenerator()                                      zCall( 0x00679C70 );
     virtual void OnTrigger( zCVob*, zCVob* )                            zCall( 0x006865E0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCDummyVobGenerator, zCVob )
+    // user API
+    #include "oCDummyVobGenerator.inl"
   };
 
   class oCMobMsg : public zCEventMessage {
@@ -416,7 +411,6 @@ namespace Gothic_I_Classic {
     oCMobMsg( TMobMsgSubType a0, oCNpc* a1 )                            zInit( oCMobMsg_OnInit( a0, a1 ));
     oCMobMsg()                                                          zInit( oCMobMsg_OnInit() );
     oCMobMsg( TMobMsgSubType a0, oCNpc* a1, int a2 )                    zInit( oCMobMsg_OnInit( a0, a1, a2 ));
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00612E90 );
     static zCObject* _CreateNewInstance()                               zCall( 0x00679EA0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x0067A020 );
     virtual ~oCMobMsg()                                                 zCall( 0x0067A1B0 );
@@ -426,8 +420,8 @@ namespace Gothic_I_Classic {
     virtual void Pack( zCBuffer&, zCEventManager* )                     zCall( 0x0067A440 );
     virtual void Unpack( zCBuffer&, zCEventManager* )                   zCall( 0x0067A4C0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCMobMsg, zCEventMessage )
+    // user API
+    #include "oCMobMsg.inl"
   };
 
 } // namespace Gothic_I_Classic

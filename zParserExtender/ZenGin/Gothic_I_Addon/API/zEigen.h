@@ -50,6 +50,9 @@ namespace Gothic_I_Addon {
     static const unsigned int& allocation_failed;
     static const unsigned int& ql_exceeded;
     static const char**& message;
+
+    // user API
+    #include "zCMgcEigenD.inl"
   };
 
 } // namespace Gothic_I_Addon

@@ -19,6 +19,9 @@ namespace Gothic_II_Addon {
     oCZoneMusicList* next;
 
     oCZoneMusicList() {}
+
+    // user API
+    #include "oCZoneMusicList.inl"
   };
 
   class oCZoneMusic : public zCZoneMusic {
@@ -55,7 +58,6 @@ namespace Gothic_II_Addon {
     int IsNightEntranceDone() const                                                                    zCall( 0x00641170 );
     float GetCamPosWeightElps()                                                                        zCall( 0x00641380 );
     static zCObject* _CreateNewInstance()                                                              zCall( 0x006400F0 );
-    static void operator delete( void* )                                                               zCall( 0x006401B0 );
     static void SetZonetime( int )                                                                     zCall( 0x00641180 );
     static void GetZonetime( int* )                                                                    zCall( 0x00641190 );
     static oCZoneMusicList* BuildTempZoneList( oCZoneMusicDefault*, zCArraySort<zCZone*> const& )      zCall( 0x00641530 );
@@ -82,6 +84,9 @@ namespace Gothic_II_Addon {
     static oHEROSTATUS& s_herostatus;
     static oCZoneMusic*& s_musiczone;
     static oCZoneMusic*& s_oldmusiczone;
+
+    // user API
+    #include "oCZoneMusic.inl"
   };
 
   class oCZoneMusicDefault : public oCZoneMusic {
@@ -91,9 +96,11 @@ namespace Gothic_II_Addon {
     void oCZoneMusicDefault_OnInit()         zCall( 0x00642430 );
     oCZoneMusicDefault()                     zInit( oCZoneMusicDefault_OnInit() );
     static zCObject* _CreateNewInstance()    zCall( 0x006403D0 );
-    static void operator delete( void* )     zCall( 0x00640490 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x006404B0 );
     virtual ~oCZoneMusicDefault()            zCall( 0x006424C0 );
+
+    // user API
+    #include "oCZoneMusicDefault.inl"
   };
 
 } // namespace Gothic_II_Addon

@@ -23,6 +23,9 @@ namespace Gothic_I_Classic {
       zMAT4 trafoObjToWorld;
 
       zTMOR_Sample() {}
+
+      // user API
+      #include "zCMoveRecorder_zTMOR_Sample.inl"
     };
 
     zSTRING name;
@@ -34,6 +37,9 @@ namespace Gothic_I_Classic {
     float startTime;
 
     zCMoveRecorder() {}
+
+    // user API
+    #include "zCMoveRecorder.inl"
   };
 
   class CMov_Movement {

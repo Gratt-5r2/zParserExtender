@@ -22,6 +22,9 @@ namespace Gothic_II_Addon {
     double packets;
 
     zTNetStatistics() {}
+
+    // user API
+    #include "zTNetStatistics.inl"
   };
 
   class zCNetStatistics {
@@ -46,6 +49,9 @@ namespace Gothic_II_Addon {
     void Reset()                     zCall( 0x004547D0 );
     double GetSeconds()              zCall( 0x004547E0 );
     virtual ~zCNetStatistics()       zCall( 0x00452F80 );
+
+    // user API
+    #include "zCNetStatistics.inl"
   };
 
   class zCNet {
@@ -92,6 +98,9 @@ namespace Gothic_II_Addon {
     void ApplyTimestamp( zCNetMessage*, unsigned char )                                            zCall( 0x00452E90 );
     int CheckTimestamp( zCNetMessage*, unsigned char )                                             zCall( 0x00452EE0 );
     virtual ~zCNet()                                                                               zCall( 0x00450700 );
+
+    // user API
+    #include "zCNet.inl"
   };
 
 } // namespace Gothic_II_Addon

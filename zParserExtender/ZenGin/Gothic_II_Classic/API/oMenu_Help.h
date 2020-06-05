@@ -14,6 +14,9 @@ namespace Gothic_II_Classic {
     unsigned short key;
 
     oSMenuKey() {}
+
+    // user API
+    #include "oSMenuKey.inl"
   };
 
   class oCMenu_Help : public zCMenu {
@@ -21,6 +24,9 @@ namespace Gothic_II_Classic {
     zCArray<oSMenuKey> keys;
 
     oCMenu_Help() {}
+
+    // user API
+    #include "oCMenu_Help.inl"
   };
 
   class oCHelpScreen {
@@ -28,6 +34,9 @@ namespace Gothic_II_Classic {
     oCMenu_Help* help;
 
     oCHelpScreen() {}
+
+    // user API
+    #include "oCHelpScreen.inl"
   };
 
 } // namespace Gothic_II_Classic

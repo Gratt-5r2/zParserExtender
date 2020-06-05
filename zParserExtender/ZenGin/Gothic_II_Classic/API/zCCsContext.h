@@ -59,7 +59,6 @@ namespace Gothic_II_Classic {
     int ReplayCutscene()                                               zCall( 0x004097F0 );
     void ForcedResume()                                                zCall( 0x00409930 );
     static zCObject* _CreateNewInstance()                              zCall( 0x00404EB0 );
-    static void operator delete( void* )                               zCall( 0x00404F80 );
     static int DisablePlayCutscenes( int )                             zCall( 0x00404FD0 );
     virtual zCClassDef* _GetClassDef() const                           zCall( 0x00404FA0 );
     virtual void Archive( zCArchiver& )                                zCall( 0x00405E20 );
@@ -89,6 +88,9 @@ namespace Gothic_II_Classic {
 
     // static properties
     static int& playDisabled;
+
+    // user API
+    #include "zCCSCutsceneContext.inl"
   };
 
   class zCCSDebugger {
@@ -106,6 +108,9 @@ namespace Gothic_II_Classic {
     virtual void CSDB_Warning( zCCSBlockBase*, zSTRING& ) zPureCall;
     virtual void CSDB_StartPlaying( zCCutscene* )         zPureCall;
     virtual void CSDB_Stop( zCCutscene* )                 zPureCall;
+
+    // user API
+    #include "zCCSDebugger.inl"
   };
 
 } // namespace Gothic_II_Classic

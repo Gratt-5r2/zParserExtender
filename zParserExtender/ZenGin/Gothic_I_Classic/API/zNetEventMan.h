@@ -20,7 +20,6 @@ namespace Gothic_I_Classic {
     zCNetEventManager( zCVob* a0 )                                         zInit( zCNetEventManager_OnInit( a0 ));
     void Init()                                                            zCall( 0x00453400 );
     static zCObject* _CreateNewInstance()                                  zCall( 0x00452570 );
-    static void operator delete( void*, char const*, char const*, int )    zCall( 0x00452610 );
     static int HandleNetMessage( zCNetMessage*, unsigned short, zCWorld* ) zCall( 0x00452640 );
     virtual zCClassDef* _GetClassDef() const                               zCall( 0x00452630 );
     virtual void Archive( zCArchiver& )                                    zCall( 0x00454E40 );
@@ -29,8 +28,8 @@ namespace Gothic_I_Classic {
     virtual void OnMessage( zCEventMessage*, zCVob* )                      zCall( 0x00453410 );
     virtual zCNetVobControl* GetNetVobControl( int )                       zCall( 0x00454EF0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCNetEventManager, zCEventManager )
+    // user API
+    #include "zCNetEventManager.inl"
   };
 
 } // namespace Gothic_I_Classic

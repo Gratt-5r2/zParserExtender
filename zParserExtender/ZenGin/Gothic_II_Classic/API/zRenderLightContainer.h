@@ -14,6 +14,9 @@ namespace Gothic_II_Classic {
       float score;
 
       zTLightScore() {}
+
+      // user API
+      #include "zCRenderLightContainer_zTLightScore.inl"
     };
 
     zCRenderLight lightList[zRENDERLIGHT_LIGHT_MAX];
@@ -37,6 +40,9 @@ namespace Gothic_II_Classic {
     void SetupRendererLights()                                         zCall( 0x005CF540 );
     static int CompareLightScore( void const*, void const* )           zCall( 0x005CDA80 );
     static void S_ReleaseVobLightRefs()                                zCall( 0x005CDED0 );
+
+    // user API
+    #include "zCRenderLightContainer.inl"
   };
 
 } // namespace Gothic_II_Classic

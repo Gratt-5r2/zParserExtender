@@ -32,7 +32,6 @@ namespace Gothic_II_Classic {
     void __fastcall RemoveChoice( zSTRING& )   zCall( 0x007A6700 );
     void __fastcall RemoveChoice( int )        zCall( 0x007A6710 );
     void __fastcall RemoveAllChoices()         zCall( 0x007A6720 );
-    static void operator delete( void* )       zCall( 0x00776B90 );
     static zCObject* _CreateNewInstance()      zCall( 0x007A56E0 );
     /* for zCObject num : 15*/
     virtual zCClassDef* _GetClassDef() const   zCall( 0x007A57C0 );
@@ -43,6 +42,9 @@ namespace Gothic_II_Classic {
     /* for zCViewBase num : 9*/
     /* for zCViewDialogChoice num : 1*/
     virtual int HandleEvent( int )             zCall( 0x007A5910 );
+
+    // user API
+    #include "zCViewDialogChoice.inl"
   };
 
 } // namespace Gothic_II_Classic

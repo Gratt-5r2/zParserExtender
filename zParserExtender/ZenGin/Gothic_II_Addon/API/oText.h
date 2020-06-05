@@ -56,6 +56,9 @@ namespace Gothic_II_Addon {
     static int& TXT_INTIMIDATION;
     static int& TXT_INVCAT;
     static int& TXT_HELP;
+
+    // user API
+    #include "oCText.inl"
   };
 
 } // namespace Gothic_II_Addon

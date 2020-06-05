@@ -33,6 +33,9 @@ namespace Gothic_I_Addon {
     virtual void Unpack( zCBuffer& )                    zCall( 0x00437820 );
     virtual void SetInstance( TPlayerInstance )         zCall( 0x00437640 );
     virtual void SetInstanceByName( zSTRING const& )    zCall( 0x00437650 );
+
+    // user API
+    #include "oCPlayerInfo.inl"
   };
 
 } // namespace Gothic_I_Addon

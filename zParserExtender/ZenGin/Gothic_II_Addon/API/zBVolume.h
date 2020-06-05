@@ -14,6 +14,9 @@ namespace Gothic_II_Addon {
     int IsIntersecting( zTBSphere3D const& ) const         zCall( 0x005440E0 );
     int ClassifyPlane( zTPlane ) const                     zCall( 0x005441A0 );
     void Draw( zCOLOR const& ) const                       zCall( 0x005441F0 );
+
+    // user API
+    #include "zTBSphere3D.inl"
   };
 
   struct zTBBox2D {
@@ -25,6 +28,9 @@ namespace Gothic_II_Addon {
     int Classify( zTBBox2D const& ) const zCall( 0x00546B10 );
     void ClipToBBox2D( zTBBox2D const& )  zCall( 0x00546BC0 );
     void Draw() const                     zCall( 0x00546C10 );
+
+    // user API
+    #include "zTBBox2D.inl"
   };
 
   struct zTBBox3D {
@@ -71,6 +77,9 @@ namespace Gothic_II_Addon {
     void InitZero()                                                                            zCall( 0x0055F3D0 );
     int IsIntersecting( zTBSphere3D const& ) const                                             zCall( 0x005D4F70 );
     int IsIntersecting( zTBBox3D const& ) const                                                zCall( 0x006039C0 );
+
+    // user API
+    #include "zTBBox3D.inl"
   };
 
   struct zTBCylinder3D {
@@ -82,6 +91,9 @@ namespace Gothic_II_Addon {
     int IsIntersecting( zTBCylinder3D const& ) const zCall( 0x00543E10 );
     void Draw( zCOLOR const& ) const                 zCall( 0x00543E80 );
     void SetByBBox3D( zTBBox3D )                     zCall( 0x00543F30 );
+
+    // user API
+    #include "zTBCylinder3D.inl"
   };
 
   class zCOBBox3D {
@@ -112,6 +124,9 @@ namespace Gothic_II_Addon {
 
     // static properties
     static zMAT4& trafoB2ToThis;
+
+    // user API
+    #include "zCOBBox3D.inl"
   };
 
 } // namespace Gothic_II_Addon

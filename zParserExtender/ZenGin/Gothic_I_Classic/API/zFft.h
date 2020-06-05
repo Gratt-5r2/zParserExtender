@@ -23,6 +23,9 @@ namespace Gothic_I_Classic {
     int m_gaussCall;
 
     zRandom_Gauss() {}
+
+    // user API
+    #include "zRandom_Gauss.inl"
   };
 
   class zCFFT {
@@ -35,6 +38,9 @@ namespace Gothic_I_Classic {
     int frameCtrLastUsed;
 
     zCFFT() {}
+
+    // user API
+    #include "zCFFT.inl"
   };
 
 } // namespace Gothic_I_Classic

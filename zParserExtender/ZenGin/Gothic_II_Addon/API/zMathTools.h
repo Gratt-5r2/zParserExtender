@@ -19,6 +19,9 @@ namespace Gothic_II_Addon {
     float b1;
 
     zCCircleArc3D() {}
+
+    // user API
+    #include "zCCircleArc3D.inl"
   };
 
   class zCPose {
@@ -61,6 +64,9 @@ namespace Gothic_II_Addon {
 
     // static properties
     static zMAT4& tmpMat;
+
+    // user API
+    #include "zCPose.inl"
   };
 
 } // namespace Gothic_II_Addon

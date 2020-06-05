@@ -38,6 +38,9 @@ namespace Gothic_II_Addon {
     void zCSkyLayerData_OnInit() zCall( 0x005E4200 );
     zCSkyLayerData()             zInit( zCSkyLayerData_OnInit() );
     ~zCSkyLayerData()            zCall( 0x005E4320 );
+
+    // user API
+    #include "zCSkyLayerData.inl"
   };
 
   class zCSkyState {
@@ -63,6 +66,9 @@ namespace Gothic_II_Addon {
     void PresetDawn()        zCall( 0x005E4130 );
     zCSkyState()             zInit( zCSkyState_OnInit() );
     ~zCSkyState()            zCall( 0x005E43E0 );
+
+    // user API
+    #include "zCSkyState.inl"
   };
 
   class zCSkyLayer {
@@ -86,6 +92,9 @@ namespace Gothic_II_Addon {
     void RenderRainCloudLayer( zCOLOR )  zCall( 0x005E5D00 );
     static zCMesh* CreateSkyPoly()       zCall( 0x005E4400 );
     static zCMesh* CreateSkyDomeMesh()   zCall( 0x005E4670 );
+
+    // user API
+    #include "zCSkyLayer.inl"
   };
 
   class zCSkyPlanet {
@@ -100,6 +109,9 @@ namespace Gothic_II_Addon {
     void zCSkyPlanet_OnInit() zCall( 0x005E66A0 );
     zCSkyPlanet()             zInit( zCSkyPlanet_OnInit() );
     ~zCSkyPlanet()            zCall( 0x005E66B0 );
+
+    // user API
+    #include "zCSkyPlanet.inl"
   };
 
   class zCSkyControler_Outdoor : public zCSkyControler_Mid {
@@ -119,6 +131,9 @@ namespace Gothic_II_Addon {
       int m_iRainCtr;
 
       zTRainFX() {}
+
+      // user API
+      #include "zCSkyControler_Outdoor_zTRainFX.inl"
     };
 
     int initDone;
@@ -184,7 +199,6 @@ namespace Gothic_II_Addon {
     void RenderSetup()                                                      zCall( 0x005EB360 );
     void RenderSky()                                                        zCall( 0x005EB3D0 );
     static zCObject* _CreateNewInstance()                                   zCall( 0x005E0FB0 );
-    static void operator delete( void* )                                    zCall( 0x005E1010 );
     virtual zCClassDef* _GetClassDef() const                                zCall( 0x005E66E0 );
     virtual void Archive( zCArchiver& )                                     zCall( 0x005EB640 );
     virtual void Unarchive( zCArchiver& )                                   zCall( 0x005EB730 );
@@ -214,6 +228,9 @@ namespace Gothic_II_Addon {
     virtual void SetCameraLocationHint( zCSkyControler::zTCamLocationHint ) zCall( 0x005E6790 );
     virtual void SetWeatherType( zTWeather )                                zCall( 0x005EB830 );
     virtual int GetRenderLightning() const                                  zCall( 0x005E6780 );
+
+    // user API
+    #include "zCSkyControler_Outdoor.inl"
   };
 
   class zCOutdoorRainFX {
@@ -225,6 +242,9 @@ namespace Gothic_II_Addon {
       zVEC3 m_destNormal;
 
       zSParticle() {}
+
+      // user API
+      #include "zCOutdoorRainFX_zSParticle.inl"
     };
 
     struct zSCacheElement {
@@ -232,6 +252,9 @@ namespace Gothic_II_Addon {
       zVEC3 m_normal;
 
       zSCacheElement() {}
+
+      // user API
+      #include "zCOutdoorRainFX_zSCacheElement.inl"
     };
 
     zSParticle m_flyParticleList[zMAX_FLY_PARTICLE];
@@ -267,6 +290,9 @@ namespace Gothic_II_Addon {
     void CreateParticles( zTRenderContext& )         zCall( 0x005E1C70 );
     void UpdateParticles()                           zCall( 0x005E2400 );
     void RenderParticles( zTRenderContext&, zCOLOR ) zCall( 0x005E25D0 );
+
+    // user API
+    #include "zCOutdoorRainFX.inl"
   };
 
 } // namespace Gothic_II_Addon

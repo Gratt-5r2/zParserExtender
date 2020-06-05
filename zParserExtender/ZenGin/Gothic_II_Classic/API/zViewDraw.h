@@ -28,7 +28,6 @@ namespace Gothic_II_Classic {
     void __fastcall Draw()                                                  zCall( 0x007A0440 );
     void __fastcall DrawChildren()                                          zCall( 0x007A0550 );
     static zCObject* _CreateNewInstance()                                   zCall( 0x0079FE50 );
-    static void operator delete( void* )                                    zCall( 0x0079FF40 );
     static zCViewDraw& GetScreen()                                          zCall( 0x007A0810 );
     static void CleanupScreen()                                             zCall( 0x007A0940 );
     /* for zCObject num : 7*/
@@ -38,6 +37,9 @@ namespace Gothic_II_Classic {
     virtual void __fastcall BlitTexture()                                   zCall( 0x007A06E0 );
     virtual void __fastcall Blit()                                          zCall( 0x007A0680 );
     /* for zCViewBase num : 9*/
+
+    // user API
+    #include "zCViewDraw.inl"
   };
 
 } // namespace Gothic_II_Classic

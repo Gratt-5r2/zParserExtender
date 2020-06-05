@@ -39,7 +39,6 @@ namespace Gothic_II_Addon {
     zSTRING GetName()                           zCall( 0x00406300 );
     zSTRING GetScriptFuncOnStop()               zCall( 0x00407670 );
     zCCSProps()                                 zInit( zCCSProps_OnInit() );
-    static void operator delete( void* )        zCall( 0x0040E5A0 );
     static zCObject* _CreateNewInstance()       zCall( 0x00421E40 );
     virtual zCClassDef* _GetClassDef() const    zCall( 0x00422060 );
     virtual void Archive( zCArchiver& )         zCall( 0x00422160 );
@@ -51,6 +50,9 @@ namespace Gothic_II_Addon {
     virtual int CheckDistance( float )          zCall( 0x00422330 );
     virtual int CheckRange( float )             zCall( 0x00422370 );
     virtual void PrintDebugInfo()               zCall( 0x004223B0 );
+
+    // user API
+    #include "zCCSProps.inl"
   };
 
 } // namespace Gothic_II_Addon

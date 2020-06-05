@@ -13,6 +13,9 @@ namespace Gothic_I_Addon {
     int occupied : 1;
 
     zCSparseArrayManDat() {}
+
+    // user API
+    #include "zCSparseArrayManDat.inl"
   };
 
   class zCSparseArrayBase {
@@ -52,6 +55,9 @@ namespace Gothic_I_Addon {
     virtual void Hash( void const*, unsigned long&, unsigned long& ) const zCall( 0x005E3350 );
     virtual void ConstructData( void* ) const                              zCall( 0x005E2D50 );
     virtual void DestructData( void* ) const                               zCall( 0x005E2D60 );
+
+    // user API
+    #include "zCSparseArrayBase.inl"
   };
 
   class zCSparseArrayIterator {
@@ -69,6 +75,9 @@ namespace Gothic_I_Addon {
     void DeRegister()                                       zCall( 0x00516260 );
     operator int()                                          zCall( 0x00516420 );
     zCSparseArrayIterator( zCSparseArrayBase& a0 )          zInit( zCSparseArrayIterator_OnInit( a0 ));
+
+    // user API
+    #include "zCSparseArrayIterator.inl"
   };
   
   template <class T, class Data> class zCSparseArray : public zCSparseArrayBase {
@@ -200,6 +209,9 @@ namespace Gothic_I_Addon {
     static int& s_currentFrame;
     static zCCacheBase*& s_anchor;
     static zCCacheBase*& s_run;
+
+    // user API
+    #include "zCCacheBase.inl"
   };
   
   template <class Index, class Data> class zCCacheData {

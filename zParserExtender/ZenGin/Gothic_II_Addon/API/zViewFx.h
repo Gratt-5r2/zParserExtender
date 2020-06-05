@@ -44,13 +44,15 @@ namespace Gothic_II_Addon {
     void __fastcall ApplyCloseFade()                                                                 zCall( 0x006913C0 );
     void __fastcall ApplyCloseZoom()                                                                 zCall( 0x00691420 );
     static zCObject* _CreateNewInstance()                                                            zCall( 0x00690940 );
-    static void operator delete( void* )                                                             zCall( 0x00690A30 );
     /* for zCObject num : 7*/
     virtual zCClassDef* _GetClassDef() const                                                         zCall( 0x00690A50 );
     virtual ~zCViewFX()                                                                              zCall( 0x00690B40 );
     virtual void __fastcall EvaluateTexturePosition()                                                zCall( 0x006915E0 );
     virtual void __fastcall Blit()                                                                   zCall( 0x006914B0 );
     /* for zCViewBase num : 9*/
+
+    // user API
+    #include "zCViewFX.inl"
   };
 
 } // namespace Gothic_II_Addon

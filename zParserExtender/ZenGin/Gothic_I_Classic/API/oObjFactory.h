@@ -10,7 +10,6 @@ namespace Gothic_I_Classic {
     zCLASS_DECLARATION( oCObjectFactory )
 
     oCObjectFactory() {}
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00425BB0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x006C81B0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00425BD0 );
     virtual ~oCObjectFactory()                                          zCall( 0x00425D90 );
@@ -24,8 +23,8 @@ namespace Gothic_I_Classic {
     virtual oCNpc* CreateNpc( int )                                     zCall( 0x006C8560 );
     virtual oCItem* CreateItem( int )                                   zCall( 0x006C8660 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCObjectFactory, zCObjectFactory )
+    // user API
+    #include "oCObjectFactory.inl"
   };
 
 } // namespace Gothic_I_Classic

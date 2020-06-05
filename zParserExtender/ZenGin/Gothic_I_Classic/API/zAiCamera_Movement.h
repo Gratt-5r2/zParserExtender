@@ -50,7 +50,7 @@ namespace Gothic_I_Classic {
     };
 
     unsigned long movement;
-    zCArray<zCPositionKey*>targetKFList;
+    zCArray<zCPositionKey*> targetKFList;
     float frameTime;
     zVEC3 sampledPlayerPos;
     zVEC3 sampledPlayerPosRing;
@@ -186,6 +186,9 @@ namespace Gothic_I_Classic {
     void SetSampledPlayerPos( zVEC3 const& )                                  zCall( 0x004B23C0 );
     zVEC3& GetPlayerFuturePos( float )                                        zCall( 0x004B2400 );
     static zCMovementTracker* GetTracker()                                    zCall( 0x004ABB60 );
+
+    // user API
+    #include "zCMovementTracker.inl"
   };
 
 } // namespace Gothic_I_Classic

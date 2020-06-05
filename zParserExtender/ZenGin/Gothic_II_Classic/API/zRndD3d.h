@@ -33,6 +33,9 @@ namespace Gothic_II_Classic {
       D3DVALUE a_tv;
 
       zD3D_vertexFormat() {}
+
+      // user API
+      #include "zD3D_alphaPoly_zD3D_vertexFormat.inl"
     };
 
     zTRnd_AlphaBlendFunc alphafunc;
@@ -57,6 +60,9 @@ namespace Gothic_II_Classic {
     static unsigned long& actvertex;
     static int& numberofvertices;
     static int& actnov;
+
+    // user API
+    #include "zD3D_alphaPoly.inl"
   };
 
   class zCRnd_D3D : public zCRenderer {
@@ -88,6 +94,9 @@ namespace Gothic_II_Classic {
       zTRnd_RenderMode renderMode;
 
       zD3D_Status() {}
+
+      // user API
+      #include "zCRnd_D3D_zD3D_Status.inl"
     };
 
     struct zD3D_Caps {
@@ -114,6 +123,9 @@ namespace Gothic_II_Classic {
       int hasStencil;
 
       zD3D_Caps() {}
+
+      // user API
+      #include "zCRnd_D3D_zD3D_Caps.inl"
     };
 
     int fogType;
@@ -318,6 +330,9 @@ namespace Gothic_II_Classic {
     static unsigned long& xd3d_actFrameNumber;
     static int& xd3d_dd7inuse;
     static int& xd3d_palsupp;
+
+    // user API
+    #include "zCRnd_D3D.inl"
   };
 
   class zCSurfaceCache_D3D {
@@ -330,6 +345,9 @@ namespace Gothic_II_Classic {
       int height;
 
       zCSlotIndex() {}
+
+      // user API
+      #include "zCSurfaceCache_D3D_zCSlotIndex.inl"
     };
 
     struct zD3D_Entry {
@@ -338,6 +356,9 @@ namespace Gothic_II_Classic {
       zD3D_Entry* nextEntry;
 
       zD3D_Entry() {}
+
+      // user API
+      #include "zCSurfaceCache_D3D_zD3D_Entry.inl"
     };
 
     struct zD3D_SlotHeader {
@@ -345,6 +366,9 @@ namespace Gothic_II_Classic {
       zD3D_Entry* lastEntry;
 
       zD3D_SlotHeader() {}
+
+      // user API
+      #include "zCSurfaceCache_D3D_zD3D_SlotHeader.inl"
     };
 
     int xsc_cacheentryCounter;
@@ -363,6 +387,9 @@ namespace Gothic_II_Classic {
     // static properties
     static zD3D_SlotHeader**& xsc_listofsurfaces;
     static int& xsc_listposition;
+
+    // user API
+    #include "zCSurfaceCache_D3D.inl"
   };
 
   class zCDXTCCache_D3D {
@@ -373,6 +400,9 @@ namespace Gothic_II_Classic {
       zD3D_Entry* nextEntry;
 
       zD3D_Entry() {}
+
+      // user API
+      #include "zCDXTCCache_D3D_zD3D_Entry.inl"
     };
 
     struct zD3D_SlotHeader {
@@ -380,6 +410,9 @@ namespace Gothic_II_Classic {
       zD3D_Entry* lastEntry;
 
       zD3D_SlotHeader() {}
+
+      // user API
+      #include "zCDXTCCache_D3D_zD3D_SlotHeader.inl"
     };
 
     int xdxtc_cacheentryCounter;
@@ -392,6 +425,9 @@ namespace Gothic_II_Classic {
     int Unlock( int, int, int, IDirectDrawSurface7* )                      zCall( 0x00757AA0 );
     void ClearCache()                                                      zCall( 0x00757BD0 );
     IDirectDrawSurface7* XDXTC_CreateSurface( int, int, int, zD3D_Entry* ) zCall( 0x00757ED0 );
+
+    // user API
+    #include "zCDXTCCache_D3D.inl"
   };
 
   struct zD3D_savedTexture {
@@ -400,6 +436,9 @@ namespace Gothic_II_Classic {
     zD3D_savedTexture* next;
 
     zD3D_savedTexture() {}
+
+    // user API
+    #include "zD3D_savedTexture.inl"
   };
 
   class zCTex_D3D : public zCTexture {
@@ -445,6 +484,9 @@ namespace Gothic_II_Classic {
     virtual zCTextureInfo GetTextureInfo()             zCall( 0x00767410 );
     virtual int CopyPaletteDataTo( void* )             zCall( 0x00767C80 );
     virtual int CopyTextureDataTo( int, void*, int )   zCall( 0x00767740 );
+
+    // user API
+    #include "zCTex_D3D.inl"
   };
 
   class zCVertexBuffer_D3D : public zCVertexBuffer {
@@ -480,6 +522,9 @@ namespace Gothic_II_Classic {
 
     // static properties
     static zCArray<zCVertexBuffer_D3D*>& xvb_vertexbufferList;
+
+    // user API
+    #include "zCVertexBuffer_D3D.inl"
   };
 
 } // namespace Gothic_II_Classic

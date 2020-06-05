@@ -30,6 +30,9 @@ namespace Gothic_I_Classic {
   public:
     int mode;
     zCTex_D3D* texture;
+
+    // user API
+    #include "zD3DTEX.inl"
   };
 
 } // namespace Gothic_I_Classic

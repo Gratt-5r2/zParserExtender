@@ -25,6 +25,9 @@ namespace Gothic_I_Addon {
     void LeaveWorld( zCPlayerInfo* )          zCall( 0x00472A90 );
     void ShowDebugInfo()                      zCall( 0x00472AD0 );
     virtual ~zCWorldInfo()                    zCall( 0x00472810 );
+
+    // user API
+    #include "zCWorldInfo.inl"
   };
 
 } // namespace Gothic_I_Addon

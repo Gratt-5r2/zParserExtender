@@ -130,6 +130,9 @@ namespace Gothic_II_Addon {
     static zCWorld*& world;
     static zCCamera*& camera;
     static int& inGameMenu;
+
+    // user API
+    #include "zCMenu.inl"
   };
 
 } // namespace Gothic_II_Addon

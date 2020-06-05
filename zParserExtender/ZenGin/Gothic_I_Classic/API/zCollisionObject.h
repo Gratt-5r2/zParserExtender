@@ -18,6 +18,9 @@ namespace Gothic_I_Classic {
 
     // static properties
     static zCArray<zCCollisionObjectDef*>*& s_aoCollObjClassList;
+
+    // user API
+    #include "zCCollisionObjectDef.inl"
   };
 
   class zCCollisionObject {
@@ -42,6 +45,9 @@ namespace Gothic_I_Classic {
     virtual float __fastcall GetAdaptiveStepSize()                                                                   zCall( 0x00538D20 );
     virtual int __fastcall SuppressCollisionResponse()                                                               zCall( 0x00538D30 );
     virtual void __fastcall GetLargestBBox3DLocal( zTBBox3D& )                                                       zCall( 0x00539060 );
+
+    // user API
+    #include "zCCollisionObject.inl"
   };
 
 } // namespace Gothic_I_Classic

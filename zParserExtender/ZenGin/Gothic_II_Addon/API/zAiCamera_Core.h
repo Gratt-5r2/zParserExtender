@@ -72,6 +72,9 @@ namespace Gothic_II_Addon {
       ~zSEvasionSearchOptions()                                           zCall( 0x004A7540 );
       zSEvasionSearchOptions()                                            zInit( zSEvasionSearchOptions_OnInit() );
       zSEvasionSearchOptions& operator =( zSEvasionSearchOptions const& ) zCall( 0x004B0EA0 );
+
+      // user API
+      #include "zSEvasionSearchDesc_zSEvasionSearchOptions.inl"
     };
 
     bool32(* searchFunc )( const zSEvasionSearchDesc& );
@@ -82,6 +85,9 @@ namespace Gothic_II_Addon {
     zSEvasionSearchDesc()                                         zInit( zSEvasionSearchDesc_OnInit() );
     ~zSEvasionSearchDesc()                                        zCall( 0x004A8F30 );
     zSEvasionSearchDesc& operator =( zSEvasionSearchDesc const& ) zCall( 0x004B1190 );
+
+    // user API
+    #include "zSEvasionSearchDesc.inl"
   };
 
   struct zSPathSearchResult {
@@ -101,6 +107,9 @@ namespace Gothic_II_Addon {
     void zSPathSearchResult_OnInit() zCall( 0x004A6D60 );
     ~zSPathSearchResult()            zCall( 0x004A40C0 );
     zSPathSearchResult()             zInit( zSPathSearchResult_OnInit() );
+
+    // user API
+    #include "zSPathSearchResult.inl"
   };
 
   struct zSPathSearchState {
@@ -122,6 +131,9 @@ namespace Gothic_II_Addon {
 
     zSPathSearchState() {}
     ~zSPathSearchState() zCall( 0x004A5A70 );
+
+    // user API
+    #include "zSPathSearchState.inl"
   };
 
   struct zSPathSearchState_Internal {
@@ -140,6 +152,9 @@ namespace Gothic_II_Addon {
 
     void zSPathSearchState_Internal_OnInit() zCall( 0x004A6A30 );
     zSPathSearchState_Internal()             zInit( zSPathSearchState_Internal_OnInit() );
+
+    // user API
+    #include "zSPathSearchState_Internal.inl"
   };
 
   class zCSphereCoordsCache {
@@ -149,6 +164,9 @@ namespace Gothic_II_Addon {
       zSPathSearchState_Internal searchState;
 
       zSRangeSphereCoord() {}
+
+      // user API
+      #include "zCSphereCoordsCache_zSRangeSphereCoord.inl"
     };
 
     struct zSElevSphereCoord {
@@ -158,6 +176,9 @@ namespace Gothic_II_Addon {
 
       zSElevSphereCoord() {}
       ~zSElevSphereCoord() zCall( 0x004A6A10 );
+
+      // user API
+      #include "zCSphereCoordsCache_zSElevSphereCoord.inl"
     };
 
     struct zSAziSphereCoord {
@@ -166,6 +187,9 @@ namespace Gothic_II_Addon {
 
       zSAziSphereCoord() {}
       ~zSAziSphereCoord() zCall( 0x004A69F0 );
+
+      // user API
+      #include "zCSphereCoordsCache_zSAziSphereCoord.inl"
     };
 
     zCArraySort<zSAziSphereCoord*> aziCoords;
@@ -176,6 +200,9 @@ namespace Gothic_II_Addon {
     zCSphereCoordsCache()                                                                            zInit( zCSphereCoordsCache_OnInit() );
     ~zCSphereCoordsCache()                                                                           zCall( 0x004A6BB0 );
     void DeleteList()                                                                                zCall( 0x004A6C10 );
+
+    // user API
+    #include "zCSphereCoordsCache.inl"
   };
 
   class zCPathSearch {
@@ -195,6 +222,9 @@ namespace Gothic_II_Addon {
       float quality;
 
       zSPathSearchOptions() {}
+
+      // user API
+      #include "zCPathSearch_zSPathSearchOptions.inl"
     };
 
     zSPathSearchState bestSearchState;
@@ -248,6 +278,9 @@ namespace Gothic_II_Addon {
     zVEC3& GetPolyNearestPoint( zCPolygon*, zVEC3 const& ) const                     zCall( 0x004AFF20 );
     static zSPathSearchResult* GetReport()                                           zCall( 0x004A6D20 );
     static zCPathSearch* GetSearch()                                                 zCall( 0x004A6D80 );
+
+    // user API
+    #include "zCPathSearch.inl"
   };
 
 } // namespace Gothic_II_Addon

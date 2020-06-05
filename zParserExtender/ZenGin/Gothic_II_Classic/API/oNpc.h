@@ -290,12 +290,14 @@ namespace Gothic_II_Classic {
     void oCNpcTalent_OnInit()                              zCall( 0x006CE430 );
     oCNpcTalent()                                          zInit( oCNpcTalent_OnInit() );
     static zCObject* _CreateNewInstance()                  zCall( 0x006CE2A0 );
-    static void operator delete( void* )                   zCall( 0x006CE400 );
     static void CreateTalentList( zCArray<oCNpcTalent*>* ) zCall( 0x006CE5E0 );
     virtual zCClassDef* _GetClassDef() const               zCall( 0x006CE420 );
     virtual void Archive( zCArchiver& )                    zCall( 0x006CE720 );
     virtual void Unarchive( zCArchiver& )                  zCall( 0x006CE760 );
     virtual ~oCNpcTalent()                                 zCall( 0x006CE5D0 );
+
+    // user API
+    #include "oCNpcTalent.inl"
   };
 
   struct TNpcSlot {
@@ -312,6 +314,9 @@ namespace Gothic_II_Classic {
     void ClearVob()        zCall( 0x006CE880 );
     TNpcSlot()             zInit( TNpcSlot_OnInit() );
     ~TNpcSlot()            zCall( 0x006D0B30 );
+
+    // user API
+    #include "TNpcSlot.inl"
   };
 
   struct TNpcPerc {
@@ -320,6 +325,9 @@ namespace Gothic_II_Classic {
     int percFunc;
 
     TNpcPerc() {}
+
+    // user API
+    #include "TNpcPerc.inl"
   };
 
   class oCNpc : public oCVob {
@@ -458,6 +466,9 @@ namespace Gothic_II_Classic {
       unsigned char checkIfClimbable    : 1;
 
       oSDirectionInfo() {}
+
+      // user API
+      #include "oCNpc_oSDirectionInfo.inl"
     };
 
     struct oTRobustTrace {
@@ -493,6 +504,9 @@ namespace Gothic_II_Classic {
 
       oTRobustTrace() {}
       ~oTRobustTrace() zCall( 0x006D01A0 );
+
+      // user API
+      #include "oCNpc_oTRobustTrace.inl"
     };
 
     class TActiveInfo {
@@ -506,6 +520,9 @@ namespace Gothic_II_Classic {
       void TActiveInfo_OnInit( oCNpc const* ) zCall( 0x006CE8D0 );
       TActiveInfo( oCNpc const* a0 )          zInit( TActiveInfo_OnInit( a0 ));
       ~TActiveInfo()                          zCall( 0x006CE8E0 );
+
+      // user API
+      #include "oCNpc_TActiveInfo.inl"
     };
 
     class oCNpcTimedOverlay {
@@ -517,6 +534,9 @@ namespace Gothic_II_Classic {
       zSTRING GetMdsName() zCall( 0x006DFFE0 );
       ~oCNpcTimedOverlay() zCall( 0x006E0040 );
       int Process()        zCall( 0x00700520 );
+
+      // user API
+      #include "oCNpc_oCNpcTimedOverlay.inl"
     };
 
     group {
@@ -682,7 +702,7 @@ namespace Gothic_II_Classic {
     zVEC3 soundPosition;
     zCPlayerGroup* playerGroup;
 
-    void oCNpc_OnInit()                                                                          zCall( 0x006CF750 );
+    void oCNpc_OnInit()                                                                          zCall( 0x0081FFC1 );
     int IsWaitingForAnswer()                                                                     zCall( 0x0065FDA0 );
     int SetCurrentAnswer( int, int, oCNpc* )                                                     zCall( 0x0065FDF0 );
     int EV_Ask( oCMsgConversation* )                                                             zCall( 0x00660310 );
@@ -1130,7 +1150,7 @@ namespace Gothic_II_Classic {
     int IsVictimAwareOfTheft()                                                                   zCall( 0x007029C0 );
     void CheckSpecialSituations()                                                                zCall( 0x00702A50 );
     void StopTheft( oCNpc*, int )                                                                zCall( 0x00702C20 );
-    void OpenInventory( int = 0 )                                                                zCall( 0x00702D10 );
+    void OpenInventory( int )                                                                    zCall( 0x00702D10 );
     void CloseInventory()                                                                        zCall( 0x00702ED0 );
     int OpenSteal()                                                                              zCall( 0x00702EF0 );
     void CloseSteal()                                                                            zCall( 0x00703410 );
@@ -1259,7 +1279,6 @@ namespace Gothic_II_Classic {
     static int IsScriptStateAIEnabled()                                                          zCall( 0x00700460 );
     static int IsMessageAIEnabled()                                                              zCall( 0x007004B0 );
     static zCObject* _CreateNewInstance()                                                        zCall( 0x007007D0 );
-    static void operator delete( void* )                                                         zCall( 0x00700830 );
     static void EnableDamageDebugOutput( int )                                                   zCall( 0x0077B150 );
     static void NotifyDamageToSpy( zSTRING& )                                                    zCall( 0x0077B160 );
     static void InitFightAI()                                                                    zCall( 0x00793050 );
@@ -1346,6 +1365,9 @@ namespace Gothic_II_Classic {
     static int& isEnabledTalkBoxPlayer;
     static int& isEnabledTalkBoxAmbient;
     static int& isEnabledTalkBoxNoise;
+
+    // user API
+    #include "oCNpc.inl"
   };
 
 } // namespace Gothic_II_Classic

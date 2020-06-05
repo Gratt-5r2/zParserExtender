@@ -192,13 +192,15 @@ namespace Gothic_II_Classic {
     void DoTimedEffect()                        zCall( 0x00485C60 );
     int CanBeDeleted()                          zCall( 0x00485CF0 );
     int DeleteCaster()                          zCall( 0x00485D00 );
-    static void operator delete( void* )        zCall( 0x00474C20 );
     static int IsTargetTypeValid( zCVob*, int ) zCall( 0x004849A0 );
     static zCObject* _CreateNewInstance()       zCall( 0x00485F30 );
     virtual zCClassDef* _GetClassDef() const    zCall( 0x00482780 );
     virtual void Archive( zCArchiver& )         zCall( 0x00485D20 );
     virtual void Unarchive( zCArchiver& )       zCall( 0x00485D30 );
     virtual ~oCSpell()                          zCall( 0x00482940 );
+
+    // user API
+    #include "oCSpell.inl"
   };
 
 } // namespace Gothic_II_Classic

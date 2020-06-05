@@ -54,6 +54,9 @@ namespace Gothic_I_Classic {
       int comboStartFrame;
       int comboEndFrame;
       int comboDir;
+
+      // user API
+      #include "oCAniCtrl_Human_oTComboInfo.inl"
     };
 
     float angle_slide1;
@@ -440,7 +443,6 @@ namespace Gothic_I_Classic {
     static zSTRING GetWeaponString( int )                               zCall( 0x00626100 );
     static zSTRING GetWeaponHitString( int )                            zCall( 0x00626390 );
     static zCObject* _CreateNewInstance()                               zCall( 0x0062F4C0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0062F530 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x0061B680 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x0062DAD0 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x0062DB80 );
@@ -449,8 +451,8 @@ namespace Gothic_I_Classic {
     virtual void StartFallDownAni()                                     zCall( 0x0062BF10 );
     virtual void Init( oCNpc* )                                         zCall( 0x0061B740 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCAniCtrl_Human, zCAIPlayer )
+    // user API
+    #include "oCAniCtrl_Human.inl"
   };
 
 } // namespace Gothic_I_Classic

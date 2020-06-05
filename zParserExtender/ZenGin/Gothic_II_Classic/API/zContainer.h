@@ -287,6 +287,9 @@ namespace Gothic_II_Classic {
       }
       DeleteList();
     }
+
+    // user API
+    #include "zCArray.inl"
   };
 
   inline int zArraySortDefaultCompare( const void* ele1, const void* ele2 ) {
@@ -609,6 +612,9 @@ namespace Gothic_II_Classic {
     void BestSort() {
       insertionsort( array, GetNumInList(), sizeof( T ), Compare, True );
     }
+
+    // user API
+    #include "zCArraySort.inl"
   };
 
 
@@ -762,6 +768,9 @@ namespace Gothic_II_Classic {
       }
       return False;
     }
+
+    // user API
+    #include "zCArrayAdapt.inl"
   };
 
   template <class T, int SIZE>
@@ -783,6 +792,9 @@ namespace Gothic_II_Classic {
       }
       return stack[--pos];
     }
+
+    // user API
+    #include "zCMatrixStack.inl"
   };
 
   template <class T>
@@ -965,6 +977,9 @@ namespace Gothic_II_Classic {
       }
       else parent = 0;
     }
+
+    // user API
+    #include "zCTree.inl"
   };
 
   template <class obj>
@@ -1210,6 +1225,9 @@ namespace Gothic_II_Classic {
     int Count() {
       return count;
     }
+
+    // user API
+    #include "zList.inl"
   };
 
   template <class T>
@@ -1345,6 +1363,9 @@ namespace Gothic_II_Classic {
     int GetNum() const {
       return GetNumInList();
     }
+
+    // user API
+    #include "zCList.inl"
   };
 
   template <class T>

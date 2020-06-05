@@ -18,6 +18,9 @@ namespace Gothic_II_Classic {
 
     // static properties
     static int& s_actCounter;
+
+    // user API
+    #include "zCAccount.inl"
   };
 
 } // namespace Gothic_II_Classic

@@ -34,6 +34,9 @@ namespace Gothic_II_Classic {
     virtual zCPlayerInfo* GetPlayerByNetAddress( zTNetAddress& ) zCall( 0x0044FC00 );
     virtual void Pack( zCBuffer&, unsigned char )                zCall( 0x0044F970 );
     virtual void Unpack( zCBuffer& )                             zCall( 0x0044FA10 );
+
+    // user API
+    #include "zCGameInfo.inl"
   };
 
 } // namespace Gothic_II_Classic

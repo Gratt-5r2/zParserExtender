@@ -109,6 +109,9 @@ namespace Gothic_II_Addon {
     int AddThunder( int, int, float, zTThunderSector )  zCall( 0x006BADE0 );
     int RenderThunder( myThunder*, zTRenderContext& )   zCall( 0x006BB4B0 );
     void RenderThunderList( zTRenderContext& )          zCall( 0x006BB770 );
+
+    // user API
+    #include "oCBarrier.inl"
   };
 
   class oCSkyControler_Barrier : public zCSkyControler_Outdoor {
@@ -120,6 +123,9 @@ namespace Gothic_II_Addon {
     oCSkyControler_Barrier()             zInit( oCSkyControler_Barrier_OnInit() );
     virtual ~oCSkyControler_Barrier()    zCall( 0x006BB860 );
     virtual void RenderSkyPre()          zCall( 0x006BB8D0 );
+
+    // user API
+    #include "oCSkyControler_Barrier.inl"
   };
 
 } // namespace Gothic_II_Addon

@@ -10,7 +10,6 @@ namespace Gothic_I_Addon {
     zCLASS_DECLARATION( zCAIBase )
 
     zCAIBase() {}
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0048F1E0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x0048F200 );
     virtual ~zCAIBase()                                                 zCall( 0x0048F310 );
     virtual void DoAI( zCVob*, int& )                                   zPureCall;
@@ -21,8 +20,8 @@ namespace Gothic_I_Addon {
     virtual void HostVobRemovedFromWorld( zCVob*, zCWorld* )            zCall( 0x0048F240 );
     virtual void HostVobAddedToWorld( zCVob*, zCWorld* )                zCall( 0x0048F2D0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCAIBase, zCObject )
+    // user API
+    #include "zCAIBase.inl"
   };
 
   class zCAIBaseSound : public zCAIBase {
@@ -36,6 +35,9 @@ namespace Gothic_I_Addon {
     void RemoveSlideSound()                                             zCall( 0x0050F7F0 );
     void CheckSlideSound( zCVob* )                                      zCall( 0x0050F810 );
     void StartDefaultCollisionSound( zCVob*, zCCollisionReport const& ) zCall( 0x0050F8A0 );
+
+    // user API
+    #include "zCAIBaseSound.inl"
   };
 
 } // namespace Gothic_I_Addon

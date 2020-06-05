@@ -1,0 +1,19 @@
+﻿cl : командная строка warning D9030: "/Gm" несовместим с многопроцессорной обработкой; ключ /MP игнорируется
+  Statics_G1.cpp
+  Globals_G1.cpp
+  ClassDeclarators_G1.cpp
+  Statics_G1A.cpp
+  Globals_G1A.cpp
+  ClassDeclarators_G1A.cpp
+  Statics_G2.cpp
+  Globals_G2.cpp
+  ClassDeclarators_G2.cpp
+  Statics_G2A.cpp
+  Globals_G2A.cpp
+  ClassDeclarators_G2A.cpp
+  Interface.cpp
+  DllMain.cpp
+  Создание кода...
+     Создается библиотека C:\Users\Gratt\source\repos\zParserExtender\Bin\zParserExtender.lib и объект C:\Users\Gratt\source\repos\zParserExtender\Bin\zParserExtender.exp
+     Создается библиотека C:\Users\Gratt\source\repos\zParserExtender\Bin\zParserExtender.lib и объект C:\Users\Gratt\source\repos\zParserExtender\Bin\zParserExtender.exp
+  zParserExtender.vcxproj -> C:\Users\Gratt\source\repos\zParserExtender\Bin\zParserExtender.dll

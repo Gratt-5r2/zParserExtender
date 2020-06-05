@@ -65,6 +65,9 @@ namespace Gothic_II_Addon {
     static bool& s_vdfsInitialized;
     static bool& s_physical_first;
     static zCCriticalSection*& s_criticalSection;
+
+    // user API
+    #include "zFILE_VDFS.inl"
   };
 
 } // namespace Gothic_II_Addon

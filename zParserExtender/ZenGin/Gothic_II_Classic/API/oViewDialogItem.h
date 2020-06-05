@@ -15,13 +15,15 @@ namespace Gothic_II_Classic {
     oCViewDialogItem()                       zInit( oCViewDialogItem_OnInit() );
     void __fastcall SetItem( oCItem* )       zCall( 0x007739B0 );
     static zCObject* _CreateNewInstance()    zCall( 0x00773800 );
-    static void operator delete( void* )     zCall( 0x00773890 );
     /* for zCObject num : 15*/
     virtual zCClassDef* _GetClassDef() const zCall( 0x007738B0 );
     virtual ~oCViewDialogItem()              zCall( 0x00773920 );
     virtual void __fastcall Blit()           zCall( 0x007739F0 );
     /* for zCViewBase num : 9*/
     /* for oCViewDialogItem num : 1*/
+
+    // user API
+    #include "oCViewDialogItem.inl"
   };
 
 } // namespace Gothic_II_Classic

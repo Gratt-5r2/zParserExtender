@@ -39,7 +39,6 @@ namespace Gothic_II_Addon {
     int __fastcall OnSectionNext()                    zCall( 0x0068BF20 );
     void __fastcall OnSection( zETradeDialogSection ) zCall( 0x0068BFA0 );
     void __fastcall OnExit()                          zCall( 0x0068C000 );
-    static void operator delete( void* )              zCall( 0x0065FDB0 );
     static zCObject* _CreateNewInstance()             zCall( 0x0068ACB0 );
     /* for zCObject num : 18*/
     virtual zCClassDef* _GetClassDef() const          zCall( 0x0068B010 );
@@ -51,6 +50,9 @@ namespace Gothic_II_Addon {
     /* for zCViewBase num : 9*/
     /* for oCViewDialogTrade num : 1*/
     virtual int HandleEvent( int )                    zCall( 0x0068B3E0 );
+
+    // user API
+    #include "oCViewDialogTrade.inl"
   };
 
 } // namespace Gothic_II_Addon

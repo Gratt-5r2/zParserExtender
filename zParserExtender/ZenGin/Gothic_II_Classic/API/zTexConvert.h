@@ -43,6 +43,9 @@ namespace Gothic_II_Classic {
     virtual int HasAlpha()                                   zCall( 0x0076EBC0 );
     virtual int ConvertTextureFormat( zCTextureInfo const& ) zCall( 0x0076CDB0 );
     virtual void SetDetailTextureMode( int )                 zCall( 0x0076EC70 );
+
+    // user API
+    #include "zCTexConGeneric.inl"
   };
 
 } // namespace Gothic_II_Classic

@@ -14,7 +14,6 @@ namespace Gothic_II_Addon {
 
     void zCViewDialog_OnInit()               zCall( 0x0068E5A0 );
     zCViewDialog()                           zInit( zCViewDialog_OnInit() );
-    static void operator delete( void* )     zCall( 0x0065EC30 );
     static zCObject* _CreateNewInstance()    zCall( 0x0068E450 );
     /* for zCViewDialog num : 1*/
     /* for zCObject num : 15*/
@@ -26,6 +25,9 @@ namespace Gothic_II_Addon {
     virtual void __fastcall StartSelection() zCall( 0x006895C0 );
     virtual void __fastcall StopSelection()  zCall( 0x006895D0 );
     /* for zCViewBase num : 9*/
+
+    // user API
+    #include "zCViewDialog.inl"
   };
 
 } // namespace Gothic_II_Addon

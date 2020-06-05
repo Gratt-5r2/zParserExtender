@@ -21,6 +21,9 @@ namespace Gothic_I_Classic {
     void Load( zSTRING& )                zCall( 0x006F7950 );
     void ShrinkToFit()                   zCall( 0x006F7B00 );
     void Show()                          zCall( 0x006F7B90 );
+
+    // user API
+    #include "zCPar_StringTable.inl"
   };
 
   class zCPar_Symbol {
@@ -84,13 +87,12 @@ namespace Gothic_I_Classic {
     static void SetUseInstanceAdr( void* )      zCall( 0x006F7D00 );
     static void* GetUseInstance()               zCall( 0x006F7D10 );
 
-    // Union
-    zSTRING GetName();
-    void Rename( const zSTRING& newName );
-
     // static properties
     static zCPar_Symbol*& instance_sym;
     static void*& instance_adr;
+
+    // user API
+    #include "zCPar_Symbol.inl"
   };
 
   class zCPar_SymbolTable {
@@ -128,15 +130,11 @@ namespace Gothic_I_Classic {
     void Show()                                       zCall( 0x006FAAA0 );
     static int Compare( void const*, void const* )    zCall( 0x006F9770 );
 
-    // Union
-    void Load_Union( zFILE* );
-    bool32 Insert_Union( zCPar_Symbol* );
-    bool32 InsertAt_Union( zCPar_Symbol*, int pos );
-    void zCPar_SymbolTable::PostDefineExternal_Union( zCPar_Symbol* external );
-    void zCPar_SymbolTable::PostDefineExternal_Union( zCPar_Symbol* external, int index );
-
     // static properties
     static zCPar_SymbolTable*& cur_table;
+
+    // user API
+    #include "zCPar_SymbolTable.inl"
   };
 
   class zCPar_Stack {
@@ -177,6 +175,9 @@ namespace Gothic_I_Classic {
     void Clear()                    zCall( 0x006FB400 );
     void Save( zFILE* )             zCall( 0x006FB410 );
     void Load( zFILE* )             zCall( 0x006FB450 );
+
+    // user API
+    #include "zCPar_Stack.inl"
   };
 
   class zCPar_DataStack {
@@ -192,6 +193,9 @@ namespace Gothic_I_Classic {
     float PopFloat()              zCall( 0x006FB530 );
     int IsEmpty()                 zCall( 0x006FB550 );
     void Clear()                  zCall( 0x006FB560 );
+
+    // user API
+    #include "zCPar_DataStack.inl"
   };
 
 } // namespace Gothic_I_Classic

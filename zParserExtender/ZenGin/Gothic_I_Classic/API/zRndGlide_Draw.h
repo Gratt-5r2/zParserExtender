@@ -26,6 +26,9 @@ namespace Gothic_I_Classic {
     zSRndGlide_AlphaPoly* next;
 
     zSRndGlide_AlphaPoly() {}
+
+    // user API
+    #include "zSRndGlide_AlphaPoly.inl"
   };
 
 } // namespace Gothic_I_Classic

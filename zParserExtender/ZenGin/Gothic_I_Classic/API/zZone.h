@@ -22,6 +22,9 @@ namespace Gothic_I_Classic {
       virtual void AddActive( void* ) zPureCall;
       virtual void DelActive( void* ) zPureCall;
       virtual void ClearActive()      zCall( 0x005F2930 );
+
+      // user API
+      #include "zCBBox3DSorterBase_zTBoxSortHandle.inl"
     };
 
     class zTNode {
@@ -30,6 +33,9 @@ namespace Gothic_I_Classic {
       void* data;
 
       zTNode() {}
+
+      // user API
+      #include "zCBBox3DSorterBase_zTNode.inl"
     };
 
     zCArray<zTBoxSortHandle*> handles;
@@ -55,6 +61,9 @@ namespace Gothic_I_Classic {
 
     static zCBBox3DSorterBase*& s_currentSorter;
     static int& s_currentDimension;
+
+    // user API
+    #include "zCBBox3DSorterBase.inl"
   };
 
   class zCZone : public zCVob {
@@ -79,6 +88,9 @@ namespace Gothic_I_Classic {
     virtual zCClassDef* GetZoneMotherClass( void ) const                                               zCall( 0x00607690 );
     virtual zCClassDef* GetDefaultZoneClass( void ) const                                              zCall( 0x00609050 );
     virtual zSTRING GetDebugDescString( void )                                                         zCall( 0x0060BDC0 );
+
+    // user API
+    #include "zCZone.inl"
   };
 
   class zCZoneZFog : public zCZone {
@@ -92,7 +104,6 @@ namespace Gothic_I_Classic {
     void zCZoneZFog_OnInit()                                                                           zCall( 0x0060BEF0 );
     zCZoneZFog()                                                                                       zInit( zCZoneZFog_OnInit() );
     float GetActiveRange( float )                                                                      zCall( 0x0060C030 );
-    static void operator delete( void*, char const*, char const*, int )                                zCall( 0x006076A0 );
     static zCObject* _CreateNewInstance()                                                              zCall( 0x0060A030 );
     virtual zCClassDef* _GetClassDef( void ) const                                                     zCall( 0x0060A130 );
     virtual void Archive( zCArchiver& )                                                                zCall( 0x0060C180 );
@@ -101,8 +112,8 @@ namespace Gothic_I_Classic {
     virtual void ProcessZoneList( zCArraySort<zCZone*> const&, zCArraySort<zCZone*> const&, zCWorld* ) zCall( 0x0060C090 );
     virtual zCClassDef* GetDefaultZoneClass( void ) const                                              zCall( 0x0060C080 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCZoneZFog, zCZone )
+    // user API
+    #include "zCZoneZFog.inl"
   };
 
   class zCZoneZFogDefault : public zCZoneZFog {
@@ -110,15 +121,14 @@ namespace Gothic_I_Classic {
     zCLASS_DECLARATION( zCZoneZFogDefault )
 
     zCZoneZFogDefault() {}
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x006076C0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x0060A330 );
     virtual zCClassDef* _GetClassDef( void ) const                      zCall( 0x006076E0 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x0060C2C0 );
     virtual ~zCZoneZFogDefault( void )                                  zCall( 0x006088C0 );
     virtual void ThisVobAddedToWorld( zCWorld* )                        zCall( 0x0060C290 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCZoneZFogDefault, zCZoneZFog )
+    // user API
+    #include "zCZoneZFogDefault.inl"
   };
 
   class zCZoneReverb : public zCZone {
@@ -133,7 +143,6 @@ namespace Gothic_I_Classic {
     zCZoneReverb()                                                                                     zInit( zCZoneReverb_OnInit() );
     float GetActiveWeight()                                                                            zCall( 0x0060EAD0 );
     static zCObject* _CreateNewInstance()                                                              zCall( 0x00608F60 );
-    static void operator delete( void*, char const*, char const*, int )                                zCall( 0x00609060 );
     virtual zCClassDef* _GetClassDef( void ) const                                                     zCall( 0x00609080 );
     virtual void Archive( zCArchiver& )                                                                zCall( 0x0060EC40 );
     virtual void Unarchive( zCArchiver& )                                                              zCall( 0x0060EEB0 );
@@ -142,8 +151,8 @@ namespace Gothic_I_Classic {
     virtual zCClassDef* GetDefaultZoneClass( void ) const                                              zCall( 0x0060EB20 );
     virtual zSTRING GetDebugDescString( void )                                                         zCall( 0x0060E950 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCZoneReverb, zCZone )
+    // user API
+    #include "zCZoneReverb.inl"
   };
 
   class zCZoneReverbDefault : public zCZoneReverb {
@@ -152,15 +161,14 @@ namespace Gothic_I_Classic {
 
     zCZoneReverbDefault() {}
     static zCObject* _CreateNewInstance()                                                              zCall( 0x00609280 );
-    static void operator delete( void*, char const*, char const*, int )                                zCall( 0x00609350 );
     virtual zCClassDef* _GetClassDef( void ) const                                                     zCall( 0x00609370 );
     virtual void Unarchive( zCArchiver& )                                                              zCall( 0x0060EFA0 );
     virtual ~zCZoneReverbDefault( void )                                                               zCall( 0x006093C0 );
     virtual void ThisVobAddedToWorld( zCWorld* )                                                       zCall( 0x0060EF60 );
     virtual void ProcessZoneList( zCArraySort<zCZone*> const&, zCArraySort<zCZone*> const&, zCWorld* ) zCall( 0x00609380 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCZoneReverbDefault, zCZoneReverb )
+    // user API
+    #include "zCZoneReverbDefault.inl"
   };
 
   class zCZoneMusic : public zCZone {
@@ -169,17 +177,17 @@ namespace Gothic_I_Classic {
 
     zCZoneMusic() {}
     static zCObject* _CreateNewInstance()                               zCall( 0x00609CA0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00609D70 );
     static int SetAutochange( int )                                     zCall( 0x0060F070 );
     static void GetAutochange( int* )                                   zCall( 0x0060F090 );
     virtual zCClassDef* _GetClassDef( void ) const                      zCall( 0x00609D90 );
     virtual ~zCZoneMusic( void )                                        zCall( 0x00609DD0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCZoneMusic, zCZone )
 
     static int& s_autochange;
     static int& s_canruleautochange;
+
+    // user API
+    #include "zCZoneMusic.inl"
   };
 
   class zCZoneVobFarPlane : public zCZone {
@@ -193,7 +201,6 @@ namespace Gothic_I_Classic {
     zCZoneVobFarPlane()                                                                                zInit( zCZoneVobFarPlane_OnInit() );
     float GetActiveFarZ( float )                                                                       zCall( 0x0060C4B0 );
     static zCObject* _CreateNewInstance()                                                              zCall( 0x00609620 );
-    static void operator delete( void*, char const*, char const*, int )                                zCall( 0x006096F0 );
     virtual zCClassDef* _GetClassDef( void ) const                                                     zCall( 0x00609710 );
     virtual void Archive( zCArchiver& )                                                                zCall( 0x0060C600 );
     virtual void Unarchive( zCArchiver& )                                                              zCall( 0x0060C660 );
@@ -201,8 +208,8 @@ namespace Gothic_I_Classic {
     virtual void ProcessZoneList( zCArraySort<zCZone*> const&, zCArraySort<zCZone*> const&, zCWorld* ) zCall( 0x0060C510 );
     virtual zCClassDef* GetDefaultZoneClass( void ) const                                              zCall( 0x0060C500 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCZoneVobFarPlane, zCZone )
+    // user API
+    #include "zCZoneVobFarPlane.inl"
   };
 
   class zCZoneVobFarPlaneDefault : public zCZoneVobFarPlane {
@@ -211,14 +218,13 @@ namespace Gothic_I_Classic {
 
     zCZoneVobFarPlaneDefault() {}
     static zCObject* _CreateNewInstance()                               zCall( 0x00609910 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x006099E0 );
     virtual zCClassDef* _GetClassDef( void ) const                      zCall( 0x00609A00 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x0060C750 );
     virtual ~zCZoneVobFarPlaneDefault( void )                           zCall( 0x00609A40 );
     virtual void ThisVobAddedToWorld( zCWorld* )                        zCall( 0x0060C700 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCZoneVobFarPlaneDefault, zCZoneVobFarPlane )
+    // user API
+    #include "zCZoneVobFarPlaneDefault.inl"
   };
 
   class zCVobSound : public zCZone {
@@ -270,7 +276,6 @@ namespace Gothic_I_Classic {
     void StartSound( int )                                                                             zCall( 0x0060D520 );
     void StopSound()                                                                                   zCall( 0x0060D6B0 );
     static zCObject* _CreateNewInstance()                                                              zCall( 0x0060A620 );
-    static void operator delete( void*, char const*, char const*, int )                                zCall( 0x0060A690 );
     virtual zCClassDef* _GetClassDef( void ) const                                                     zCall( 0x0060CA60 );
     virtual void Archive( zCArchiver& )                                                                zCall( 0x0060D8B0 );
     virtual void Unarchive( zCArchiver& )                                                              zCall( 0x0060DA20 );
@@ -285,8 +290,8 @@ namespace Gothic_I_Classic {
     virtual zSTRING GetDebugDescString( void )                                                         zCall( 0x0060CBB0 );
     virtual void DoSoundUpdate( float )                                                                zCall( 0x0060D6F0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCVobSound, zCZone )
+    // user API
+    #include "zCVobSound.inl"
   };
 
   class zCVobSoundDaytime : public zCVobSound {
@@ -304,7 +309,6 @@ namespace Gothic_I_Classic {
     void ActivateSection( int )                                         zCall( 0x0060E240 );
     int CalcTimeFrac( float, float, float, float& )                     zCall( 0x0060E320 );
     static zCObject* _CreateNewInstance()                               zCall( 0x0060A8A0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0060A970 );
     virtual zCClassDef* _GetClassDef( void ) const                      zCall( 0x0060A990 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x0060E6D0 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x0060E740 );
@@ -313,8 +317,8 @@ namespace Gothic_I_Classic {
     virtual zSTRING GetDebugDescString( void )                          zCall( 0x0060E120 );
     virtual void DoSoundUpdate( float )                                 zCall( 0x0060E3B0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCVobSoundDaytime, zCVobSound )
+    // user API
+    #include "zCVobSoundDaytime.inl"
   };
 
 } // namespace Gothic_I_Classic

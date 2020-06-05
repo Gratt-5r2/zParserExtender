@@ -29,11 +29,13 @@ namespace Gothic_II_Addon {
     zCCSBlock* GetOU( int )                  zCall( 0x00419760 );
     void CompactLib()                        zCall( 0x00419770 );
     static zCObject* _CreateNewInstance()    zCall( 0x00418A00 );
-    static void operator delete( void* )     zCall( 0x00418B20 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x00418B40 );
     virtual void Archive( zCArchiver& )      zCall( 0x00418B50 );
     virtual void Unarchive( zCArchiver& )    zCall( 0x00418D80 );
     virtual ~zCCSLib()                       zCall( 0x00419430 );
+
+    // user API
+    #include "zCCSLib.inl"
   };
 
 } // namespace Gothic_II_Addon

@@ -163,7 +163,6 @@ namespace Gothic_II_Classic {
     static void SetLightingSwell( int )                                                      zCall( 0x006B35D0 );
     static int GetLightingSwell()                                                            zCall( 0x006B35E0 );
     static zCObject* _CreateNewInstance()                                                    zCall( 0x006B63B0 );
-    static void operator delete( void* )                                                     zCall( 0x006B6410 );
     virtual zCClassDef* _GetClassDef() const                                                 zCall( 0x006B3750 );
     virtual void Archive( zCArchiver& )                                                      zCall( 0x006B5CE0 );
     virtual void Unarchive( zCArchiver& )                                                    zCall( 0x006B5E20 );
@@ -185,6 +184,9 @@ namespace Gothic_II_Classic {
 
     // static properties
     static float& s_fGlobalItemZBiasScale;
+
+    // user API
+    #include "oCItem.inl"
   };
 
 } // namespace Gothic_II_Classic

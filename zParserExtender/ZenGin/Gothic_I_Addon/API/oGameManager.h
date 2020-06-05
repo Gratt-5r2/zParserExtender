@@ -66,6 +66,9 @@ namespace Gothic_I_Addon {
     void ShowRealPlayTime()                                         zCall( 0x0042CAD0 );
     virtual int HandleEvent( int )                                  zCall( 0x0042C030 );
     virtual ~CGameManager()                                         zCall( 0x00426520 );
+
+    // user API
+    #include "CGameManager.inl"
   };
 
 } // namespace Gothic_I_Addon

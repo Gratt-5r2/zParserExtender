@@ -135,6 +135,21 @@ namespace Gothic_I_Classic {
       extern HWND&      Window;   // Origin name: hWndApp;
     }
   }
+  
+  uint ASTAPI FindEngineAddress( string from, string to );
+
+  template <typename T>
+  inline CInvoke<T> InvokeAuto_BySignature( const string& sig, T ptr, const uint32& flag = IVK_AUTO ) {
+    uint adr = FindEngineAddress( sig, typeid( ptr ).name() );
+    return CInvoke<T>( adr, ptr, flag );
+  }
+
+  template <typename T>
+  inline ModulePatchCallInvoker<T> AutoModulePatchCallInvoker_BySignature( const string& sig, T ptr ) {
+    uint adr = FindEngineAddress( sig, typeid(ptr).name() );
+    return ModulePatchCallInvoker<T>( adr, ptr );
+  }
+
 } // namespace Gothic_II_Addon
 
 #endif // __ZGLOBAL_H__VER0__

@@ -49,7 +49,6 @@ namespace Gothic_II_Classic {
     zSTRING GetShortCom( int )                                         zCall( 0x0041B0D0 );
     void LibForceToLoad()                                              zCall( 0x0041C0D0 );
     static zCObject* _CreateNewInstance()                              zCall( 0x00419B40 );
-    static void operator delete( void* )                               zCall( 0x00419BA0 );
     virtual zCClassDef* _GetClassDef() const                           zCall( 0x0041A470 );
     virtual void Archive( zCArchiver& )                                zCall( 0x0041B250 );
     virtual void Unarchive( zCArchiver& )                              zCall( 0x0041B4A0 );
@@ -81,6 +80,9 @@ namespace Gothic_II_Classic {
     virtual void LibCheckLoaded( int )                                 zCall( 0x0041BB90 );
     virtual zCCSPoolItem* PoolFindItem( zSTRING& )                     zCall( 0x0041AD50 );
     virtual void PoolInsertItem( zCCSPoolItem* )                       zCall( 0x0041AC70 );
+
+    // user API
+    #include "zCCSManager.inl"
   };
 
 } // namespace Gothic_II_Classic

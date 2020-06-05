@@ -21,6 +21,9 @@ namespace Gothic_II_Classic {
     void Load( zSTRING& )                zCall( 0x00741860 );
     void ShrinkToFit()                   zCall( 0x00741A40 );
     void Show()                          zCall( 0x00741AC0 );
+
+    // user API
+    #include "zCPar_StringTable.inl"
   };
 
   class zCPar_Symbol {
@@ -84,13 +87,12 @@ namespace Gothic_II_Classic {
     static void SetUseInstanceAdr( void* )      zCall( 0x00741C30 );
     static void* GetUseInstance()               zCall( 0x00741C40 );
 
-    // Union
-    zSTRING GetName();
-    void Rename( const zSTRING& newName );
-
     // static properties
     static zCPar_Symbol*& instance_sym;
     static void*& instance_adr;
+
+    // user API
+    #include "zCPar_Symbol.inl"
   };
 
   class zCPar_SymbolTable {
@@ -128,15 +130,11 @@ namespace Gothic_II_Classic {
     void Show()                                       zCall( 0x00744AD0 );
     static int Compare( void const*, void const* )    zCall( 0x00743820 );
 
-    // Union
-    void Load_Union( zFILE* );
-    bool32 Insert_Union( zCPar_Symbol* );
-    bool32 InsertAt_Union( zCPar_Symbol* sym, int pos );
-    void PostDefineExternal_Union( zCPar_Symbol* external );
-    void PostDefineExternal_Union( zCPar_Symbol* external, int index );
-
     // static properties
     static zCPar_SymbolTable*& cur_table;
+
+    // user API
+    #include "zCPar_SymbolTable.inl"
   };
 
   class zCPar_Stack {
@@ -177,6 +175,9 @@ namespace Gothic_II_Classic {
     void Clear()                    zCall( 0x00745460 );
     void Save( zFILE* )             zCall( 0x00745470 );
     void Load( zFILE* )             zCall( 0x007454B0 );
+
+    // user API
+    #include "zCPar_Stack.inl"
   };
 
   class zCPar_DataStack {
@@ -192,6 +193,9 @@ namespace Gothic_II_Classic {
     float PopFloat()              zCall( 0x00745650 );
     int IsEmpty()                 zCall( 0x00745670 );
     void Clear()                  zCall( 0x00745680 );
+
+    // user API
+    #include "zCPar_DataStack.inl"
   };
 
 } // namespace Gothic_II_Classic

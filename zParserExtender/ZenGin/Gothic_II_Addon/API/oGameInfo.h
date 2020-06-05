@@ -16,6 +16,9 @@ namespace Gothic_II_Addon {
     virtual void Init()                           zCall( 0x00424010 );
     virtual void Pack( zCBuffer&, unsigned char ) zCall( 0x004240D0 );
     virtual void Unpack( zCBuffer& )              zCall( 0x004240E0 );
+
+    // user API
+    #include "oCGameInfo.inl"
   };
 
 } // namespace Gothic_II_Addon

@@ -18,6 +18,9 @@ namespace Gothic_I_Addon {
       zVEC3 m_destNormal;
 
       zSParticle() {}
+
+      // user API
+      #include "zCOutdoorRainFX_zSParticle.inl"
     };
 
     struct zSCacheElement {
@@ -25,6 +28,9 @@ namespace Gothic_I_Addon {
       zVEC3 m_normal;
 
       zSCacheElement() {}
+
+      // user API
+      #include "zCOutdoorRainFX_zSCacheElement.inl"
     };
 
     void zCOutdoorRainFX_OnInit()                    zCall( 0x005D5D30 );
@@ -36,6 +42,9 @@ namespace Gothic_I_Addon {
     void CreateParticles( zTRenderContext& )         zCall( 0x005D6550 );
     void UpdateParticles()                           zCall( 0x005D6C50 );
     void RenderParticles( zTRenderContext&, zCOLOR ) zCall( 0x005D6E00 );
+
+    // user API
+    #include "zCOutdoorRainFX.inl"
   };
 
 } // namespace Gothic_I_Addon

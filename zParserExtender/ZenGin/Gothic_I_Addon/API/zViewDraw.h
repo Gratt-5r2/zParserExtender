@@ -27,7 +27,6 @@ namespace Gothic_I_Addon {
     void __fastcall Draw()                                                  zCall( 0x00795B80 );
     void __fastcall DrawChildren()                                          zCall( 0x00795C80 );
     static zCObject* _CreateNewInstance()                                   zCall( 0x007955C0 );
-    static void operator delete( void*, char const*, char const*, int )     zCall( 0x007956C0 );
     static zCViewDraw& GetScreen()                                          zCall( 0x00795F10 );
     static void CleanupScreen()                                             zCall( 0x00796050 );
     /* for zCObject num : 7*/
@@ -38,8 +37,8 @@ namespace Gothic_I_Addon {
     virtual void __fastcall Blit()                                          zCall( 0x00795DA0 );
     /* for zCViewBase num : 8*/
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCViewDraw, zCViewObject )
+    // user API
+    #include "zCViewDraw.inl"
   };
 
 } // namespace Gothic_I_Addon

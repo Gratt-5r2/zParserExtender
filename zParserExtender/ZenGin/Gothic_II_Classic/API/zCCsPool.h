@@ -33,7 +33,6 @@ namespace Gothic_II_Classic {
     void ClrFlags( long )                                     zCall( 0x00421890 );
     void SetFlags( long )                                     zCall( 0x004218B0 );
     int HasFlags( long )                                      zCall( 0x004218C0 );
-    static void operator delete( void* )                      zCall( 0x0041A930 );
     static zCObject* _CreateNewInstance()                     zCall( 0x00420DC0 );
     /* for zSTRING num : 2*/
     virtual ~zCCSPoolItem()                                   zCall( 0x004211D0 );

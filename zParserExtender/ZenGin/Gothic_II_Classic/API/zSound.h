@@ -44,6 +44,9 @@ namespace Gothic_II_Classic {
 
       zTSound3DParams() {}
       void SetDefaults() zCall( 0x0060B890 );
+
+      // user API
+      #include "zCSoundSystem_zTSound3DParams.inl"
     };
 
     float defaultRadius;
@@ -83,6 +86,9 @@ namespace Gothic_II_Classic {
     virtual zTSpeakerType GetSpeakerType()                                   zCall( 0x004E8830 );
     virtual void SetGlobalOcclusion( float )                                 zPureCall;
     virtual float GetCPULoad()                                               zCall( 0x004E8840 );
+
+    // user API
+    #include "zCSoundSystem.inl"
   };
 
   class zCSoundFX : public zCResource {
@@ -91,7 +97,6 @@ namespace Gothic_II_Classic {
 
     void zCSoundFX_OnInit()                                       zCall( 0x004EB2D0 );
     zCSoundFX()                                                   zInit( zCSoundFX_OnInit() );
-    static void operator delete( void* )                          zCall( 0x004EB2A0 );
     virtual zCClassDef* _GetClassDef() const                      zCall( 0x004EB2C0 );
     virtual ~zCSoundFX()                                          zCall( 0x004EB2F0 );
     virtual void GetCacheConfig( unsigned long&, unsigned long& ) zCall( 0x005E52E0 );
@@ -110,6 +115,9 @@ namespace Gothic_II_Classic {
     virtual int IsLooping() const                                 zCall( 0x004EB3C0 );
     virtual void SetIsFixed( int )                                zCall( 0x004EB3D0 );
     virtual int GetIsFixed() const                                zCall( 0x004EB3E0 );
+
+    // user API
+    #include "zCSoundFX.inl"
   };
 
   class zCSoundFXDummy : public zCSoundFX {
@@ -117,6 +125,9 @@ namespace Gothic_II_Classic {
 
     zCSoundFXDummy() {}
     virtual ~zCSoundFXDummy() zCall( 0x0062B380 );
+
+    // user API
+    #include "zCSoundFXDummy.inl"
   };
 
   class zCSoundSystemDummy : public zCSoundSystem {
@@ -133,6 +144,9 @@ namespace Gothic_II_Classic {
     virtual int UpdateSound3D( int const&, zCSoundSystem::zTSound3DParams* )                zCall( 0x0062B3F0 );
     virtual void DoSoundUpdate()                                                            zCall( 0x0062B2E0 );
     virtual void SetGlobalOcclusion( float )                                                zCall( 0x0062B3B0 );
+
+    // user API
+    #include "zCSoundSystemDummy.inl"
   };
 
 } // namespace Gothic_II_Classic

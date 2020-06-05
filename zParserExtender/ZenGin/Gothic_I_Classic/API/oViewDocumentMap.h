@@ -30,6 +30,9 @@ namespace Gothic_I_Classic {
     virtual oCViewDocument* __fastcall SetPage( int, zSTRING&, int ) zCall( 0x00725F40 );
     /* for zCViewBase num : 8*/
     /* for oCViewDocumentMap num : 1*/
+
+    // user API
+    #include "oCViewDocumentMap.inl"
   };
 
 } // namespace Gothic_I_Classic

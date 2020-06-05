@@ -37,6 +37,9 @@ namespace Gothic_I_Classic {
     virtual zCArchiver* CreateArchiverWrite( zTArchiveMode, int, int )                 zCall( 0x0050AF60 );
     virtual zCArchiver* CreateArchiverWrite( zFILE*, zTArchiveMode, int, int )         zCall( 0x0050B000 );
     virtual zCArchiver* CreateArchiverWrite( zSTRING const&, zTArchiveMode, int, int ) zCall( 0x0050AF80 );
+
+    // user API
+    #include "zCArchiverFactory.inl"
   };
 
   class zCArchiver : public zCObject {
@@ -66,6 +69,9 @@ namespace Gothic_I_Classic {
       ~zTChunkRecord()                                  zCall( 0x0050DF80 );
       zTChunkRecord& operator =( zTChunkRecord const& ) zCall( 0x0050F3A0 );
       zTChunkRecord()                                   zInit( zTChunkRecord_OnInit() );
+
+      // user API
+      #include "zCArchiver_zTChunkRecord.inl"
     };
 
     zTArchiveMedium medium;
@@ -165,6 +171,9 @@ namespace Gothic_I_Classic {
 
     // static properties
     static zSTRING& stringEOL;
+
+    // user API
+    #include "zCArchiver.inl"
   };
 
 } // namespace Gothic_I_Classic

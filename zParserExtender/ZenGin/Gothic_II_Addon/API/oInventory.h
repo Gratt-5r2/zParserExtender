@@ -144,6 +144,9 @@ namespace Gothic_II_Addon {
     static zCGfx*& gfx_cursor;
     static zCGfx*& gfx_cursor_equip;
     static zCGfx**& gfx_arrow;
+
+    // user API
+    #include "oCItemContainer.inl"
   };
 
   class oCStealContainer : public oCItemContainer {
@@ -157,6 +160,9 @@ namespace Gothic_II_Addon {
     virtual void SetOwner( oCNpc* ) zCall( 0x0070ADB0 );
     virtual oCNpc* GetOwner()       zCall( 0x0070ADD0 );
     virtual void CreateList()       zCall( 0x0070ADE0 );
+
+    // user API
+    #include "oCStealContainer.inl"
   };
 
   class oCNpcContainer : public oCStealContainer {
@@ -169,6 +175,9 @@ namespace Gothic_II_Addon {
     virtual oCItem* Insert( oCItem* ) zCall( 0x0070B9F0 );
     virtual void Remove( oCItem* )    zCall( 0x0070BA30 );
     virtual void CreateList()         zCall( 0x0070B570 );
+
+    // user API
+    #include "oCNpcContainer.inl"
   };
 
   class oCNpcInventory : public oCItemContainer {
@@ -179,7 +188,7 @@ namespace Gothic_II_Addon {
     zSTRING packString;
     int maxSlots;
 
-    void oCNpcInventory_OnInit()                             zCall( 0x0070BAF0 );
+    void oCNpcInventory_OnInit()                             zCall( 0x0082DF4B );
     oCNpcInventory()                                         zInit( oCNpcInventory_OnInit() );
     void ClearInventory()                                    zCall( 0x0070BDB0 );
     void SetOwner( oCNpc* )                                  zCall( 0x0070C320 );
@@ -224,6 +233,9 @@ namespace Gothic_II_Addon {
 
     // static properties
     static zCGfx*& gfx_title;
+
+    // user API
+    #include "oCNpcInventory.inl"
   };
 
 } // namespace Gothic_II_Addon

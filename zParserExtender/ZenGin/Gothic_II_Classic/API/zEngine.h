@@ -23,6 +23,7 @@ using std::ostream;
   #include "oPrototypes.h"
 #endif
 
+
 // startup
 #ifdef __G2
 	#if True
@@ -36,6 +37,7 @@ using std::ostream;
 	  #endif
 	#endif
 #endif
+
 
 // data, containers, cache, factory
 #if True
@@ -56,6 +58,7 @@ using std::ostream;
   #endif
 #endif
 
+
 // input
 #if True
   #ifdef __ZCON_B_VER2__
@@ -63,6 +66,7 @@ using std::ostream;
     #include "zInput_Win32.h"
   #endif
 #endif
+
 
 // z2D views, fonts, fx, etc
 #if True
@@ -82,8 +86,9 @@ using std::ostream;
   #endif
 #endif
 
+
 // o2D inventories, dialogs, documents, menu, etc
-#if False
+#if True
   #ifdef __Z2D_B_VER2__
     #define __O2D_B_VER2__
     #include "oViewDialogInventory.h"
@@ -127,6 +132,7 @@ using std::ostream;
   #endif
 #endif
 
+
 // sky
 #if True
   #ifdef __ZWLD_B_VER2__
@@ -158,8 +164,9 @@ using std::ostream;
   #endif
 #endif
 
+
 // ai, physic, portals
-#if False
+#if True
   #ifdef __ZWLD_B_VER2__
     #define __ZAI_B_VER2__
     #include "zAIPlayer.h"
@@ -174,6 +181,7 @@ using std::ostream;
     #include "oWaynet.h"
   #endif
 #endif
+
 
 // data system, vdfs
 #if True
@@ -217,8 +225,9 @@ using std::ostream;
   #endif
 #endif
 
+
 // system, memory
-#if False
+#if True
   #ifdef __ZCON_B_VER2__
     #define __ZHELP_B_VER2__
     #include "zMemory_Base.h"
@@ -242,8 +251,9 @@ using std::ostream;
   #endif
 #endif
 
+
 // triggers, cutscenes
-#if False
+#if True
   #ifdef __ZWLD_B_VER2__
     #define __ZCS_B_VER2__
     #include "zCCsPool.h"
@@ -255,8 +265,9 @@ using std::ostream;
   #endif
 #endif
 
+
 // render
-#if False
+#if True
   #ifdef __ZCON_B_VER2__
     #define __ZRND_B_VER2__
     #include "zScanDir.h"
@@ -271,8 +282,9 @@ using std::ostream;
   #endif
 #endif
 
+
 // sound, music
-#if False
+#if True
   #ifdef __ZCON_B_VER2__
     #define __ZSND_B_VER2__
       #include "zVobMisc.h"
@@ -281,8 +293,9 @@ using std::ostream;
   #endif
 #endif
 
+
 // video
-#if False
+#if True
   #ifdef __ZCON_B_VER2__
     #define __ZVID_B_VER2__
     #include "zVideo_Win32.h"
@@ -292,7 +305,7 @@ using std::ostream;
 
 
 // collisions
-#if False
+#if True
   #ifdef __ZWLD_B_VER2__
     #define __ZCOLL_B_VER2__
     #include "zPluecker.h"
@@ -305,7 +318,7 @@ using std::ostream;
 #endif
 
 // other
-#if False
+#if True
   #ifdef __ZINIT_B_VER2__
     #define __ZOTHER_B_VER2__
     #include "zEigen.h"

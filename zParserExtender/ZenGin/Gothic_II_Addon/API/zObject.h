@@ -16,6 +16,9 @@ namespace Gothic_II_Addon {
     zCArray<int> numList;
 
     zCLivingObjectsState() {}
+
+    // user API
+    #include "zCLivingObjectsState.inl"
   };
 
   class zCClassDef {
@@ -68,6 +71,9 @@ namespace Gothic_II_Addon {
     static zCArraySort<zCClassDef*>*& classDefList;
     static zCClassDef*& classDefSearchDummy;
     static int& startupFinished;
+
+    // user API
+    #include "zCClassDef.inl"
   };
 
   template<class T>
@@ -121,6 +127,9 @@ namespace Gothic_II_Addon {
     const T* CastTo() const {
       return zDYNAMIC_CAST<T>( this );
     }
+
+    // user API
+    #include "zCObject.inl"
   };
 
   class zCObjectFactory : public zCObject {
@@ -128,7 +137,6 @@ namespace Gothic_II_Addon {
     zCLASS_DECLARATION( zCObjectFactory )
 
     zCObjectFactory() {}
-    static void operator delete( void* )                   zCall( 0x005591E0 );
     static zCObject* _CreateNewInstance()                  zCall( 0x005A8B00 );
     virtual zCClassDef* _GetClassDef( void ) const         zCall( 0x00426C80 );
     virtual ~zCObjectFactory( void )                       zCall( 0x00426CE0 );
@@ -142,6 +150,9 @@ namespace Gothic_II_Addon {
     virtual zCWorld* CreateWorld( void )                   zCall( 0x005ABEF0 );
     virtual zCWaypoint* CreateWaypoint( void )             zCall( 0x005ABC00 );
     virtual zCWay* CreateWay( void )                       zCall( 0x005ABD70 );
+
+    // user API
+    #include "zCObjectFactory.inl"
   };
 
   

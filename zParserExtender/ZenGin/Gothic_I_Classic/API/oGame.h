@@ -36,6 +36,9 @@ namespace Gothic_I_Classic {
       TObjectRoutine() {}
       void Release()    zCall( 0x00636100 );
       ~TObjectRoutine() zCall( 0x00636120 );
+
+      // user API
+      #include "oCGame_TObjectRoutine.inl"
     };
 
     float cliprange;
@@ -203,6 +206,9 @@ namespace Gothic_I_Classic {
     virtual void NpcInit()                                                       zCall( 0x00636BF0 );
     virtual void NpcInit( zCTree<zCVob>* )                                       zCall( 0x00636C20 );
     virtual void SetAsPlayer( zSTRING const& )                                   zCall( 0x00639840 );
+
+    // user API
+    #include "oCGame.inl"
   };
 
 } // namespace Gothic_I_Classic

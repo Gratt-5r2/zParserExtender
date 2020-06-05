@@ -21,6 +21,9 @@ namespace Gothic_I_Addon {
     virtual int PlayFrame()          zCall( 0x00424950 );
     virtual int PlayDeinit()         zCall( 0x00424940 );
     virtual int PlayHandleEvents()   zCall( 0x00424960 );
+
+    // user API
+    #include "oCBinkPlayer.inl"
   };
 
 } // namespace Gothic_I_Addon

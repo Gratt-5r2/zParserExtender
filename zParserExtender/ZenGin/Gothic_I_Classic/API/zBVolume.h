@@ -13,6 +13,9 @@ namespace Gothic_I_Classic {
     int IsIntersecting( zVEC3 const&, zVEC3 const& ) const zCall( 0x005303E0 );
     int ClassifyPlane( zTPlane ) const                     zCall( 0x005304F0 );
     void Draw( zCOLOR const& ) const                       zCall( 0x00530540 );
+
+    // user API
+    #include "zTBSphere3D.inl"
   };
 
   struct zTBBox2D {
@@ -24,6 +27,9 @@ namespace Gothic_I_Classic {
     int Classify( zTBBox2D const& ) const zCall( 0x00532AC0 );
     void ClipToBBox2D( zTBBox2D const& )  zCall( 0x00532B70 );
     void Draw() const                     zCall( 0x00532BC0 );
+
+    // user API
+    #include "zTBBox2D.inl"
   };
 
   struct zTBBox3D {
@@ -68,6 +74,9 @@ namespace Gothic_I_Classic {
     void InitZero()                                                                            zCall( 0x005486F0 );
     zTBBox3D()                                                                                 zInit( zTBBox3D_OnInit() );
     int IsIntersecting( zTBBox3D const& ) const                                                zCall( 0x005D8320 );
+
+    // user API
+    #include "zTBBox3D.inl"
   };
 
   struct zTBCylinder3D {
@@ -79,6 +88,9 @@ namespace Gothic_I_Classic {
     int IsIntersecting( zTBCylinder3D const& ) const zCall( 0x00530220 );
     void Draw( zCOLOR const& ) const                 zCall( 0x00530290 );
     void SetByBBox3D( zTBBox3D )                     zCall( 0x00530340 );
+
+    // user API
+    #include "zTBCylinder3D.inl"
   };
 
   class zCOBBox3D {
@@ -109,6 +121,9 @@ namespace Gothic_I_Classic {
 
     // static properties
     static zMAT4& trafoB2ToThis;
+
+    // user API
+    #include "zCOBBox3D.inl"
   };
 
 } // namespace Gothic_I_Classic

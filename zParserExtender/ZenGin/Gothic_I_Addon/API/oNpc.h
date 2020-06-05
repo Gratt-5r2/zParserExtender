@@ -270,15 +270,14 @@ namespace Gothic_I_Addon {
     void oCNpcTalent_OnInit()                                           zCall( 0x006BA650 );
     oCNpcTalent()                                                       zInit( oCNpcTalent_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x006BA4D0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x006BA620 );
     static void CreateTalentList( zCArray<oCNpcTalent*>* )              zCall( 0x006BA800 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x006BA640 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x006BA970 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x006BA9B0 );
     virtual ~oCNpcTalent()                                              zCall( 0x006BA7F0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCNpcTalent, zCObject )
+    // user API
+    #include "oCNpcTalent.inl"
   };
 
   struct TNpcSlot {
@@ -295,6 +294,9 @@ namespace Gothic_I_Addon {
     void ClearVob()        zCall( 0x006BAAC0 );
     TNpcSlot()             zInit( TNpcSlot_OnInit() );
     ~TNpcSlot()            zCall( 0x006BCEC0 );
+
+    // user API
+    #include "TNpcSlot.inl"
   };
 
   struct TNpcPerc {
@@ -303,6 +305,9 @@ namespace Gothic_I_Addon {
     int percFunc;
 
     TNpcPerc() {}
+
+    // user API
+    #include "TNpcPerc.inl"
   };
 
   class oCNpc : public oCVob {
@@ -435,6 +440,9 @@ namespace Gothic_I_Addon {
       unsigned char checkIfClimbable    : 1;
 
       oSDirectionInfo() {}
+
+      // user API
+      #include "oCNpc_oSDirectionInfo.inl"
     };
 
     struct oTRobustTrace {
@@ -470,6 +478,9 @@ namespace Gothic_I_Addon {
 
       oTRobustTrace() {}
       ~oTRobustTrace() zCall( 0x006BC560 );
+
+      // user API
+      #include "oCNpc_oTRobustTrace.inl"
     };
 
     class TActiveInfo {
@@ -483,6 +494,9 @@ namespace Gothic_I_Addon {
       void TActiveInfo_OnInit( oCNpc const* ) zCall( 0x006BAB10 );
       TActiveInfo( oCNpc const* a0 )          zInit( TActiveInfo_OnInit( a0 ));
       ~TActiveInfo()                          zCall( 0x006BAB20 );
+
+      // user API
+      #include "oCNpc_TActiveInfo.inl"
     };
 
     class oCNpcTimedOverlay {
@@ -494,6 +508,9 @@ namespace Gothic_I_Addon {
       zSTRING GetMdsName() zCall( 0x006CD260 );
       ~oCNpcTimedOverlay() zCall( 0x006CD2D0 );
       int Process()        zCall( 0x006ED610 );
+
+      // user API
+      #include "oCNpc_oCNpcTimedOverlay.inl"
     };
 
     group {
@@ -654,7 +671,7 @@ namespace Gothic_I_Addon {
     zVEC3 soundPosition;
     zCPlayerGroup* playerGroup;
 
-    void oCNpc_OnInit()                                                                          zCall( 0x006BB9F0 );
+    void oCNpc_OnInit()                                                                          zCall( 0x00812F90 );
     void SetBloodEmitter( zSTRING )                                                              zCall( 0x00640E90 );
     void SetBloodTexture( zSTRING )                                                              zCall( 0x00641000 );
     int IsWaitingForAnswer()                                                                     zCall( 0x00658BA0 );
@@ -1230,7 +1247,6 @@ namespace Gothic_I_Addon {
     static int IsScriptStateAIEnabled()                                                          zCall( 0x006ED550 );
     static int IsMessageAIEnabled()                                                              zCall( 0x006ED5A0 );
     static zCObject* _CreateNewInstance()                                                        zCall( 0x006ED8F0 );
-    static void operator delete( void*, char const*, char const*, int )                          zCall( 0x006ED960 );
     static void EnableDamageDebugOutput( int )                                                   zCall( 0x0076DD40 );
     static void NotifyDamageToSpy( zSTRING& )                                                    zCall( 0x0076DD50 );
     static void InitFightAI()                                                                    zCall( 0x00788E00 );
@@ -1291,8 +1307,6 @@ namespace Gothic_I_Addon {
     virtual void ProcessNpc()                                                                    zCall( 0x006CCE00 );
     virtual int AllowDiscardingOfSubtree()                                                       zCall( 0x006D7520 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCNpc, oCVob )
 
     // static properties
     static zSTRING*& FightAIInstances;
@@ -1316,6 +1330,9 @@ namespace Gothic_I_Addon {
     static float& ai_scriptStateSkipTimer;
     static int& ai_baseEnabled;
     static int& isEnabledTalkBox;
+
+    // user API
+    #include "oCNpc.inl"
   };
 
 } // namespace Gothic_I_Addon

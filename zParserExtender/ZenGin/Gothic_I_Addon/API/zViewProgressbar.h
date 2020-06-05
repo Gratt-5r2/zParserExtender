@@ -11,6 +11,9 @@ namespace Gothic_I_Addon {
     float max;
 
     zTProgressRange() {}
+
+    // user API
+    #include "zTProgressRange.inl"
   };
 
   class zCViewProgressBar : public zCView {
@@ -35,6 +38,9 @@ namespace Gothic_I_Addon {
     virtual void HandleChange()                                      zCall( 0x00471FB0 );
     virtual void Draw()                                              zCall( 0x004720B0 );
     /* for zCInputCallback num : 1*/
+
+    // user API
+    #include "zCViewProgressBar.inl"
   };
 
 } // namespace Gothic_I_Addon

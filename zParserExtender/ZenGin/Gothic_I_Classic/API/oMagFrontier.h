@@ -24,6 +24,9 @@ namespace Gothic_I_Classic {
     void DisposeWarningFX()                           zCall( 0x0046E550 );
     void DoShootFX( zVEC3 const& )                    zCall( 0x0046E590 );
     void DisposeShootFX()                             zCall( 0x0046E8A0 );
+
+    // user API
+    #include "oCMagFrontier.inl"
   };
 
 } // namespace Gothic_I_Classic

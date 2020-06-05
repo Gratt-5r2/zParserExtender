@@ -4,13 +4,21 @@
 #define __ZALGEBRA_H__VER3__
 
 namespace Gothic_II_Addon {
-  const double PI     = 3.14159265359;
-  const double RAD    = PI / 180.0f;
-  const double DEGREE = 180.0 / PI;
+  const double PI_LONG     = 3.14159265359;
+  const double RAD_LONG    = PI_LONG / 180.0f;
+  const double DEGREE_LONG = 180.0 / PI_LONG;
 
+  const float PI     = PI_LONG;
+  const float RAD    = RAD_LONG;
+  const float DEGREE = DEGREE_LONG;
+  const float RAD45  = 45.0f  / DEGREE;
   const float RAD90  = 90.0f  / DEGREE;
+  const float RAD135 = 135.0f / DEGREE;
   const float RAD180 = 180.0f / DEGREE;
+  const float RAD225 = 225.0f / DEGREE;
   const float RAD270 = 270.0f / DEGREE;
+  const float RAD315 = 315.0f / DEGREE;
+  const float RAD360 = 360.0f / DEGREE;
 
   const float AVERAGE_SMOOTH_FRAME_TIME = 0.025f;
 
@@ -171,6 +179,19 @@ namespace Gothic_II_Addon {
     {
       return n[index];
     }
+
+    float GetAngle()
+    {
+      CalcAngle( n[0], n[1] );
+    }
+
+    zVEC2& Rotate( const float& rad )
+    {
+      RotAngle( n[0], n[1], );
+    }
+
+    // user API
+    #include "zVEC2.inl"
   };
 
   class zVEC3 {
@@ -203,6 +224,31 @@ namespace Gothic_II_Addon {
       n[0] = a0[0];
       n[1] = a0[1];
       n[2] = a0[2];
+    }
+
+    float LengthApprox() const {
+      float ix = n[VX];
+      float iy = n[VY];
+      float iz = n[VZ];
+
+      if( ix < 0.0f ) ix *= -1.0;
+      if( iy < 0.0f ) iy *= -1.0;
+      if( iz < 0.0f ) iz *= -1.0;
+
+      if( ix < iy ) {
+        float it = ix;
+        ix = iy;
+        iy = it;
+      }
+
+      if( ix < iz ) {
+        float it = ix;
+        ix = iz;
+        iz = it;
+      }
+
+      float t = iy + iz;
+      return ix - (ix * (1.0f / 16.0f)) + (t * (1.0f / 4.0f)) + (t * (1.0f / 8.0f));
     }
 
     float Length() const
@@ -342,6 +388,9 @@ namespace Gothic_II_Addon {
     zVEC3& RotateYZ( const float& rad ) {
       RotAngle(n[1], n[2], YZ);
     }
+
+    // user API
+    #include "zVEC3.inl"
   };
 
   class zVEC4 {
@@ -498,6 +547,9 @@ namespace Gothic_II_Addon {
     {
       return n[index];
     }
+
+    // user API
+    #include "zVEC4.inl"
   };
 
   class zMAT3 {
@@ -709,6 +761,9 @@ namespace Gothic_II_Addon {
     }
 
     static zMAT3& s_identity;
+
+    // user API
+    #include "zMAT3.inl"
   };
 
   class zMAT4 {
@@ -765,7 +820,7 @@ namespace Gothic_II_Addon {
     void PreScale( const zVEC3& a0 )    zCall( 0x00517840 );
     void PostScale( const zVEC3& a0 )   zCall( 0x00517820 );
     zVEC3 GetEulerAngles() const        zCall( 0x00516390 );
-    void SetByEulerAngles()             zCall( 0x005163D0 );
+    void SetByEulerAngles( zVEC3 )      zCall( 0x005163D0 );
     zMAT4 TransposeLinTrafo() const     zCall( 0x00515180 );
     zMAT4 InverseLinTrafo() const       zCall( 0x00515340 );
 
@@ -982,6 +1037,9 @@ namespace Gothic_II_Addon {
     }
 
     static zMAT4& s_identity;
+
+    // user API
+    #include "zMAT4.inl"
   };
 
   class zCQuat {
@@ -1145,6 +1203,9 @@ namespace Gothic_II_Addon {
     {
       return q[index];
     }
+
+    // user API
+    #include "zCQuat.inl"
   };
 
   struct zComplex {
@@ -1214,6 +1275,9 @@ namespace Gothic_II_Addon {
 
     float Mag()   zCall( 0x00559BD0 );
     float Phase() zCall( 0x00559C40 );
+
+    // user API
+    #include "zComplex.inl"
   };
 
   class zCValueSmooth {
@@ -1261,6 +1325,9 @@ namespace Gothic_II_Addon {
     {
       return smoothedValue;
     }
+
+    // user API
+    #include "zCValueSmooth.inl"
   };
 
   class zCVEC3Smooth {
@@ -1308,8 +1375,170 @@ namespace Gothic_II_Addon {
     {
       return smoothedValue;
     }
+
+    // user API
+    #include "zCVEC3Smooth.inl"
   };
 
+  inline void GetProjection( int& x, int& y, zVEC3 v );
+  inline int PixelToVirtualX( int x );
+  inline int PixelToVirtualY( int y );
+  inline int VirtualToPixelX( int x );
+  inline int VirtualToPixelY( int y );
+  extern oCGame*& ogame;
+
+  class zCLine2D {
+    zVEC2 posA;
+    zVEC2 posB;
+  public:
+
+    zCLine2D()
+    {
+
+    }
+
+    zCLine2D( zVEC2 a, zVEC2 b )
+    {
+      posA = a;
+      posB = b;
+    }
+
+    zCLine2D( zVEC3 a, zVEC3 b )
+    {
+      if( !ogame )
+        return;
+
+      int ax, ay, bx, by;
+      GetProjection( ax, ay, a );
+      GetProjection( bx, by, b );
+
+      posA = zVEC2( ax, ay );
+      posB = zVEC2( bx, by );
+    }
+
+    zVEC2& operator[] ( uint i )
+    {
+      return i == 0 ? posA : posB;
+    }
+
+    const zVEC2& operator[] ( uint i ) const
+    {
+      return i == 0 ? posA : posB;
+    }
+
+    zCLine2D Dot( float mult ) const
+    {
+      zVEC2 vector = GetVector() * mult;
+      return zCLine2D( posA, posA + vector );
+    }
+
+    bool TraceRay( const zCLine2D& line, zVEC2* intersec = Null ) const
+    {
+      zCLine2D line1 = *this;
+      zCLine2D line2 = line;
+
+      float angle = line1.GetAngle();
+      line1.Rotate( -angle );
+      line2.Rotate( -angle, line1[VA] );
+
+      float vx_mid = line1[VA][VX];
+      float vx_min = min( line2[VA][VX], line2[VB][VX] );
+      float vx_max = max( line2[VA][VX], line2[VB][VX] );
+
+      if( vx_mid >= vx_min && vx_mid <= vx_max ) {
+        float vx_length     = vx_max - vx_min;
+        float vx_collide    = vx_mid - vx_min;
+        float vx_multiplier = SafeDiv( 1.0f, vx_length ) * vx_collide;
+        zCLine2D line3      = line2.Dot( vx_multiplier );
+
+        float vy_mid = line3[VB][VY];
+        float vy_min = min( line1[VA][VY], line1[VB][VY] );
+        float vy_max = max( line1[VA][VY], line1[VB][VY] );
+
+        if( vy_mid >= vy_min && vy_mid <= vy_max ) {
+          if( intersec )
+            *intersec = line[VA] + line.GetVector() * vx_multiplier;
+
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    bool TraceRay( const zVEC2& dot, float depth, zVEC2* intersec = Null ) const
+    {
+      zVEC2 vector = GetVector().Rotate( RAD90 ).Normalize() * zVEC2( PixelToVirtualX( depth ), PixelToVirtualY( depth ) );
+      zCLine2D line( dot - vector, dot + vector );
+      return TraceRay( line, intersec );
+    }
+
+    float GetAngle() const
+    {
+      zVEC2 vself = zVEC2( VirtualToPixelX( vself[VX] ), VirtualToPixelY( vself[VY] ) );
+      return vself.GetAngle();
+    }
+
+    zCLine2D& Rotate( float angle )
+    {
+      return Rotate( angle, posA );
+    }
+
+    zCLine2D& Rotate( float angle, const zVEC2& pivot )
+    {
+      zVEC2 v1 = posA - pivot;
+      zVEC2 v2 = posB - pivot;
+
+      posA = pivot + v1.Rotate( angle );
+      posB = pivot + v2.Rotate( angle );
+      return *this;
+    }
+
+    zVEC2 GetVector() const
+    {
+      return posB - posA;
+    }
+
+    float GetLength() const
+    {
+      return GetVector().Length();
+    }
+
+    // user API
+    #include "zCLine2D.inl"
+  };
+  
+  inline zVEC2 Alg_Min( zVEC2 const &, zVEC2 const & )               zCall( 0x00512FC0 );
+  inline zVEC3 Alg_Min( zVEC3 const &, zVEC3 const & )               zCall( 0x00513290 );
+  inline zVEC4 Alg_Min( zVEC4 const &, zVEC4 const & )               zCall( 0x00513730 );
+  inline zVEC2 Alg_Max( zVEC2 const &, zVEC2 const & )               zCall( 0x00513010 );
+  inline zVEC3 Alg_Max( zVEC3 const &, zVEC3 const & )               zCall( 0x00513300 );
+  inline zVEC4 Alg_Max( zVEC4 const &, zVEC4 const & )               zCall( 0x005137B0 );
+  inline zVEC2 Alg_Prod( zVEC2 const &, zVEC2 const & )              zCall( 0x00513060 );
+  inline zVEC3 Alg_Prod( zVEC3 const &, zVEC3 const & )              zCall( 0x00513370 );
+  inline zVEC4 Alg_Prod( zVEC4 const &, zVEC4 const & )              zCall( 0x00513830 );
+  inline void Alg_Swap( zVEC2 &, zVEC2 & )                           zCall( 0x00512F80 );
+  inline void Alg_Swap( zVEC3 &, zVEC3 & )                           zCall( 0x00513240 );
+  inline void Alg_Swap( zVEC4 &, zMAT4 & )                           zCall( 0x005136D0 );
+  inline void Alg_Swap( zMAT3 &, zMAT3 & )                           zCall( 0x005146B0 );
+  inline void Alg_Swap( zMAT4 &, zMAT4 & )                           zCall( 0x00517040 );
+  inline zMAT3 Alg_Identity2D()                                      zCall( 0x005178A0 );
+  inline zMAT3 Alg_Translation2D( zVEC2 & )                          zCall( 0x00517940 );
+  inline zMAT3 Alg_Rotation2D( zVEC2 &, float )                      zCall( 0x005179E0 );
+  inline zMAT3 Alg_Scaling2D( zVEC2 & )                              zCall( 0x00517AB0 );
+  inline zMAT4 Alg_Identity3D()                                      zCall( 0x00517B50 );
+  inline zMAT4 Alg_Translation3D( zVEC3 const & )                    zCall( 0x00517C60 );
+  inline zMAT4 Alg_Rotation3D( zVEC3 const &, float )                zCall( 0x00517D70 );
+  inline zMAT4 Alg_Rotation3DN( zVEC3 const &, float )               zCall( 0x00517DF0 );
+  inline zMAT4 Alg_Rotation3DRad( zVEC3 const &, float )             zCall( 0x00517E20 );
+  inline zMAT4 Alg_Rotation3DNRad( zVEC3 const &, float )            zCall( 0x00517E90 );
+  inline zMAT4 Alg_Scaling3D( zVEC3 const & )                        zCall( 0x00518010 );
+  inline zMAT4 Alg_Perspective3D( float )                            zCall( 0x00518120 );
+  inline void Alg_ClipAtZ0( zVEC3 &, zVEC3 & )                       zCall( 0x00518230 );
+  inline float Alg_SqrtInvApprox( float )                            zCall( 0x004957F0 );
+  inline float Alg_AngleUnitRad( zVEC3 const &, zVEC3 const & )      zCall( 0x00550CF0 );
+  inline void Alg_CalcAziElevUnit( zVEC3 const &, float &, float & ) zCall( 0x00681620 );
+  inline void Alg_CalcAziElev( zVEC3&, float&, float& )              zCall( 0x00477650 );
 } // namespace Gothic_II_Addon
 
 #endif // __ZALGEBRA_H__VER3__

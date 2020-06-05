@@ -17,6 +17,9 @@ namespace Gothic_II_Classic {
 
     zTCSBlockPosition() {}
     ~zTCSBlockPosition() zCall( 0x00417DB0 );
+
+    // user API
+    #include "zTCSBlockPosition.inl"
   };
 
   class zCEvMsgCutscene : public zCEventMessage {
@@ -43,7 +46,6 @@ namespace Gothic_II_Classic {
     void SetCutsceneName( zSTRING )                 zCall( 0x00413CC0 );
     zSTRING GetCutsceneName()                       zCall( 0x006EDEA0 );
     static zCObject* _CreateNewInstance()           zCall( 0x0040B740 );
-    static void operator delete( void* )            zCall( 0x0040B850 );
     virtual zCClassDef* _GetClassDef() const        zCall( 0x0040B870 );
     virtual ~zCEvMsgCutscene()                      zCall( 0x0040C640 );
     virtual int IsHighPriority()                    zCall( 0x0040B880 );
@@ -51,6 +53,9 @@ namespace Gothic_II_Classic {
     virtual int IsDeleted()                         zCall( 0x0040B8A0 );
     virtual int MD_GetNumOfSubTypes()               zCall( 0x0040C6A0 );
     virtual zSTRING MD_GetSubTypeString( int )      zCall( 0x0040C6B0 );
+
+    // user API
+    #include "zCEvMsgCutscene.inl"
   };
 
   class zCCSRole : public zCObject, public zSTRING {
@@ -74,7 +79,6 @@ namespace Gothic_II_Classic {
     void SetRoleVob( zCVob* )                zCall( 0x0040BE80 );
     zCVob* GetRoleVob()                      zCall( 0x0040C330 );
     static zCObject* _CreateNewInstance()    zCall( 0x0040B3E0 );
-    static void operator delete( void* )     zCall( 0x0040B530 );
     /* for zCObject num : 4*/
     virtual zCClassDef* _GetClassDef() const zCall( 0x0040B550 );
     virtual void Archive( zCArchiver& )      zCall( 0x0040C340 );
@@ -113,6 +117,9 @@ namespace Gothic_II_Classic {
     virtual void BlockCorrection()                                      zCall( 0x0040CA40 );
     virtual void BlockAsFocus( int )                                    zCall( 0x0040CA50 );
     virtual zCCSBlockPosition* GetChildPos( int )                       zCall( 0x0040CB10 );
+
+    // user API
+    #include "zCCSBlockBase.inl"
   };
 
   class zCCSAtomicBlock : public zCCSBlockBase {
@@ -133,7 +140,6 @@ namespace Gothic_II_Classic {
     void zCCSAtomicBlock_OnInit()                                       zCall( 0x0040CB20 );
     zCCSAtomicBlock()                                                   zInit( zCCSAtomicBlock_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x0040A820 );
-    static void operator delete( void* )                                zCall( 0x0040A960 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x0040A980 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x00416C20 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x00416C40 );
@@ -147,6 +153,9 @@ namespace Gothic_II_Classic {
     virtual int IsFinished( zCArray<zCEventManager*> const& )           zCall( 0x0040A990 );
     virtual int IsFinished( zCEventManager* )                           zCall( 0x0040D070 );
     virtual zCEventMessage* GetCommand()                                zCall( 0x0040A9A0 );
+
+    // user API
+    #include "zCCSAtomicBlock.inl"
   };
 
   class zCCSBlockPosition {
@@ -162,6 +171,9 @@ namespace Gothic_II_Classic {
     zCCSBlockPosition( float a0, zCCSBlockBase* a1 )          zInit( zCCSBlockPosition_OnInit( a0, a1 ));
     zCCSBlockPosition& operator =( zCCSBlockPosition const& ) zCall( 0x00416BE0 );
     virtual ~zCCSBlockPosition()                              zCall( 0x00416BD0 );
+
+    // user API
+    #include "zCCSBlockPosition.inl"
   };
 
   class zCCSBlock : public zCCSBlockBase {
@@ -174,7 +186,6 @@ namespace Gothic_II_Classic {
     void zCCSBlock_OnInit()                                             zCall( 0x0040D260 );
     zCCSBlock()                                                         zInit( zCCSBlock_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x0040AB90 );
-    static void operator delete( void* )                                zCall( 0x0040AC60 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x0040AC80 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x00416C70 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x00416E50 );
@@ -197,6 +208,9 @@ namespace Gothic_II_Classic {
     virtual void BlockCorrection()                                      zCall( 0x0040DCA0 );
     virtual void BlockAsFocus( int )                                    zCall( 0x0040DC60 );
     virtual zCCSBlockPosition* GetChildPos( int )                       zCall( 0x0040D430 );
+
+    // user API
+    #include "zCCSBlock.inl"
   };
 
   class zCCSSyncBlock : public zCCSBlock {
@@ -209,7 +223,6 @@ namespace Gothic_II_Classic {
     zCCSSyncBlock()                                                    zInit( zCCSSyncBlock_OnInit() );
     void AssignerCorrection( int )                                     zCall( 0x0040E3B0 );
     static zCObject* _CreateNewInstance()                              zCall( 0x0040AE70 );
-    static void operator delete( void* )                               zCall( 0x0040AF50 );
     virtual zCClassDef* _GetClassDef() const                           zCall( 0x0040AF70 );
     virtual void Archive( zCArchiver& )                                zCall( 0x00417090 );
     virtual void Unarchive( zCArchiver& )                              zCall( 0x004172C0 );
@@ -223,6 +236,9 @@ namespace Gothic_II_Classic {
     virtual void DeleteChild( int )                                    zCall( 0x0040E2F0 );
     virtual int GetRoleNumOfChild( int )                               zCall( 0x0040E0E0 );
     virtual void BlockAsFocus( int )                                   zCall( 0x0040E2A0 );
+
+    // user API
+    #include "zCCSSyncBlock.inl"
   };
 
   class zCCutscene : public zCCSBlock {
@@ -276,7 +292,6 @@ namespace Gothic_II_Classic {
     void SerializeBlock( zCCSBlockBase*, zTCSBlockPosition& ) zCall( 0x00417FC0 );
     zCCSProps* GetProperties()                                zCall( 0x0041CF00 );
     static zCObject* _CreateNewInstance()                     zCall( 0x0040B170 );
-    static void operator delete( void* )                      zCall( 0x0040B1D0 );
     virtual zCClassDef* _GetClassDef() const                  zCall( 0x0040E5C0 );
     virtual void Archive( zCArchiver& )                       zCall( 0x00417500 );
     virtual void Unarchive( zCArchiver& )                     zCall( 0x00417590 );
@@ -306,6 +321,9 @@ namespace Gothic_II_Classic {
     virtual zCVob* LoadStage()                                zCall( 0x00416910 );
     virtual zCVob* CatchPlayer( zCVob* )                      zCall( 0x00416B30 );
     virtual void PrepareBlock()                               zCall( 0x0040FDC0 );
+
+    // user API
+    #include "zCCutscene.inl"
   };
 
 } // namespace Gothic_II_Classic

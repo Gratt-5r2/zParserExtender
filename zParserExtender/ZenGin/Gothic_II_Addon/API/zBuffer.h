@@ -92,6 +92,9 @@ namespace Gothic_II_Addon {
     static void ByteFreq_Reset()                          zCall( 0x00441BE0 );
     static void ByteFreq_Print()                          zCall( 0x00441C30 );
     virtual ~zCBuffer()                                   zCall( 0x00440C70 );
+
+    // user API
+    #include "zCBuffer.inl"
   };
 
 } // namespace Gothic_II_Addon

@@ -10,7 +10,6 @@ namespace Gothic_II_Classic {
     zCLASS_DECLARATION( oCObjectFactory )
 
     oCObjectFactory() {}
-    static void operator delete( void* )                 zCall( 0x00426710 );
     static zCObject* _CreateNewInstance()                zCall( 0x00710490 );
     virtual zCClassDef* _GetClassDef() const             zCall( 0x00426730 );
     virtual ~oCObjectFactory()                           zCall( 0x00426930 );
@@ -23,6 +22,9 @@ namespace Gothic_II_Classic {
     virtual zCWay* CreateWay()                           zCall( 0x00710990 );
     virtual oCNpc* CreateNpc( int )                      zCall( 0x007107B0 );
     virtual oCItem* CreateItem( int )                    zCall( 0x00710870 );
+
+    // user API
+    #include "oCObjectFactory.inl"
   };
 
 } // namespace Gothic_II_Classic

@@ -33,6 +33,9 @@ namespace Gothic_I_Classic {
     __int64 numBytesFreedTotal;
 
     zTMallocStats() {}
+
+    // user API
+    #include "zTMallocStats.inl"
   };
 
   struct zTMallocProcessStats {
@@ -41,6 +44,9 @@ namespace Gothic_I_Classic {
     unsigned long moveable;
 
     zTMallocProcessStats() {}
+
+    // user API
+    #include "zTMallocProcessStats.inl"
   };
 
   class zCMalloc {
@@ -59,6 +65,9 @@ namespace Gothic_I_Classic {
     virtual zTMallocCheckPtrError CheckPtr( void* )                     zCall( 0x0054EB40 );
     virtual int Init( int )                                             zPureCall;
     virtual int Shutdown()                                              zPureCall;
+
+    // user API
+    #include "zCMalloc.inl"
   };
 
 } // namespace Gothic_I_Classic

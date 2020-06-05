@@ -212,6 +212,9 @@ namespace Gothic_II_Addon {
 
     void zCRenderLight_OnInit() zCall( 0x0057A7C0 );
     zCRenderLight()             zInit( zCRenderLight_OnInit() );
+
+    // user API
+    #include "zCRenderLight.inl"
   };
 
   class zCRndAlphaSortObject {
@@ -223,6 +226,9 @@ namespace Gothic_II_Addon {
     virtual ~zCRndAlphaSortObject() zCall( 0x00528C80 );
     virtual void Draw( int )        zPureCall;
     virtual int IsAlphaPoly()       zCall( 0x00528C00 );
+
+    // user API
+    #include "zCRndAlphaSortObject.inl"
   };
 
   struct zTRnd_TexFormatInfo {
@@ -237,6 +243,9 @@ namespace Gothic_II_Addon {
     int aSize;
 
     zTRnd_TexFormatInfo() {}
+
+    // user API
+    #include "zTRnd_TexFormatInfo.inl"
   };
 
   struct zTRnd_DeviceInfo {
@@ -245,6 +254,9 @@ namespace Gothic_II_Addon {
     void zTRnd_DeviceInfo_OnInit() zCall( 0x00638F80 );
     ~zTRnd_DeviceInfo()            zCall( 0x004275C0 );
     zTRnd_DeviceInfo()             zInit( zTRnd_DeviceInfo_OnInit() );
+
+    // user API
+    #include "zTRnd_DeviceInfo.inl"
   };
 
   struct zTRnd_VidModeInfo {
@@ -254,6 +266,9 @@ namespace Gothic_II_Addon {
     int fullscreenOnly;
 
     zTRnd_VidModeInfo() {}
+
+    // user API
+    #include "zTRnd_VidModeInfo.inl"
   };
 
   struct zTRnd_Stats {
@@ -268,6 +283,9 @@ namespace Gothic_II_Addon {
     int numAlphaPolyBatches;
 
     zTRnd_Stats() {}
+
+    // user API
+    #include "zTRnd_Stats.inl"
   };
 
   struct zTRndSimpleVertex {
@@ -278,6 +296,9 @@ namespace Gothic_II_Addon {
 
     void zTRndSimpleVertex_OnInit() zCall( 0x005D45F0 );
     zTRndSimpleVertex()             zInit( zTRndSimpleVertex_OnInit() );
+
+    // user API
+    #include "zTRndSimpleVertex.inl"
   };
 
   struct zTRndSurfaceDesc {
@@ -291,6 +312,9 @@ namespace Gothic_II_Addon {
     unsigned long bitBMask;
 
     zTRndSurfaceDesc() {}
+
+    // user API
+    #include "zTRndSurfaceDesc.inl"
   };
 
   class zCRenderer {
@@ -300,6 +324,9 @@ namespace Gothic_II_Addon {
       zVEC4 ambientRGBA;
 
       zTMaterial() {}
+
+      // user API
+      #include "zCRenderer_zTMaterial.inl"
     };
 
     zTRnd_PolySortMode polySortMode;
@@ -424,6 +451,9 @@ namespace Gothic_II_Addon {
     virtual void RenderAlphaSortList()                                                                 zCall( 0x0064A3D0 );
     virtual int DrawVertexBuffer( zCVertexBuffer*, int, int, unsigned short*, unsigned long )          zPureCall;
     virtual zCVertexBuffer* CreateVertexBuffer()                                                       zPureCall;
+
+    // user API
+    #include "zCRenderer.inl"
   };
 
 } // namespace Gothic_II_Addon

@@ -56,6 +56,9 @@ namespace Gothic_I_Addon {
 
     zTEngineStats() {}
     void PrintScreen( int, int ) zCall( 0x0050E510 );
+
+    // user API
+    #include "zTEngineStats.inl"
   };
 
   class zCLineCache {
@@ -68,6 +71,9 @@ namespace Gothic_I_Addon {
       int color;
 
       zTCacheEntry() {}
+
+      // user API
+      #include "zCLineCache_zTCacheEntry.inl"
     };
 
     int numEntries;
@@ -80,6 +86,9 @@ namespace Gothic_I_Addon {
     void Flush( zCViewBase* )                              zCall( 0x0050EAC0 );
     void Line3D( zVEC3 const&, zVEC3 const&, zCOLOR, int ) zCall( 0x0050EB50 );
     void LineCS3D( zVEC3 const&, zVEC3 const&, zCOLOR )    zCall( 0x0050EF00 );
+
+    // user API
+    #include "zCLineCache.inl"
   };
 
   struct zTViewportData {
@@ -99,6 +108,9 @@ namespace Gothic_I_Addon {
     float ycenter;
 
     zTViewportData() {}
+
+    // user API
+    #include "zTViewportData.inl"
   };
 
   class zCCamera {
@@ -121,6 +133,9 @@ namespace Gothic_I_Addon {
       zCOLOR color;
 
       zTCamVertSimple() {}
+
+      // user API
+      #include "zCCamera_zTCamVertSimple.inl"
     };
 
     zTPlane frustumplanes[NUM_FRUSTUM_PLANES];
@@ -210,6 +225,9 @@ namespace Gothic_I_Addon {
     // static properties
     static zCCamera*& activeCam;
     static zVEC3& activeCamPos;
+
+    // user API
+    #include "zCCamera.inl"
   };
 
   class zCVertex {
@@ -232,6 +250,9 @@ namespace Gothic_I_Addon {
     zCVertex()                                 zInit( zCVertex_OnInit() );
     void ResetVertexTransform()                zCall( 0x005BF270 );
     static void ResetVertexTransforms()        zCall( 0x0050F260 );
+
+    // user API
+    #include "zCVertex.inl"
   };
 
   class zCVertFeature {
@@ -247,6 +268,9 @@ namespace Gothic_I_Addon {
 
     void zCVertFeature_OnInit() zCall( 0x0056DDC0 );
     zCVertFeature()             zInit( zCVertFeature_OnInit() );
+
+    // user API
+    #include "zCVertFeature.inl"
   };
 
   class zCPolygon {
@@ -272,6 +296,9 @@ namespace Gothic_I_Addon {
       unsigned short sectorIndex        : 16;
 
       TFlags() {}
+
+      // user API
+      #include "zCPolygon_TFlags.inl"
     };
 #pragma pack( pop )
 
@@ -369,6 +396,9 @@ namespace Gothic_I_Addon {
     static int& s_numFeatListScene;
     static zCVertex**& s_actClipVert;
     static int& s_actNumClipVert;
+
+    // user API
+    #include "zCPolygon.inl"
   };
 
   class zCPortal : public zCPolygon {
@@ -388,7 +418,23 @@ namespace Gothic_I_Addon {
 
     // static properties
     static zCMaterial*& portalDummyMaterial;
+
+    // user API
+    #include "zCPortal.inl"
   };
+
+  inline void GetProjection( int& x, int& y, zVEC3 v ) {
+    float fPixelPosX = FLT_MAX;
+    float fPixelPosY = FLT_MAX;
+    zCCamera* pCamera = zCCamera::activeCam;
+    pCamera->Activate();
+    zVEC3 vec = pCamera->camMatrix * v;
+    if( vec[2] > 0 )
+      pCamera->Project( &vec, fPixelPosX, fPixelPosY );
+
+    x = screen->anx( fPixelPosX );
+    y = screen->any( fPixelPosY );
+  }
 
 } // namespace Gothic_I_Addon
 

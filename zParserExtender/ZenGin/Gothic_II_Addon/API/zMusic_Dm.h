@@ -16,12 +16,18 @@ namespace Gothic_II_Addon {
     zCMusicTheme_DM() {}
     virtual ~zCMusicTheme_DM()   zCall( 0x004E72B0 );
     virtual int IsActive() const zCall( 0x004E7420 );
+
+    // user API
+    #include "zCMusicTheme_DM.inl"
   };
 
   class zCMusicJingle_DM : public zCMusicJingle {
   public:
 
     zCMusicJingle_DM() {}
+
+    // user API
+    #include "zCMusicJingle_DM.inl"
   };
 
   class CMusDrvProperties {
@@ -64,6 +70,9 @@ namespace Gothic_II_Addon {
     virtual void SetVolume( float )                                                                          zCall( 0x004E9FD0 );
     virtual float GetVolume() const                                                                          zCall( 0x004E8160 );
     virtual int IsAvailable( zSTRING const& )                                                                zCall( 0x004EA010 );
+
+    // user API
+    #include "zCMusicSys_DirectMusic.inl"
   };
 
 } // namespace Gothic_II_Addon

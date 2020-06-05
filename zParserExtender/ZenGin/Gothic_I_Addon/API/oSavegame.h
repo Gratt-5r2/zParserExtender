@@ -39,14 +39,13 @@ namespace Gothic_I_Addon {
     void SetSlot( int )                                                 zCall( 0x00438520 );
     zSTRING GetGameTime()                                               zCall( 0x00439270 );
     static zCObject* _CreateNewInstance()                               zCall( 0x00437C00 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00437D40 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00437D60 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x00438920 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x00438DC0 );
     virtual ~oCSavegameInfo()                                           zCall( 0x004387A0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCSavegameInfo, zCObject )
+    // user API
+    #include "oCSavegameInfo.inl"
   };
 
   class oCSavegameManager {
@@ -67,6 +66,9 @@ namespace Gothic_I_Addon {
     void ClearCurrent()                              zCall( 0x0043A500 );
     zSTRING GetSlotDirName( int )                    zCall( 0x0043A650 );
     virtual ~oCSavegameManager()                     zCall( 0x00439790 );
+
+    // user API
+    #include "oCSavegameManager.inl"
   };
 
 } // namespace Gothic_I_Addon

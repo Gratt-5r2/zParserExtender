@@ -18,6 +18,9 @@ namespace Gothic_I_Addon {
 
     zCMemPoolBlock() {}
     static void operator delete( void* ) zCall( 0x00567830 );
+
+    // user API
+    #include "zCMemPoolBlock.inl"
   };
 
   class zCVolatileMemoryBase {
@@ -43,6 +46,9 @@ namespace Gothic_I_Addon {
     void Restore( unsigned int )                                                           zCall( 0x005674A0 );
     void MaxFillPercentage( int )                                                          zCall( 0x00567570 );
     virtual void Destroyed( void* )                                                        zCall( 0x00567220 );
+
+    // user API
+    #include "zCVolatileMemoryBase.inl"
   };
 
   class zCMemPoolBase {
@@ -73,6 +79,9 @@ namespace Gothic_I_Addon {
     static const char*& s_fileName;
     static int& s_line;
     static int& s_disablePools;
+
+    // user API
+    #include "zCMemPoolBase.inl"
   };
 
 } // namespace Gothic_I_Addon

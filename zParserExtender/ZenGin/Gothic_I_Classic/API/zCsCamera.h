@@ -54,7 +54,6 @@ namespace Gothic_I_Classic {
     void zCCamTrj_KeyFrame_OnInit()                                     zCall( 0x004B4AC0 );
     zCCamTrj_KeyFrame()                                                 zInit( zCCamTrj_KeyFrame_OnInit() );
     void Changed()                                                      zCall( 0x004B5050 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x004BA650 );
     static zCObject* _CreateNewInstance()                               zCall( 0x004BED90 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x004B4B90 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x004B4DC0 );
@@ -63,8 +62,8 @@ namespace Gothic_I_Classic {
     virtual void ThisVobAddedToWorld( zCWorld* )                        zCall( 0x004B4C50 );
     virtual void ThisVobRemovedFromWorld( zCWorld* )                    zCall( 0x004B4C60 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCCamTrj_KeyFrame, zCVob )
+    // user API
+    #include "zCCamTrj_KeyFrame.inl"
   };
 
   class zCCSCamera_EventMsg : public zCEventMessage {
@@ -91,8 +90,6 @@ namespace Gothic_I_Classic {
     void zCCSCamera_EventMsg_OnInit( zTCSCam_EvSubType )                     zCall( 0x004BD910 );
     zCCSCamera_EventMsg()                                                    zInit( zCCSCamera_EventMsg_OnInit() );
     zCCSCamera_EventMsg( zTCSCam_EvSubType a0 )                              zInit( zCCSCamera_EventMsg_OnInit( a0 ));
-    static void operator delete( void*, char const*, char const*, int )      zCall( 0x00402050 );
-    static void* operator new( unsigned int, char const*, char const*, int ) zCall( 0x004AB960 );
     static zCObject* _CreateNewInstance()                                    zCall( 0x004BE470 );
     virtual zCClassDef* _GetClassDef() const                                 zCall( 0x004BA670 );
     virtual void Archive( zCArchiver& )                                      zCall( 0x004BDA80 );
@@ -107,9 +104,8 @@ namespace Gothic_I_Classic {
     virtual zCEventMessage::zTTimeBehavior MD_GetTimeBehavior()              zCall( 0x004BA6D0 );
     virtual float MD_GetMinTime()                                            zCall( 0x004BDDC0 );
 
-    // compatible with g2 operators style
-    zOperatorNew   ( zCCSCamera_EventMsg, zCEventMessage )
-    zOperatorDelete( zCCSCamera_EventMsg, zCEventMessage )
+    // user API
+    #include "zCCSCamera_EventMsg.inl"
   };
 
   class zCCSCamera_EventMsgActivate : public zCEventMessage {
@@ -127,7 +123,6 @@ namespace Gothic_I_Classic {
     zCVob* referenceVob;
 
     zCCSCamera_EventMsgActivate() {}
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00402070 );
     static zCObject* _CreateNewInstance()                               zCall( 0x004BE7E0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00402090 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x004BDDE0 );
@@ -141,8 +136,8 @@ namespace Gothic_I_Classic {
     virtual void MD_SetVobRefName( zSTRING const& )                     zCall( 0x004BE120 );
     virtual void MD_SetVobParam( zCVob* )                               zCall( 0x004BE260 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCCSCamera_EventMsgActivate, zCEventMessage )
+    // user API
+    #include "zCCSCamera_EventMsgActivate.inl"
   };
 
   class zCCSCamera : public zCVob {
@@ -255,7 +250,6 @@ namespace Gothic_I_Classic {
     static zCVob* GetPlayerVob()                                                                  zCall( 0x004B50C0 );
     static void SetDrawEnabled( int )                                                             zCall( 0x004BE270 );
     static zCObject* _CreateNewInstance()                                                         zCall( 0x004BEB10 );
-    static void operator delete( void*, char const*, char const*, int )                           zCall( 0x004BEB80 );
     virtual zCClassDef* _GetClassDef() const                                                      zCall( 0x004B5450 );
     virtual void Archive( zCArchiver& )                                                           zCall( 0x004B6710 );
     virtual void Unarchive( zCArchiver& )                                                         zCall( 0x004B6930 );
@@ -267,13 +261,14 @@ namespace Gothic_I_Classic {
     virtual void ThisVobAddedToWorld( zCWorld* )                                                  zCall( 0x004B6DA0 );
     virtual void ThisVobRemovedFromWorld( zCWorld* )                                              zCall( 0x004B6DB0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCCSCamera, zCVob )
 
     // static properties
     static int& playing;
     static int& draw;
     static int& evaluateAvgFPS;
+
+    // user API
+    #include "zCCSCamera.inl"
   };
 
 } // namespace Gothic_I_Classic

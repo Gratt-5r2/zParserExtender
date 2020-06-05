@@ -122,7 +122,6 @@ namespace Gothic_II_Addon {
     zSTRING GetPreviousMode()                                                         zCall( 0x0069D800 );
     static zCAICamera* GetCurrent()                                                   zCall( 0x0049FD20 );
     static zCAICamera* Create()                                                       zCall( 0x004A0180 );
-    static void operator delete( void* )                                              zCall( 0x004A0210 );
     static void GlobalStartUp()                                                       zCall( 0x004A0880 );
     static void GlobalCleanUp()                                                       zCall( 0x004A0890 );
     static zCObject* _CreateNewInstance()                                             zCall( 0x004A56E0 );
@@ -139,6 +138,9 @@ namespace Gothic_II_Addon {
     static zCAICamera*& current;
     static int& bCreated;
     static int& bCamChanges;
+
+    // user API
+    #include "zCAICamera.inl"
   };
 
 } // namespace Gothic_II_Addon

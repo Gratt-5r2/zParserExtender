@@ -48,6 +48,9 @@ namespace Gothic_I_Addon {
     zCMusicTheme()               zInit( zCMusicTheme_OnInit() );
     virtual ~zCMusicTheme()      zCall( 0x004EB390 );
     virtual int IsActive() const zCall( 0x004EB430 );
+
+    // user API
+    #include "zCMusicTheme.inl"
   };
 
   class zCMusicJingle {
@@ -69,6 +72,9 @@ namespace Gothic_I_Addon {
     virtual void StopPlaying()      zCall( 0x004EBEB0 );
     virtual void CacheIn()          zCall( 0x004EBEC0 );
     virtual void CacheOut()         zCall( 0x004EBED0 );
+
+    // user API
+    #include "zCMusicJingle.inl"
   };
 
   class zCMusicSystem {
@@ -102,6 +108,9 @@ namespace Gothic_I_Addon {
 
     // static properties
     static int& s_musicSystemDisabled;
+
+    // user API
+    #include "zCMusicSystem.inl"
   };
 
   class zCMusicSys_Dummy : public zCMusicSystem {
@@ -114,6 +123,9 @@ namespace Gothic_I_Addon {
     virtual zCMusicJingle* LoadJingleByScript( zSTRING const& ) zCall( 0x00625A40 );
     virtual zCMusicJingle* LoadJingle( zSTRING const& )         zCall( 0x00625AB0 );
     virtual void DoMusicUpdate()                                zCall( 0x00625B20 );
+
+    // user API
+    #include "zCMusicSys_Dummy.inl"
   };
 
 } // namespace Gothic_I_Addon

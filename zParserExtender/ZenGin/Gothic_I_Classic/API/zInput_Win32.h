@@ -48,6 +48,9 @@ namespace Gothic_I_Classic {
     virtual void SetMouseFlipXY( int, int )             zCall( 0x004C8CD0 );
     virtual void GetMouseFlipXY( int&, int& )           zCall( 0x004C8CF0 );
     virtual void ProcessInputEvents()                   zCall( 0x004C8BA0 );
+
+    // user API
+    #include "zCInput_Win32.inl"
   };
 
 } // namespace Gothic_I_Classic

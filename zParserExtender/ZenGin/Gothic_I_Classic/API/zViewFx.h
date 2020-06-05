@@ -44,7 +44,6 @@ namespace Gothic_I_Classic {
     void __fastcall ApplyCloseFade()                                                                 zCall( 0x00754860 );
     void __fastcall ApplyCloseZoom()                                                                 zCall( 0x007548C0 );
     static zCObject* _CreateNewInstance()                                                            zCall( 0x00753DF0 );
-    static void operator delete( void*, char const*, char const*, int )                              zCall( 0x00753EF0 );
     /* for zCObject num : 7*/
     virtual zCClassDef* _GetClassDef() const                                                         zCall( 0x00753F10 );
     virtual ~zCViewFX()                                                                              zCall( 0x00754000 );
@@ -52,8 +51,8 @@ namespace Gothic_I_Classic {
     virtual void __fastcall Blit()                                                                   zCall( 0x00754950 );
     /* for zCViewBase num : 8*/
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCViewFX, zCViewDraw )
+    // user API
+    #include "zCViewFX.inl"
   };
 
 } // namespace Gothic_I_Classic

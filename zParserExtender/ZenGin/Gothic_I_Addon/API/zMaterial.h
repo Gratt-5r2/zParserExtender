@@ -29,6 +29,9 @@ namespace Gothic_I_Addon {
 
     // static properties
     static unsigned long& masterFrameCtr;
+
+    // user API
+    #include "zCTexAniCtrl.inl"
   };
 
   class zCMaterial : public zCObject {
@@ -98,8 +101,6 @@ namespace Gothic_I_Addon {
     void SetMatGroupByString( zSTRING const& )                               zCall( 0x00566610 );
     void RefreshAvgColorFromTexture()                                        zCall( 0x00566800 );
     zCTexture* GetAniTexture()                                               zCall( 0x00751320 );
-    static void operator delete( void*, char const*, char const*, int )      zCall( 0x00476D50 );
-    static void* operator new( unsigned int, char const*, char const*, int ) zCall( 0x0053A060 );
     static zCObject* _CreateNewInstance()                                    zCall( 0x00565270 );
     static zCMaterial* SearchName( zSTRING& )                                zCall( 0x005664C0 );
     static zSTRING const& GetMatGroupString( zTMat_Group )                   zCall( 0x00566570 );
@@ -108,12 +109,12 @@ namespace Gothic_I_Addon {
     virtual void Unarchive( zCArchiver& )                                    zCall( 0x00566AF0 );
     virtual ~zCMaterial()                                                    zCall( 0x005655E0 );
 
-    // compatible with g2 operators style
-    zOperatorNew   ( zCMaterial, zCObject )
-    zOperatorDelete( zCMaterial, zCObject )
 
     // static properties
     static unsigned char& s_matUsageDefault;
+
+    // user API
+    #include "zCMaterial.inl"
   };
 
 } // namespace Gothic_I_Addon

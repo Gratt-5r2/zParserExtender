@@ -28,6 +28,9 @@ namespace Gothic_I_Classic {
     virtual void SetRange( float, float )                              zCall( 0x0043A240 );
     virtual void SetValue( float )                                     zCall( 0x0043A300 );
     /* for zCInputCallback num : 1*/
+
+    // user API
+    #include "oCViewStatusBar.inl"
   };
 
 } // namespace Gothic_I_Classic

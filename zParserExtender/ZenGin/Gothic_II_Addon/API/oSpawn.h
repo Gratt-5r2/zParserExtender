@@ -56,6 +56,9 @@ namespace Gothic_II_Addon {
     static float GetRemoveRange()                     zCall( 0x00777850 );
     static void SetSpawnTime( float )                 zCall( 0x00777860 );
     static float GetSpawnTime()                       zCall( 0x00777870 );
+
+    // user API
+    #include "oCSpawnManager.inl"
   };
 
 } // namespace Gothic_II_Addon

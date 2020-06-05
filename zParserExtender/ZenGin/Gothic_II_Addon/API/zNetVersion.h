@@ -20,6 +20,9 @@ namespace Gothic_II_Addon {
     virtual long CreateChecksum()            zCall( 0x0045D300 );
     virtual void Pack( zCBuffer& ) const     zCall( 0x0045D410 );
     virtual void Unpack( zCBuffer& )         zCall( 0x0045D440 );
+
+    // user API
+    #include "zCNetVersion.inl"
   };
 
 } // namespace Gothic_II_Addon

@@ -196,6 +196,9 @@ namespace Gothic_II_Classic {
     };
     int GetNumInList() const { return numInArray; };
     BOOL IsEmpty() const { return ( numInArray == 0 ); };
+
+    // user API
+    #include "zCPQueue.inl"
   };
 
   
@@ -336,6 +339,9 @@ namespace Gothic_II_Classic {
     {
       Compare = Cmp;
     };
+
+    // user API
+    #include "zCListSort.inl"
   };
 
   template <class T>

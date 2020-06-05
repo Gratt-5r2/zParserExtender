@@ -62,6 +62,9 @@ namespace Gothic_II_Classic {
     public:
       zCVisual* visual;
       int nodeIndex;
+
+      // user API
+      #include "zCModelMeshLib_zTNodeMesh.inl"
     };
 
     zCArray<zTNodeMesh> meshNodeList;
@@ -80,7 +83,6 @@ namespace Gothic_II_Classic {
     void BuildFromModel( zCModel* )                                                         zCall( 0x0059A3A0 );
     void SaveMDM( zCModelPrototype* )                                                       zCall( 0x0059A5D0 );
     void SaveMDM( zCFileBIN&, zCModelPrototype* )                                           zCall( 0x0059A7E0 );
-    static void operator delete( void* )                                                    zCall( 0x005794F0 );
     static zCObject* _CreateNewInstance()                                                   zCall( 0x0057F310 );
     static unsigned long GetMDMFileVersion()                                                zCall( 0x0059A5A0 );
     static int LoadMDM( zSTRING const&, zCModelPrototype*, zCModel*, zCModelMeshLib** )     zCall( 0x0059AC70 );
@@ -89,6 +91,9 @@ namespace Gothic_II_Classic {
     static int ConvertMDM( zSTRING const&, zCModelPrototype* )                              zCall( 0x0059BD80 );
     virtual zCClassDef* _GetClassDef() const                                                zCall( 0x00579510 );
     virtual ~zCModelMeshLib()                                                               zCall( 0x00599A60 );
+
+    // user API
+    #include "zCModelMeshLib.inl"
   };
 
   class zCModelAniEvent {
@@ -110,6 +115,9 @@ namespace Gothic_II_Classic {
     ~zCModelAniEvent()            zCall( 0x00582DC0 );
     void Save( zCFileBIN& ) const zCall( 0x00582EA0 );
     void Load( zCFileBIN& )       zCall( 0x00583000 );
+
+    // user API
+    #include "zCModelAniEvent.inl"
   };
 
   class zCModelNode {
@@ -131,6 +139,9 @@ namespace Gothic_II_Classic {
     zCModelNode( zCModelNode const& a0 )          zInit( zCModelNode_OnInit( a0 ));
     ~zCModelNode()                                zCall( 0x0057F730 );
     void SetNodeVisualS( zCVisual* )              zCall( 0x0057F7D0 );
+
+    // user API
+    #include "zCModelNode.inl"
   };
 
 #pragma pack( push, 1 )
@@ -142,6 +153,9 @@ namespace Gothic_II_Classic {
     // static properties
     static float& samplePosScaler;
     static float& samplePosRangeMin;
+
+    // user API
+    #include "zTMdl_AniSample.inl"
   };
 #pragma pack( pop )
 
@@ -220,9 +234,11 @@ namespace Gothic_II_Classic {
     zTMdl_AniType GetAniType() const                                 zCall( 0x00597C10 );
     int GetAniID() const                                             zCall( 0x0064CF80 );
     static zCObject* _CreateNewInstance()                            zCall( 0x005716D0 );
-    static void operator delete( void* )                             zCall( 0x00571730 );
     virtual zCClassDef* _GetClassDef() const                         zCall( 0x0057FD60 );
     virtual ~zCModelAni()                                            zCall( 0x0057FDA0 );
+
+    // user API
+    #include "zCModelAni.inl"
   };
 
   class zCModelPrototype {
@@ -329,6 +345,9 @@ namespace Gothic_II_Classic {
     static int& s_autoConvertAnis;
     static int& s_autoConvertMeshes;
     static zCModelPrototype*& s_modelRoot;
+
+    // user API
+    #include "zCModelPrototype.inl"
   };
 
   class zCModelAniActive {
@@ -363,6 +382,9 @@ namespace Gothic_II_Classic {
     void SetProgressPercent( float )        zCall( 0x005719F0 );
     void SetActFrame( float )               zCall( 0x00571A40 );
     void DoCombineAni( zCModel*, int, int ) zCall( 0x0057A890 );
+
+    // user API
+    #include "zCModelAniActive.inl"
   };
 
   class zCModelTexAniState {
@@ -389,6 +411,9 @@ namespace Gothic_II_Classic {
     void AddTexListFromMesh( zCMesh*, zCArray<zCTexture*>& )              zCall( 0x00572180 );
     void AddTexListFromProgMesh( zCProgMeshProto*, zCArray<zCTexture*>& ) zCall( 0x005722E0 );
     void FinishTexList( zCArray<zCTexture*>& )                            zCall( 0x00572430 );
+
+    // user API
+    #include "zCModelTexAniState.inl"
   };
 
 #pragma pack( push, 1 )
@@ -408,6 +433,9 @@ namespace Gothic_II_Classic {
       zCQuat quat;
 
       zTNodeAni() {}
+
+      // user API
+      #include "zCModelNodeInst_zTNodeAni.inl"
     };
 
     zCModelNodeInst* parentNode;
@@ -439,6 +467,9 @@ namespace Gothic_II_Classic {
     void AddToNodeAniWeight( int, float )                    zCall( 0x0057A190 );
     void CalcBlending( zCModel* )                            zCall( 0x0057A200 );
     int GetNodeAniListIndex( zCModelAniActive const* ) const zCall( 0x0057A390 );
+
+    // user API
+    #include "zCModelNodeInst.inl"
   };
 #pragma pack( pop )
 
@@ -447,6 +478,9 @@ namespace Gothic_II_Classic {
     int prob;
 
     zTRandAni() {}
+
+    // user API
+    #include "zTRandAni.inl"
   };
 
   struct zTAniAttachment {
@@ -458,6 +492,9 @@ namespace Gothic_II_Classic {
     void zTAniAttachment_OnInit() zCall( 0x0057DE00 );
     ~zTAniAttachment()            zCall( 0x0057DDE0 );
     zTAniAttachment()             zInit( zTAniAttachment_OnInit() );
+
+    // user API
+    #include "zTAniAttachment.inl"
   };
 
   class zCModel : public zCVisualAnimate {
@@ -479,24 +516,36 @@ namespace Gothic_II_Classic {
     public:
       zCVob* vob;
       zCModelNodeInst* mnode;
+
+      // user API
+      #include "zCModel_zTMdl_NodeVobAttachment.inl"
     };
 
     struct zTMdl_StartedVobFX {
     public:
       zCVob* vob;
       float vobFXHandle;
+
+      // user API
+      #include "zCModel_zTMdl_StartedVobFX.inl"
     };
 
     struct zTAniMeshLibEntry {
     public:
       zCModelAniActive* ani;
       zCModelMeshLib* meshLib;
+
+      // user API
+      #include "zCModel_zTAniMeshLibEntry.inl"
     };
 
     struct zTMeshLibEntry {
     public:
       zCModelTexAniState texAniState;
       zCModelMeshLib* meshLib;
+
+      // user API
+      #include "zCModel_zTMeshLibEntry.inl"
     };
 
     int numActiveAnis;
@@ -631,7 +680,6 @@ namespace Gothic_II_Classic {
     void __fastcall RecalcRootPosLocal( int )                                                                       zCall( 0x0057E580 );
     int GetAniIDFromAniName( zSTRING const& ) const                                                                 zCall( 0x0060A9B0 );
     static zCObject* _CreateNewInstance()                                                                           zCall( 0x00571170 );
-    static void operator delete( void* )                                                                            zCall( 0x005712E0 );
     static int AniAttachmentCompare( void const*, void const* )                                                     zCall( 0x0057DE10 );
     virtual zCClassDef* _GetClassDef() const                                                                        zCall( 0x00571300 );
     virtual ~zCModel()                                                                                              zCall( 0x00572A10 );
@@ -654,6 +702,9 @@ namespace Gothic_II_Classic {
     // static properties
     static int& s_drawSkeleton;
     static int& s_bSmoothRootNode;
+
+    // user API
+    #include "zCModel.inl"
   };
 
   class zCModelConvertFileHandler : public zCScanDirFileHandler {
@@ -663,6 +714,9 @@ namespace Gothic_II_Classic {
     zCModelConvertFileHandler()                                        zInit( zCModelConvertFileHandler_OnInit() );
     virtual ~zCModelConvertFileHandler()                               zCall( 0x00424910 );
     virtual int HandleFile( zSTRING const&, char const*, _finddata_t ) zCall( 0x0059C1E0 );
+
+    // user API
+    #include "zCModelConvertFileHandler.inl"
   };
 
 } // namespace Gothic_II_Classic

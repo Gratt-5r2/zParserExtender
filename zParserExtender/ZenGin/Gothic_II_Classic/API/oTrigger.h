@@ -20,14 +20,15 @@ namespace Gothic_II_Classic {
     oCTriggerChangeLevel()                              zInit( oCTriggerChangeLevel_OnInit() );
     void SetLevelName( zSTRING const&, zSTRING const& ) zCall( 0x0043BB10 );
     static zCObject* _CreateNewInstance()               zCall( 0x0043B310 );
-    static void operator delete( void* )                zCall( 0x0043B3D0 );
-    static void* operator new( unsigned int )           zCall( 0x006732D0 );
     virtual zCClassDef* _GetClassDef() const            zCall( 0x0043B3F0 );
     virtual void Archive( zCArchiver& )                 zCall( 0x0043BD40 );
     virtual void Unarchive( zCArchiver& )               zCall( 0x0043BD80 );
     virtual ~oCTriggerChangeLevel()                     zCall( 0x0043B750 );
     virtual void TriggerTarget( zCVob* )                zCall( 0x0043B7F0 );
     virtual void UntriggerTarget( zCVob* )              zCall( 0x0043BB00 );
+
+    // user API
+    #include "oCTriggerChangeLevel.inl"
   };
 
   class oCTriggerScript : public zCTrigger {
@@ -40,13 +41,15 @@ namespace Gothic_II_Classic {
     oCTriggerScript()                         zInit( oCTriggerScript_OnInit() );
     void SetScriptFunc( zSTRING const&, int ) zCall( 0x0043C480 );
     static zCObject* _CreateNewInstance()     zCall( 0x0043B5F0 );
-    static void operator delete( void* )      zCall( 0x0043B690 );
     virtual zCClassDef* _GetClassDef() const  zCall( 0x0043B6B0 );
     virtual void Archive( zCArchiver& )       zCall( 0x0043C5D0 );
     virtual void Unarchive( zCArchiver& )     zCall( 0x0043C600 );
     virtual ~oCTriggerScript()                zCall( 0x0043BE30 );
     virtual void TriggerTarget( zCVob* )      zCall( 0x0043BE90 );
     virtual void UntriggerTarget( zCVob* )    zCall( 0x0043C1F0 );
+
+    // user API
+    #include "oCTriggerScript.inl"
   };
 
   class oCObjectGenerator : public zCVob {
@@ -62,6 +65,9 @@ namespace Gothic_II_Classic {
     virtual void Unarchive( zCArchiver& )    zCall( 0x0043CBB0 );
     virtual ~oCObjectGenerator()             zCall( 0x0043C6E0 );
     virtual void OnTrigger( zCVob*, zCVob* ) zCall( 0x0043C890 );
+
+    // user API
+    #include "oCObjectGenerator.inl"
   };
 
 } // namespace Gothic_II_Classic

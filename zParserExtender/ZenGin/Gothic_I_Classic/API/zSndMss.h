@@ -29,6 +29,9 @@ namespace Gothic_I_Classic {
     void zCDrvProperties_MSS_OnInit() zCall( 0x004DCD30 );
     zCDrvProperties_MSS()             zInit( zCDrvProperties_MSS_OnInit() );
     ~zCDrvProperties_MSS()            zCall( 0x004DCDC0 );
+
+    // user API
+    #include "zCDrvProperties_MSS.inl"
   };
 
   class zCActiveSnd {
@@ -102,6 +105,9 @@ namespace Gothic_I_Classic {
     static int& autoUpdate3D;
     static zCArray<zCActiveSnd*>& preAllocedSndList;
     static zCActiveSnd*& nextFreeSnd;
+
+    // user API
+    #include "zCActiveSnd.inl"
   };
 
   class zCSndChannel {
@@ -114,6 +120,9 @@ namespace Gothic_I_Classic {
     void zCSndChannel_OnInit() zCall( 0x004EB2F0 );
     zCSndChannel()             zInit( zCSndChannel_OnInit() );
     ~zCSndChannel()            zCall( 0x004EB310 );
+
+    // user API
+    #include "zCSndChannel.inl"
   };
 
   class zCSndFrame {
@@ -142,6 +151,9 @@ namespace Gothic_I_Classic {
     void SetDefaultProperties()   zCall( 0x004EB930 );
     void CacheIn()                zCall( 0x004EB9E0 );
     void CacheOut()               zCall( 0x004EBA60 );
+
+    // user API
+    #include "zCSndFrame.inl"
   };
 
   class zCWaveData {
@@ -167,6 +179,9 @@ namespace Gothic_I_Classic {
     int CheckForCorrectFormat( int )   zCall( 0x004ED990 );
     int Release()                      zCall( 0x004EDC40 );
     int GetSize()                      zCall( 0x004EDC90 );
+
+    // user API
+    #include "zCWaveData.inl"
   };
 
   class zCSndSys_MSS : public zCSoundSystem {
@@ -228,6 +243,9 @@ namespace Gothic_I_Classic {
 
     // static properties
     static zCDrvProperties_MSS& prefs;
+
+    // user API
+    #include "zCSndSys_MSS.inl"
   };
 
   class zCSndFX_MSS : public zCSoundFX {
@@ -271,6 +289,9 @@ namespace Gothic_I_Classic {
     virtual void SetFrequency( int )               zCall( 0x004E74D0 );
     virtual void SetLooping( int )                 zCall( 0x004E8380 );
     virtual int IsLooping() const                  zCall( 0x004E0B40 );
+
+    // user API
+    #include "zCSndFX_MSS.inl"
   };
 
   class zCHandleManager {
@@ -286,6 +307,9 @@ namespace Gothic_I_Classic {
     void Free3DSample( void* )    zCall( 0x004EDD20 );
     void FreeSample( void* )      zCall( 0x004EDE10 );
     void DisposeAllSamples()      zCall( 0x004EDF00 );
+
+    // user API
+    #include "zCHandleManager.inl"
   };
 
 } // namespace Gothic_I_Classic

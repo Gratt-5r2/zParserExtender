@@ -23,12 +23,14 @@ namespace Gothic_II_Addon {
 
     zCEventCommon() {}
     static zCObject* _CreateNewInstance()      zCall( 0x0060EF70 );
-    static void operator delete( void* )       zCall( 0x0060F0A0 );
     virtual zCClassDef* _GetClassDef() const   zCall( 0x0060F0C0 );
     virtual ~zCEventCommon()                   zCall( 0x0060F120 );
     virtual int IsNetRelevant()                zCall( 0x0060F0E0 );
     virtual int MD_GetNumOfSubTypes()          zCall( 0x0060F0D0 );
     virtual zSTRING MD_GetSubTypeString( int ) zCall( 0x0060F7E0 );
+
+    // user API
+    #include "zCEventCommon.inl"
   };
 
   class zCTriggerBase : public zCVob {
@@ -48,6 +50,9 @@ namespace Gothic_II_Addon {
     virtual void OnTouch( zCVob* )                       zCall( 0x0060FBC0 );
     virtual void OnUntouch( zCVob* )                     zCall( 0x0060FC60 );
     virtual zSTRING const* GetTriggerTarget( int ) const zCall( 0x004042F0 );
+
+    // user API
+    #include "zCTriggerBase.inl"
   };
 
   class zCTrigger : public zCTriggerBase {
@@ -81,7 +86,6 @@ namespace Gothic_II_Addon {
     void ActivateTrigger( zCVob* )                                    zCall( 0x006104D0 );
     void DeactivateTrigger( zCVob* )                                  zCall( 0x006105B0 );
     static zCObject* _CreateNewInstance()                             zCall( 0x0060C9E0 );
-    static void operator delete( void* )                              zCall( 0x0060CA40 );
     virtual zCClassDef* _GetClassDef() const                          zCall( 0x00610090 );
     virtual void Archive( zCArchiver& )                               zCall( 0x006107E0 );
     virtual void Unarchive( zCArchiver& )                             zCall( 0x00610A60 );
@@ -96,6 +100,9 @@ namespace Gothic_II_Addon {
     virtual void TriggerTarget( zCVob* )                              zCall( 0x00610340 );
     virtual void UntriggerTarget( zCVob* )                            zCall( 0x006103F0 );
     virtual int CanBeActivatedNow( zCVob* )                           zCall( 0x00610220 );
+
+    // user API
+    #include "zCTrigger.inl"
   };
 
   class zCEventMover : public zCEventMessage {
@@ -114,12 +121,14 @@ namespace Gothic_II_Addon {
 
     zCEventMover() {}
     static zCObject* _CreateNewInstance()      zCall( 0x0060F310 );
-    static void operator delete( void* )       zCall( 0x0060F440 );
     virtual zCClassDef* _GetClassDef() const   zCall( 0x0060F460 );
     virtual ~zCEventMover()                    zCall( 0x0060F4C0 );
     virtual int IsNetRelevant()                zCall( 0x0060F480 );
     virtual int MD_GetNumOfSubTypes()          zCall( 0x0060F470 );
     virtual zSTRING MD_GetSubTypeString( int ) zCall( 0x0060F940 );
+
+    // user API
+    #include "zCEventMover.inl"
   };
 
   class zCMover : public zCTrigger {
@@ -172,6 +181,9 @@ namespace Gothic_II_Addon {
       zCQuat quat;
 
       zTMov_Keyframe() {}
+
+      // user API
+      #include "zCMover_zTMov_Keyframe.inl"
     };
 
     zCArray<zTMov_Keyframe> keyframeList;
@@ -228,7 +240,6 @@ namespace Gothic_II_Addon {
     int IsKeyToThisMover( zCVob* )                                    zCall( 0x00612C20 );
     void TriggerMover( zCVob* )                                       zCall( 0x00612CB0 );
     static zCObject* _CreateNewInstance()                             zCall( 0x0060D080 );
-    static void operator delete( void* )                              zCall( 0x0060D0E0 );
     static zTMov_Keyframe GetKeyframe( zCVob* )                       zCall( 0x006112F0 );
     virtual zCClassDef* _GetClassDef() const                          zCall( 0x00610F00 );
     virtual void Archive( zCArchiver& )                               zCall( 0x006137E0 );
@@ -243,6 +254,9 @@ namespace Gothic_II_Addon {
     virtual void PostLoad()                                           zCall( 0x006137D0 );
     virtual int CanThisCollideWith( zCVob* )                          zCall( 0x006111F0 );
     virtual void SetVisual( zCVisual* )                               zCall( 0x006123A0 );
+
+    // user API
+    #include "zCMover.inl"
   };
 
   class zCTriggerTeleport : public zCTrigger {
@@ -256,7 +270,6 @@ namespace Gothic_II_Addon {
     zCTriggerTeleport()                        zInit( zCTriggerTeleport_OnInit() );
     void DoTeleport( zCVob* )                  zCall( 0x00614440 );
     static zCObject* _CreateNewInstance()      zCall( 0x0060D2F0 );
-    static void operator delete( void* )       zCall( 0x0060D450 );
     virtual zCClassDef* _GetClassDef() const   zCall( 0x0060D470 );
     virtual void Archive( zCArchiver& )        zCall( 0x006146C0 );
     virtual void Unarchive( zCArchiver& )      zCall( 0x006146F0 );
@@ -264,6 +277,9 @@ namespace Gothic_II_Addon {
     virtual void OnTrigger( zCVob*, zCVob* )   zCall( 0x006146A0 );
     virtual void OnUntrigger( zCVob*, zCVob* ) zCall( 0x006146B0 );
     virtual void OnTouch( zCVob* )             zCall( 0x00614690 );
+
+    // user API
+    #include "zCTriggerTeleport.inl"
   };
 
   class zCTriggerList : public zCTrigger {
@@ -290,7 +306,6 @@ namespace Gothic_II_Addon {
     void FinishActivation()                              zCall( 0x00615090 );
     void DoTriggering( zCVob* )                          zCall( 0x00615190 );
     static zCObject* _CreateNewInstance()                zCall( 0x0060CC50 );
-    static void operator delete( void* )                 zCall( 0x0060CE60 );
     virtual zCClassDef* _GetClassDef() const             zCall( 0x0060CE80 );
     virtual void Archive( zCArchiver& )                  zCall( 0x00615490 );
     virtual void Unarchive( zCArchiver& )                zCall( 0x00615770 );
@@ -299,6 +314,9 @@ namespace Gothic_II_Addon {
     virtual zSTRING const* GetTriggerTarget( int ) const zCall( 0x00614F10 );
     virtual void TriggerTarget( zCVob* )                 zCall( 0x00615460 );
     virtual void UntriggerTarget( zCVob* )               zCall( 0x00615470 );
+
+    // user API
+    #include "zCTriggerList.inl"
   };
 
   class zCEffect : public zCVob {
@@ -308,6 +326,9 @@ namespace Gothic_II_Addon {
     zCEffect() {}
     virtual zCClassDef* _GetClassDef() const zCall( 0x00489F40 );
     virtual ~zCEffect()                      zCall( 0x0048A220 );
+
+    // user API
+    #include "zCEffect.inl"
   };
 
   class zCEarthquake : public zCEffect {
@@ -320,7 +341,6 @@ namespace Gothic_II_Addon {
 
     void zCEarthquake_OnInit()                 zCall( 0x00613EA0 );
     zCEarthquake()                             zInit( zCEarthquake_OnInit() );
-    static void operator delete( void* )       zCall( 0x0048D2D0 );
     static zCObject* _CreateNewInstance()      zCall( 0x0060D850 );
     virtual zCClassDef* _GetClassDef() const   zCall( 0x0060D920 );
     virtual void Archive( zCArchiver& )        zCall( 0x00614030 );
@@ -328,6 +348,9 @@ namespace Gothic_II_Addon {
     virtual ~zCEarthquake()                    zCall( 0x00613F80 );
     virtual void OnTrigger( zCVob*, zCVob* )   zCall( 0x00613F90 );
     virtual void OnUntrigger( zCVob*, zCVob* ) zCall( 0x00613FE0 );
+
+    // user API
+    #include "zCEarthquake.inl"
   };
 
   class zCPFXControler : public zCEffect {
@@ -344,7 +367,6 @@ namespace Gothic_II_Addon {
     zCPFXControler()                           zInit( zCPFXControler_OnInit() );
     zCParticleFX* GetPFX()                     zCall( 0x00614840 );
     static zCObject* _CreateNewInstance()      zCall( 0x0060DB20 );
-    static void operator delete( void* )       zCall( 0x0060DBD0 );
     virtual zCClassDef* _GetClassDef() const   zCall( 0x0060DBF0 );
     virtual void Archive( zCArchiver& )        zCall( 0x00614990 );
     virtual void Unarchive( zCArchiver& )      zCall( 0x006149F0 );
@@ -352,6 +374,9 @@ namespace Gothic_II_Addon {
     virtual void OnTrigger( zCVob*, zCVob* )   zCall( 0x006148D0 );
     virtual void OnUntrigger( zCVob*, zCVob* ) zCall( 0x00614960 );
     virtual void PostLoad()                    zCall( 0x006148B0 );
+
+    // user API
+    #include "zCPFXControler.inl"
   };
 
   class zCTouchDamage : public zCEffect {
@@ -377,7 +402,6 @@ namespace Gothic_II_Addon {
     void FireDamageMessage( zCVob* )                          zCall( 0x00616070 );
     void SetVobProperties()                                   zCall( 0x00616300 );
     static zCObject* _CreateNewInstance()                     zCall( 0x0060DDF0 );
-    static void operator delete( void* )                      zCall( 0x0060DED0 );
     virtual zCClassDef* _GetClassDef() const                  zCall( 0x0060DEF0 );
     virtual void Archive( zCArchiver& )                       zCall( 0x00616100 );
     virtual void Unarchive( zCArchiver& )                     zCall( 0x006161D0 );
@@ -387,6 +411,9 @@ namespace Gothic_II_Addon {
     virtual void OnTimer()                                    zCall( 0x00615C70 );
     virtual void SetVisual( zCVisual* )                       zCall( 0x006162B0 );
     virtual char const* GetDamageTypeArcEnum( unsigned long ) zCall( 0x00616290 );
+
+    // user API
+    #include "zCTouchDamage.inl"
   };
 
   class zCVobStair : public zCVob {
@@ -395,9 +422,11 @@ namespace Gothic_II_Addon {
 
     zCVobStair() {}
     static zCObject* _CreateNewInstance()    zCall( 0x0060B350 );
-    static void operator delete( void* )     zCall( 0x0060B3B0 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x0060B3D0 );
     virtual ~zCVobStair()                    zCall( 0x0060B410 );
+
+    // user API
+    #include "zCVobStair.inl"
   };
 
   class zCTouchAnimate : public zCEffect {
@@ -415,7 +444,6 @@ namespace Gothic_II_Addon {
     int IsAniActive()                        zCall( 0x00616B70 );
     void SetVobProperties()                  zCall( 0x00616C80 );
     static zCObject* _CreateNewInstance()    zCall( 0x0060E0F0 );
-    static void operator delete( void* )     zCall( 0x0060E1D0 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x0060E1F0 );
     virtual void Archive( zCArchiver& )      zCall( 0x00616BB0 );
     virtual void Unarchive( zCArchiver& )    zCall( 0x00616BC0 );
@@ -425,6 +453,9 @@ namespace Gothic_II_Addon {
     virtual void OnTick()                    zCall( 0x00616620 );
     virtual void SetVisual( zCVisual* )      zCall( 0x00616C30 );
     virtual zSTRING GetSoundName()           zCall( 0x00616A20 );
+
+    // user API
+    #include "zCTouchAnimate.inl"
   };
 
   class zCTouchAnimateSound : public zCTouchAnimate {
@@ -436,12 +467,14 @@ namespace Gothic_II_Addon {
     void zCTouchAnimateSound_OnInit()        zCall( 0x00616CC0 );
     zCTouchAnimateSound()                    zInit( zCTouchAnimateSound_OnInit() );
     static zCObject* _CreateNewInstance()    zCall( 0x0060E3F0 );
-    static void operator delete( void* )     zCall( 0x0060E580 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x0060E5A0 );
     virtual void Archive( zCArchiver& )      zCall( 0x00616F60 );
     virtual void Unarchive( zCArchiver& )    zCall( 0x00616F90 );
     virtual ~zCTouchAnimateSound()           zCall( 0x00616E60 );
     virtual zSTRING GetSoundName()           zCall( 0x00617020 );
+
+    // user API
+    #include "zCTouchAnimateSound.inl"
   };
 
   class zCVobAnimate : public zCEffect {
@@ -456,7 +489,6 @@ namespace Gothic_II_Addon {
     void StartAni()                            zCall( 0x006171A0 );
     void StopAni()                             zCall( 0x006171E0 );
     static zCObject* _CreateNewInstance()      zCall( 0x0060E7A0 );
-    static void operator delete( void* )       zCall( 0x0060E840 );
     virtual zCClassDef* _GetClassDef() const   zCall( 0x0060E860 );
     virtual void Archive( zCArchiver& )        zCall( 0x00617250 );
     virtual void Unarchive( zCArchiver& )      zCall( 0x006172A0 );
@@ -464,6 +496,9 @@ namespace Gothic_II_Addon {
     virtual void OnTrigger( zCVob*, zCVob* )   zCall( 0x006171F0 );
     virtual void OnUntrigger( zCVob*, zCVob* ) zCall( 0x00617240 );
     virtual void SetVisual( zCVisual* )        zCall( 0x00617130 );
+
+    // user API
+    #include "zCVobAnimate.inl"
   };
 
   class zCVobLensFlare : public zCEffect {
@@ -476,12 +511,14 @@ namespace Gothic_II_Addon {
     zCVobLensFlare()                                  zInit( zCVobLensFlare_OnInit() );
     void SetLensFlareFXByName( zSTRING const& )       zCall( 0x00617430 );
     static zCObject* _CreateNewInstance()             zCall( 0x0060EA60 );
-    static void operator delete( void* )              zCall( 0x0060EB10 );
     virtual zCClassDef* _GetClassDef() const          zCall( 0x0060EB30 );
     virtual void Archive( zCArchiver& )               zCall( 0x00617480 );
     virtual void Unarchive( zCArchiver& )             zCall( 0x00617570 );
     virtual ~zCVobLensFlare()                         zCall( 0x006173F0 );
     virtual int __fastcall Render( zTRenderContext& ) zCall( 0x00617410 );
+
+    // user API
+    #include "zCVobLensFlare.inl"
   };
 
   class zCEventScreenFX : public zCEventMessage {
@@ -505,7 +542,6 @@ namespace Gothic_II_Addon {
     void zCEventScreenFX_OnInit( zTEventScreenFXSubType, float, zCOLOR, float ) zCall( 0x00617650 );
     zCEventScreenFX( zTEventScreenFXSubType a0, float a1, zCOLOR a2, float a3 ) zInit( zCEventScreenFX_OnInit( a0, a1, a2, a3 ));
     void Clear()                                                                zCall( 0x006176F0 );
-    static void operator delete( void* )                                        zCall( 0x004022A0 );
     static zCObject* _CreateNewInstance()                                       zCall( 0x0060F6B0 );
     virtual zCClassDef* _GetClassDef() const                                    zCall( 0x0060F780 );
     virtual void Archive( zCArchiver& )                                         zCall( 0x006179C0 );
@@ -517,6 +553,9 @@ namespace Gothic_II_Addon {
     virtual float MD_GetMinTime()                                               zCall( 0x00617930 );
     virtual void Pack( zCBuffer&, zCEventManager* )                             zCall( 0x00617940 );
     virtual void Unpack( zCBuffer&, zCEventManager* )                           zCall( 0x00617980 );
+
+    // user API
+    #include "zCEventScreenFX.inl"
   };
 
   class zCVobScreenFX : public zCEffect {
@@ -535,6 +574,9 @@ namespace Gothic_II_Addon {
 
       zTScreenFXSet() {}
       ~zTScreenFXSet() zCall( 0x00617C30 );
+
+      // user API
+      #include "zCVobScreenFX_zTScreenFXSet.inl"
     };
 
     zTScreenFXSet blend;
@@ -547,7 +589,6 @@ namespace Gothic_II_Addon {
     zCVobScreenFX()                                        zInit( zCVobScreenFX_OnInit() );
     void StartEffect( float, zCOLOR, int, zTScreenFXSet& ) zCall( 0x00617F50 );
     zCOLOR CalcEffectColor( zTScreenFXSet& )               zCall( 0x00617FE0 );
-    static void operator delete( void* )                   zCall( 0x0048D2F0 );
     static zCObject* _CreateNewInstance()                  zCall( 0x0060ED30 );
     virtual zCClassDef* _GetClassDef() const               zCall( 0x00617BF0 );
     virtual void Archive( zCArchiver& )                    zCall( 0x006183B0 );
@@ -555,6 +596,9 @@ namespace Gothic_II_Addon {
     virtual ~zCVobScreenFX()                               zCall( 0x00617C80 );
     virtual void OnMessage( zCEventMessage*, zCVob* )      zCall( 0x00617D60 );
     virtual void OnTick()                                  zCall( 0x00618070 );
+
+    // user API
+    #include "zCVobScreenFX.inl"
   };
 
   class zCMessageFilter : public zCTriggerBase {
@@ -580,7 +624,6 @@ namespace Gothic_II_Addon {
     zCMessageFilter()                            zInit( zCMessageFilter_OnInit() );
     void ProcessMessage( zTMessageType, zCVob* ) zCall( 0x00618620 );
     static zCObject* _CreateNewInstance()        zCall( 0x0060BBC0 );
-    static void operator delete( void* )         zCall( 0x0060BCA0 );
     virtual zCClassDef* _GetClassDef() const     zCall( 0x0060BCC0 );
     virtual void Archive( zCArchiver& )          zCall( 0x00618970 );
     virtual void Unarchive( zCArchiver& )        zCall( 0x006189D0 );
@@ -589,6 +632,9 @@ namespace Gothic_II_Addon {
     virtual void OnUntrigger( zCVob*, zCVob* )   zCall( 0x00618950 );
     virtual void OnTouch( zCVob* )               zCall( 0x0060BCD0 );
     virtual void OnUntouch( zCVob* )             zCall( 0x0060BCE0 );
+
+    // user API
+    #include "zCMessageFilter.inl"
   };
 
   class zCTriggerUntouch : public zCTriggerBase {
@@ -597,13 +643,15 @@ namespace Gothic_II_Addon {
 
     zCTriggerUntouch() {}
     static zCObject* _CreateNewInstance()      zCall( 0x0060B7F0 );
-    static void operator delete( void* )       zCall( 0x0060B8E0 );
     virtual zCClassDef* _GetClassDef() const   zCall( 0x0060B900 );
     virtual ~zCTriggerUntouch()                zCall( 0x0060B970 );
     virtual void OnTrigger( zCVob*, zCVob* )   zCall( 0x0060B920 );
     virtual void OnUntrigger( zCVob*, zCVob* ) zCall( 0x0060B930 );
     virtual void OnTouch( zCVob* )             zCall( 0x0060B910 );
     virtual void OnUntouch( zCVob* )           zCall( 0x00618A50 );
+
+    // user API
+    #include "zCTriggerUntouch.inl"
   };
 
   class zCTriggerWorldStart : public zCTriggerBase {
@@ -616,7 +664,6 @@ namespace Gothic_II_Addon {
     void zCTriggerWorldStart_OnInit()          zCall( 0x0061A3A0 );
     zCTriggerWorldStart()                      zInit( zCTriggerWorldStart_OnInit() );
     static zCObject* _CreateNewInstance()      zCall( 0x0060C6A0 );
-    static void operator delete( void* )       zCall( 0x0060C790 );
     virtual zCClassDef* _GetClassDef() const   zCall( 0x0060C7B0 );
     virtual void Archive( zCArchiver& )        zCall( 0x0061A530 );
     virtual void Unarchive( zCArchiver& )      zCall( 0x0061A590 );
@@ -626,6 +673,9 @@ namespace Gothic_II_Addon {
     virtual void OnTouch( zCVob* )             zCall( 0x0060C7C0 );
     virtual void OnUntouch( zCVob* )           zCall( 0x0060C7D0 );
     virtual void PostLoad()                    zCall( 0x0061A4E0 );
+
+    // user API
+    #include "zCTriggerWorldStart.inl"
   };
 
   class zCCodeMaster : public zCTriggerBase {
@@ -652,7 +702,6 @@ namespace Gothic_II_Addon {
     void FireTriggerFailure( zCVob* )                    zCall( 0x00619170 );
     int GetSlaveNr( zCVob* )                             zCall( 0x00619250 );
     static zCObject* _CreateNewInstance()                zCall( 0x0060BEE0 );
-    static void operator delete( void* )                 zCall( 0x0060C0C0 );
     virtual zCClassDef* _GetClassDef() const             zCall( 0x0060C0E0 );
     virtual void Archive( zCArchiver& )                  zCall( 0x00619670 );
     virtual void Unarchive( zCArchiver& )                zCall( 0x00619A80 );
@@ -663,6 +712,9 @@ namespace Gothic_II_Addon {
     virtual void OnUntouch( zCVob* )                     zCall( 0x0060C0F0 );
     virtual void OnMessage( zCEventMessage*, zCVob* )    zCall( 0x00619600 );
     virtual zSTRING const* GetTriggerTarget( int ) const zCall( 0x00619E40 );
+
+    // user API
+    #include "zCCodeMaster.inl"
   };
 
   class zCMoverControler : public zCTriggerBase {
@@ -675,7 +727,6 @@ namespace Gothic_II_Addon {
     void zCMoverControler_OnInit()             zCall( 0x00619E70 );
     zCMoverControler()                         zInit( zCMoverControler_OnInit() );
     static zCObject* _CreateNewInstance()      zCall( 0x0060C360 );
-    static void operator delete( void* )       zCall( 0x0060C450 );
     virtual zCClassDef* _GetClassDef() const   zCall( 0x0060C470 );
     virtual void Archive( zCArchiver& )        zCall( 0x0061A0D0 );
     virtual void Unarchive( zCArchiver& )      zCall( 0x0061A340 );
@@ -684,6 +735,9 @@ namespace Gothic_II_Addon {
     virtual void OnUntrigger( zCVob*, zCVob* ) zCall( 0x0060C480 );
     virtual void OnTouch( zCVob* )             zCall( 0x0060C4A0 );
     virtual void OnUntouch( zCVob* )           zCall( 0x0060C490 );
+
+    // user API
+    #include "zCMoverControler.inl"
   };
 
   class zCVobChar : public zCVob {
@@ -691,6 +745,9 @@ namespace Gothic_II_Addon {
     zCLASS_DECLARATION( zCVobChar )
 
     zCVobChar() {}
+
+    // user API
+    #include "zCVobChar.inl"
   };
 
 } // namespace Gothic_II_Addon

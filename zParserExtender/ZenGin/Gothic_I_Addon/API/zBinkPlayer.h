@@ -40,6 +40,9 @@ namespace Gothic_I_Addon {
     virtual int PlayGotoNextFrame()          zCall( 0x00441860 );
     virtual int PlayWaitNextFrame()          zCall( 0x00441870 );
     virtual int PlayHandleEvents()           zCall( 0x00441AB0 );
+
+    // user API
+    #include "zCBinkPlayer.inl"
   };
 
 } // namespace Gothic_I_Addon

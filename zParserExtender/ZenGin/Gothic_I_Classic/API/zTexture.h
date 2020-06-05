@@ -38,6 +38,9 @@ namespace Gothic_I_Classic {
     unsigned char b;
 
     zTTexPalette() {}
+
+    // user API
+    #include "zTTexPalette.inl"
   };
 
   class zCTextureInfo {
@@ -51,6 +54,9 @@ namespace Gothic_I_Classic {
     zCOLOR averageColor;
 
     zCTextureInfo() { ZeroMemory( this, sizeof( zCTextureInfo ) ); }
+
+    // user API
+    #include "zCTextureInfo.inl"
   };
 
   class zCTextureFileFormat : public zCObject {
@@ -67,6 +73,9 @@ namespace Gothic_I_Classic {
     virtual zSTRING const& GetFileExtension() const               zPureCall;
     virtual int CanSave() const                                   zPureCall;
     virtual int CanLoad() const                                   zPureCall;
+
+    // user API
+    #include "zCTextureFileFormat.inl"
   };
 
   class zCTextureFileFormatTGA : public zCTextureFileFormat {
@@ -92,6 +101,9 @@ namespace Gothic_I_Classic {
       unsigned char HeightHi;
       unsigned char PixelDepth;
       unsigned char ImageDescriptor;
+
+      // user API
+      #include "zCTextureFileFormatTGA_zTTgaHeader.inl"
     };
 #pragma pack( pop )
 
@@ -115,7 +127,6 @@ namespace Gothic_I_Classic {
     int ReadTGASpan( zFILE*, unsigned char*, int, int )                 zCall( 0x005C71B0 );
     int ReadTGAData( zFILE* )                                           zCall( 0x005C72C0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x005C5CE0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x005C5E00 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x005C5E20 );
     virtual ~zCTextureFileFormatTGA()                                   zCall( 0x005C62D0 );
     virtual int LoadTexture( zSTRING const&, zCTextureExchange* )       zCall( 0x005C7690 );
@@ -126,8 +137,8 @@ namespace Gothic_I_Classic {
     virtual int CanSave() const                                         zCall( 0x005C5E50 );
     virtual int CanLoad() const                                         zCall( 0x005C5E60 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCTextureFileFormatTGA, zCTextureFileFormat )
+    // user API
+    #include "zCTextureFileFormatTGA.inl"
   };
 
   class zCTextureFileFormatInternal : public zCTextureFileFormat {
@@ -145,7 +156,6 @@ namespace Gothic_I_Classic {
     int ReadData( zFILE&, zCTextureExchange*, int )                     zCall( 0x005C7A90 );
     int WriteHeader( zFILE&, zCTextureExchange* )                       zCall( 0x005C7EC0 );
     int WriteData( zFILE&, zCTextureExchange* )                         zCall( 0x005C7F30 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00434310 );
     static zCObject* _CreateNewInstance()                               zCall( 0x005C6050 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x005C6170 );
     virtual ~zCTextureFileFormatInternal()                              zCall( 0x005C79D0 );
@@ -157,8 +167,8 @@ namespace Gothic_I_Classic {
     virtual int CanSave() const                                         zCall( 0x005C6180 );
     virtual int CanLoad() const                                         zCall( 0x005C6190 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCTextureFileFormatInternal, zCTextureFileFormat )
+    // user API
+    #include "zCTextureFileFormatInternal.inl"
   };
 
   class zCTextureExchange {
@@ -179,6 +189,9 @@ namespace Gothic_I_Classic {
     virtual int CopyTextureDataTo( int, void*, int )                         zPureCall;
     virtual int HasAlpha()                                                   zPureCall;
     virtual zVEC4 GetRGBAAtTexel( float, float )                             zCall( 0x005CD2D0 );
+
+    // user API
+    #include "zCTextureExchange.inl"
   };
 
   class zCTextureConvert : public zCTextureExchange {
@@ -197,6 +210,9 @@ namespace Gothic_I_Classic {
     static int CalcNumMipMaps( unsigned long, unsigned long ) zCall( 0x005CA4F0 );
     static void CorrectAspectRatio( int&, int& )              zCall( 0x005CA520 );
     static void CorrectPow2( int&, int& )                     zCall( 0x005CA5A0 );
+
+    // user API
+    #include "zCTextureConvert.inl"
   };
 
   class zCTexture : public zCResource, public zCTextureExchange {
@@ -245,7 +261,6 @@ namespace Gothic_I_Classic {
     static zTRnd_TextureFormat CalcNextBestTexFormat( zTRnd_TextureFormat )                        zCall( 0x005CB270 );
     static void CalcDesiredBPP( zSTRING const*, zTTexFileDesiredBPP&, zTRnd_TextureFormat&, int& ) zCall( 0x005CB370 );
     static void ScanConvertTextures()                                                              zCall( 0x005CCF00 );
-    static void operator delete( void*, char const*, char const*, int )                            zCall( 0x0071AF50 );
     /* for zCResource num : 11*/
     virtual zCClassDef* _GetClassDef() const                                                       zCall( 0x005C8850 );
     virtual ~zCTexture()                                                                           zCall( 0x005C88F0 );
@@ -267,8 +282,6 @@ namespace Gothic_I_Classic {
     virtual int CopyTextureDataTo( int, void*, int )                                               zPureCall;
     virtual int HasAlpha()                                                                         zCall( 0x005C8860 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCTexture, zCTextureExchange )
 
     // static properties
     static zSTRING& zTEX_DEFAULT_TEXTURE_FILE;
@@ -282,6 +295,9 @@ namespace Gothic_I_Classic {
     static zTRnd_TextureFormat*& s_texDesiredBPPDefault;
     static float& s_texRefRAM;
     static zTTexFileDesiredBPP& s_texRefBPP;
+
+    // user API
+    #include "zCTexture.inl"
   };
 
   class zCLightMap : public zCObject {
@@ -297,13 +313,12 @@ namespace Gothic_I_Classic {
     zCLightMap()                                                               zInit( zCLightMap_OnInit() );
     void SetTexture( zCTexture* )                                              zCall( 0x005CDEA0 );
     void CalcLightmapOriginUpRight( zVEC3 const&, zVEC3 const&, zVEC3 const& ) zCall( 0x005CDEE0 );
-    static void operator delete( void*, char const*, char const*, int )        zCall( 0x005587D0 );
     static zCObject* _CreateNewInstance()                                      zCall( 0x005CDC90 );
     virtual zCClassDef* _GetClassDef() const                                   zCall( 0x005CDD60 );
     virtual ~zCLightMap()                                                      zCall( 0x005CDE30 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCLightMap, zCObject )
+    // user API
+    #include "zCLightMap.inl"
   };
 
   class zCTextureFileHandler : public zCScanDirFileHandler {
@@ -312,6 +327,9 @@ namespace Gothic_I_Classic {
     zCTextureFileHandler() {}
     virtual ~zCTextureFileHandler()                                    zCall( 0x00424060 );
     virtual int HandleFile( zSTRING const&, char const*, _finddata_t ) zCall( 0x005CCC00 );
+
+    // user API
+    #include "zCTextureFileHandler.inl"
   };
 
 } // namespace Gothic_I_Classic

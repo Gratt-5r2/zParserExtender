@@ -28,6 +28,9 @@ namespace Gothic_I_Addon {
       void Copy( zCBolt* )                                      zCall( 0x004D1C70 );
       virtual int Render( zTRenderContext& )                    zCall( 0x004D1910 );
       virtual void FreeResources()                              zCall( 0x004D1880 );
+
+      // user API
+      #include "zCFlash_zCBolt.inl"
     };
 
     float timeAlive;
@@ -56,6 +59,9 @@ namespace Gothic_I_Addon {
     virtual int GetVisualDied()                                        zCall( 0x004D0A90 );
     virtual void SetVisualUsedBy( zCVob* )                             zCall( 0x004D0CA0 );
     virtual void DynLightVisual( zCArray<zCVobLight*> const&, zMAT4* ) zCall( 0x004D0860 );
+
+    // user API
+    #include "zCFlash.inl"
   };
 
 } // namespace Gothic_I_Addon

@@ -19,6 +19,9 @@ namespace Gothic_I_Addon {
     void ResetPlayState()       zCall( 0x00702A80 );
     oCRtnCutscene()             zInit( oCRtnCutscene_OnInit() );
     virtual ~oCRtnCutscene()    zCall( 0x00702AA0 );
+
+    // user API
+    #include "oCRtnCutscene.inl"
   };
 
   class oCRtnEntry {
@@ -44,6 +47,9 @@ namespace Gothic_I_Addon {
     void SetTime( int, int, int, int )                                              zCall( 0x00702E80 );
     int GetState()                                                                  zCall( 0x00702EA0 );
     zSTRING GetWaypoint()                                                           zCall( 0x00702EB0 );
+
+    // user API
+    #include "oCRtnEntry.inl"
   };
 
   class oCRtnManager {
@@ -54,6 +60,9 @@ namespace Gothic_I_Addon {
       zTBBox3D bbox;
       float value;
       oCNpc* npc;
+
+      // user API
+      #include "oCRtnManager_TRtn_WayBoxLimit.inl"
     };
 
     struct TRtn_WayBox {
@@ -61,6 +70,9 @@ namespace Gothic_I_Addon {
       zTBBox3D bbox;
       oCNpc* npc;
       int found;
+
+      // user API
+      #include "oCRtnManager_TRtn_WayBox.inl"
     };
 
     int indexStart[3];
@@ -106,6 +118,9 @@ namespace Gothic_I_Addon {
     static int Sort_WayBoxX( TRtn_WayBox*, TRtn_WayBox* )               zCall( 0x00702FA0 );
     static int Sort_WayBoxY( TRtn_WayBox*, TRtn_WayBox* )               zCall( 0x00702FC0 );
     static int Sort_WayBoxZ( TRtn_WayBox*, TRtn_WayBox* )               zCall( 0x00702FE0 );
+
+    // user API
+    #include "oCRtnManager.inl"
   };
 
 } // namespace Gothic_I_Addon

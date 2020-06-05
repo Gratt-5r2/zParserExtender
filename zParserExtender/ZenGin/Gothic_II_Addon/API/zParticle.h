@@ -53,6 +53,7 @@ namespace Gothic_II_Addon {
 
   typedef struct zSParticle {
   public:
+    zSParticle* next;
     zVEC3 position;
     zVEC3 positionWS;
     zVEC3 vel;
@@ -183,6 +184,9 @@ namespace Gothic_II_Addon {
     zCParticleEmitter& operator =( zCParticleEmitter const& )  zCall( 0x00770750 );
     static zVEC3 String2Vec3( zSTRING const& )                 zCall( 0x005B3210 );
     static zVEC2 String2Vec2( zSTRING const& )                 zCall( 0x005B3490 );
+
+    // user API
+    #include "zCParticleEmitter.inl"
   };
 
   class zCParticleEmitterVars {
@@ -196,6 +200,9 @@ namespace Gothic_II_Addon {
     float uniformDelta;
 
     zCParticleEmitterVars() {}
+
+    // user API
+    #include "zCParticleEmitterVars.inl"
   };
 
   class zCParticleFX : public zCVisual {
@@ -214,6 +221,9 @@ namespace Gothic_II_Addon {
       void TouchPfx( zCParticleFX* )      zCall( 0x005AD330 );
       void ProcessList()                  zCall( 0x005AD3F0 );
       int IsInList( zCParticleFX* )       zCall( 0x005ADB70 );
+
+      // user API
+      #include "zCParticleFX_zCStaticPfxList.inl"
     };
 
     zTParticle* firstPart;
@@ -260,7 +270,6 @@ namespace Gothic_II_Addon {
     int GetNumParticlesThisFrame()                                    zCall( 0x005B1A90 );
     void CheckDependentEmitter()                                      zCall( 0x005B1C30 );
     void CreateParticles()                                            zCall( 0x005B1DD0 );
-    static void operator delete( void* )                              zCall( 0x0048D2B0 );
     static zCObject* _CreateNewInstance()                             zCall( 0x005AC430 );
     static void ParseParticleFXScript()                               zCall( 0x005AC560 );
     static void InitParticleFX()                                      zCall( 0x005ACB50 );
@@ -294,6 +303,9 @@ namespace Gothic_II_Addon {
     static zCMesh*& s_partMeshQuad;
     static int& s_showDebugInfo;
     static zCStaticPfxList& s_pfxList;
+
+    // user API
+    #include "zCParticleFX.inl"
   };
 
 } // namespace Gothic_II_Addon

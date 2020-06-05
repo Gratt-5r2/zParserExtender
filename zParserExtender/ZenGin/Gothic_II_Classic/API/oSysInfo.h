@@ -32,6 +32,9 @@ namespace Gothic_II_Classic {
     virtual void AnalyseNow()           zCall( 0x004394C0 );
     virtual void ScoreNow()             zCall( 0x00439DC0 );
     virtual void ResetSettings( float ) zCall( 0x004394D0 );
+
+    // user API
+    #include "oCSystemInfo.inl"
   };
 
 } // namespace Gothic_II_Classic

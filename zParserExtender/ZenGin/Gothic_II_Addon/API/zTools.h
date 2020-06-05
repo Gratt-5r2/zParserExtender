@@ -33,6 +33,9 @@ namespace Gothic_II_Addon {
 
     // static properties
     static unsigned long& s_forcedMaxFrameTime;
+
+    // user API
+    #include "zCTimer.inl"
   };
 
   class zCChecksum {
@@ -46,6 +49,9 @@ namespace Gothic_II_Addon {
     void CalcFileChecksum( zFILE* )                                                     zCall( 0x005F9B90 );
     void CalcFileChecksum( zSTRING const& )                                             zCall( 0x005F9BF0 );
     static unsigned long GetBufferCRC32( unsigned char*, unsigned long, unsigned long ) zCall( 0x005F9A10 );
+
+    // user API
+    #include "zCChecksum.inl"
   };
 
   class zCChecksum16 {
@@ -57,6 +63,9 @@ namespace Gothic_II_Addon {
     unsigned short EndChecksum()                                                          zCall( 0x005F9DE0 );
     void CalcBufferChecksum( unsigned char*, unsigned long )                              zCall( 0x005F9DF0 );
     static unsigned short GetBufferCRC16( unsigned char*, unsigned long, unsigned short ) zCall( 0x005F9C80 );
+
+    // user API
+    #include "zCChecksum16.inl"
   };
 
   class zCFPUControler {
@@ -76,6 +85,9 @@ namespace Gothic_II_Addon {
     void SetPrecision_53()                zCall( 0x005F9F80 );
     void SetPrecision_64()                zCall( 0x005F9FA0 );
     void PrintStatus()                    zCall( 0x005F9FC0 );
+
+    // user API
+    #include "zCFPUControler.inl"
   };
 
 } // namespace Gothic_II_Addon

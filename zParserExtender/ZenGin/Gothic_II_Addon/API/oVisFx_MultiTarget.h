@@ -15,7 +15,6 @@ namespace Gothic_II_Addon {
 
     void oCVisFX_MultiTarget_OnInit()                      zCall( 0x0049EB40 );
     oCVisFX_MultiTarget()                                  zInit( oCVisFX_MultiTarget_OnInit() );
-    static void operator delete( void* )                   zCall( 0x00484530 );
     static zCObject* _CreateNewInstance()                  zCall( 0x0049F750 );
     virtual zCClassDef* _GetClassDef() const               zCall( 0x0049EB80 );
     virtual void Archive( zCArchiver& )                    zCall( 0x0049F540 );
@@ -33,6 +32,9 @@ namespace Gothic_II_Addon {
     virtual void Reset()                                   zCall( 0x0049F400 );
     virtual void SetDamage( float )                        zCall( 0x0049F490 );
     virtual void SetDamageType( int )                      zCall( 0x0049F4F0 );
+
+    // user API
+    #include "oCVisFX_MultiTarget.inl"
   };
 
 } // namespace Gothic_II_Addon

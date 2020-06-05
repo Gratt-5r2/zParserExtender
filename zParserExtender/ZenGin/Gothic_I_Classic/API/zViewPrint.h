@@ -34,7 +34,6 @@ namespace Gothic_I_Classic {
     void __fastcall RemoveText( zCViewText2* )                                   zCall( 0x00757590 );
     void __fastcall RemoveAllTexts()                                             zCall( 0x007575F0 );
     static zCObject* _CreateNewInstance()                                        zCall( 0x00756640 );
-    static void operator delete( void*, char const*, char const*, int )          zCall( 0x007566B0 );
     /* for zCObject num : 10*/
     virtual zCClassDef* _GetClassDef() const                                     zCall( 0x007567A0 );
     virtual ~zCViewPrint()                                                       zCall( 0x007567E0 );
@@ -44,8 +43,8 @@ namespace Gothic_I_Classic {
     virtual void __fastcall BlitTextCharacters( zCViewText2*, zCFont*, zCOLOR& ) zCall( 0x00756B20 );
     /* for zCViewBase num : 8*/
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCViewPrint, zCViewFX )
+    // user API
+    #include "zCViewPrint.inl"
   };
 
 } // namespace Gothic_I_Classic

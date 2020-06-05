@@ -43,6 +43,9 @@ namespace Gothic_I_Addon {
     virtual int HasAlpha()                                   zCall( 0x0075F5E0 );
     virtual int ConvertTextureFormat( zCTextureInfo const& ) zCall( 0x0075D770 );
     virtual void SetDetailTextureMode( int )                 zCall( 0x0075F6A0 );
+
+    // user API
+    #include "zCTexConGeneric.inl"
   };
 
 } // namespace Gothic_I_Addon

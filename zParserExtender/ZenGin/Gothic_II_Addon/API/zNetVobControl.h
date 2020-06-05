@@ -19,7 +19,6 @@ namespace Gothic_II_Addon {
     void zCNetVobControl_OnInit()                                                 zCall( 0x0045DD00 );
     zCNetVobControl()                                                             zInit( zCNetVobControl_OnInit() );
     static zCObject* _CreateNewInstance()                                         zCall( 0x0045DB80 );
-    static void operator delete( void* )                                          zCall( 0x0045DCB0 );
     static int HandleNetMessage( zCNetMessage*, unsigned short const&, zCWorld* ) zCall( 0x0045E3B0 );
     virtual zCClassDef* _GetClassDef() const                                      zCall( 0x0045DCD0 );
     virtual void Archive( zCArchiver& )                                           zCall( 0x0045F170 );
@@ -35,6 +34,9 @@ namespace Gothic_II_Addon {
     virtual int Process()                                                         zCall( 0x0045DE70 );
     virtual int HandOverToPlayer( zCPlayerInfo* )                                 zCall( 0x0045DF40 );
     virtual zCNetMessage* CreateNetMessage( unsigned short const& )               zCall( 0x0045E8C0 );
+
+    // user API
+    #include "zCNetVobControl.inl"
   };
 
 } // namespace Gothic_II_Addon

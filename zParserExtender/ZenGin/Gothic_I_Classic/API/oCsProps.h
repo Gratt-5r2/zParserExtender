@@ -15,7 +15,6 @@ namespace Gothic_I_Classic {
 
     void oCCSProps_OnInit()                                             zCall( 0x00403DA0 );
     oCCSProps()                                                         zInit( oCCSProps_OnInit() );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00402BC0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x00403D10 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00403D90 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x00403E00 );
@@ -25,8 +24,8 @@ namespace Gothic_I_Classic {
     virtual int CheckRole( zCCSRole*, zCVob* )                          zCall( 0x00403E30 );
     virtual int CheckRoleResult()                                       zCall( 0x00403E80 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCCSProps, zCCSProps )
+    // user API
+    #include "oCCSProps.inl"
   };
 
 } // namespace Gothic_I_Classic

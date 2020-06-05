@@ -32,6 +32,9 @@ namespace Gothic_II_Addon {
     // static properties
     static zCPlayerGroup& allPlayerGroup;
     static zCList<zCPlayerGroup>& group_list;
+
+    // user API
+    #include "zCPlayerGroup.inl"
   };
 
 } // namespace Gothic_II_Addon

@@ -31,6 +31,9 @@ namespace Gothic_I_Addon {
     virtual void SetPreview( float )                                                   zCall( 0x0043EFB0 );
     virtual void SetValue( float )                                                     zCall( 0x0043F020 );
     /* for zCInputCallback num : 1*/
+
+    // user API
+    #include "oCViewStatusBar.inl"
   };
 
 } // namespace Gothic_I_Addon

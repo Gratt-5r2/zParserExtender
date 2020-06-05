@@ -15,7 +15,6 @@ namespace Gothic_II_Addon {
 
     void oCCSProps_OnInit()                     zCall( 0x00403F00 );
     oCCSProps()                                 zInit( oCCSProps_OnInit() );
-    static void operator delete( void* )        zCall( 0x00402B70 );
     static zCObject* _CreateNewInstance()       zCall( 0x00403E90 );
     virtual zCClassDef* _GetClassDef() const    zCall( 0x00403EF0 );
     virtual void Archive( zCArchiver& )         zCall( 0x00403F60 );
@@ -24,6 +23,9 @@ namespace Gothic_II_Addon {
     virtual int AcceptRole( zCCSRole*, zCVob* ) zCall( 0x00403F80 );
     virtual int CheckRole( zCCSRole*, zCVob* )  zCall( 0x00403F90 );
     virtual int CheckRoleResult()               zCall( 0x00403FE0 );
+
+    // user API
+    #include "oCCSProps.inl"
   };
 
 } // namespace Gothic_II_Addon

@@ -59,6 +59,9 @@ namespace Gothic_II_Addon {
     int ShouldSlide( zVEC3 const& ) const                                    zCall( 0x005B6790 );
     void Archive( zCArchiver& )                                              zCall( 0x005B6930 );
     void Unarchive( zCArchiver& )                                            zCall( 0x005B69B0 );
+
+    // user API
+    #include "zCRigidBody.inl"
   };
 
 } // namespace Gothic_II_Addon

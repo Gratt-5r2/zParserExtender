@@ -16,6 +16,9 @@ namespace Gothic_I_Classic {
     zCArray<int> numList;
 
     zCLivingObjectsState() {}
+
+    // user API
+    #include "zCLivingObjectsState.inl"
   };
 
   class zCClassDef {
@@ -68,6 +71,9 @@ namespace Gothic_I_Classic {
     static zCArraySort<zCClassDef*>*& classDefList;
     static zCClassDef*& classDefSearchDummy;
     static int& startupFinished;
+
+    // user API
+    #include "zCClassDef.inl"
   };
 
   template<class T>
@@ -118,6 +124,9 @@ namespace Gothic_I_Classic {
     const T* CastTo() const {
       return zDYNAMIC_CAST<T>( this );
     }
+
+    // user API
+    #include "zCObject.inl"
   };
 
   class zCObjectFactory : public zCObject {
@@ -125,7 +134,6 @@ namespace Gothic_I_Classic {
     zCLASS_DECLARATION( zCObjectFactory )
 
     zCObjectFactory() {}
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00544910 );
     static zCObject* _CreateNewInstance()                               zCall( 0x005890A0 );
     virtual zCClassDef* _GetClassDef( void ) const                      zCall( 0x00425DA0 );
     virtual ~zCObjectFactory( void )                                    zCall( 0x00425E00 );
@@ -140,8 +148,8 @@ namespace Gothic_I_Classic {
     virtual zCWaypoint* CreateWaypoint( void )                          zCall( 0x0058BFA0 );
     virtual zCWay* CreateWay( void )                                    zCall( 0x0058C0C0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCObjectFactory, zCObject )
+    // user API
+    #include "zCObjectFactory.inl"
   };
 } // namespace Gothic_I_Classic
 

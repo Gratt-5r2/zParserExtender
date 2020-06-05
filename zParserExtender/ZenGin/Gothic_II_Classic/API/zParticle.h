@@ -50,6 +50,7 @@ namespace Gothic_II_Classic {
 
   typedef struct zSParticle {
   public:
+    zSParticle* next;
     zVEC3 position;
     zVEC3 positionWS;
     zVEC3 vel;
@@ -180,6 +181,9 @@ namespace Gothic_II_Classic {
     zCParticleEmitter& operator =( zCParticleEmitter const& )  zCall( 0x007111E0 );
     static zVEC3 String2Vec3( zSTRING const& )                 zCall( 0x005ADB80 );
     static zVEC2 String2Vec2( zSTRING const& )                 zCall( 0x005ADE00 );
+
+    // user API
+    #include "zCParticleEmitter.inl"
   };
 
   class zCParticleEmitterVars {
@@ -193,6 +197,9 @@ namespace Gothic_II_Classic {
     float uniformDelta;
 
     zCParticleEmitterVars() {}
+
+    // user API
+    #include "zCParticleEmitterVars.inl"
   };
 
   class zCParticleFX : public zCVisual {
@@ -211,6 +218,9 @@ namespace Gothic_II_Classic {
       void TouchPfx( zCParticleFX* )      zCall( 0x005A7CB0 );
       void ProcessList()                  zCall( 0x005A7D70 );
       int IsInList( zCParticleFX* )       zCall( 0x005A84B0 );
+
+      // user API
+      #include "zCParticleFX_zCStaticPfxList.inl"
     };
 
     zTParticle* firstPart;
@@ -257,7 +267,6 @@ namespace Gothic_II_Classic {
     int GetNumParticlesThisFrame()                                    zCall( 0x005AC430 );
     void CheckDependentEmitter()                                      zCall( 0x005AC5D0 );
     void CreateParticles()                                            zCall( 0x005AC770 );
-    static void operator delete( void* )                              zCall( 0x0048B940 );
     static zCObject* _CreateNewInstance()                             zCall( 0x005A6ED0 );
     static void ParseParticleFXScript()                               zCall( 0x005A7000 );
     static void InitParticleFX()                                      zCall( 0x005A74D0 );
@@ -291,6 +300,9 @@ namespace Gothic_II_Classic {
     static zCMesh*& s_partMeshQuad;
     static int& s_showDebugInfo;
     static zCStaticPfxList& s_pfxList;
+
+    // user API
+    #include "zCParticleFX.inl"
   };
 
 } // namespace Gothic_II_Classic

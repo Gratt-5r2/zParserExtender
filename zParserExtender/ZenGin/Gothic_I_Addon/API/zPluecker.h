@@ -16,6 +16,9 @@ namespace Gothic_I_Addon {
     zCPluecker()                                         zInit( zCPluecker_OnInit() );
     float Length2() const                                zCall( 0x005B1710 );
     void Normalize()                                     zCall( 0x005B1740 );
+
+    // user API
+    #include "zCPluecker.inl"
   };
 
 } // namespace Gothic_I_Addon

@@ -23,6 +23,9 @@ namespace Gothic_II_Classic {
     zCViewFont()                                                          zInit( zCViewFont_OnInit() );
     ~zCViewFont()                                                         zCall( 0x007A4F70 );
     void __fastcall SetFont( zSTRING& )                                   zCall( 0x007A4F80 );
+
+    // user API
+    #include "zCViewFont.inl"
   };
 
   class zCViewText2 {
@@ -54,6 +57,9 @@ namespace Gothic_II_Classic {
     zCViewText2( zSTRING& a0, zCPosition& a1, float a2 )                                                          zInit( zCViewText2_OnInit( a0, a1, a2 ));
     zCViewText2( zSTRING& a0, zCPosition& a1 )                                                                    zInit( zCViewText2_OnInit( a0, a1 ));
     ~zCViewText2()                                                                                                zCall( 0x007A4E40 );
+
+    // user API
+    #include "zCViewText2.inl"
   };
 
 } // namespace Gothic_II_Classic

@@ -36,6 +36,9 @@ namespace Gothic_I_Addon {
     void DeleteLastPFX()                                      zCall( 0x00700340 );
     void UpdateInternals()                                    zCall( 0x00700470 );
     void EndEditActive()                                      zCall( 0x00700480 );
+
+    // user API
+    #include "oCParticleControl.inl"
   };
 
 } // namespace Gothic_I_Addon

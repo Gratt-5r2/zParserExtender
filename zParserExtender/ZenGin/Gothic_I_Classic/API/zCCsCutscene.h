@@ -18,6 +18,9 @@ namespace Gothic_I_Classic {
 
     zTCSBlockPosition() {}
     ~zTCSBlockPosition() zCall( 0x00417700 );
+
+    // user API
+    #include "zTCSBlockPosition.inl"
   };
 
   class zCEvMsgCutscene : public zCEventMessage {
@@ -44,7 +47,6 @@ namespace Gothic_I_Classic {
     void SetCutsceneName( zSTRING )                                     zCall( 0x004136F0 );
     zSTRING GetCutsceneName()                                           zCall( 0x006A84B0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x0040B410 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0040B530 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x0040B550 );
     virtual ~zCEvMsgCutscene()                                          zCall( 0x0040C250 );
     virtual int IsHighPriority()                                        zCall( 0x0040B560 );
@@ -53,8 +55,8 @@ namespace Gothic_I_Classic {
     virtual int MD_GetNumOfSubTypes()                                   zCall( 0x0040C2B0 );
     virtual zSTRING MD_GetSubTypeString( int )                          zCall( 0x0040C2C0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCEvMsgCutscene, zCEventMessage )
+    // user API
+    #include "zCEvMsgCutscene.inl"
   };
 
   class zCCSRole : public zCObject, public zSTRING {
@@ -78,16 +80,12 @@ namespace Gothic_I_Classic {
     void SetRoleVob( zCVob* )                                           zCall( 0x0040BB20 );
     zCVob* GetRoleVob()                                                 zCall( 0x0040BF40 );
     static zCObject* _CreateNewInstance()                               zCall( 0x0040B0D0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0040B200 );
     /* for zCObject num : 4*/
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x0040B220 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x0040BF50 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x0040BFB0 );
     virtual ~zCCSRole()                                                 zCall( 0x0040B8B0 );
     /* for zSTRING num : 0*/
-
-    // compatible with g2 operators style
-    zOperatorDelete( zCCSRole, zSTRING )
   };
 
   class zCCSBlockBase : public zCObject {
@@ -120,6 +118,9 @@ namespace Gothic_I_Classic {
     virtual void BlockCorrection()                                      zCall( 0x0040C650 );
     virtual void BlockAsFocus( int )                                    zCall( 0x0040C660 );
     virtual zCCSBlockPosition* GetChildPos( int )                       zCall( 0x0040C720 );
+
+    // user API
+    #include "zCCSBlockBase.inl"
   };
 
   class zCCSAtomicBlock : public zCCSBlockBase {
@@ -140,7 +141,6 @@ namespace Gothic_I_Classic {
     void zCCSAtomicBlock_OnInit()                                       zCall( 0x0040C730 );
     zCCSAtomicBlock()                                                   zInit( zCCSAtomicBlock_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x0040A470 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0040A620 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x0040A640 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x004166A0 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x004166C0 );
@@ -155,8 +155,8 @@ namespace Gothic_I_Classic {
     virtual int IsFinished( zCEventManager* )                           zCall( 0x0040CC80 );
     virtual zCEventMessage* GetCommand()                                zCall( 0x0040A660 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCCSAtomicBlock, zCCSBlockBase )
+    // user API
+    #include "zCCSAtomicBlock.inl"
   };
 
   class zCCSBlockPosition {
@@ -172,6 +172,9 @@ namespace Gothic_I_Classic {
     zCCSBlockPosition( float a0, zCCSBlockBase* a1 )          zInit( zCCSBlockPosition_OnInit( a0, a1 ));
     zCCSBlockPosition& operator =( zCCSBlockPosition const& ) zCall( 0x00416660 );
     virtual ~zCCSBlockPosition()                              zCall( 0x00416650 );
+
+    // user API
+    #include "zCCSBlockPosition.inl"
   };
 
   class zCCSBlock : public zCCSBlockBase {
@@ -184,7 +187,6 @@ namespace Gothic_I_Classic {
     void zCCSBlock_OnInit()                                             zCall( 0x0040CE70 );
     zCCSBlock()                                                         zInit( zCCSBlock_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x0040A850 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0040A930 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x0040A950 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x004166F0 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x00416860 );
@@ -208,8 +210,8 @@ namespace Gothic_I_Classic {
     virtual void BlockAsFocus( int )                                    zCall( 0x0040D870 );
     virtual zCCSBlockPosition* GetChildPos( int )                       zCall( 0x0040D040 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCCSBlock, zCCSBlockBase )
+    // user API
+    #include "zCCSBlock.inl"
   };
 
   class zCCSSyncBlock : public zCCSBlock {
@@ -222,7 +224,6 @@ namespace Gothic_I_Classic {
     zCCSSyncBlock()                                                     zInit( zCCSSyncBlock_OnInit() );
     void AssignerCorrection( int )                                      zCall( 0x0040DFC0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x0040AB40 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0040AC30 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x0040AC50 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x00416A20 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x00416BE0 );
@@ -237,8 +238,8 @@ namespace Gothic_I_Classic {
     virtual int GetRoleNumOfChild( int )                                zCall( 0x0040DCF0 );
     virtual void BlockAsFocus( int )                                    zCall( 0x0040DEB0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCCSSyncBlock, zCCSBlock )
+    // user API
+    #include "zCCSSyncBlock.inl"
   };
 
   class zCCutscene : public zCCSBlock {
@@ -292,7 +293,6 @@ namespace Gothic_I_Classic {
     void SerializeBlock( zCCSBlockBase*, zTCSBlockPosition& )           zCall( 0x00417930 );
     zCCSProps* GetProperties()                                          zCall( 0x0041CCF0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x0040AE50 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0040AEC0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x0040E1E0 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x00416E30 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x00416EC0 );
@@ -323,8 +323,8 @@ namespace Gothic_I_Classic {
     virtual zCVob* CatchPlayer( zCVob* )                                zCall( 0x004165B0 );
     virtual void PrepareBlock()                                         zCall( 0x0040F930 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCCutscene, zCCSBlock )
+    // user API
+    #include "zCCutscene.inl"
   };
 
 } // namespace Gothic_I_Classic

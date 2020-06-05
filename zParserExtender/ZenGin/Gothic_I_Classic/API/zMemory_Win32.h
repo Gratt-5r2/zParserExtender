@@ -19,6 +19,9 @@ namespace Gothic_I_Classic {
     int ShowNoName;
 
     zCMallocWin32Debug() {}
+
+    // user API
+    #include "zCMallocWin32Debug.inl"
   };
 
 } // namespace Gothic_I_Classic

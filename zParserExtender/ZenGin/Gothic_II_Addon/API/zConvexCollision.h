@@ -11,6 +11,9 @@ namespace Gothic_II_Addon {
     zCVob* vobb;
 
     zCCacheIndex() {}
+
+    // user API
+    #include "zCCacheIndex.inl"
   };
 
   class zCConvexCollisionCache {
@@ -23,6 +26,9 @@ namespace Gothic_II_Addon {
     zCConvexCollisionCache() {}
     void zCConvexCollisionCache_OnInit( zCCacheIndex const& ) zCall( 0x00554E20 );
     zCConvexCollisionCache( zCCacheIndex const& a0 )          zInit( zCConvexCollisionCache_OnInit( a0 ));
+
+    // user API
+    #include "zCConvexCollisionCache.inl"
   };
 
   class zCConvexPrimitive {
@@ -45,6 +51,9 @@ namespace Gothic_II_Addon {
     virtual int SymetryRotation( zVEC3& ) const                                                                                                                  zCall( 0x00555530 );
     virtual void UpdateBBox()                                                                                                                                    zCall( 0x00555540 );
     virtual void DrawVirtual() const                                                                                                                             zCall( 0x00555150 );
+
+    // user API
+    #include "zCConvexPrimitive.inl"
   };
 
   class zCConvexPrimitiveUnitSphere : public zCConvexPrimitive {
@@ -62,6 +71,9 @@ namespace Gothic_II_Addon {
 
     // static properties
     static zCConvexPrimitiveUnitSphere& s_unitSphere;
+
+    // user API
+    #include "zCConvexPrimitiveUnitSphere.inl"
   };
 
   class zCConvexPrimitiveScaleTrans : public zCConvexPrimitive {
@@ -79,6 +91,9 @@ namespace Gothic_II_Addon {
     virtual int PointIsInLocal( zVEC3 const& ) const                                          zCall( 0x005558B0 );
     virtual void UpdateBBox()                                                                 zCall( 0x00555940 );
     virtual void DrawVirtual() const                                                          zCall( 0x00555990 );
+
+    // user API
+    #include "zCConvexPrimitiveScaleTrans.inl"
   };
 
   class zCConvexPrimitiveEllipsoid : public zCConvexPrimitiveScaleTrans {
@@ -91,6 +106,9 @@ namespace Gothic_II_Addon {
     void Snap()                                                    zCall( 0x00555C10 );
     virtual ~zCConvexPrimitiveEllipsoid()                          zCall( 0x00555C00 );
     virtual int SymetryRotation( zVEC3& ) const                    zCall( 0x00555B90 );
+
+    // user API
+    #include "zCConvexPrimitiveEllipsoid.inl"
   };
 
 } // namespace Gothic_II_Addon

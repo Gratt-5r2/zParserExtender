@@ -14,6 +14,9 @@ namespace Gothic_II_Classic {
     static void __fastcall S_RegisterCollisionTestFuncs( zCCollisionDetector* )                                    zCall( 0x00549A40 );
     virtual ~zCCollObjectBase()                                                                                    zCall( 0x00548580 );
     virtual void __fastcall GetLargestBBox3DLocal( zTBBox3D& )                                                     zCall( 0x005499B0 );
+
+    // user API
+    #include "zCCollObjectBase.inl"
   };
 
   class zCCollObjectUndef : public zCCollObjectBase {
@@ -24,6 +27,9 @@ namespace Gothic_II_Classic {
     static zCCollisionObject* _CreateNewInstance()        zCall( 0x005483E0 );
     virtual zCCollisionObjectDef* GetCollObjClass() const zCall( 0x00548420 );
     virtual ~zCCollObjectUndef()                          zCall( 0x00548450 );
+
+    // user API
+    #include "zCCollObjectUndef.inl"
   };
 
   class zCCollObjectPoint : public zCCollObjectBase {
@@ -40,6 +46,9 @@ namespace Gothic_II_Classic {
     virtual void __fastcall DetectCollisionsSelf( zCArray<zCCollisionObject*> const&, zCArray<zCCollisionReport*>& ) zCall( 0x00549070 );
     virtual void __fastcall CollisionResponse( zCArray<zCCollisionReport*> const&, int& )                            zCall( 0x00548AA0 );
     virtual void __fastcall GetLargestBBox3DLocal( zTBBox3D& )                                                       zCall( 0x00548A00 );
+
+    // user API
+    #include "zCCollObjectPoint.inl"
   };
 
   class zCCollObjectProjectile : public zCCollObjectPoint {
@@ -50,6 +59,9 @@ namespace Gothic_II_Classic {
     static zCCollisionObject* _CreateNewInstance()        zCall( 0x00548730 );
     virtual zCCollisionObjectDef* GetCollObjClass() const zCall( 0x00548770 );
     virtual ~zCCollObjectProjectile()                     zCall( 0x005487A0 );
+
+    // user API
+    #include "zCCollObjectProjectile.inl"
   };
 
   class zCCollObjectComplex : public zCCollObjectBase {
@@ -62,6 +74,9 @@ namespace Gothic_II_Classic {
     virtual ~zCCollObjectComplex()                                                        zCall( 0x00548860 );
     virtual void __fastcall CollisionResponse( zCArray<zCCollisionReport*> const&, int& ) zCall( 0x00549100 );
     virtual float __fastcall GetAdaptiveStepSize()                                        zCall( 0x00549080 );
+
+    // user API
+    #include "zCCollObjectComplex.inl"
   };
 
   class zCCollObjectLevelPolys : public zCCollObjectBase {
@@ -75,6 +90,9 @@ namespace Gothic_II_Classic {
     static zCCollisionObject* _CreateNewInstance()        zCall( 0x005484A0 );
     virtual zCCollisionObjectDef* GetCollObjClass() const zCall( 0x005484F0 );
     virtual ~zCCollObjectLevelPolys()                     zCall( 0x00548520 );
+
+    // user API
+    #include "zCCollObjectLevelPolys.inl"
   };
 
   class zCCollObjectBoxPassThrough : public zCCollObjectBase {
@@ -86,6 +104,9 @@ namespace Gothic_II_Classic {
     virtual zCCollisionObjectDef* GetCollObjClass() const zCall( 0x005489B0 );
     virtual ~zCCollObjectBoxPassThrough()                 zCall( 0x005489F0 );
     virtual int __fastcall SuppressCollisionResponse()    zCall( 0x005489C0 );
+
+    // user API
+    #include "zCCollObjectBoxPassThrough.inl"
   };
 
   class zCCollObjectBoxBlocker : public zCCollObjectBase {
@@ -96,6 +117,9 @@ namespace Gothic_II_Classic {
     static zCCollisionObject* _CreateNewInstance()        zCall( 0x005488B0 );
     virtual zCCollisionObjectDef* GetCollObjClass() const zCall( 0x005488F0 );
     virtual ~zCCollObjectBoxBlocker()                     zCall( 0x00548920 );
+
+    // user API
+    #include "zCCollObjectBoxBlocker.inl"
   };
 
   class zCCollObjectCharacter : public zCCollObjectBase {
@@ -125,6 +149,9 @@ namespace Gothic_II_Classic {
       };
 
       zTConfig() {}
+
+      // user API
+      #include "zCCollObjectCharacter_zTConfig.inl"
     };
 
     struct zTSpatialState {
@@ -142,6 +169,9 @@ namespace Gothic_II_Classic {
       };
 
       zTSpatialState() {}
+
+      // user API
+      #include "zCCollObjectCharacter_zTSpatialState.inl"
     };
 
     struct zTInterferenceReport {
@@ -176,6 +206,9 @@ namespace Gothic_II_Classic {
       zVEC3 collisionNormal;
 
       zTInterferenceReport() {}
+
+      // user API
+      #include "zCCollObjectCharacter_zTInterferenceReport.inl"
     };
 
     zCRayCache m_oUpRayCache;
@@ -221,6 +254,9 @@ namespace Gothic_II_Classic {
     virtual int DontLetHimComeNearer( zCVob const* ) const                                                           zCall( 0x0054A6E0 );
     virtual float TurnSpeed() const                                                                                  zCall( 0x0054A6F0 );
     virtual void PushAround( zVEC3 const& )                                                                          zCall( 0x0054A700 );
+
+    // user API
+    #include "zCCollObjectCharacter.inl"
   };
 
 } // namespace Gothic_II_Classic

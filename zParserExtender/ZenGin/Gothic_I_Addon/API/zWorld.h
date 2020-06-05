@@ -32,6 +32,9 @@ namespace Gothic_I_Addon {
   public:
 
     zCCallback() {}
+
+    // user API
+    #include "zCCallback.inl"
   };
 
   class zCVobCallback : public zCCallback {
@@ -39,6 +42,9 @@ namespace Gothic_I_Addon {
 
     zCVobCallback() {}
     virtual void HandleVob( zCVob*, void* ) zPureCall;
+
+    // user API
+    #include "zCVobCallback.inl"
   };
 
   class zCWorldPerFrameCallback : public zCCallback {
@@ -46,6 +52,9 @@ namespace Gothic_I_Addon {
     
     virtual void DoWorldPerFrameCallback( zCWorld*, zCCamera* ) zPureCall;
     zCWorldPerFrameCallback() {}
+
+    // user API
+    #include "zCWorldPerFrameCallback.inl"
   };
 
   struct zTTraceRayReport {
@@ -57,6 +66,9 @@ namespace Gothic_I_Addon {
     zCVertex* foundVertex;
 
     zTTraceRayReport() {}
+
+    // user API
+    #include "zTTraceRayReport.inl"
   };
 
   class zCTransferConstr {
@@ -65,6 +77,9 @@ namespace Gothic_I_Addon {
     float formFactor;
 
     zCTransferConstr() {}
+
+    // user API
+    #include "zCTransferConstr.inl"
   };
   
 #pragma pack( push, 1 )
@@ -75,6 +90,9 @@ namespace Gothic_I_Addon {
     unsigned short formFactor;
 
     zCTransfer() {}
+
+    // user API
+    #include "zCTransfer.inl"
   };
   
 #pragma pack( pop )
@@ -95,6 +113,9 @@ namespace Gothic_I_Addon {
     void zCPatch_OnInit() zCall( 0x0061EE90 );
     zCPatch()             zInit( zCPatch_OnInit() );
     void DoTransfers()    zCall( 0x00621CF0 );
+
+    // user API
+    #include "zCPatch.inl"
   };
     
 #pragma pack( push, 1 )
@@ -117,6 +138,9 @@ namespace Gothic_I_Addon {
     zCPatchMap() {}
     int CheckRaySurfaceIntersection( zVEC3&, zVEC3&, zVEC3&, zCPolygon*& ) zCall( 0x0061EEE0 );
     ~zCPatchMap()                                                          zCall( 0x006214D0 );
+
+    // user API
+    #include "zCPatchMap.inl"
   };
     
 #pragma pack( pop )
@@ -269,7 +293,6 @@ namespace Gothic_I_Addon {
     void MakeVobLightingDirty()                                                                                    zCall( 0x006228C0 );
     zCBspTree* GetBspTree()                                                                                        zCall( 0x006299A0 );
     void SetVobFarClipZScalability( float )                                                                        zCall( 0x006299B0 );
-    static void operator delete( void*, char const*, char const*, int )                                            zCall( 0x005A7870 );
     static zCObject* _CreateNewInstance()                                                                          zCall( 0x00613150 );
     static int ActiveZoneListCompare( void const*, void const* )                                                   zCall( 0x00613B30 );
     virtual zCClassDef* _GetClassDef() const                                                                       zCall( 0x00613730 );
@@ -298,13 +321,14 @@ namespace Gothic_I_Addon {
     virtual void VobRemovedFromWorld( zCVob* )                                                                     zCall( 0x006174A0 );
     virtual void RenderWaynet( zCCamera* )                                                                         zCall( 0x00613B10 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCWorld, zCObject )
 
     // static properties
     static zTWorldLoadMode& s_worldLoadMode;
     static zTWorldSaveMode& s_worldSaveMode;
     static zTWorldLoadMergeMode& s_worldMergeMode;
+
+    // user API
+    #include "zCWorld.inl"
   };
 
 } // namespace Gothic_I_Addon

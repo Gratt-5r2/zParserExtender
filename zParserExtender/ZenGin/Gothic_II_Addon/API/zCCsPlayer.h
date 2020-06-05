@@ -37,7 +37,6 @@ namespace Gothic_II_Addon {
     void DebugResetInfoscreen()                                                zCall( 0x00420860 );
     void DebugAddCutscene( int, zVEC3, int )                                   zCall( 0x00420890 );
     void ToggleDebugInfo()                                                     zCall( 0x00420C60 );
-    static void operator delete( void* )                                       zCall( 0x0041A690 );
     static zCObject* _CreateNewInstance()                                      zCall( 0x0041C9E0 );
     /* for zCObject num : 21*/
     virtual zCClassDef* _GetClassDef() const                                   zCall( 0x0041CAF0 );
@@ -69,6 +68,9 @@ namespace Gothic_II_Addon {
     virtual void CSDB_Warning( zCCSBlockBase*, zSTRING& )                      zCall( 0x0041F890 );
     virtual void CSDB_StartPlaying( zCCutscene* )                              zCall( 0x0041FAC0 );
     virtual void CSDB_Stop( zCCutscene* )                                      zCall( 0x0041FAD0 );
+
+    // user API
+    #include "zCCSPlayer.inl"
   };
 
 } // namespace Gothic_II_Addon

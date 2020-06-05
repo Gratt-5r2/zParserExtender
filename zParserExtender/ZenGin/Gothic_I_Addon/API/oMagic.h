@@ -90,6 +90,9 @@ namespace Gothic_I_Addon {
     oCItem* GetSpellItemByKey( int )                zCall( 0x0047C190 );
     int GetNoOfSpellByKey( int )                    zCall( 0x0047C1D0 );
     int GetKeyByItem( oCItem* )                     zCall( 0x0047C220 );
+
+    // user API
+    #include "oCMag_Book.inl"
   };
 
 } // namespace Gothic_I_Addon

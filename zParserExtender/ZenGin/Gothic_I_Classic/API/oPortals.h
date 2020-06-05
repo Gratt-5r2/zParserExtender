@@ -22,6 +22,9 @@ namespace Gothic_I_Classic {
     int IsPortalMyRoom( oCNpc* )               zCall( 0x006CA9C0 );
     void SavePortalData( zCArchiver& )         zCall( 0x006CAB60 );
     void LoadPortalData( zCArchiver& )         zCall( 0x006CABA0 );
+
+    // user API
+    #include "oCPortalRoom.inl"
   };
 
   class oCPortalRoomManager {
@@ -52,6 +55,9 @@ namespace Gothic_I_Classic {
     void SavePortalData( zCArchiver& )                       zCall( 0x006CBFC0 );
     void LoadPortalData( zCArchiver& )                       zCall( 0x006CC030 );
     static int SortPortals( void const*, void const* )       zCall( 0x006CABE0 );
+
+    // user API
+    #include "oCPortalRoomManager.inl"
   };
 
 } // namespace Gothic_I_Classic

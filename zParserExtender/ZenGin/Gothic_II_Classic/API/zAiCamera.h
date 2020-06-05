@@ -120,7 +120,6 @@ namespace Gothic_II_Classic {
     zSTRING GetPreviousMode()                                                         zCall( 0x00641030 );
     static zCAICamera* GetCurrent()                                                   zCall( 0x0049D9C0 );
     static zCAICamera* Create()                                                       zCall( 0x0049DE10 );
-    static void operator delete( void* )                                              zCall( 0x0049DEA0 );
     static void GlobalStartUp()                                                       zCall( 0x0049E3A0 );
     static void GlobalCleanUp()                                                       zCall( 0x0049E3B0 );
     static zCObject* _CreateNewInstance()                                             zCall( 0x004A31D0 );
@@ -137,6 +136,9 @@ namespace Gothic_II_Classic {
     static zCAICamera*& current;
     static int& bCreated;
     static int& bCamChanges;
+
+    // user API
+    #include "zCAICamera.inl"
   };
 
 } // namespace Gothic_II_Classic

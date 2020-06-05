@@ -21,11 +21,13 @@ namespace Gothic_II_Addon {
     void oCAICamera_OnInit()                 zCall( 0x0069DD00 );
     oCAICamera()                             zInit( oCAICamera_OnInit() );
     static zCObject* _CreateNewInstance()    zCall( 0x0069E760 );
-    static void operator delete( void* )     zCall( 0x0069E8A0 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x0069DE40 );
     virtual ~oCAICamera()                    zCall( 0x0069DE90 );
     virtual void DoAI( zCVob*, int& )        zCall( 0x0069DEA0 );
     virtual int HasAIDetectedCollision()     zCall( 0x0069DE50 );
+
+    // user API
+    #include "oCAICamera.inl"
   };
 
   class oCAIHuman : public oCAniCtrl_Human {
@@ -96,7 +98,6 @@ namespace Gothic_II_Addon {
     int GetShowAI()                          zCall( 0x0069D880 );
     void StartFlyDamage( float, zVEC3& )     zCall( 0x0069D940 );
     static zCObject* _CreateNewInstance()    zCall( 0x0069E500 );
-    static void operator delete( void* )     zCall( 0x0069E560 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x00695280 );
     virtual void Archive( zCArchiver& )      zCall( 0x0069DCC0 );
     virtual void Unarchive( zCArchiver& )    zCall( 0x0069DCE0 );
@@ -112,6 +113,9 @@ namespace Gothic_II_Addon {
     static zSTRING& Cam_Normal;
     static zSTRING& Cam_Run;
     static zSTRING& Cam_Fight;
+
+    // user API
+    #include "oCAIHuman.inl"
   };
 
   class oCAIHuman_Stand : public zCAIBase {
@@ -122,10 +126,12 @@ namespace Gothic_II_Addon {
     void oCAIHuman_Stand_OnInit( zCVob* )    zCall( 0x0069E0E0 );
     oCAIHuman_Stand( zCVob* a0 )             zInit( oCAIHuman_Stand_OnInit( a0 ));
     static zCObject* _CreateNewInstance()    zCall( 0x0069EAA0 );
-    static void operator delete( void* )     zCall( 0x0069EBC0 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x0069E200 );
     virtual ~oCAIHuman_Stand()               zCall( 0x0069E240 );
     virtual void DoAI( zCVob*, int& )        zCall( 0x0069E250 );
+
+    // user API
+    #include "oCAIHuman_Stand.inl"
   };
 
 } // namespace Gothic_II_Addon

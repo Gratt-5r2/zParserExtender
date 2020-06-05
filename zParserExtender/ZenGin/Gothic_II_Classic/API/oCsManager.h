@@ -14,13 +14,15 @@ namespace Gothic_II_Classic {
     void oCCSManager_OnInit()                            zCall( 0x00401600 );
     oCCSManager()                                        zInit( oCCSManager_OnInit() );
     static zCObject* _CreateNewInstance()                zCall( 0x00401550 );
-    static void operator delete( void* )                 zCall( 0x004015B0 );
     virtual zCClassDef* _GetClassDef() const             zCall( 0x004022C0 );
     virtual ~oCCSManager()                               zCall( 0x00402360 );
     virtual zCEventMessage* CreateMessage( int )         zCall( 0x00402420 );
     virtual zCEventMessage* CreateOuMessage()            zCall( 0x00402410 );
     virtual zCCSPlayer* CreateCutscenePlayer( zCWorld* ) zCall( 0x00402370 );
     virtual zCCSProps* CreateProperties()                zCall( 0x00402B10 );
+
+    // user API
+    #include "oCCSManager.inl"
   };
 
 } // namespace Gothic_II_Classic

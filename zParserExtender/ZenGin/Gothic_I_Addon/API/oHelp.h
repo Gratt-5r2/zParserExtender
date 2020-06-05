@@ -26,6 +26,9 @@ namespace Gothic_I_Addon {
     void Toggle()         zCall( 0x006910B0 );
     void Update()         zCall( 0x00691270 );
     void Redraw( zCVob* ) zCall( 0x00691280 );
+
+    // user API
+    #include "oCHelp.inl"
   };
 
 } // namespace Gothic_I_Addon

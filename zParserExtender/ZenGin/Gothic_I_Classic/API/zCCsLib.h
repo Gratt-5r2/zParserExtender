@@ -29,14 +29,13 @@ namespace Gothic_I_Classic {
     zCCSBlock* GetOU( int )                                             zCall( 0x00419220 );
     void CompactLib()                                                   zCall( 0x00419230 );
     static zCObject* _CreateNewInstance()                               zCall( 0x00418530 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00418680 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x004186A0 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x004186B0 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x00418860 );
     virtual ~zCCSLib()                                                  zCall( 0x00418EE0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCCSLib, zCObject )
+    // user API
+    #include "zCCSLib.inl"
   };
 
 } // namespace Gothic_I_Classic

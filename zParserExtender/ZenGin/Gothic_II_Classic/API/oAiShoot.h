@@ -26,6 +26,9 @@ namespace Gothic_II_Classic {
     virtual zCClassDef* _GetClassDef() const                        zCall( 0x00642CC0 );
     virtual ~oCAISound()                                            zCall( 0x00642CD0 );
     virtual void DoAI( zCVob*, int& )                               zPureCall;
+
+    // user API
+    #include "oCAISound.inl"
   };
 
   class oCAIArrowBase : public oCAISound {
@@ -49,7 +52,6 @@ namespace Gothic_II_Classic {
     void ClearIgnoreCDVob()                                            zCall( 0x00643BD0 );
     void CreateTrail( zCVob* )                                         zCall( 0x00643C40 );
     static zCObject* _CreateNewInstance()                              zCall( 0x00646270 );
-    static void operator delete( void* )                               zCall( 0x00646340 );
     virtual zCClassDef* _GetClassDef() const                           zCall( 0x00643A40 );
     virtual void Archive( zCArchiver& )                                zCall( 0x00644470 );
     virtual void Unarchive( zCArchiver& )                              zCall( 0x006444F0 );
@@ -58,6 +60,9 @@ namespace Gothic_II_Classic {
     virtual void ReportCollisionToAI( zCCollisionReport const& )       zCall( 0x00644160 );
     virtual int HasAIDetectedCollision()                               zCall( 0x00643A50 );
     virtual void AICollisionResponseSelfDetected( zVEC3 const&, int& ) zCall( 0x00643A60 );
+
+    // user API
+    #include "oCAIArrowBase.inl"
   };
 
   class oCAIArrow : public oCAIArrowBase {
@@ -75,7 +80,6 @@ namespace Gothic_II_Classic {
     void ClearUsedVobs()                                         zCall( 0x006447D0 );
     void SetupAIVob( zCVob*, zCVob*, zCVob* )                    zCall( 0x00644880 );
     static zCObject* _CreateNewInstance()                        zCall( 0x00646540 );
-    static void operator delete( void* )                         zCall( 0x00646620 );
     virtual zCClassDef* _GetClassDef() const                     zCall( 0x00644660 );
     virtual void Archive( zCArchiver& )                          zCall( 0x00645440 );
     virtual void Unarchive( zCArchiver& )                        zCall( 0x00645510 );
@@ -83,6 +87,9 @@ namespace Gothic_II_Classic {
     virtual void DoAI( zCVob*, int& )                            zCall( 0x00644BE0 );
     virtual int CanThisCollideWith( zCVob* )                     zCall( 0x00644C10 );
     virtual void ReportCollisionToAI( zCCollisionReport const& ) zCall( 0x00644CB0 );
+
+    // user API
+    #include "oCAIArrow.inl"
   };
 
   class oCAIDrop : public oCAISound {
@@ -104,7 +111,6 @@ namespace Gothic_II_Classic {
     void SetVelocity( float, float )                             zCall( 0x00645C60 );
     void SetStartPosition( zVEC3& )                              zCall( 0x00645D10 );
     static zCObject* _CreateNewInstance()                        zCall( 0x00646820 );
-    static void operator delete( void* )                         zCall( 0x006468E0 );
     virtual zCClassDef* _GetClassDef() const                     zCall( 0x00645700 );
     virtual void Archive( zCArchiver& )                          zCall( 0x00645E90 );
     virtual void Unarchive( zCArchiver& )                        zCall( 0x00645EA0 );
@@ -113,6 +119,9 @@ namespace Gothic_II_Classic {
     virtual int CanThisCollideWith( zCVob* )                     zCall( 0x00645720 );
     virtual void ReportCollisionToAI( zCCollisionReport const& ) zCall( 0x00645C10 );
     virtual int HasAIDetectedCollision()                         zCall( 0x00645710 );
+
+    // user API
+    #include "oCAIDrop.inl"
   };
 
   class oCAIVobMove : public oCAISound {
@@ -128,7 +137,6 @@ namespace Gothic_II_Classic {
     void AddIgnoreCDVob( zCVob* )                                     zCall( 0x00643400 );
     void ClearIgnoreCDVob()                                           zCall( 0x00643420 );
     static zCObject* _CreateNewInstance()                             zCall( 0x00646AE0 );
-    static void operator delete( void* )                              zCall( 0x00646BA0 );
     virtual zCClassDef* _GetClassDef() const                          zCall( 0x00642B20 );
     virtual void Archive( zCArchiver& )                               zCall( 0x006432B0 );
     virtual void Unarchive( zCArchiver& )                             zCall( 0x00643310 );
@@ -137,6 +145,9 @@ namespace Gothic_II_Classic {
     virtual int CanThisCollideWith( zCVob* )                          zCall( 0x00642B30 );
     virtual void ReportCollisionToAI( zCCollisionReport const& )      zCall( 0x00643260 );
     virtual void Init( zCVob*, zCVob*, zVEC3&, float, float, zMAT4* ) zCall( 0x00642D70 );
+
+    // user API
+    #include "oCAIVobMove.inl"
   };
 
   class oCAIVobMoveTorch : public oCAIVobMove {
@@ -150,11 +161,13 @@ namespace Gothic_II_Classic {
     int CheckWater()                                                  zCall( 0x006436C0 );
     void BurnedOut()                                                  zCall( 0x00643770 );
     static zCObject* _CreateNewInstance()                             zCall( 0x00646DA0 );
-    static void operator delete( void* )                              zCall( 0x00646E60 );
     virtual zCClassDef* _GetClassDef() const                          zCall( 0x00643520 );
     virtual ~oCAIVobMoveTorch()                                       zCall( 0x00643560 );
     virtual void DoAI( zCVob*, int& )                                 zCall( 0x00643690 );
     virtual void Init( zCVob*, zCVob*, zVEC3&, float, float, zMAT4* ) zCall( 0x00643670 );
+
+    // user API
+    #include "oCAIVobMoveTorch.inl"
   };
 
 } // namespace Gothic_II_Classic

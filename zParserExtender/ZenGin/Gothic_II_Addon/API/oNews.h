@@ -49,6 +49,9 @@ namespace Gothic_II_Addon {
 
     // static properties
     static int& news_counter;
+
+    // user API
+    #include "oCNews.inl"
   };
 
   class oCNewsMemory {
@@ -69,6 +72,9 @@ namespace Gothic_II_Addon {
     int DeleteNewsByNumber( int )          zCall( 0x0072A0A0 );
     virtual void Archive( zCArchiver& )    zCall( 0x0072A140 );
     virtual void Unarchive( zCArchiver& )  zCall( 0x0072A1C0 );
+
+    // user API
+    #include "oCNewsMemory.inl"
   };
 
   class oCNewsManager {
@@ -84,6 +90,9 @@ namespace Gothic_II_Addon {
     void SpreadToGuild( int )                                zCall( 0x00728FB0 );
     int IsInSpreadList( int )                                zCall( 0x00728FD0 );
     void SpreadNews( oCNews* )                               zCall( 0x00729000 );
+
+    // user API
+    #include "oCNewsManager.inl"
   };
 
 } // namespace Gothic_II_Addon

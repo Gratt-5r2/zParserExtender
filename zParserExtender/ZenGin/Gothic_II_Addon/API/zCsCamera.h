@@ -54,7 +54,6 @@ namespace Gothic_II_Addon {
     void zCCamTrj_KeyFrame_OnInit()                  zCall( 0x004BDE00 );
     zCCamTrj_KeyFrame()                              zInit( zCCamTrj_KeyFrame_OnInit() );
     void Changed()                                   zCall( 0x004BE390 );
-    static void operator delete( void* )             zCall( 0x004C3A20 );
     static zCObject* _CreateNewInstance()            zCall( 0x004C8180 );
     virtual zCClassDef* _GetClassDef() const         zCall( 0x004BDED0 );
     virtual void Archive( zCArchiver& )              zCall( 0x004BE100 );
@@ -62,6 +61,9 @@ namespace Gothic_II_Addon {
     virtual ~zCCamTrj_KeyFrame()                     zCall( 0x004BDF10 );
     virtual void ThisVobAddedToWorld( zCWorld* )     zCall( 0x004BDF90 );
     virtual void ThisVobRemovedFromWorld( zCWorld* ) zCall( 0x004BDFA0 );
+
+    // user API
+    #include "zCCamTrj_KeyFrame.inl"
   };
 
   class zCCSCamera_EventMsg : public zCEventMessage {
@@ -88,7 +90,6 @@ namespace Gothic_II_Addon {
     void zCCSCamera_EventMsg_OnInit( zTCSCam_EvSubType )        zCall( 0x004C6D70 );
     zCCSCamera_EventMsg()                                       zInit( zCCSCamera_EventMsg_OnInit() );
     zCCSCamera_EventMsg( zTCSCam_EvSubType a0 )                 zInit( zCCSCamera_EventMsg_OnInit( a0 ));
-    static void operator delete( void* )                        zCall( 0x004021A0 );
     static zCObject* _CreateNewInstance()                       zCall( 0x004C78D0 );
     virtual zCClassDef* _GetClassDef() const                    zCall( 0x004C3A40 );
     virtual void Archive( zCArchiver& )                         zCall( 0x004C6EE0 );
@@ -102,6 +103,9 @@ namespace Gothic_II_Addon {
     virtual zSTRING MD_GetSubTypeString( int )                  zCall( 0x004C7010 );
     virtual zCEventMessage::zTTimeBehavior MD_GetTimeBehavior() zCall( 0x004C3AA0 );
     virtual float MD_GetMinTime()                               zCall( 0x004C7220 );
+
+    // user API
+    #include "zCCSCamera_EventMsg.inl"
   };
 
   class zCCSCamera_EventMsgActivate : public zCEventMessage {
@@ -121,7 +125,6 @@ namespace Gothic_II_Addon {
     zCCSCamera_EventMsgActivate() {}
     void zCCSCamera_EventMsgActivate_OnInit( zTCSCam_ActivateSubType ) zCall( 0x004B4160 );
     zCCSCamera_EventMsgActivate( zTCSCam_ActivateSubType a0 )          zInit( zCCSCamera_EventMsgActivate_OnInit( a0 ));
-    static void operator delete( void* )                               zCall( 0x004021C0 );
     static zCObject* _CreateNewInstance()                              zCall( 0x004C7C00 );
     virtual zCClassDef* _GetClassDef() const                           zCall( 0x004021E0 );
     virtual void Archive( zCArchiver& )                                zCall( 0x004C7240 );
@@ -134,6 +137,9 @@ namespace Gothic_II_Addon {
     virtual zSTRING MD_GetVobRefName()                                 zCall( 0x004C7530 );
     virtual void MD_SetVobRefName( zSTRING const& )                    zCall( 0x004C7580 );
     virtual void MD_SetVobParam( zCVob* )                              zCall( 0x004C76C0 );
+
+    // user API
+    #include "zCCSCamera_EventMsgActivate.inl"
   };
 
   class zCCSCamera : public zCVob {
@@ -246,7 +252,6 @@ namespace Gothic_II_Addon {
     static zCVob* GetPlayerVob()                                                                  zCall( 0x004BE400 );
     static void SetDrawEnabled( int )                                                             zCall( 0x004C76D0 );
     static zCObject* _CreateNewInstance()                                                         zCall( 0x004C7F10 );
-    static void operator delete( void* )                                                          zCall( 0x004C7F70 );
     virtual zCClassDef* _GetClassDef() const                                                      zCall( 0x004BE790 );
     virtual void Archive( zCArchiver& )                                                           zCall( 0x004BF9A0 );
     virtual void Unarchive( zCArchiver& )                                                         zCall( 0x004BFBC0 );
@@ -262,6 +267,9 @@ namespace Gothic_II_Addon {
     static int& playing;
     static int& draw;
     static int& evaluateAvgFPS;
+
+    // user API
+    #include "zCCSCamera.inl"
   };
 
 } // namespace Gothic_II_Addon

@@ -31,6 +31,9 @@ namespace Gothic_I_Classic {
     void __fastcall UpdateMap( int )                                      zCall( 0x00724CE0 );
     static oCDocumentManager& GetDocumentManager()                        zCall( 0x007241D0 );
     virtual int HandleEvent( int )                                        zCall( 0x00724D30 );
+
+    // user API
+    #include "oCDocumentManager.inl"
   };
 
 } // namespace Gothic_I_Classic

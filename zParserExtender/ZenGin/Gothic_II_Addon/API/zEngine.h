@@ -20,6 +20,7 @@ using std::ostream;
   #include "oPrototypes.h"
 #endif
 
+
 // startup
 #ifdef __G2A
 	#if True
@@ -33,6 +34,7 @@ using std::ostream;
 	  #endif
 	#endif
 #endif
+
 
 // data, containers, cache, factory
 #if True
@@ -50,12 +52,14 @@ using std::ostream;
   #endif
 #endif
 
+
 // input
 #if True
   #ifdef __ZCON_B_VER3__
     #include "zInput_Win32.h"
   #endif
 #endif
+
 
 // z2D views, fonts, fx, etc
 #if True
@@ -75,8 +79,9 @@ using std::ostream;
   #endif
 #endif
 
+
 // o2D inventories, dialogs, documents, menu, etc
-#if False
+#if True
   #ifdef __Z2D_B_VER3__
     #define __O2D_B_VER3__
     #include "oViewDialogInventory.h"
@@ -114,6 +119,7 @@ using std::ostream;
   #endif
 #endif
 
+
 // sky
 #if True
   #ifdef __ZWLD_B_VER3__
@@ -143,8 +149,9 @@ using std::ostream;
   #endif
 #endif
 
+
 // ai, physic, portals
-#if False
+#if True
   #ifdef __ZWLD_B_VER3__
     #define __ZAI_B_VER3__
     #include "zAIPlayer.h"
@@ -159,6 +166,7 @@ using std::ostream;
     #include "oWaynet.h"
   #endif
 #endif
+
 
 // data system, vdfs
 #if True
@@ -200,8 +208,9 @@ using std::ostream;
   #endif
 #endif
 
+
 // system, memory
-#if False
+#if True
   #ifdef __ZINIT_B_VER3__
     #define __ZHELP_B_VER3__
     #include "zMemory_Win32.h"
@@ -223,8 +232,9 @@ using std::ostream;
   #endif
 #endif
 
+
 // triggers, cutscenes
-#if False
+#if True
   #ifdef __ZWLD_B_VER3__
     #define __ZCS_B_VER3__
     #include "zCCsPool.h"
@@ -236,8 +246,9 @@ using std::ostream;
   #endif
 #endif
 
+
 // render
-#if False
+#if True
   #ifdef __ZCON_B_VER3__
     #define __ZRND_B_VER3__
     #include "zRndD3d_Init.h"
@@ -245,8 +256,9 @@ using std::ostream;
   #endif
 #endif
 
+
 // sound, music
-#if False
+#if True
   #ifdef __ZCON_B_VER3__
     #define __ZSND_B_VER3__
       #include "zMusicCtrl.h"
@@ -254,8 +266,9 @@ using std::ostream;
   #endif
 #endif
 
+
 // video
-#if False
+#if True
   #ifdef __ZCON_B_VER3__
     #define __ZVID_B_VER3__
     #include "oBinkPlayer.h"
@@ -264,7 +277,7 @@ using std::ostream;
 
 
 // collisions
-#if False
+#if True
   #ifdef __ZWLD_B_VER3__
     #define __ZCOLL_B_VER3__
     #include "zConvexCollision.h"
@@ -273,8 +286,9 @@ using std::ostream;
   #endif
 #endif
 
+
 // other
-#if False
+#if True
   #include "zEigen.h"
   #include "zVobIdentifier.h"
   #include "zPrime.h"

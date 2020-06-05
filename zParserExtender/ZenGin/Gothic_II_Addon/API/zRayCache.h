@@ -22,6 +22,9 @@ namespace Gothic_II_Addon {
     zCRayCacheElement( zCBspLeaf const* a0, zCRayCacheElement** a1 )       zInit( zCRayCacheElement_OnInit( a0, a1 ));
     ~zCRayCacheElement()                                                   zCall( 0x005D2B60 );
     void JumpBack( zCRayCacheElement** )                                   zCall( 0x005D2C30 );
+
+    // user API
+    #include "zCRayCacheElement.inl"
   };
 
   class zCRayCache {
@@ -44,6 +47,9 @@ namespace Gothic_II_Addon {
     static zVEC3& s_start;
     static zVEC3& s_stop;
     static zCRayCache*& s_anchor;
+
+    // user API
+    #include "zCRayCache.inl"
   };
 
 } // namespace Gothic_II_Addon

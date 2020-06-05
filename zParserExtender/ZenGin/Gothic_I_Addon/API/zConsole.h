@@ -31,6 +31,9 @@ namespace Gothic_I_Addon {
     zCConDat( zSTRING const& a0, zSTRING const& a1, int a2, void* a3, int a4 ) zInit( zCConDat_OnInit( a0, a1, a2, a3, a4 ));
     zCConDat( zSTRING const& a0, zSTRING const& a1, int a2 )                   zInit( zCConDat_OnInit( a0, a1, a2 ));
     ~zCConDat()                                                                zCall( 0x007149C0 );
+
+    // user API
+    #include "zCConDat.inl"
   };
 
   class zCConsole : public zCInputCallback {
@@ -102,6 +105,9 @@ namespace Gothic_I_Addon {
     // static properties
     static zCList<zCConsole>& active_consoles;
     static zCConsole*& cur_console;
+
+    // user API
+    #include "zCConsole.inl"
   };
 
 } // namespace Gothic_I_Addon

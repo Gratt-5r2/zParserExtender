@@ -36,6 +36,9 @@ namespace Gothic_II_Addon {
     unsigned int rand24()                 zCall( 0x0055B200 );
     unsigned int unRand24()               zCall( 0x0055B210 );
     float GetGaussAt( long )              zCall( 0x0055B220 );
+
+    // user API
+    #include "zRandom_Gauss.inl"
   };
 
   class zCFFT {
@@ -75,6 +78,9 @@ namespace Gothic_II_Addon {
     static zCFFT& s_fft;
     static zCFFT& s_fftSlow;
     static zCFFT& s_fftFast;
+
+    // user API
+    #include "zCFFT.inl"
   };
 
 } // namespace Gothic_II_Addon

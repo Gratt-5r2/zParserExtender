@@ -55,7 +55,6 @@ namespace Gothic_I_Classic {
     zCPosition __fastcall ConvertToPixelLocal( zCPosition& )            zCall( 0x00755F80 );
     zCPosition __fastcall ConvertToVirtualLocal( zCPosition& )          zCall( 0x00755FC0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x00754CD0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00754D40 );
     static int Compare( zCViewObject*, zCViewObject* )                  zCall( 0x00754E50 );
     /* for zCObject num : 4*/
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00754E40 );
@@ -70,8 +69,8 @@ namespace Gothic_I_Classic {
     virtual void __fastcall GetViewport( int&, int&, int&, int& )       zCall( 0x007557E0 );
     virtual int GetCode( int, int )                                     zCall( 0x007562F0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCViewObject, zCViewBase )
+    // user API
+    #include "zCViewObject.inl"
   };
 
 } // namespace Gothic_I_Classic

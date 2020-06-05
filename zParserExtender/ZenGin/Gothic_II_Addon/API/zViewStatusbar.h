@@ -26,6 +26,9 @@ namespace Gothic_II_Addon {
     virtual void SetPreview( float )                               zCall( 0x0046F810 );
     virtual void SetValue( float )                                 zCall( 0x0046F860 );
     /* for zCInputCallback num : 1*/
+
+    // user API
+    #include "zCViewStatusBar.inl"
   };
 
 } // namespace Gothic_II_Addon

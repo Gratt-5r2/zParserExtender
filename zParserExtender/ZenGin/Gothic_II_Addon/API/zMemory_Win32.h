@@ -21,6 +21,9 @@ namespace Gothic_II_Addon {
     int ShowNoName;
 
     zCMallocWin32Debug() {}
+
+    // user API
+    #include "zCMallocWin32Debug.inl"
   };
 
 } // namespace Gothic_II_Addon

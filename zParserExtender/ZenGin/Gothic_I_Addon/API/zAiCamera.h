@@ -117,7 +117,6 @@ namespace Gothic_I_Addon {
     zVEC3& CalcAziElevRange( float const&, float const&, float const&, zMAT4 const& ) zCall( 0x004C35B0 );
     static zCAICamera* GetCurrent()                                                   zCall( 0x004A59B0 );
     static zCAICamera* Create()                                                       zCall( 0x004A5E40 );
-    static void operator delete( void*, char const*, char const*, int )               zCall( 0x004A5EF0 );
     static void GlobalStartUp()                                                       zCall( 0x004A64A0 );
     static void GlobalCleanUp()                                                       zCall( 0x004A64B0 );
     static zCObject* _CreateNewInstance()                                             zCall( 0x004AB590 );
@@ -126,8 +125,6 @@ namespace Gothic_I_Addon {
     virtual ~zCAICamera()                                                             zCall( 0x004A5C50 );
     virtual void DoAI( zCVob*, int& )                                                 zCall( 0x004AADF0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCAICamera, zCAIBase )
 
     // static properties
     static short int& s_iLookAroundSgn;
@@ -137,6 +134,9 @@ namespace Gothic_I_Addon {
     static zCAICamera*& current;
     static int& bCreated;
     static int& bCamChanges;
+
+    // user API
+    #include "zCAICamera.inl"
   };
 
 } // namespace Gothic_I_Addon

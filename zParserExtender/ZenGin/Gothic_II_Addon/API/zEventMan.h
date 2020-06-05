@@ -25,7 +25,6 @@ namespace Gothic_II_Addon {
     void KillMessages()                                               zCall( 0x00786320 );
     void ShowMessageCommunication( zCVob*, zCVob* )                   zCall( 0x00786E20 );
     void Print_db( zSTRING const&, zCVob* )                           zCall( 0x00787850 );
-    static void operator delete( void* )                              zCall( 0x005ABA80 );
     static zCObject* _CreateNewInstance()                             zCall( 0x00785DB0 );
     static void DoFrameActivity()                                     zCall( 0x00785F70 );
     static void SetShowMessageCommunication( int )                    zCall( 0x00786E00 );
@@ -63,6 +62,9 @@ namespace Gothic_II_Addon {
     static int& disableEventManagers;
     static zCArray<zCEventManager*>& activeEM;
     static int& showMsgCommunication;
+
+    // user API
+    #include "zCEventManager.inl"
   };
 
 } // namespace Gothic_II_Addon

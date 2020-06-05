@@ -24,6 +24,9 @@ namespace Gothic_I_Addon {
     unsigned char flags;
 
     zTNetMessageHeader() {}
+
+    // user API
+    #include "zTNetMessageHeader.inl"
   };
 #pragma pack( pop )
 
@@ -80,6 +83,9 @@ namespace Gothic_I_Addon {
     unsigned char GetFlags()                                        zCall( 0x0045EFF0 );
     bool HasError() const                                           zCall( 0x0045F000 );
     virtual ~zCNetMessage()                                         zCall( 0x0045E3A0 );
+
+    // user API
+    #include "zCNetMessage.inl"
   };
 
   class zCNetMessageQueue {
@@ -89,6 +95,9 @@ namespace Gothic_I_Addon {
     void zCNetMessageQueue_OnInit() zCall( 0x00452280 );
     zCNetMessageQueue()             zInit( zCNetMessageQueue_OnInit() );
     ~zCNetMessageQueue()            zCall( 0x004522E0 );
+
+    // user API
+    #include "zCNetMessageQueue.inl"
   };
 
 } // namespace Gothic_I_Addon

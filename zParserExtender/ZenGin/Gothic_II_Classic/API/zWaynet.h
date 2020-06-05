@@ -22,10 +22,12 @@ namespace Gothic_II_Classic {
 
     void zCVobWaypoint_OnInit()              zCall( 0x0074D0C0 );
     zCVobWaypoint()                          zInit( zCVobWaypoint_OnInit() );
-    static void operator delete( void* )     zCall( 0x006A2F60 );
     static zCObject* _CreateNewInstance()    zCall( 0x007538B0 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x0074D0E0 );
     virtual ~zCVobWaypoint()                 zCall( 0x0074D120 );
+
+    // user API
+    #include "zCVobWaypoint.inl"
   };
 
   class zCWaypoint : public zCObject {
@@ -66,13 +68,15 @@ namespace Gothic_II_Classic {
     zCList<zCWay>& GetWayList()              zCall( 0x00750700 );
     void SetWaypointVob( zCVobWaypoint* )    zCall( 0x00750710 );
     void Draw()                              zCall( 0x00750750 );
-    static void operator delete( void* )     zCall( 0x005A6760 );
     static zCObject* _CreateNewInstance()    zCall( 0x00754070 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x0071E4D0 );
     virtual void Archive( zCArchiver& )      zCall( 0x00750760 );
     virtual void Unarchive( zCArchiver& )    zCall( 0x007507C0 );
     virtual ~zCWaypoint()                    zCall( 0x0074FF80 );
     virtual int CanBeUsed( zCVob const* )    zCall( 0x0074FD60 );
+
+    // user API
+    #include "zCWaypoint.inl"
   };
 
   class zCWay {
@@ -104,6 +108,9 @@ namespace Gothic_II_Classic {
     virtual int CanJump()                         zCall( 0x0074FB10 );
     virtual int CanBeUsed( zCVob const* )         zCall( 0x0074F280 );
     virtual int IsObjectOnWay( zCVob const* )     zCall( 0x0074ED50 );
+
+    // user API
+    #include "zCWay.inl"
   };
 
   class zCWayNet : public zCObject {
@@ -167,7 +174,6 @@ namespace Gothic_II_Classic {
     void ArchiveOldFormat( zCArchiver& )                               zCall( 0x00751340 );
     void UnarchiveOldFormat( zCArchiver& )                             zCall( 0x00751BF0 );
     void CalcProperties( zCWorld* )                                    zCall( 0x00752D20 );
-    static void operator delete( void* )                               zCall( 0x00618910 );
     static int SortWpList( zCWaypoint*, zCWaypoint* )                  zCall( 0x0074FB20 );
     static int SortOpenList( zCWaypoint*, zCWaypoint* )                zCall( 0x00750BE0 );
     static zCObject* _CreateNewInstance()                              zCall( 0x007542B0 );
@@ -175,6 +181,9 @@ namespace Gothic_II_Classic {
     virtual void Archive( zCArchiver& )                                zCall( 0x007516D0 );
     virtual void Unarchive( zCArchiver& )                              zCall( 0x00752700 );
     virtual ~zCWayNet()                                                zCall( 0x0074D2B0 );
+
+    // user API
+    #include "zCWayNet.inl"
   };
 
   class zCRoute {
@@ -198,6 +207,9 @@ namespace Gothic_II_Classic {
     int IsLastTarget()                                zCall( 0x00753280 );
     int GetInterpolatedPosition( float, int, zVEC3& ) zCall( 0x007532A0 );
     virtual ~zCRoute()                                zCall( 0x00752DA0 );
+
+    // user API
+    #include "zCRoute.inl"
   };
 
   class zCVobSpot : public zCVob {
@@ -212,9 +224,11 @@ namespace Gothic_II_Classic {
     int IsAvailable( zCVob* )                zCall( 0x00753520 );
     void MarkAsUsed( float, zCVob* )         zCall( 0x007536A0 );
     static zCObject* _CreateNewInstance()    zCall( 0x00753B10 );
-    static void operator delete( void* )     zCall( 0x00753BA0 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x007534C0 );
     virtual ~zCVobSpot()                     zCall( 0x00753500 );
+
+    // user API
+    #include "zCVobSpot.inl"
   };
 
   class zCVobStartpoint : public zCVob {
@@ -223,9 +237,11 @@ namespace Gothic_II_Classic {
 
     zCVobStartpoint() {}
     static zCObject* _CreateNewInstance()    zCall( 0x00753DB0 );
-    static void operator delete( void* )     zCall( 0x00753E20 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x00753E40 );
     virtual ~zCVobStartpoint()               zCall( 0x00753E80 );
+
+    // user API
+    #include "zCVobStartpoint.inl"
   };
 
 } // namespace Gothic_II_Classic

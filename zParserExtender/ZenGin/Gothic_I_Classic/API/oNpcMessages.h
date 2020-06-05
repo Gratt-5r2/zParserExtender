@@ -23,7 +23,6 @@ namespace Gothic_I_Classic {
     void oCNpcMessage_OnInit()                                          zCall( 0x006BDC20 );
     oCNpcMessage()                                                      zInit( oCNpcMessage_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x006BBD60 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x006BBE60 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x006BBE80 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x006BDD60 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x006BDDD0 );
@@ -38,8 +37,8 @@ namespace Gothic_I_Classic {
     virtual int IsInUse()                                               zCall( 0x006BBEC0 );
     virtual void SetHighPriority( int )                                 zCall( 0x006BBED0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCNpcMessage, zCEventMessage )
+    // user API
+    #include "oCNpcMessage.inl"
   };
 
   class oCMsgDamage : public oCNpcMessage {
@@ -60,9 +59,7 @@ namespace Gothic_I_Classic {
     oCMsgDamage()                                                               zInit( oCMsgDamage_OnInit() );
     oCMsgDamage( TDamageSubType a0 )                                            zInit( oCMsgDamage_OnInit( a0 ));
     oCMsgDamage( TDamageSubType a0, oCNpc::oSDamageDescriptor const& a1 )       zInit( oCMsgDamage_OnInit( a0, a1 ));
-    static void operator delete( void*, char const*, char const*, int )         zCall( 0x0048D830 );
     static zCObject* _CreateNewInstance()                                       zCall( 0x006BC130 );
-    static void* operator new( unsigned int, char const*, char const*, int )    zCall( 0x0073F4E0 );
     virtual zCClassDef* _GetClassDef() const                                    zCall( 0x006BC260 );
     virtual void Archive( zCArchiver& )                                         zCall( 0x006BE370 );
     virtual void Unarchive( zCArchiver& )                                       zCall( 0x006BE3F0 );
@@ -76,9 +73,8 @@ namespace Gothic_I_Classic {
     virtual void Pack( zCBuffer&, zCEventManager* )                             zCall( 0x006BE350 );
     virtual void Unpack( zCBuffer&, zCEventManager* )                           zCall( 0x006BE360 );
 
-    // compatible with g2 operators style
-    zOperatorNew   ( oCMsgDamage, oCNpcMessage )
-    zOperatorDelete( oCMsgDamage, oCNpcMessage )
+    // user API
+    #include "oCMsgDamage.inl"
   };
 
   class oCMsgWeapon : public oCNpcMessage {
@@ -115,7 +111,6 @@ namespace Gothic_I_Classic {
     void oCMsgWeapon_OnInit( TWeaponSubType, int, int )                 zCall( 0x006BF630 );
     oCMsgWeapon()                                                       zInit( oCMsgWeapon_OnInit() );
     oCMsgWeapon( TWeaponSubType a0, int a1, int a2 )                    zInit( oCMsgWeapon_OnInit( a0, a1, a2 ));
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0046D4C0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x006BC490 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x006BC5A0 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x006BF710 );
@@ -126,8 +121,8 @@ namespace Gothic_I_Classic {
     virtual zCEventMessage::zTTimeBehavior MD_GetTimeBehavior()         zCall( 0x006BFD40 );
     virtual float MD_GetMinTime()                                       zCall( 0x006BFD50 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCMsgWeapon, oCNpcMessage )
+    // user API
+    #include "oCMsgWeapon.inl"
   };
 
   class oCMsgMovement : public oCNpcMessage {
@@ -178,8 +173,6 @@ namespace Gothic_I_Classic {
     oCMsgMovement( TMovementSubType a0, float a1 )                           zInit( oCMsgMovement_OnInit( a0, a1 ));
     oCMsgMovement( TMovementSubType a0, int a1 )                             zInit( oCMsgMovement_OnInit( a0, a1 ));
     void Init()                                                              zCall( 0x006BEC20 );
-    static void operator delete( void*, char const*, char const*, int )      zCall( 0x00402180 );
-    static void* operator new( unsigned int, char const*, char const*, int ) zCall( 0x00645070 );
     static zCObject* _CreateNewInstance()                                    zCall( 0x006BC820 );
     virtual zCClassDef* _GetClassDef() const                                 zCall( 0x006BC930 );
     virtual void Archive( zCArchiver& )                                      zCall( 0x006BEC60 );
@@ -194,9 +187,8 @@ namespace Gothic_I_Classic {
     virtual zCEventMessage::zTTimeBehavior MD_GetTimeBehavior()              zCall( 0x006BF520 );
     virtual float MD_GetMinTime()                                            zCall( 0x006BF560 );
 
-    // compatible with g2 operators style
-    zOperatorNew   ( oCMsgMovement, oCNpcMessage )
-    zOperatorDelete( oCMsgMovement, oCNpcMessage )
+    // user API
+    #include "oCMsgMovement.inl"
   };
 
   class oCMsgAttack : public oCNpcMessage {
@@ -232,8 +224,6 @@ namespace Gothic_I_Classic {
     oCMsgAttack()                                                            zInit( oCMsgAttack_OnInit() );
     oCMsgAttack( TAttackSubType a0, int a1, int a2 )                         zInit( oCMsgAttack_OnInit( a0, a1, a2 ));
     oCMsgAttack( TAttackSubType a0, zCVob* a1, float a2 )                    zInit( oCMsgAttack_OnInit( a0, a1, a2 ));
-    static void operator delete( void*, char const*, char const*, int )      zCall( 0x00611AB0 );
-    static void* operator new( unsigned int, char const*, char const*, int ) zCall( 0x006ACE20 );
     static zCObject* _CreateNewInstance()                                    zCall( 0x006BCB20 );
     virtual zCClassDef* _GetClassDef() const                                 zCall( 0x006BCC30 );
     virtual void Archive( zCArchiver& )                                      zCall( 0x006C0070 );
@@ -246,9 +236,8 @@ namespace Gothic_I_Classic {
     virtual void Pack( zCBuffer&, zCEventManager* )                          zCall( 0x006C0200 );
     virtual void Unpack( zCBuffer&, zCEventManager* )                        zCall( 0x006C0390 );
 
-    // compatible with g2 operators style
-    zOperatorNew   ( oCMsgAttack, oCNpcMessage )
-    zOperatorDelete( oCMsgAttack, oCNpcMessage )
+    // user API
+    #include "oCMsgAttack.inl"
   };
 
   class oCMsgUseItem : public oCNpcMessage {
@@ -271,7 +260,6 @@ namespace Gothic_I_Classic {
     oCMsgUseItem()                                                      zInit( oCMsgUseItem_OnInit() );
     oCMsgUseItem( TUseItemSubType a0, zCVob* a1 )                       zInit( oCMsgUseItem_OnInit( a0, a1 ));
     static zCObject* _CreateNewInstance()                               zCall( 0x006BCE50 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x006BCF50 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x006BCF70 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x006C0B30 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x006C0BB0 );
@@ -280,8 +268,8 @@ namespace Gothic_I_Classic {
     virtual void Pack( zCBuffer&, zCEventManager* )                     zCall( 0x006C0A90 );
     virtual void Unpack( zCBuffer&, zCEventManager* )                   zCall( 0x006C0AE0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCMsgUseItem, oCNpcMessage )
+    // user API
+    #include "oCMsgUseItem.inl"
   };
 
   class oCMsgState : public oCNpcMessage {
@@ -315,7 +303,6 @@ namespace Gothic_I_Classic {
     oCMsgState( TStateSubType a0, float a1 )                            zInit( oCMsgState_OnInit( a0, a1 ));
     oCMsgState( TStateSubType a0, int a1 )                              zInit( oCMsgState_OnInit( a0, a1 ));
     oCMsgState( TStateSubType a0, int a1, int a2, zSTRING const& a3 )   zInit( oCMsgState_OnInit( a0, a1, a2, a3 ));
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00652160 );
     static zCObject* _CreateNewInstance()                               zCall( 0x006BD170 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x006BD290 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x006C11A0 );
@@ -327,8 +314,8 @@ namespace Gothic_I_Classic {
     virtual zCEventMessage::zTTimeBehavior MD_GetTimeBehavior()         zCall( 0x006C1580 );
     virtual float MD_GetMinTime()                                       zCall( 0x006C1590 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCMsgState, oCNpcMessage )
+    // user API
+    #include "oCMsgState.inl"
   };
 
   class oCMsgManipulate : public oCNpcMessage {
@@ -382,7 +369,6 @@ namespace Gothic_I_Classic {
     oCMsgManipulate( TManipulateSubType a0, zSTRING const& a1, int a2 )               zInit( oCMsgManipulate_OnInit( a0, a1, a2 ));
     oCMsgManipulate( TManipulateSubType a0, zCVob* a1, int a2 )                       zInit( oCMsgManipulate_OnInit( a0, a1, a2 ));
     oCMsgManipulate( TManipulateSubType a0, zSTRING const& a1, zSTRING const& a2 )    zInit( oCMsgManipulate_OnInit( a0, a1, a2 ));
-    static void operator delete( void*, char const*, char const*, int )               zCall( 0x004021A0 );
     static zCObject* _CreateNewInstance()                                             zCall( 0x006BD4A0 );
     virtual zCClassDef* _GetClassDef() const                                          zCall( 0x006BD5C0 );
     virtual void Archive( zCArchiver& )                                               zCall( 0x006C1EA0 );
@@ -399,8 +385,8 @@ namespace Gothic_I_Classic {
     virtual void Pack( zCBuffer&, zCEventManager* )                                   zCall( 0x006C20A0 );
     virtual void Unpack( zCBuffer&, zCEventManager* )                                 zCall( 0x006C2190 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCMsgManipulate, oCNpcMessage )
+    // user API
+    #include "oCMsgManipulate.inl"
   };
 
   class oCMsgConversation : public oCNpcMessage {
@@ -460,8 +446,6 @@ namespace Gothic_I_Classic {
     oCMsgConversation( TConversationSubType a0, zCVob* a1 )                               zInit( oCMsgConversation_OnInit( a0, a1 ));
     oCMsgConversation( TConversationSubType a0, int a1 )                                  zInit( oCMsgConversation_OnInit( a0, a1 ));
     oCMsgConversation( TConversationSubType a0, int a1, int a2, float a3 )                zInit( oCMsgConversation_OnInit( a0, a1, a2, a3 ));
-    static void operator delete( void*, char const*, char const*, int )                   zCall( 0x004021C0 );
-    static void* operator new( unsigned int, char const*, char const*, int )              zCall( 0x00693380 );
     static zCObject* _CreateNewInstance()                                                 zCall( 0x006BD7E0 );
     virtual zCClassDef* _GetClassDef() const                                              zCall( 0x006BD900 );
     virtual void Archive( zCArchiver& )                                                   zCall( 0x006C33D0 );
@@ -477,9 +461,8 @@ namespace Gothic_I_Classic {
     virtual zCEventMessage::zTTimeBehavior MD_GetTimeBehavior()                           zCall( 0x006C3D20 );
     virtual float MD_GetMinTime()                                                         zCall( 0x006C3D70 );
 
-    // compatible with g2 operators style
-    zOperatorNew   ( oCMsgConversation, oCNpcMessage )
-    zOperatorDelete( oCMsgConversation, oCNpcMessage )
+    // user API
+    #include "oCMsgConversation.inl"
   };
 
   class oCMsgMagic : public oCNpcMessage {
@@ -516,7 +499,6 @@ namespace Gothic_I_Classic {
     oCMsgMagic()                                                        zInit( oCMsgMagic_OnInit() );
     oCMsgMagic( TConversationSubType a0 )                               zInit( oCMsgMagic_OnInit( a0 ));
     oCMsgMagic( TConversationSubType a0, int a1, int a2 )               zInit( oCMsgMagic_OnInit( a0, a1, a2 ));
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00610670 );
     static zCObject* _CreateNewInstance()                               zCall( 0x006BDAF0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x006BDBE0 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x006C4440 );
@@ -530,8 +512,8 @@ namespace Gothic_I_Classic {
     virtual void Pack( zCBuffer&, zCEventManager* )                     zCall( 0x006C40E0 );
     virtual void Unpack( zCBuffer&, zCEventManager* )                   zCall( 0x006C4180 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCMsgMagic, oCNpcMessage )
+    // user API
+    #include "oCMsgMagic.inl"
   };
 
 } // namespace Gothic_I_Classic

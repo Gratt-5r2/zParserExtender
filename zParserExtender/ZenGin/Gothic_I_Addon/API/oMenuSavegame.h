@@ -39,6 +39,9 @@ namespace Gothic_I_Addon {
     virtual void ScreenDone()                                        zCall( 0x00430340 );
     virtual void HandleSlotChange( int )                             zCall( 0x0042F500 );
     virtual int GetSelectedSlot()                                    zCall( 0x00430AC0 );
+
+    // user API
+    #include "oCMenuSavegame.inl"
   };
 
 } // namespace Gothic_I_Addon

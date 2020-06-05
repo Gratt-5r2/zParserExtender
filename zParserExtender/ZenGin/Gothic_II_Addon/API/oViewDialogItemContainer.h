@@ -35,7 +35,6 @@ namespace Gothic_II_Addon {
     int __fastcall CanHandleLeft()                           zCall( 0x00689D20 );
     int __fastcall CanHandleRight()                          zCall( 0x00689D30 );
     static zCObject* _CreateNewInstance()                    zCall( 0x00689970 );
-    static void operator delete( void* )                     zCall( 0x00689A20 );
     /* for zCObject num : 15*/
     virtual zCClassDef* _GetClassDef() const                 zCall( 0x00689A40 );
     virtual ~oCViewDialogItemContainer()                     zCall( 0x00689AD0 );
@@ -45,6 +44,9 @@ namespace Gothic_II_Addon {
     /* for zCViewBase num : 9*/
     /* for oCViewDialogItemContainer num : 1*/
     virtual int HandleEvent( int )                           zCall( 0x00689D40 );
+
+    // user API
+    #include "oCViewDialogItemContainer.inl"
   };
 
 } // namespace Gothic_II_Addon

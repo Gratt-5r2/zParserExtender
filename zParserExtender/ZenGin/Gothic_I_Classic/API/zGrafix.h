@@ -44,6 +44,9 @@ namespace Gothic_I_Classic {
     // static properties
     static zCGfx*& Gfx_List;
     static int& gfxcount;
+
+    // user API
+    #include "zCGfx.inl"
   };
 
 } // namespace Gothic_I_Classic

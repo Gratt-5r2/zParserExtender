@@ -49,7 +49,6 @@ namespace Gothic_I_Addon {
     zSTRING GetShortCom( int )                                          zCall( 0x0041CC90 );
     void LibForceToLoad()                                               zCall( 0x0041DCD0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x0041B560 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0041B5D0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x0041BF70 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x0041CE20 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x0041D000 );
@@ -82,8 +81,8 @@ namespace Gothic_I_Addon {
     virtual zCCSPoolItem* PoolFindItem( zSTRING& )                      zCall( 0x0041C920 );
     virtual void PoolInsertItem( zCCSPoolItem* )                        zCall( 0x0041C830 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCCSManager, zCObject )
+    // user API
+    #include "zCCSManager.inl"
   };
 
 } // namespace Gothic_I_Addon

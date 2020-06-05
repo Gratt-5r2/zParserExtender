@@ -32,6 +32,9 @@ namespace Gothic_I_Addon {
     virtual void AnalyseNow()           zCall( 0x0043A9B0 );
     virtual void ScoreNow()             zCall( 0x0043B2A0 );
     virtual void ResetSettings( float ) zCall( 0x0043A9C0 );
+
+    // user API
+    #include "oCSystemInfo.inl"
   };
 
 } // namespace Gothic_I_Addon

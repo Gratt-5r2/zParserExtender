@@ -40,6 +40,9 @@ namespace Gothic_II_Classic {
     // static properties
     static unsigned char& iter;
     static zCNetHost*& localhost;
+
+    // user API
+    #include "zCNetHost.inl"
   };
 
 } // namespace Gothic_II_Classic

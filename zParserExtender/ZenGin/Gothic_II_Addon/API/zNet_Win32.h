@@ -24,6 +24,9 @@ namespace Gothic_II_Addon {
     };
 
     zTNetAddress() {}
+
+    // user API
+    #include "zTNetAddress.inl"
   };
 
   struct zTNetBufferInfo {
@@ -31,6 +34,9 @@ namespace Gothic_II_Addon {
     int inBytes;
 
     zTNetBufferInfo() {}
+
+    // user API
+    #include "zTNetBufferInfo.inl"
   };
 
   struct zTNetPacket {
@@ -40,6 +46,9 @@ namespace Gothic_II_Addon {
     unsigned char Data[];
 
     zTNetPacket() {}
+
+    // user API
+    #include "zTNetPacket.inl"
   };
 
   struct zTNetTimeout {
@@ -49,6 +58,9 @@ namespace Gothic_II_Addon {
     unsigned long Connect;
 
     zTNetTimeout() {}
+
+    // user API
+    #include "zTNetTimeout.inl"
   };
 
 } // namespace Gothic_II_Addon

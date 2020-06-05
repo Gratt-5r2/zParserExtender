@@ -58,6 +58,9 @@ namespace Gothic_II_Classic {
     zDATE& operator =( long )          zCall( 0x00442230 );
     long ToTime_t()                    zCall( 0x00442280 );
     zSTRING ToString( zTDATE_CONVERT ) zCall( 0x004422D0 );
+
+    // user API
+    #include "zDATE.inl"
   };
 
   class zFILE_STATS {
@@ -68,6 +71,9 @@ namespace Gothic_II_Classic {
     unsigned int size;
 
     zFILE_STATS() {}
+
+    // user API
+    #include "zFILE_STATS.inl"
   };
 
   class zFILE_INFO {
@@ -76,6 +82,9 @@ namespace Gothic_II_Classic {
     zSTRING name;
 
     zFILE_INFO() {}
+
+    // user API
+    #include "zFILE_INFO.inl"
   };
 
   class zFILE {
@@ -168,6 +177,9 @@ namespace Gothic_II_Classic {
     static bool& s_initialized;
     static zCBuffer**& bufferList;
     static int*& bufferFlag;
+
+    // user API
+    #include "zFILE.inl"
   };
 
   class zFILE_FILE : public zFILE {
@@ -254,6 +266,9 @@ namespace Gothic_II_Classic {
     virtual int ReadCodeline( zSTRING& )                          zCall( 0x00444500 );
     virtual int ReadLines( zSTRING&, long )                       zCall( 0x00444710 );
     virtual zSTRING DirStepInto( zSTRING )                        zCall( 0x00446290 );
+
+    // user API
+    #include "zFILE_FILE.inl"
   };
 
   class zPATH {
@@ -278,6 +293,9 @@ namespace Gothic_II_Classic {
     zSTRING GetFile()                                     zCall( 0x00583F20 );
     zSTRING GetDrive()                                    zCall( 0x005A09B0 );
     virtual ~zPATH()                                      zCall( 0x0048B920 );
+
+    // user API
+    #include "zPATH.inl"
   };
 
 } // namespace Gothic_II_Classic

@@ -55,6 +55,9 @@ namespace Gothic_I_Addon {
     virtual void GetSoundMaterial_AM( zCSoundManager::zTSndManMedium&, oTSndMaterial&, int ) zCall( 0x00709BE0 );
     virtual void SetSoundMaterial( oTSndMaterial )                                           zCall( 0x0069E7F0 );
     virtual oTSndMaterial GetSoundMaterial()                                                 zCall( 0x006BC4C0 );
+
+    // user API
+    #include "oCVob.inl"
   };
 
   class oCTouchDamage : public zCTouchDamage {
@@ -63,13 +66,12 @@ namespace Gothic_I_Addon {
 
     oCTouchDamage() {}
     static zCObject* _CreateNewInstance()                               zCall( 0x0070C080 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0070C100 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x0070C120 );
     virtual ~oCTouchDamage()                                            zCall( 0x0070C160 );
     virtual char const* GetDamageTypeArcEnum( unsigned long )           zCall( 0x0070BC00 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCTouchDamage, zCTouchDamage )
+    // user API
+    #include "oCTouchDamage.inl"
   };
 
 } // namespace Gothic_I_Addon

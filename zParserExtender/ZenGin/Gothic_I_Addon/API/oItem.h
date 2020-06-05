@@ -158,7 +158,6 @@ namespace Gothic_I_Addon {
     static void SetLightingSwell( int )                                                      zCall( 0x0069E690 );
     static int GetLightingSwell()                                                            zCall( 0x0069E6A0 );
     static zCObject* _CreateNewInstance()                                                    zCall( 0x006A1200 );
-    static void operator delete( void*, char const*, char const*, int )                      zCall( 0x006A1270 );
     virtual zCClassDef* _GetClassDef() const                                                 zCall( 0x0069E810 );
     virtual void Archive( zCArchiver& )                                                      zCall( 0x006A0CE0 );
     virtual void Unarchive( zCArchiver& )                                                    zCall( 0x006A0E30 );
@@ -178,8 +177,8 @@ namespace Gothic_I_Addon {
     virtual void GetSoundMaterial_AM( zCSoundManager::zTSndManMedium&, oTSndMaterial&, int ) zCall( 0x0069FAA0 );
     virtual oTSndMaterial GetSoundMaterial()                                                 zCall( 0x0069E830 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCItem, oCVob )
+    // user API
+    #include "oCItem.inl"
   };
 
 } // namespace Gothic_I_Addon

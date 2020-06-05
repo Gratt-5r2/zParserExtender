@@ -32,6 +32,9 @@ namespace Gothic_II_Addon {
     };
 
     zTRenderContext() {}
+
+    // user API
+    #include "zTRenderContext.inl"
   };
 
   class zCVisual : public zCObject {
@@ -47,7 +50,6 @@ namespace Gothic_II_Addon {
     zCVisual()                                                                 zInit( zCVisual_OnInit() );
     void AddNextLODVisual( zCVisual* )                                         zCall( 0x00606820 );
     void AddEndLODVisual( zCVisual* )                                          zCall( 0x00606850 );
-    static void operator delete( void* )                                       zCall( 0x00474C70 );
     static void InitVisualSystem()                                             zCall( 0x006068F0 );
     static void CleanupVisualSystem()                                          zCall( 0x00606A80 );
     static zCVisual* LoadVisual( zSTRING const& )                              zCall( 0x00606AD0 );
@@ -74,6 +76,9 @@ namespace Gothic_II_Addon {
 
     // static properties
     static zCArray<zCVisual*>& s_visualClassList;
+
+    // user API
+    #include "zCVisual.inl"
   };
 
   class zCVisualAnimate : public zCVisual {
@@ -90,6 +95,9 @@ namespace Gothic_II_Addon {
     virtual void StopAnimation( zSTRING const& )    zPureCall;
     virtual int IsAnimationActive( zSTRING const& ) zPureCall;
     virtual zSTRING const* GetAnyAnimation()        zPureCall;
+
+    // user API
+    #include "zCVisualAnimate.inl"
   };
 
   class zCDecal : public zCVisual {
@@ -111,7 +119,6 @@ namespace Gothic_II_Addon {
     void SetTexture( zCTexture* )                                      zCall( 0x00556960 );
     void SetDecalDim( float, float )                                   zCall( 0x00556970 );
     static zCObject* _CreateNewInstance()                              zCall( 0x00556440 );
-    static void operator delete( void* )                               zCall( 0x00556530 );
     static void CleanupDecals()                                        zCall( 0x005566B0 );
     static void CreateDecalMeshes()                                    zCall( 0x00556730 );
     virtual zCClassDef* _GetClassDef() const                           zCall( 0x00556550 );
@@ -132,6 +139,9 @@ namespace Gothic_II_Addon {
     // static properties
     static zCMesh*& decalMesh1Sided;
     static zCMesh*& decalMesh2Sided;
+
+    // user API
+    #include "zCDecal.inl"
   };
 
   class zCMesh : public zCVisual {
@@ -226,7 +236,6 @@ namespace Gothic_II_Addon {
     void RemoveDegeneratePolys()                                                             zCall( 0x00573860 );
     void CombineLightmaps()                                                                  zCall( 0x00573A90 );
     void LightMesh( zCVobLight&, zMAT4&, zCWorld* )                                          zCall( 0x00629A50 );
-    static void operator delete( void* )                                                     zCall( 0x00539D00 );
     static zCObject* _CreateNewInstance()                                                    zCall( 0x00566CD0 );
     static zCMesh* SearchName( zSTRING const& )                                              zCall( 0x00567590 );
     static zCMesh* Load( zSTRING const&, int )                                               zCall( 0x00567600 );
@@ -258,6 +267,9 @@ namespace Gothic_II_Addon {
     static int& s_numMeshes;
     static zCMesh*& s_meshRoot;
     static zCArraySort<zCVertex*>& s_vertexCache;
+
+    // user API
+    #include "zCMesh.inl"
   };
 
 } // namespace Gothic_II_Addon

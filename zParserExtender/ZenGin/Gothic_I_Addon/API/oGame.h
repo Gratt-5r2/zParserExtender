@@ -35,6 +35,9 @@ namespace Gothic_I_Addon {
       TObjectRoutine() {}
       void Release()    zCall( 0x0065C5C0 );
       ~TObjectRoutine() zCall( 0x0065C5E0 );
+
+      // user API
+      #include "oCGame_TObjectRoutine.inl"
     };
 
     float cliprange;
@@ -202,6 +205,9 @@ namespace Gothic_I_Addon {
     virtual void NpcInit()                                                       zCall( 0x0065D130 );
     virtual void NpcInit( zCTree<zCVob>* )                                       zCall( 0x0065D160 );
     virtual void SetAsPlayer( zSTRING const& )                                   zCall( 0x0065FFF0 );
+
+    // user API
+    #include "oCGame.inl"
   };
 
 } // namespace Gothic_I_Addon

@@ -34,6 +34,9 @@ namespace Gothic_I_Addon {
     virtual zCPlayerInfo* GetPlayerByNetAddress( zTNetAddress& ) zCall( 0x00452150 );
     virtual void Pack( zCBuffer&, unsigned char )                zCall( 0x00451ED0 );
     virtual void Unpack( zCBuffer& )                             zCall( 0x00451F60 );
+
+    // user API
+    #include "zCGameInfo.inl"
   };
 
 } // namespace Gothic_I_Addon

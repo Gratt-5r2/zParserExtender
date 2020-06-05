@@ -21,6 +21,9 @@ namespace Gothic_I_Classic {
     zSTRING GetGuildName( int )                 zCall( 0x00663580 );
     void SaveGuildTable( zCArchiver& )          zCall( 0x00663700 );
     void LoadGuildTable( zCArchiver& )          zCall( 0x00663730 );
+
+    // user API
+    #include "oCGuilds.inl"
   };
 
 } // namespace Gothic_I_Classic

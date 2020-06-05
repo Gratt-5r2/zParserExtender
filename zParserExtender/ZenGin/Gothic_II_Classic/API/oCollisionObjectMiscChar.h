@@ -24,6 +24,9 @@ namespace Gothic_II_Classic {
 
     // static properties
     static zCCollisionObjectDef& s_oCollObjClass;
+
+    // user API
+    #include "oCCollObjectCharacter.inl"
   };
 
 } // namespace Gothic_II_Classic

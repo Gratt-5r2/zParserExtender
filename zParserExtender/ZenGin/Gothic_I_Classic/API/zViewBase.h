@@ -23,6 +23,9 @@ namespace Gothic_I_Classic {
     // static properties
     static const unsigned short& ViewVirtualWidth;
     static const unsigned short& ViewVirtualHeight;
+
+    // user API
+    #include "zCViewBase.inl"
   };
 
 } // namespace Gothic_I_Classic

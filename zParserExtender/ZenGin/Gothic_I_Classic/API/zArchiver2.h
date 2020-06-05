@@ -59,7 +59,6 @@ namespace Gothic_I_Classic {
     zCArchiverBinSafe()                                                                                zInit( zCArchiverBinSafe_OnInit() );
     void DebugMessage( zSTRING const& )                                                                zCall( 0x0050C2A0 );
     void CheckObjectListSize( int )                                                                    zCall( 0x0050EAE0 );
-    static void operator delete( void*, char const*, char const*, int )                                zCall( 0x0050ADB0 );
     static zCObject* _CreateNewInstance()                                                              zCall( 0x0050B2E0 );
     virtual zCClassDef* _GetClassDef() const                                                           zCall( 0x0050BF20 );
     virtual ~zCArchiverBinSafe()                                                                       zCall( 0x0050C1A0 );
@@ -150,8 +149,8 @@ namespace Gothic_I_Classic {
     virtual void __fastcall RestoreSeek( unsigned long )                                               zCall( 0x0050E790 );
     virtual void __fastcall DeleteBuffer()                                                             zCall( 0x0050C790 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCArchiverBinSafe, zCArchiver )
+    // user API
+    #include "zCArchiverBinSafe.inl"
   };
 
 } // namespace Gothic_I_Classic

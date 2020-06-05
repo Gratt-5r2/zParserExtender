@@ -20,8 +20,6 @@ namespace Gothic_I_Classic {
     oCTriggerChangeLevel()                                                   zInit( oCTriggerChangeLevel_OnInit() );
     void SetLevelName( zSTRING const&, zSTRING const& )                      zCall( 0x004386B0 );
     static zCObject* _CreateNewInstance()                                    zCall( 0x00437E60 );
-    static void operator delete( void*, char const*, char const*, int )      zCall( 0x00437F40 );
-    static void* operator new( unsigned int, char const*, char const*, int ) zCall( 0x006450B0 );
     virtual zCClassDef* _GetClassDef() const                                 zCall( 0x00437F60 );
     virtual void Archive( zCArchiver& )                                      zCall( 0x004388E0 );
     virtual void Unarchive( zCArchiver& )                                    zCall( 0x00438920 );
@@ -29,9 +27,8 @@ namespace Gothic_I_Classic {
     virtual void TriggerTarget( zCVob* )                                     zCall( 0x00438370 );
     virtual void UntriggerTarget( zCVob* )                                   zCall( 0x004386A0 );
 
-    // compatible with g2 operators style
-    zOperatorNew   ( oCTriggerChangeLevel, zCTrigger )
-    zOperatorDelete( oCTriggerChangeLevel, zCTrigger )
+    // user API
+    #include "oCTriggerChangeLevel.inl"
   };
 
   class oCTriggerScript : public zCTrigger {
@@ -44,7 +41,6 @@ namespace Gothic_I_Classic {
     oCTriggerScript()                                                   zInit( oCTriggerScript_OnInit() );
     void SetScriptFunc( zSTRING const&, int )                           zCall( 0x00439020 );
     static zCObject* _CreateNewInstance()                               zCall( 0x00438160 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00438210 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00438230 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x00439170 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x004391A0 );
@@ -52,8 +48,8 @@ namespace Gothic_I_Classic {
     virtual void TriggerTarget( zCVob* )                                zCall( 0x00438A30 );
     virtual void UntriggerTarget( zCVob* )                              zCall( 0x00438D90 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCTriggerScript, zCTrigger )
+    // user API
+    #include "oCTriggerScript.inl"
   };
 
   class oCObjectGenerator : public zCVob {
@@ -69,6 +65,9 @@ namespace Gothic_I_Classic {
     virtual void Unarchive( zCArchiver& )    zCall( 0x00439760 );
     virtual ~oCObjectGenerator()             zCall( 0x00439280 );
     virtual void OnTrigger( zCVob*, zCVob* ) zCall( 0x00439430 );
+
+    // user API
+    #include "oCObjectGenerator.inl"
   };
 
 } // namespace Gothic_I_Classic

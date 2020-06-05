@@ -27,6 +27,9 @@ namespace Gothic_I_Classic {
       void zTScriptSoundData_OnInit() zCall( 0x005C1B30 );
       ~zTScriptSoundData()            zCall( 0x005C1AB0 );
       zTScriptSoundData()             zInit( zTScriptSoundData_OnInit() );
+
+      // user API
+      #include "zCSoundManager_zTScriptSoundData.inl"
     };
 
     struct zCSoundEventData {
@@ -39,6 +42,9 @@ namespace Gothic_I_Classic {
       zCSoundEventData()                                               zInit( zCSoundEventData_OnInit() );
       void GetData( zSTRING const&, zCSoundFX*&, zCParticleEmitter*& ) zCall( 0x005C2E00 );
       void GetData( zCSoundFX*&, zCParticleEmitter*& )                 zCall( 0x005C2EE0 );
+
+      // user API
+      #include "zCSoundManager_zCSoundEventData.inl"
     };
 
     class zCMediumType {
@@ -49,6 +55,9 @@ namespace Gothic_I_Classic {
       void zCMediumType_OnInit() zCall( 0x005C4660 );
       ~zCMediumType()            zCall( 0x005C1F80 );
       zCMediumType()             zInit( zCMediumType_OnInit() );
+
+      // user API
+      #include "zCSoundManager_zCMediumType.inl"
     };
 
     class zCTableEntry {
@@ -59,6 +68,9 @@ namespace Gothic_I_Classic {
       void zCTableEntry_OnInit() zCall( 0x005C1C10 );
       zCTableEntry()             zInit( zCTableEntry_OnInit() );
       ~zCTableEntry()            zCall( 0x00603870 );
+
+      // user API
+      #include "zCSoundManager_zCTableEntry.inl"
     };
 
     zCArraySort<zCMediumType> mediumTypeIDList;
@@ -83,6 +95,9 @@ namespace Gothic_I_Classic {
     static zTScriptSoundData& scriptSoundData;
     static zSTRING& mediumIDList;
     static zSTRING& prefixProto;
+
+    // user API
+    #include "zCSoundManager.inl"
   };
 
 } // namespace Gothic_I_Classic

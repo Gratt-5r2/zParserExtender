@@ -190,6 +190,9 @@ namespace Gothic_II_Classic {
     // static properties
     static zCArraySort<zCMenuItem*>& itemList;
     static zCMenuItem*& tmp;
+
+    // user API
+    #include "zCMenuItem.inl"
   };
 
   class zCMenuItemInput : public zCMenuItem {
@@ -213,6 +216,9 @@ namespace Gothic_II_Classic {
     virtual void InsertInWin( zCView* )           zCall( 0x004DF980 );
     /* for zCInputCallback num : 1*/
     virtual int HandleEvent( int )                zCall( 0x004DC420 );
+
+    // user API
+    #include "zCMenuItemInput.inl"
   };
 
   class zCMenuItemText : public zCMenuItem {
@@ -245,6 +251,9 @@ namespace Gothic_II_Classic {
     virtual void SetEnum( zSTRING const& )           zCall( 0x004E0810 );
     /* for zCInputCallback num : 1*/
     virtual int HandleEvent( int )                   zCall( 0x004E0990 );
+
+    // user API
+    #include "zCMenuItemText.inl"
   };
 
   class zCMenuItemSlider : public zCMenuItem {
@@ -269,6 +278,9 @@ namespace Gothic_II_Classic {
     virtual void SetIsActive( int )                zCall( 0x004DC440 );
     /* for zCInputCallback num : 1*/
     virtual int HandleEvent( int )                 zCall( 0x004DC460 );
+
+    // user API
+    #include "zCMenuItemSlider.inl"
   };
 
   class zCMenuItemButton : public zCMenuItem {
@@ -287,6 +299,9 @@ namespace Gothic_II_Classic {
     virtual void InsertInWin( zCView* )            zCall( 0x004E31C0 );
     virtual void RemoveFromWin()                   zCall( 0x004E3200 );
     /* for zCInputCallback num : 1*/
+
+    // user API
+    #include "zCMenuItemButton.inl"
   };
 
   class zCMenuItemChoice : public zCMenuItem {
@@ -313,6 +328,9 @@ namespace Gothic_II_Classic {
     virtual void InsertInWin( zCView* )            zCall( 0x004E1F30 );
     virtual void RemoveFromWin()                   zCall( 0x004E20F0 );
     /* for zCInputCallback num : 1*/
+
+    // user API
+    #include "zCMenuItemChoice.inl"
   };
 
   struct zTMenuItemListElement {
@@ -323,6 +341,9 @@ namespace Gothic_II_Classic {
     void zTMenuItemListElement_OnInit() zCall( 0x004E4810 );
     ~zTMenuItemListElement()            zCall( 0x0047B130 );
     zTMenuItemListElement()             zInit( zTMenuItemListElement_OnInit() );
+
+    // user API
+    #include "zTMenuItemListElement.inl"
   };
 
   class zCMenuItemList : public zCMenuItem {
@@ -359,6 +380,9 @@ namespace Gothic_II_Classic {
     virtual void UpdateContent()                 zCall( 0x004E3B90 );
     /* for zCInputCallback num : 1*/
     virtual int HandleEvent( int )               zCall( 0x004E3EB0 );
+
+    // user API
+    #include "zCMenuItemList.inl"
   };
 
 } // namespace Gothic_II_Classic

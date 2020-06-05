@@ -37,6 +37,9 @@ namespace Gothic_II_Addon {
     virtual void SetWorld( zCWorld* )                                            zCall( 0x005DED40 );
     virtual void DesktopInit()                                                   zCall( 0x005DE950 );
     virtual void CutsceneSystemInit()                                            zCall( 0x005DE9E0 );
+
+    // user API
+    #include "zCSession.inl"
   };
 
 } // namespace Gothic_II_Addon

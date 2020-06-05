@@ -11,6 +11,9 @@ namespace Gothic_II_Classic {
     unsigned long id;
 
     zCVobIdentifier() {}
+
+    // user API
+    #include "zCVobIdentifier.inl"
   };
 
 } // namespace Gothic_II_Classic

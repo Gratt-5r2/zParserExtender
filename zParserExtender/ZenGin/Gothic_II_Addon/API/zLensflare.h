@@ -34,6 +34,9 @@ namespace Gothic_II_Addon {
 
       void zTVobLightLensFlare_OnInit() zCall( 0x00563020 );
       zTVobLightLensFlare()             zInit( zTVobLightLensFlare_OnInit() );
+
+      // user API
+      #include "zCLensFlareFX_zTVobLightLensFlare.inl"
     };
 
     zCArray<zTVobLightLensFlare> lensFlareList;
@@ -45,7 +48,6 @@ namespace Gothic_II_Addon {
     void RenderLensFlares( zVEC2& )          zCall( 0x00563880 );
     void SetAlpha( int )                     zCall( 0x00563A10 );
     static zCObject* _CreateNewInstance()    zCall( 0x005624C0 );
-    static void operator delete( void* )     zCall( 0x005625F0 );
     static void LoadLensFlareScript()        zCall( 0x00562650 );
     static void ReleaseLensFlareScript()     zCall( 0x00562940 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x00562610 );
@@ -57,6 +59,9 @@ namespace Gothic_II_Addon {
     static zCMesh*& s_lensFlareMesh;
     static zCMesh*& s_coronaMesh;
     static zCMesh*& s_glowMesh;
+
+    // user API
+    #include "zCLensFlareFX.inl"
   };
 
 } // namespace Gothic_II_Addon

@@ -47,6 +47,9 @@ namespace Gothic_I_Classic {
     static unsigned long& sizeTexMemHw;
     static int& fragmented;
     static zCTex_RndGlide*& tmpTexture;
+
+    // user API
+    #include "zCTex_RndGlide.inl"
   };
 
   class zCRnd_Glide : public zCRenderer {
@@ -101,6 +104,9 @@ namespace Gothic_I_Classic {
     zTRnd_DeviceInfo deviceInfo;
 
     zCRnd_Glide() {}
+
+    // user API
+    #include "zCRnd_Glide.inl"
   };
 
 } // namespace Gothic_I_Classic

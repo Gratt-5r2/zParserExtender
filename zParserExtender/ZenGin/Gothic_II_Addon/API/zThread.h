@@ -36,6 +36,9 @@ namespace Gothic_II_Addon {
     virtual int GetTerminationRequested() const zCall( 0x005DC960 );
     virtual void SetTerminationRequested( int ) zCall( 0x005DC970 );
     virtual unsigned long ThreadProc()          zCall( 0x005F9320 );
+
+    // user API
+    #include "zCThread.inl"
   };
 
   class zCSyncObject {
@@ -45,6 +48,9 @@ namespace Gothic_II_Addon {
     virtual ~zCSyncObject()           zCall( 0x005F9580 );
     virtual int Lock( unsigned long ) zPureCall;
     virtual int Unlock()              zPureCall;
+
+    // user API
+    #include "zCSyncObject.inl"
   };
 
   class zCCriticalSection : public zCSyncObject {
@@ -56,6 +62,9 @@ namespace Gothic_II_Addon {
     virtual ~zCCriticalSection()      zCall( 0x005F9420 );
     virtual int Lock( unsigned long ) zCall( 0x005F9460 );
     virtual int Unlock()              zCall( 0x005F9480 );
+
+    // user API
+    #include "zCCriticalSection.inl"
   };
 
   class zCMutex : public zCSyncObject {
@@ -67,6 +76,9 @@ namespace Gothic_II_Addon {
     virtual ~zCMutex()                zCall( 0x005F95B0 );
     virtual int Lock( unsigned long ) zCall( 0x005F95E0 );
     virtual int Unlock()              zCall( 0x005F9600 );
+
+    // user API
+    #include "zCMutex.inl"
   };
 
 } // namespace Gothic_II_Addon

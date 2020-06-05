@@ -31,7 +31,6 @@ namespace Gothic_I_Addon {
     void ClearNpcPerceptionVobLists()                                    zCall( 0x0070F180 );
     void __fastcall InsertInLists( zCVob* )                              zCall( 0x0070F1C0 );
     void __fastcall RemoveFromLists( zCVob* )                            zCall( 0x0070F2B0 );
-    static void operator delete( void*, char const*, char const*, int )  zCall( 0x006FE3A0 );
     static zCObject* _CreateNewInstance()                                zCall( 0x0070D5C0 );
     virtual zCClassDef* _GetClassDef() const                             zCall( 0x0070D850 );
     virtual void Archive( zCArchiver& )                                  zCall( 0x0070DEE0 );
@@ -54,8 +53,8 @@ namespace Gothic_I_Addon {
     virtual int DisposeVobs( zCTree<zCVob>* )                            zCall( 0x00616570 );
     virtual void DisposeVobs()                                           zCall( 0x0070F520 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCWorld, zCWorld )
+    // user API
+    #include "oCWorld.inl"
   };
 
   class oCWorldTimer {
@@ -82,6 +81,9 @@ namespace Gothic_I_Addon {
     int IsDay()                                 zCall( 0x0070FB90 );
     int IsNight()                               zCall( 0x0070FC10 );
     static void AddTime( int&, int&, int, int ) zCall( 0x0070FCA0 );
+
+    // user API
+    #include "oCWorldTimer.inl"
   };
 
 } // namespace Gothic_I_Addon

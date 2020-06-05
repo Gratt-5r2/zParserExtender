@@ -26,6 +26,9 @@ namespace Gothic_I_Addon {
 
     zCPositionKey() {}
     zMAT4 GetMat() zCall( 0x004997F0 );
+
+    // user API
+    #include "zCPositionKey.inl"
   };
 
   class zCCubicPolynomial {
@@ -44,6 +47,9 @@ namespace Gothic_I_Addon {
     float Speed( float )               zCall( 0x004DA680 );
     float Length( float )              zCall( 0x004DA7D0 );
     void Interpolate0( float, zVEC3& ) zCall( 0x004DC340 );
+
+    // user API
+    #include "zCCubicPolynomial.inl"
   };
 
   class zCKBSpline {
@@ -80,6 +86,9 @@ namespace Gothic_I_Addon {
     void DrawControlPolygon( zCOLOR )                    zCall( 0x004DBB80 );
     void Draw( zCOLOR, float )                           zCall( 0x004DBDF0 );
     float GetTime( float )                               zCall( 0x004DC4F0 );
+
+    // user API
+    #include "zCKBSpline.inl"
   };
 
 } // namespace Gothic_I_Addon

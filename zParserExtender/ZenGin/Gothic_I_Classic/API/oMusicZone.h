@@ -19,6 +19,9 @@ namespace Gothic_I_Classic {
     oCZoneMusicList* next;
 
     oCZoneMusicList() {}
+
+    // user API
+    #include "oCZoneMusicList.inl"
   };
 
   class oCZoneMusic : public zCZoneMusic {
@@ -55,7 +58,6 @@ namespace Gothic_I_Classic {
     int IsNightEntranceDone() const                                                                    zCall( 0x0070B970 );
     float GetCamPosWeightElps()                                                                        zCall( 0x0070BB80 );
     static zCObject* _CreateNewInstance()                                                              zCall( 0x0070A9F0 );
-    static void operator delete( void*, char const*, char const*, int )                                zCall( 0x0070AAC0 );
     static void SetZonetime( int )                                                                     zCall( 0x0070B980 );
     static void GetZonetime( int* )                                                                    zCall( 0x0070B990 );
     static oCZoneMusicList* BuildTempZoneList( oCZoneMusicDefault*, zCArraySort<zCZone*> const& )      zCall( 0x0070BD30 );
@@ -76,8 +78,6 @@ namespace Gothic_I_Classic {
     virtual zCClassDef* GetDefaultZoneClass() const                                                    zCall( 0x0070B830 );
     virtual zSTRING GetDebugDescString()                                                               zCall( 0x0070B840 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCZoneMusic, zCZoneMusic )
 
     // static properties
     static long& s_lastzonechange;
@@ -86,6 +86,9 @@ namespace Gothic_I_Classic {
     static oHEROSTATUS& s_herostatus;
     static oCZoneMusic*& s_musiczone;
     static oCZoneMusic*& s_oldmusiczone;
+
+    // user API
+    #include "oCZoneMusic.inl"
   };
 
   class oCZoneMusicDefault : public oCZoneMusic {
@@ -95,12 +98,11 @@ namespace Gothic_I_Classic {
     void oCZoneMusicDefault_OnInit()                                    zCall( 0x0070CBA0 );
     oCZoneMusicDefault()                                                zInit( oCZoneMusicDefault_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x0070ACE0 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x0070ADB0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x0070ADD0 );
     virtual ~oCZoneMusicDefault()                                       zCall( 0x0070CC30 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCZoneMusicDefault, oCZoneMusic )
+    // user API
+    #include "oCZoneMusicDefault.inl"
   };
 
 } // namespace Gothic_I_Classic

@@ -49,6 +49,9 @@ namespace Gothic_II_Classic {
     zSTRING GetOsName()        zCall( 0x0046D7D0 );
     virtual ~zCSystemInfo()    zCall( 0x0046C740 );
     virtual void AnalyseNow()  zCall( 0x0046CE70 );
+
+    // user API
+    #include "zCSystemInfo.inl"
   };
 
 } // namespace Gothic_II_Classic

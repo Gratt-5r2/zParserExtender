@@ -38,6 +38,9 @@ namespace Gothic_II_Classic {
     unsigned char b;
 
     zTTexPalette() {}
+
+    // user API
+    #include "zTTexPalette.inl"
   };
 
   class zCTextureInfo {
@@ -51,6 +54,9 @@ namespace Gothic_II_Classic {
     zCOLOR averageColor;
 
     zCTextureInfo() { ZeroMemory( this, sizeof( zCTextureInfo ) ); }
+
+    // user API
+    #include "zCTextureInfo.inl"
   };
 
   class zCTextureFileFormat : public zCObject {
@@ -67,6 +73,9 @@ namespace Gothic_II_Classic {
     virtual zSTRING const& GetFileExtension() const               zPureCall;
     virtual int CanSave() const                                   zPureCall;
     virtual int CanLoad() const                                   zPureCall;
+
+    // user API
+    #include "zCTextureFileFormat.inl"
   };
 
   class zCTextureFileFormatTGA : public zCTextureFileFormat {
@@ -92,6 +101,9 @@ namespace Gothic_II_Classic {
       unsigned char HeightHi;
       unsigned char PixelDepth;
       unsigned char ImageDescriptor;
+
+      // user API
+      #include "zCTextureFileFormatTGA_zTTgaHeader.inl"
     };
 #pragma pack( pop )
 
@@ -115,7 +127,6 @@ namespace Gothic_II_Classic {
     int ReadTGASpan( zFILE*, unsigned char*, int, int )           zCall( 0x005EAF30 );
     int ReadTGAData( zFILE* )                                     zCall( 0x005EB040 );
     static zCObject* _CreateNewInstance()                         zCall( 0x005E99C0 );
-    static void operator delete( void* )                          zCall( 0x005E9AD0 );
     virtual zCClassDef* _GetClassDef() const                      zCall( 0x005E9AF0 );
     virtual ~zCTextureFileFormatTGA()                             zCall( 0x005E9FA0 );
     virtual int LoadTexture( zSTRING const&, zCTextureExchange* ) zCall( 0x005EB410 );
@@ -125,6 +136,9 @@ namespace Gothic_II_Classic {
     virtual zSTRING const& GetFileExtension() const               zCall( 0x005EA010 );
     virtual int CanSave() const                                   zCall( 0x005E9B20 );
     virtual int CanLoad() const                                   zCall( 0x005E9B30 );
+
+    // user API
+    #include "zCTextureFileFormatTGA.inl"
   };
 
   class zCTextureFileFormatInternal : public zCTextureFileFormat {
@@ -142,7 +156,6 @@ namespace Gothic_II_Classic {
     int ReadData( zFILE&, zCTextureExchange*, int )               zCall( 0x005EB810 );
     int WriteHeader( zFILE&, zCTextureExchange* )                 zCall( 0x005EBC40 );
     int WriteData( zFILE&, zCTextureExchange* )                   zCall( 0x005EBCB0 );
-    static void operator delete( void* )                          zCall( 0x00436DF0 );
     static zCObject* _CreateNewInstance()                         zCall( 0x005E9D30 );
     virtual zCClassDef* _GetClassDef() const                      zCall( 0x005E9E40 );
     virtual ~zCTextureFileFormatInternal()                        zCall( 0x005EB750 );
@@ -153,6 +166,9 @@ namespace Gothic_II_Classic {
     virtual zSTRING const& GetFileExtension() const               zCall( 0x005EB760 );
     virtual int CanSave() const                                   zCall( 0x005E9E50 );
     virtual int CanLoad() const                                   zCall( 0x005E9E60 );
+
+    // user API
+    #include "zCTextureFileFormatInternal.inl"
   };
 
   class zCTextureExchange {
@@ -173,6 +189,9 @@ namespace Gothic_II_Classic {
     virtual int CopyTextureDataTo( int, void*, int )                         zPureCall;
     virtual int HasAlpha()                                                   zPureCall;
     virtual zVEC4 GetRGBAAtTexel( float, float )                             zCall( 0x005F1550 );
+
+    // user API
+    #include "zCTextureExchange.inl"
   };
 
   class zCTextureConvert : public zCTextureExchange {
@@ -191,6 +210,9 @@ namespace Gothic_II_Classic {
     static int CalcNumMipMaps( unsigned long, unsigned long ) zCall( 0x005EE630 );
     static void CorrectAspectRatio( int&, int& )              zCall( 0x005EE660 );
     static void CorrectPow2( int&, int& )                     zCall( 0x005EE6E0 );
+
+    // user API
+    #include "zCTextureConvert.inl"
   };
 
   class zCTexture : public zCResource, public zCTextureExchange {
@@ -240,7 +262,6 @@ namespace Gothic_II_Classic {
     static zTRnd_TextureFormat CalcNextBestTexFormat( zTRnd_TextureFormat )                        zCall( 0x005EF490 );
     static void CalcDesiredBPP( zSTRING const*, zTTexFileDesiredBPP&, zTRnd_TextureFormat&, int& ) zCall( 0x005EF590 );
     static void ScanConvertTextures( zSTRING )                                                     zCall( 0x005F1150 );
-    static void operator delete( void* )                                                           zCall( 0x00766D50 );
     /* for zCResource num : 11*/
     virtual zCClassDef* _GetClassDef() const                                                       zCall( 0x005EC650 );
     virtual ~zCTexture()                                                                           zCall( 0x005EC6F0 );
@@ -274,6 +295,9 @@ namespace Gothic_II_Classic {
     static zTRnd_TextureFormat*& s_texDesiredBPPDefault;
     static float& s_texRefRAM;
     static zTTexFileDesiredBPP& s_texRefBPP;
+
+    // user API
+    #include "zCTexture.inl"
   };
 
   class zCLightMap : public zCObject {
@@ -289,10 +313,12 @@ namespace Gothic_II_Classic {
     zCLightMap()                                                               zInit( zCLightMap_OnInit() );
     void SetTexture( zCTexture* )                                              zCall( 0x005F21E0 );
     void CalcLightmapOriginUpRight( zVEC3 const&, zVEC3 const&, zVEC3 const& ) zCall( 0x005F2220 );
-    static void operator delete( void* )                                       zCall( 0x0056C3F0 );
     static zCObject* _CreateNewInstance()                                      zCall( 0x005F1FE0 );
     virtual zCClassDef* _GetClassDef() const                                   zCall( 0x005F20A0 );
     virtual ~zCLightMap()                                                      zCall( 0x005F2170 );
+
+    // user API
+    #include "zCLightMap.inl"
   };
 
   class zCTextureFileHandler : public zCScanDirFileHandler {
@@ -301,6 +327,9 @@ namespace Gothic_II_Classic {
     zCTextureFileHandler() {}
     virtual ~zCTextureFileHandler()                                    zCall( 0x004248E0 );
     virtual int HandleFile( zSTRING const&, char const*, _finddata_t ) zCall( 0x005F0E50 );
+
+    // user API
+    #include "zCTextureFileHandler.inl"
   };
 
 } // namespace Gothic_II_Classic

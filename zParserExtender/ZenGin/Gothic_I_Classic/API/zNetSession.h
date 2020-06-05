@@ -19,6 +19,9 @@ namespace Gothic_I_Classic {
     zCNetSession( unsigned short a0 )          zInit( zCNetSession_OnInit( a0 ));
     void Reset()                               zCall( 0x00458080 );
     virtual ~zCNetSession()                    zCall( 0x004580A0 );
+
+    // user API
+    #include "zCNetSession.inl"
   };
 
 } // namespace Gothic_I_Classic

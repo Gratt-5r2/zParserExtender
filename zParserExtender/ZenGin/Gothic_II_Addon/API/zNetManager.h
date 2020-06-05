@@ -24,13 +24,15 @@ namespace Gothic_II_Addon {
     void SendPingReply( zCPlayerInfo* )                                                         zCall( 0x0045BDD0 );
     void SendWorldTime()                                                                        zCall( 0x0045BE10 );
     static zCObject* _CreateNewInstance()                                                       zCall( 0x0045B700 );
-    static void operator delete( void* )                                                        zCall( 0x0045B880 );
     virtual zCClassDef* _GetClassDef() const                                                    zCall( 0x0045B8A0 );
     virtual ~zCNetManager()                                                                     zCall( 0x0045BAD0 );
     virtual void Process()                                                                      zCall( 0x0045BAE0 );
     virtual zCNetMessage* CreateNetMessage( unsigned short const&, zCObject* )                  zCall( 0x0045BCD0 );
     virtual int HandleNetMessage( zCNetMessage*, unsigned short const&, zCClassDef*, zCWorld* ) zCall( 0x0045BC10 );
     virtual void ProcessMessages()                                                              zCall( 0x0045BB90 );
+
+    // user API
+    #include "zCNetManager.inl"
   };
 
 } // namespace Gothic_II_Addon

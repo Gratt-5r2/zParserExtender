@@ -74,6 +74,9 @@ namespace Gothic_II_Classic {
     void ShowRealPlayTime()                                         zCall( 0x0042BAC0 );
     virtual int HandleEvent( int )                                  zCall( 0x0042AA30 );
     virtual ~CGameManager()                                         zCall( 0x00424400 );
+
+    // user API
+    #include "CGameManager.inl"
   };
 
 } // namespace Gothic_II_Classic

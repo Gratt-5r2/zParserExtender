@@ -27,6 +27,9 @@ namespace Gothic_I_Classic {
     void SetPosition()                zCall( 0x00632C60 );
     virtual ~oCAskBox()               zCall( 0x00632450 );
     virtual void DoAI( zCVob*, int& ) zCall( 0x006327C0 );
+
+    // user API
+    #include "oCAskBox.inl"
   };
 
 } // namespace Gothic_I_Classic

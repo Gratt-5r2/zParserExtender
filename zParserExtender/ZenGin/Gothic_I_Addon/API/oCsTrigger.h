@@ -13,7 +13,6 @@ namespace Gothic_I_Addon {
 
     oCCSTrigger() {}
     static zCObject* _CreateNewInstance()                               zCall( 0x00404840 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x00404960 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00404980 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x00405330 );
     virtual void Unarchive( zCArchiver& )                               zCall( 0x00405340 );
@@ -21,8 +20,8 @@ namespace Gothic_I_Addon {
     virtual void TriggerTarget( zCVob* )                                zCall( 0x004049D0 );
     virtual void UntriggerTarget( zCVob* )                              zCall( 0x004050B0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( oCCSTrigger, zCTrigger )
+    // user API
+    #include "oCCSTrigger.inl"
   };
 
 } // namespace Gothic_I_Addon

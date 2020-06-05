@@ -42,6 +42,7 @@ namespace Gothic_I_Classic {
 
   typedef struct zSParticle {
   public:
+    zSParticle* next;
     zVEC3 position;
     zVEC3 vel;
     float lifeSpan;
@@ -161,6 +162,9 @@ namespace Gothic_I_Classic {
     zCParticleEmitter& operator =( zCParticleEmitter const& )  zCall( 0x006C9050 );
     static zVEC3 String2Vec3( zSTRING const& )                 zCall( 0x005926B0 );
     static zVEC2 String2Vec2( zSTRING const& )                 zCall( 0x00592930 );
+
+    // user API
+    #include "zCParticleEmitter.inl"
   };
 
   class zCParticleEmitterVars {
@@ -174,6 +178,9 @@ namespace Gothic_I_Classic {
     float uniformDelta;
 
     zCParticleEmitterVars() {}
+
+    // user API
+    #include "zCParticleEmitterVars.inl"
   };
 
   class zCParticleFX : public zCVisual {
@@ -192,6 +199,9 @@ namespace Gothic_I_Classic {
       void TouchPfx( zCParticleFX* )      zCall( 0x0058D590 );
       void ProcessList()                  zCall( 0x0058D650 );
       int IsInList( zCParticleFX* )       zCall( 0x0058DC50 );
+
+      // user API
+      #include "zCParticleFX_zCStaticPfxList.inl"
     };
 
     zTParticle* firstPart;
@@ -235,7 +245,6 @@ namespace Gothic_I_Classic {
     int GetNumParticlesThisFrame()                                      zCall( 0x00591220 );
     void CheckDependentEmitter()                                        zCall( 0x005913C0 );
     void CreateParticles()                                              zCall( 0x00591580 );
-    static void operator delete( void*, char const*, char const*, int ) zCall( 0x004855C0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x0058C640 );
     static void ParseParticleFXScript()                                 zCall( 0x0058C790 );
     static void InitParticleFX()                                        zCall( 0x0058CD50 );
@@ -257,8 +266,6 @@ namespace Gothic_I_Classic {
     virtual zSTRING const* GetFileExtension( int )                      zCall( 0x0058DC80 );
     virtual zCVisual* LoadVisualVirtual( zSTRING const& ) const         zCall( 0x0058DCE0 );
 
-    // compatible with g2 operators style
-    zOperatorDelete( zCParticleFX, zCVisual )
 
     // static properties
     static zCParser*& s_pfxParser;
@@ -271,6 +278,9 @@ namespace Gothic_I_Classic {
     static zCMesh*& s_partMeshQuad;
     static int& s_showDebugInfo;
     static zCStaticPfxList& s_pfxList;
+
+    // user API
+    #include "zCParticleFX.inl"
   };
 
 } // namespace Gothic_I_Classic

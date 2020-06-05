@@ -31,6 +31,9 @@ namespace Gothic_I_Addon {
     void __fastcall UpdateMap( int )                                      zCall( 0x00761C30 );
     static oCDocumentManager& GetDocumentManager()                        zCall( 0x00761110 );
     virtual int HandleEvent( int )                                        zCall( 0x00761C80 );
+
+    // user API
+    #include "oCDocumentManager.inl"
   };
 
 } // namespace Gothic_I_Addon

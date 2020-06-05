@@ -47,6 +47,9 @@ namespace Gothic_I_Addon {
     virtual void SetMouseFlipXY( int, int )             zCall( 0x004D8DF0 );
     virtual void GetMouseFlipXY( int&, int& )           zCall( 0x004D8E10 );
     virtual void ProcessInputEvents()                   zCall( 0x004D8CC0 );
+
+    // user API
+    #include "zCInput_Win32.inl"
   };
 
 } // namespace Gothic_I_Addon
