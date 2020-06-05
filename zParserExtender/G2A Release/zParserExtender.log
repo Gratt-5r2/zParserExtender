@@ -1,6 +1,0 @@
-﻿  Interface.cpp
-c:\users\gratt\source\repos\zparserextender\zparserextender\zExternals.cpp(179): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-     Создается библиотека C:\Users\Gratt\source\repos\zParserExtender\Bin\zParserExtender.lib и объект C:\Users\Gratt\source\repos\zParserExtender\Bin\zParserExtender.exp
-  Создание кода
-  Создание кода завершено
-  zParserExtender.vcxproj -> C:\Users\Gratt\source\repos\zParserExtender\Bin\zParserExtender.dll

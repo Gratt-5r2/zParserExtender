@@ -136,7 +136,11 @@ namespace GOTHIC_ENGINE {
     int index = GetIndex( sym->name );
     if( index != Invalid ) {
       zCPar_Symbol* oldSym = table[index];
-      if( oldSym->HasFlag( zPAR_FLAG_EXTERNAL ) || zParserExtender.MergeModeEnabled() ) {
+
+      // Replace external func to internal
+      bool externalFunc = !sym->HasFlag( zPAR_FLAG_EXTERNAL ) && oldSym->HasFlag( zPAR_FLAG_EXTERNAL );
+
+      if( externalFunc || zParserExtender.MergeModeEnabled() ) {
 
         table[index] = sym;
         sym->AllocSpace();
