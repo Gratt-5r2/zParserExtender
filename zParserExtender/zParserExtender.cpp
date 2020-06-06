@@ -55,7 +55,7 @@ namespace GOTHIC_ENGINE {
 
         // Assign meta parameters
              if( parameter == "Parser" )      ParserName              = value;
-        else if( parameter == "Merge" )       CompileInfo.MergeMode   = StringToBool( value );
+        else if( parameter == "MergeMode" )   CompileInfo.MergeMode   = StringToBool( value );
         else if( parameter == "NativeWhile" ) CompileInfo.NativeWhile = StringToBool( value );
         else {
           // Wut ??
