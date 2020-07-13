@@ -3,3 +3,4 @@
 // User API for oCItem
 // Add your methods here
 
+void InitByScript_Union( int, int );

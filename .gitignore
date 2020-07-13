@@ -3,3 +3,6 @@
 ################################################################################
 
 /.vs/zParserExtender/v16/Browse.VC.db
+/.vs/zParserExtender/v16/Browse.VC.opendb
+/.vs/zParserExtender/v16/ipch/AutoPCH/6626e6faafb5da54/INTERFACE.ipch
+*.suo

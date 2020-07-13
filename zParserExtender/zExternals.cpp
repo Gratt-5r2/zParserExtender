@@ -176,7 +176,7 @@ namespace GOTHIC_ENGINE {
     ppos = *(zVEC3*)par->GetInstance();
     par->GetParameter( effect );
 
-    oCVisualFX::CreateAndPlay( effect, ppos, Null, level, damage, damage_type, damage_speed );
+    oCVisualFX::CreateAndPlay( effect, ppos, Null, level, (float)damage, damage_type, damage_speed );
     return 0;
   }
 

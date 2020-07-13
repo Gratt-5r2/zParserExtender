@@ -237,6 +237,8 @@ namespace GOTHIC_ENGINE {
         
         // Search game parser by name
         zCParser* par = GetParserByName( scriptInfo.ParserName );
+        zCParser::cur_parser = par;
+
         if( par == Null ) {
           cmd << colWarn2 << "zParserExtender: "    <<
                  colWarn1 << "invalid parser name " <<

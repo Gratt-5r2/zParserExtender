@@ -46,7 +46,7 @@
     <ProjectGuid>{4595ff32-6a71-47e1-a29d-7ea28b2a5d86}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>zParserExtender</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>zParserExtender</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -462,6 +462,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DllMain.cpp" />
+    <ClInclude Include="InstanceItem.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="OU.cpp">
       <SubType>
       </SubType>

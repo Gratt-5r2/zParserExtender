@@ -7,6 +7,56 @@ namespace GOTHIC_ENGINE {
 
 
 
+  struct zTCallReplaceInfo {
+    int_t ReplaceLength;
+    zCParser* Parser;
+    zCPar_Symbol* OldSymbol;
+    zCPar_Symbol* NewSymbol;
+  };
+
+  Array<zTCallReplaceInfo> CallReplaceInfos;
+
+
+
+  // Find and replace call address to other function
+  void ReplaceStackCallAddress( zCPar_Stack& stack, zCPar_Symbol* symLeft, zCPar_Symbol* symRight, int_t length ) {
+    int oldPos = symLeft->single_intdata;
+    int newPos = symRight->single_intdata;
+
+    for( int_t i = 0; i < length; i++ ) {
+      byte& command = stack.stack[i];
+      if( command == zPAR_TOK_CALL ) {
+        int& address = (int&)stack.stack[i + 1];
+        if( address == oldPos ) {
+
+          cmd << colParse2 << "zParserExtender: " <<
+                 colParse1 << "func call "        <<
+                 colParse2 << AHEX32( oldPos )    <<
+                 colParse1 << " -> "              <<
+                 colParse2 << AHEX32( newPos )    <<
+                 colParse1 << " replaced."        <<
+                 colParse3 << endl;
+
+          (int&)stack.stack[i + 1] = newPos;
+        }
+      }
+    }
+  }
+
+
+
+  void PostCompileCallReplace() {
+    for( uint i = 0; i < CallReplaceInfos.GetNum(); i++ )
+      ReplaceStackCallAddress(
+        CallReplaceInfos[i].Parser->stack,
+        CallReplaceInfos[i].OldSymbol,
+        CallReplaceInfos[i].NewSymbol,
+        CallReplaceInfos[i].ReplaceLength );
+
+    CallReplaceInfos.Clear();
+  }
+
+
 
 
   void zCPar_SymbolTable::PostDefineExternal_Union( zCPar_Symbol* external ) {
@@ -147,6 +197,24 @@ namespace GOTHIC_ENGINE {
 
         oldSym->Rename( oldSym->GetName() + "_OLD" );
         InsertAt_Union( oldSym, False );
+
+        cmd << colParse2 << "zParserExtender: " <<
+               colParse1 << "symbol "           <<
+               colParse2 << sym->GetName()      <<
+               colParse1 << " replaced."        <<
+               colParse3 << endl;
+
+        // Add function to the post compile queue.
+        // This symbol will be replace the original
+        // call address for new call address. For
+        // calling origin func - use '_old' suffix.
+        if( sym->type == zPAR_TYPE_FUNC && !oldSym->HasFlag( zPAR_FLAG_EXTERNAL ) ) {
+          zTCallReplaceInfo& callReplace = CallReplaceInfos.Create();
+          callReplace.ReplaceLength = zCParser::GetParser()->stack.stacksize - 4;
+          callReplace.Parser        = zCParser::GetParser();
+          callReplace.OldSymbol     = oldSym;
+          callReplace.NewSymbol     = sym;
+        }
 
         cur_table = this;
         return True;

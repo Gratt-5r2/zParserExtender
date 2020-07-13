@@ -226,6 +226,9 @@
     <Filter Include="Plugin\zParserExtender\Externals">
       <UniqueIdentifier>{fc9e04c3-c5e7-426f-b793-9c5ba09c397d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\zParserExtender\InstanceItem">
+      <UniqueIdentifier>{9c1476e9-e9e5-420c-b5e8-dddcb57b4c87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2809,6 +2812,9 @@
     </ClInclude>
     <ClInclude Include="zExternals.cpp">
       <Filter>Plugin\zParserExtender\Externals</Filter>
+    </ClInclude>
+    <ClInclude Include="InstanceItem.cpp">
+      <Filter>Plugin\zParserExtender\InstanceItem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

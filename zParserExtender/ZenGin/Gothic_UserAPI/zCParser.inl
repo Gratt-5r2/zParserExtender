@@ -21,3 +21,4 @@ void CallGameInit_Union();
 void CallGameLoop_Union();
 void ReadWord_Union( zSTRING& );
 void Reset_Union();
+int LoadGlobalVars_Union( zCArchiver& );

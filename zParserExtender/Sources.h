@@ -9,6 +9,7 @@
 #include "zParser.cpp"
 #include "OU.cpp"
 #include "zExternals.cpp"
+#include "InstanceItem.cpp"
 #include "Plugin.cpp"
 #pragma endregion
 

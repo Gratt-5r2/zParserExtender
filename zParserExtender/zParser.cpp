@@ -2,15 +2,18 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-  HOOK Ivk_zCParser_SaveDat    AS( &zCParser::SaveDat,    &zCParser::SaveDat_Union );
-  HOOK Ivk_zCParser_ParseBlock AS( &zCParser::ParseBlock, &zCParser::ParseBlock_Union );
-  HOOK Ivk_zCParser_ReadWord   AS( &zCParser::ReadWord,   &zCParser::ReadWord_Union );
+  HOOK Ivk_zCParser_SaveDat        AS( &zCParser::SaveDat,        &zCParser::SaveDat_Union );
+  HOOK Ivk_zCParser_ParseBlock     AS( &zCParser::ParseBlock,     &zCParser::ParseBlock_Union );
+  HOOK Ivk_zCParser_ReadWord       AS( &zCParser::ReadWord,       &zCParser::ReadWord_Union );
+  HOOK Ivk_zCParser_LoadGlobalVars AS( &zCParser::LoadGlobalVars, &zCParser::LoadGlobalVars_Union );
 
 
 
 
 
   int zCParser::SaveDat_Union( zSTRING& name ) {
+    PostCompileCallReplace();
+
     if( zParserExtender.CompileDatEnabled() ) {
       if( zParserExtender.ExtendedParsingEnabled() ) {
         zSTRING clearName = name.GetPattern("", ".", -1);
@@ -209,5 +212,56 @@ namespace GOTHIC_ENGINE {
 
   void zCParser::Reset_Union() {
     add_funclist = Null;
+  }
+
+
+
+
+  inline bool IsValidIntegerSymbol( zCPar_Symbol* sym ) {
+    return sym && sym->type == zPAR_TYPE_INT && sym->flags == 0;
+  }
+
+
+
+
+  // Parser bugfix
+  int zCParser::LoadGlobalVars_Union( zCArchiver& arc ) {
+    string symRowName = NullStr;
+    int symNum        = 0;
+    int arrayNum      = 0;
+    int tmpValue      = 0;
+
+    arc.ReadInt( "numSymbols", symNum );
+    for( int i = 0; i < symNum; i++ ) {
+      symRowName = string::Combine( "symName%i", i );
+
+      zSTRING symName;
+      arc.ReadString( symRowName, symName );
+      arc.ReadInt( symRowName + "cnt", arrayNum );
+
+      zCPar_Symbol* sym  = GetSymbol( symName );
+      bool isValidSymbol = IsValidIntegerSymbol( sym );
+
+      for( uint j = 0; j < arrayNum; j++ ) {
+
+        // Read null-size symbol at first!
+        // Otherwise the data reading may be incorrect
+        if( sym && sym->ele == 0 ) {
+          symRowName = "symValue" + A i;
+          arc.ReadInt( symRowName.ToChar(), tmpValue );
+        }
+        else {
+          symRowName = string::Combine( "symValue%i_%i", i, j );
+          arc.ReadInt( symRowName, tmpValue );
+
+          // Check symbol AFTER data reading!
+          // For else the engine will loop (or maybe crash)
+          if( isValidSymbol )
+            sym->SetValue( tmpValue, j );
+        }
+      }
+    }
+
+    return True;
   }
 }
