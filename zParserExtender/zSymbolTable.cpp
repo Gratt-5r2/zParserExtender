@@ -46,14 +46,18 @@ namespace GOTHIC_ENGINE {
 
 
   void PostCompileCallReplace() {
-    for( uint i = 0; i < CallReplaceInfos.GetNum(); i++ )
+    for( uint i = 0; i < CallReplaceInfos.GetNum(); i++ ) {
+      if( CallReplaceInfos[i].Parser != zParserExtender.GetParser() )
+        continue;
+
       ReplaceStackCallAddress(
         CallReplaceInfos[i].Parser->stack,
         CallReplaceInfos[i].OldSymbol,
         CallReplaceInfos[i].NewSymbol,
         CallReplaceInfos[i].ReplaceLength );
 
-    CallReplaceInfos.Clear();
+      CallReplaceInfos.RemoveAt( i-- );
+    }
   }
 
 
@@ -122,7 +126,7 @@ namespace GOTHIC_ENGINE {
       Symbol->LoadFull( f );
 
       // is a symbol - function ??
-      if( Symbol->type == zPAR_TYPE_FUNC ) {
+      if( Symbol->type == zPAR_TYPE_FUNC || Symbol->HasFlag( zPAR_FLAG_EXTERNAL ) ) {
         if( !Symbol->name.HasWordI( ParentFuncName ) ) {
           ParentFuncSymbol = Symbol;
           PreviousSymbol = Symbol;
@@ -132,7 +136,7 @@ namespace GOTHIC_ENGINE {
 
       // check arguments and define `next` pointers
       if( ParentFuncSymbol ) {
-        if( Symbol->name.HasWordI( ParentFuncName ) ) {
+        if ( Symbol->name.GetWord( "." ) == ParentFuncName ) {
           PreviousSymbol->next = Symbol;
           PreviousSymbol = Symbol;
         }
@@ -159,6 +163,9 @@ namespace GOTHIC_ENGINE {
           int StackAddress;
           OldExternal->GetStackPos( StackAddress, 0 );
           NewExternal->SetStackPos( StackAddress, 0 );
+
+          // copy arguments from old to new
+          NewExternal->next = OldExternal->next;
           delete OldExternal;
         }
         else
@@ -183,7 +190,10 @@ namespace GOTHIC_ENGINE {
     if( !sym )
       return False;
 
-    int index = GetIndex( sym->name );
+    if( zParserExtender.ExtendedParsingEnabled() && zParserExtender.GetParser() == Gothic::Parsers::PFX )
+      zParserExtender.InsertPFXSymbol( sym );
+
+    int index = GetIndex( sym->name ); // TO DO Safe ??
     if( index != Invalid ) {
       zCPar_Symbol* oldSym = table[index];
 
@@ -200,7 +210,7 @@ namespace GOTHIC_ENGINE {
 
         cmd << colParse2 << "zParserExtender: " <<
                colParse1 << "symbol "           <<
-               colParse2 << sym->GetName()      <<
+               colParse2 << sym->name           <<
                colParse1 << " replaced."        <<
                colParse3 << endl;
 
@@ -210,10 +220,10 @@ namespace GOTHIC_ENGINE {
         // calling origin func - use '_old' suffix.
         if( sym->type == zPAR_TYPE_FUNC && !oldSym->HasFlag( zPAR_FLAG_EXTERNAL ) ) {
           zTCallReplaceInfo& callReplace = CallReplaceInfos.Create();
-          callReplace.ReplaceLength = zCParser::GetParser()->stack.stacksize - 4;
-          callReplace.Parser        = zCParser::GetParser();
-          callReplace.OldSymbol     = oldSym;
-          callReplace.NewSymbol     = sym;
+          callReplace.ReplaceLength      = zParserExtender.GetParser()->stack.stacksize - 4;
+          callReplace.Parser             = zParserExtender.GetParser();
+          callReplace.OldSymbol          = oldSym;
+          callReplace.NewSymbol          = sym;
         }
 
         cur_table = this;

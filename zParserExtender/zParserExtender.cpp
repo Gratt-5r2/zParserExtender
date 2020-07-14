@@ -238,6 +238,7 @@ namespace GOTHIC_ENGINE {
         // Search game parser by name
         zCParser* par = GetParserByName( scriptInfo.ParserName );
         zCParser::cur_parser = par;
+        CurrentParser = par;
 
         if( par == Null ) {
           cmd << colWarn2 << "zParserExtender: "    <<
@@ -277,13 +278,58 @@ namespace GOTHIC_ENGINE {
 
       // Compile parsed scripts...
       for( uint i = 0; i < activeParsers.GetNum(); i++ ) {
-        activeParsers[i]->CreatePCode();
-        activeParsers[i]->SetEnableParsing_Union( False );
+        CurrentParser = activeParsers[i];
+        CurrentParser->CreatePCode();
+        CurrentParser->SetEnableParsing_Union( False );
+
+        if( CurrentParser == Gothic::Parsers::PFX )
+          RegisterPFXSymbols();
       }
 
       activeParsers.Clear();
     }
     ParsingEnabled = false;
+  }
+
+
+
+
+  void zCParserExtender::RegisterPFXSymbols() {
+    if( PFXSymbols.GetNum() == 0 )
+      return;
+
+    for( uint i = 0; i < PFXSymbols.GetNum(); i++ ) {
+      zCPar_Symbol* sym          = PFXSymbols[i];
+      zSTRING instanceName       = sym->name;
+      zCParticleEmitter* emitter = new zCParticleEmitter();
+      emitter->particleFXName    = instanceName;
+
+      // Rename old pfx emitter
+      int indexEqual = zCParticleFX::s_emitterPresetList.Search( emitter );
+      if( indexEqual != Invalid )
+        zCParticleFX::s_emitterPresetList[i]->particleFXName += "_OLD";
+      
+      Gothic::Parsers::PFX->CreateInstance( instanceName, emitter );
+      zCParticleFX::s_emitterPresetList.Insert( emitter );
+      emitter->UpdateInternals();
+    }
+
+    zCParticleFX::s_emitterPresetList.QuickSort();
+    PFXSymbols.Clear();
+  }
+
+
+
+
+  void zCParserExtender::InsertPFXSymbol( zCPar_Symbol* sym ) {
+    PFXSymbols += sym;
+  }
+
+
+
+
+  zCParser* zCParserExtender::GetParser() {
+    return CurrentParser;
   }
 
 

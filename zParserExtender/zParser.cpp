@@ -242,7 +242,7 @@ namespace GOTHIC_ENGINE {
       zCPar_Symbol* sym  = GetSymbol( symName );
       bool isValidSymbol = IsValidIntegerSymbol( sym );
 
-      for( uint j = 0; j < arrayNum; j++ ) {
+      for( int j = 0; j < arrayNum; j++ ) {
 
         // Read null-size symbol at first!
         // Otherwise the data reading may be incorrect
