@@ -16,15 +16,30 @@ namespace GOTHIC_ENGINE {
 
 
   zCParser* GetParserByName( string name ) {
-    if( name.HasWordI( "Game" )   || name.HasWordI( "parser"           ) ) return Gothic::Parsers::Game;
+    if( name.HasWordI( "Game"   ) || name.HasWordI( "parser"           ) ) return Gothic::Parsers::Game;
     if( name.HasWordI( "Auto"                                          ) ) return Gothic::Parsers::Game;
-    if( name.HasWordI( "SFX" )    || name.HasWordI( "parserSoundFX"    ) ) return Gothic::Parsers::SFX;
-    if( name.HasWordI( "PFX" )    || name.HasWordI( "parserParticleFX" ) ) return Gothic::Parsers::PFX;
-    if( name.HasWordI( "VFX" )    || name.HasWordI( "parserVisualFX"   ) ) return Gothic::Parsers::VFX;
+    if( name.HasWordI( "SFX"    ) || name.HasWordI( "parserSoundFX"    ) ) return Gothic::Parsers::SFX;
+    if( name.HasWordI( "PFX"    ) || name.HasWordI( "parserParticleFX" ) ) return Gothic::Parsers::PFX;
+    if( name.HasWordI( "VFX"    ) || name.HasWordI( "parserVisualFX"   ) ) return Gothic::Parsers::VFX;
     if( name.HasWordI( "Camera" ) || name.HasWordI( "parserCamera"     ) ) return Gothic::Parsers::Camera;
-    if( name.HasWordI( "Menu" )   || name.HasWordI( "parserMenu"       ) ) return Gothic::Parsers::Menu;
-    if( name.HasWordI( "Music" )  || name.HasWordI( "parserMusic"      ) ) return Gothic::Parsers::Music;
+    if( name.HasWordI( "Menu"   ) || name.HasWordI( "parserMenu"       ) ) return Gothic::Parsers::Menu;
+    if( name.HasWordI( "Music"  ) || name.HasWordI( "parserMusic"      ) ) return Gothic::Parsers::Music;
     return Null;
+  }
+
+
+
+
+
+  string GetNameByParser( zCParser* par ) {
+    if( par == Gothic::Parsers::Game   ) return "Game";
+    if( par == Gothic::Parsers::SFX    ) return "SFX";
+    if( par == Gothic::Parsers::PFX    ) return "PFX";
+    if( par == Gothic::Parsers::VFX    ) return "VFX";
+    if( par == Gothic::Parsers::Camera ) return "Camera";
+    if( par == Gothic::Parsers::Menu   ) return "Menu";
+    if( par == Gothic::Parsers::Music  ) return "Music";
+    return "Unknown";
   }
 
 
@@ -258,7 +273,7 @@ namespace GOTHIC_ENGINE {
 
 
         // So, activate parser for parsing and parse file
-        par->Reset_Union();
+        par->ReserAdditionalInfo();
         par->SetEnableParsing_Union( True );
         if( par->ParseFile( Z scriptInfo.FullName ) != 0 ) {
           bool parsed = activeParsers & par;

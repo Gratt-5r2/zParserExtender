@@ -1,0 +1,18 @@
+﻿  DllMain.cpp
+  Interface.cpp
+  ClassDeclarators_G2A.cpp
+  Globals_G2A.cpp
+  Statics_G2A.cpp
+  ClassDeclarators_G2.cpp
+  Globals_G2.cpp
+  Statics_G2.cpp
+  ClassDeclarators_G1A.cpp
+  Globals_G1A.cpp
+  Statics_G1A.cpp
+  ClassDeclarators_G1.cpp
+  Globals_G1.cpp
+  Statics_G1.cpp
+     Создается библиотека H:\Users\Gratt\Source\Repos\zParserExtender\Bin\zParserExtender.lib и объект H:\Users\Gratt\Source\Repos\zParserExtender\Bin\zParserExtender.exp
+  Создание кода
+  Создание кода завершено
+  zParserExtender.vcxproj -> H:\Users\Gratt\Source\Repos\zParserExtender\Bin\zParserExtender.dll

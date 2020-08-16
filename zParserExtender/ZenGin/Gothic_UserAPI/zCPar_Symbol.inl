@@ -5,3 +5,4 @@
 
 zSTRING GetName();
 void Rename( const zSTRING& );
+zCPar_Symbol* Destructor();

@@ -3,13 +3,6 @@
 
 namespace GOTHIC_ENGINE {
   HOOK Ivk_zCParser_SaveDat        AS( &zCParser::SaveDat,        &zCParser::SaveDat_Union );
-  HOOK Ivk_zCParser_ParseBlock     AS( &zCParser::ParseBlock,     &zCParser::ParseBlock_Union );
-  HOOK Ivk_zCParser_ReadWord       AS( &zCParser::ReadWord,       &zCParser::ReadWord_Union );
-  HOOK Ivk_zCParser_LoadGlobalVars AS( &zCParser::LoadGlobalVars, &zCParser::LoadGlobalVars_Union );
-
-
-
-
 
   int zCParser::SaveDat_Union( zSTRING& name ) {
     PostCompileCallReplace();
@@ -43,6 +36,8 @@ namespace GOTHIC_ENGINE {
 
 #define WHILE_BEGIN op_loop_level++, op_while_enumerator += 2
 #define WHILE_END   op_loop_level--
+
+  HOOK Ivk_zCParser_ParseBlock AS( &zCParser::ParseBlock, &zCParser::ParseBlock_Union );
 
   void zCParser::ParseBlock_Union() {
     if( !zParserExtender.ExtendedParsingEnabled() )
@@ -80,6 +75,7 @@ namespace GOTHIC_ENGINE {
 
 
 
+  HOOK Ivk_zCParser_ReadWord AS( &zCParser::ReadWord, &zCParser::ReadWord_Union );
 
   void zCParser::ReadWord_Union( zSTRING& word ) {
     THISCALL( Ivk_zCParser_ReadWord )(word);
@@ -210,7 +206,7 @@ namespace GOTHIC_ENGINE {
 
 
 
-  void zCParser::Reset_Union() {
+  void zCParser::ReserAdditionalInfo() {
     add_funclist = Null;
   }
 
@@ -222,7 +218,10 @@ namespace GOTHIC_ENGINE {
   }
 
 
+  
 
+#if ENGINE >= Engine_G2
+  HOOK Ivk_zCParser_LoadGlobalVars AS( &zCParser::LoadGlobalVars, &zCParser::LoadGlobalVars_Union );
 
   // Parser bugfix
   int zCParser::LoadGlobalVars_Union( zCArchiver& arc ) {
@@ -234,6 +233,7 @@ namespace GOTHIC_ENGINE {
     arc.ReadInt( "numSymbols", symNum );
     for( int i = 0; i < symNum; i++ ) {
       symRowName = string::Combine( "symName%i", i );
+      cmd << i << ".\t" << symRowName << endl;
 
       zSTRING symName;
       arc.ReadString( symRowName, symName );
@@ -263,5 +263,36 @@ namespace GOTHIC_ENGINE {
     }
 
     return True;
+  }
+#endif
+
+
+
+
+
+
+  static bool NeedToReparse( string s ) {
+    string parName = s.GetPattern( "\\", "." );
+    if( parName == "GOTHIC"     && zoptions->Parm( "ZREPARSE_GAME"   ) ) return true;
+    if( parName == "SFX"        && zoptions->Parm( "ZREPARSE_SFX"    ) ) return true;
+    if( parName == "PARTICLEFX" && zoptions->Parm( "ZREPARSE_PFX"    ) ) return true;
+    if( parName == "VISUALFX"   && zoptions->Parm( "ZREPARSE_VFX"    ) ) return true;
+    if( parName == "CAMERA"     && zoptions->Parm( "ZREPARSE_CAMERA" ) ) return true;
+    if( parName == "MENU"       && zoptions->Parm( "ZREPARSE_MENU"   ) ) return true;
+    if( parName == "MUSIC"      && zoptions->Parm( "ZREPARSE_MUSIC"  ) ) return true;
+    if( parName == "FIGHT"      && zoptions->Parm( "ZREPARSE_FIGHT"  ) ) return true;
+    return false;
+  }
+
+  HOOK Ivk_zCParser_Parse AS( &zCParser::Parse, &zCParser::Parse_Union );
+
+  int zCParser::Parse_Union( zSTRING s ) {
+    int enableParsing_tmp = enableParsing;
+    enableParsing         = enableParsing_tmp || NeedToReparse( s ) ? True : False;
+
+    int Ok = THISCALL( Ivk_zCParser_Parse )( s );
+
+    enableParsing = enableParsing_tmp;
+    return Ok;
   }
 }

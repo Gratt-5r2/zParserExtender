@@ -189,10 +189,10 @@ namespace GOTHIC_ENGINE {
   int zCPar_SymbolTable::InsertAt_Union( zCPar_Symbol* sym, int alloc ) {
     if( !sym )
       return False;
-
+    
     if( zParserExtender.ExtendedParsingEnabled() && zParserExtender.GetParser() == Gothic::Parsers::PFX )
       zParserExtender.InsertPFXSymbol( sym );
-
+    
     int index = GetIndex( sym->name ); // TO DO Safe ??
     if( index != Invalid ) {
       zCPar_Symbol* oldSym = table[index];

@@ -167,6 +167,11 @@ namespace GOTHIC_ENGINE {
       return;
 
     if( ForceOUSave | !zoptions->Parm( "ZREPARSE" ) ) {
+      cmd << colParse2 << "zParserExtender: " <<
+             colParse1 << "building "    <<
+             colParse2 << "Output Units" <<
+             colParse3 << endl;
+
       THISCALL( Ivk_zCCSManager_LibLoad )(flags);
     }
     else {
@@ -245,4 +250,21 @@ namespace GOTHIC_ENGINE {
 
     return True;
   }
+
+
+
+
+
+
+
+  /*HOOK Ivk_zCParser_Reset AS( &zCParser::Reset, &zCParser::Reset_Union );
+
+  void zCParser::Reset_Union() {
+    if( add_funclist )
+      for( int i = 0; i < symtab.table.GetNum(); i++ )
+        add_funclist->Remove( &symtab.table[i]->name );
+
+    add_funclist = Null;
+    THISCALL( Ivk_zCParser_Reset )();
+  }*/
 }
