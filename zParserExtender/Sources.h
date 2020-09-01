@@ -8,6 +8,7 @@
 #include "zSymbolTable.cpp"
 #include "zParser.cpp"
 #include "OU.cpp"
+#include "zTriggerScript.cpp"
 #include "zExternals.cpp"
 #include "InstanceItem.cpp"
 #include "Plugin.cpp"

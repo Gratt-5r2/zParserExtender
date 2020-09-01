@@ -4,3 +4,5 @@
 // Add your methods here
 
 void LibLoad_Union( int flags );
+void LibSortion();
+void LibStoreCopy( int flags );

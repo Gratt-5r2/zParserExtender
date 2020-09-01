@@ -3,3 +3,4 @@
 // User API for zCArchiverFactory
 // Add your methods here
 
+zCArchiver* CreateArchiverWrite_Union( zSTRING const&, zTArchiveMode, int, int );

@@ -50,6 +50,7 @@ namespace GOTHIC_ENGINE {
   void Game_Init() {
     zParserExtender.ParseBegin();
     parser->CallGameInit_Union();
+    DefineConsoleCommands();
   }
 
   void Game_Exit() {
@@ -57,6 +58,7 @@ namespace GOTHIC_ENGINE {
 
   void Game_Loop() {
     parser->CallGameLoop_Union();
+    zTTriggerScript::DoTriggers();
   }
 
   // Information about current saving or loading world

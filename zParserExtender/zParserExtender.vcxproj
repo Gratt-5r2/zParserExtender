@@ -508,6 +508,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="zTriggerScript.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="zTriggerScript.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Plugin.h" />

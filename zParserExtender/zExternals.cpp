@@ -569,6 +569,254 @@ namespace GOTHIC_ENGINE {
     return 0;
   }
 
+  int Hlp_PrintConsole() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING message;
+    par->GetParameter( message );
+    message
+      .Replace( "\\r", "\r" )
+      .Replace( "\\n", "\n" )
+      .Replace( "\\t", "\t" )
+      .Replace( "\\0", "\0" );
+
+    cmd << message << endl;
+    return 0;
+  }
+
+  int AI_CallScript() {
+    zSTRING scriptName;
+    oCNpc* self;
+    oCNpc* other;
+
+    other = (oCNpc*)parser->GetInstance();
+    self = (oCNpc*)parser->GetInstance();
+    parser->GetParameter( scriptName );
+
+    int function = parser->GetIndex( scriptName );
+    if( function != Invalid )
+      self->GetEM( False )->OnMessage( new oCMsgManipulate( oCMsgManipulate::EV_CALLSCRIPT, other, function ), other );
+
+    return True;
+  }
+
+  HOOK Hook_oCNpc_EV_CallScript AS( &oCNpc::EV_CallScript, &oCNpc::EV_CallScript_Union );
+
+  int oCNpc::EV_CallScript_Union( oCMsgManipulate* csg ) {
+    if( csg->targetVob != Null ) {
+      parser->SetInstance( "SELF", this );
+      parser->SetInstance( "OTHER", csg->targetVob );
+      parser->CallFunc( csg->targetState );
+      return True;
+    }
+
+    return THISCALL( Hook_oCNpc_EV_CallScript )(csg);
+  }
+
+  int AI_StartTriggerScript() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING funcName;
+    int delay;
+    par->GetParameter( delay );
+    par->GetParameter( funcName );
+
+    zTTriggerScript* trigger = zTTriggerScript::Create( funcName, delay );
+    par->SetReturn( &trigger->Parser );
+    return True;
+  }
+
+  int AI_StartTriggerScriptEx() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING funcName;
+    int delay;
+
+    oCNpc* Victim = (oCNpc*)par->GetInstance();
+    oCNpc* Other  = (oCNpc*)par->GetInstance();
+    oCNpc* Self   = (oCNpc*)par->GetInstance();
+
+    par->GetParameter( delay );
+    par->GetParameter( funcName );
+
+    zTTriggerScript* trigger = zTTriggerScript::Create( funcName, delay );
+    trigger->Self            = Self;
+    trigger->Other           = Other;
+    trigger->Victim          = Victim;
+
+    par->SetReturn( &trigger->Parser );
+    return True;
+  }
+
+  int AI_GetFirstTrigger() {
+    zCParser* par = zCParser::GetParser();
+    par->SetReturn( zTTriggerScript::GetFirstTrigger() );
+    return True;
+  }
+
+  int AI_GetNextTrigger() {
+    zCParser* par = zCParser::GetParser();
+    zTTriggerScript* trigger = (zTTriggerScript*)par->GetInstance();
+    cmd << (int)trigger << " " << (int)trigger->Next << endl;
+    par->SetReturn( trigger->Next );
+    return True;
+  }
+
+  int AI_GetPrevTrigger() {
+    zCParser* par = zCParser::GetParser();
+    zTTriggerScript* trigger = (zTTriggerScript*)par->GetInstance();
+    par->SetReturn( trigger->Prev );
+    return True;
+  }
+
+  int Hlp_ReadOptionInt() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING optName;
+    zSTRING section;
+    zSTRING parameter;
+    int     default;
+
+    par->GetParameter( default   );
+    par->GetParameter( parameter );
+    par->GetParameter( section   );
+    par->GetParameter( optName   );
+
+    int Result = default;
+    if( optName == "Gothic"     ) Result = zoptions->ReadInt( section, parameter, default );
+    if( optName == "Mod"        ) Result = zgameoptions->ReadInt( section, parameter, default );
+    if( optName == "SystemPack" ) Union.GetSysPackOption().Read( Result, A section, A parameter, default );
+
+    par->SetReturn( Result );
+    return True;
+  }
+
+  int Hlp_ReadOptionFloat() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING optName;
+    zSTRING section;
+    zSTRING parameter;
+    float   default;
+    par->GetParameter( default   );
+    par->GetParameter( parameter );
+    par->GetParameter( section   );
+    par->GetParameter( optName   );
+
+    float Result = default;
+    if( optName == "Gothic"     ) Result = zoptions->ReadReal( section, parameter, default );
+    if( optName == "Mod"        ) Result = zgameoptions->ReadReal( section, parameter, default );
+    if( optName == "SystemPack" ) Union.GetSysPackOption().Read( Result, A section, A parameter, default );
+
+    par->SetReturn( Result );
+    return True;
+  }
+
+  int Hlp_ReadOptionString() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING optName;
+    zSTRING section;
+    zSTRING parameter;
+    zSTRING default;
+
+    par->GetParameter( default   );
+    par->GetParameter( parameter );
+    par->GetParameter( section   );
+    par->GetParameter( optName   );
+
+    string Result = default;
+    if( optName == "Gothic"     ) Result = A zoptions->ReadString( section, parameter, default );
+    if( optName == "Mod"        ) Result = A zgameoptions->ReadString( section, parameter, default );
+    if( optName == "SystemPack" ) Union.GetSysPackOption().Read( Result, A section, A parameter, default );
+
+    par->SetReturn( Z Result );
+    return True;
+  }
+
+  int Hlp_OptionIsExists() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING optName;
+    zSTRING section;
+    zSTRING parameter;
+    int     default;
+
+    par->GetParameter( default   );
+    par->GetParameter( parameter );
+    par->GetParameter( section   );
+    par->GetParameter( optName   );
+
+    int Result = False;
+    if( parameter.IsEmpty() ) {
+      if( optName == "Gothic"     ) Result = zoptions->SectionExists( section );
+      if( optName == "Mod"        ) Result = zgameoptions->SectionExists( section );
+      if( optName == "SystemPack" ) Result = Union.GetSysPackOption().IsExists( section );
+    }
+    else {
+      if( optName == "Gothic"     ) Result = zoptions->EntryExists( section, parameter );
+      if( optName == "Mod"        ) Result = zgameoptions->EntryExists( section, parameter );
+      if( optName == "SystemPack" ) Result = Union.GetSysPackOption().IsExists( section, parameter );
+    }
+
+    par->SetReturn( Result );
+    return True;
+  }
+
+  int Hlp_WriteOptionInt() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING optName;
+    zSTRING section;
+    zSTRING parameter;
+    int     value;
+
+    par->GetParameter( value );
+    par->GetParameter( parameter );
+    par->GetParameter( section   );
+    par->GetParameter( optName   );
+
+    if( optName == "Gothic"     ) zoptions->WriteInt( section, parameter, value, False );
+    if( optName == "Mod"        ) zgameoptions->WriteInt( section, parameter, value, False );
+    if( optName == "SystemPack" ) Union.GetSysPackOption().Write( value, section, parameter );
+
+    return True;
+  }
+
+  int Hlp_WriteOptionFloat() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING optName;
+    zSTRING section;
+    zSTRING parameter;
+    float   value;
+
+    par->GetParameter( value );
+    par->GetParameter( parameter );
+    par->GetParameter( section );
+    par->GetParameter( optName );
+
+    if( optName == "Gothic" ) zoptions->WriteReal( section, parameter, value, False );
+    if( optName == "Mod" ) zgameoptions->WriteReal( section, parameter, value, False );
+    if( optName == "SystemPack" ) Union.GetSysPackOption().Write( value, section, parameter );
+
+    return True;
+  }
+
+  int Hlp_WriteOptionString() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING optName;
+    zSTRING section;
+    zSTRING parameter;
+    zSTRING value;
+
+    par->GetParameter( value );
+    par->GetParameter( parameter );
+    par->GetParameter( section   );
+    par->GetParameter( optName   );
+
+    if( optName == "Gothic"     ) zoptions->WriteString( section, parameter, value, False );
+    if( optName == "Mod"        ) zgameoptions->WriteString( section, parameter, value, False );
+    if( optName == "SystemPack" ) Union.GetSysPackOption().Write( value, section, parameter );
+
+    return True;
+  }
+
+
+
+
+
   void DefineExternals() {
     // CAST
     parser->DefineExternal( "Cast_PointerToInstance",    Cast_PointerToInstance,    zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
@@ -590,6 +838,15 @@ namespace GOTHIC_ENGINE {
     parser->DefineExternal( "Hlp_LogicalKeyToggled",     Hlp_LogicalKeyToggled,     zPAR_TYPE_INT,      zPAR_TYPE_INT,      0 );
     parser->DefineExternal( "Hlp_GameOnPause",           Hlp_GameOnPause,           zPAR_TYPE_INT,      0 );
     parser->DefineExternal( "Hlp_MessageBox",            Hlp_MessageBox,            zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   0 );
+    parser->DefineExternal( "Hlp_PrintConsole",          Hlp_PrintConsole,          zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   0 );
+    
+    parser->DefineExternal( "Hlp_ReadOptionInt",         Hlp_ReadOptionInt,         zPAR_TYPE_INT,      zPAR_TYPE_STRING,   zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_INT,    0 );
+    parser->DefineExternal( "Hlp_ReadOptionFloat",       Hlp_ReadOptionFloat,       zPAR_TYPE_FLOAT,    zPAR_TYPE_STRING,   zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_FLOAT,  0 );
+    parser->DefineExternal( "Hlp_ReadOptionString",      Hlp_ReadOptionString,      zPAR_TYPE_STRING,   zPAR_TYPE_STRING,   zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_STRING, 0 );
+    parser->DefineExternal( "Hlp_OptionIsExists",        Hlp_OptionIsExists,        zPAR_TYPE_INT,      zPAR_TYPE_STRING,   zPAR_TYPE_STRING, 0 );
+    parser->DefineExternal( "Hlp_WriteOptionInt",        Hlp_ReadOptionInt,         zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_INT,    0 );
+    parser->DefineExternal( "Hlp_WriteOptionFloat",      Hlp_WriteOptionFloat,      zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_FLOAT,  0 );
+    parser->DefineExternal( "Hlp_WriteOptionString",     Hlp_WriteOptionString,     zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_STRING, 0 );
 
     // WLD
     parser->DefineExternal( "Wld_ChangeLevel",           Wld_ChangeLevel,           zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   zPAR_TYPE_STRING,   0 );
@@ -629,6 +886,14 @@ namespace GOTHIC_ENGINE {
     parser->DefineExternal( "Mob_SetLocked",             Mob_SetLocked,             zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
     parser->DefineExternal( "Mob_GetKeyInstance",        Mob_GetKeyInstance,        zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
     parser->DefineExternal( "Mob_SetKeyInstance",        Mob_SetKeyInstance,        zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
+
+    // AI
+    parser->DefineExternal( "AI_CallScript",             AI_CallScript,             zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
+    parser->DefineExternal( "AI_StartTriggerScript",     AI_StartTriggerScript,     zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING,   zPAR_TYPE_INT,      0 );
+    parser->DefineExternal( "AI_StartTriggerScriptEx",   AI_StartTriggerScriptEx,   zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING,   zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
+    parser->DefineExternal( "AI_GetFirstTrigger",        AI_GetFirstTrigger,        zPAR_TYPE_INSTANCE, zPAR_TYPE_VOID,     0 );
+    parser->DefineExternal( "AI_GetNextTrigger",         AI_GetNextTrigger,         zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
+    parser->DefineExternal( "AI_GetPrevTrigger",         AI_GetPrevTrigger,         zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
 
     // OTHER
     static float fNan  = NAN;

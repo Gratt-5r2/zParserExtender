@@ -4,6 +4,7 @@
 // Automatically generated block
 #pragma region Includes
 #include "zParserExtender.h"
+#include "zTriggerScript.h"
 #include "Plugin.h"
 #pragma endregion
 

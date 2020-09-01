@@ -3,3 +3,4 @@
 // User API for zCOption
 // Add your methods here
 
+int Parm_Union( zSTRING const& );

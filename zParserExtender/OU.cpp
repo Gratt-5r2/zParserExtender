@@ -14,8 +14,9 @@ namespace GOTHIC_ENGINE {
 
   HOOK Ivk_oCGame_LoadParserFile AS( &oCGame::LoadParserFile, &oCGame::LoadParserFile_Union );
 
+  static zCList<zSTRING> funclist;
+
   int oCGame::LoadParserFile_Union( zSTRING const& parserfile ) {
-    zCList<zSTRING> funclist;
     funclist.Insert( new zSTRING( "AI_OUTPUT" ) );
     parser->SetInfoFile( &funclist, "OuInfo.inf" );
 
@@ -104,12 +105,12 @@ namespace GOTHIC_ENGINE {
   HOOK Ivk_zCParser_DeclareAssign AS( &zCParser::DeclareAssign, &zCParser::DeclareAssign_Union );
 
   void zCParser::DeclareAssign_Union( zSTRING& symName ) {
-    if( SVM ) {
+    if( SVM || 1 ) {
       int index = FindIndexInst_Union( symName );
       if( index != Invalid ) {
         zCPar_Symbol* sym = symtab.GetSymbol( index );
 
-        if( sym->type == zPAR_TYPE_STRING ) {
+        if( sym->type == zPAR_TYPE_FUNC ) {
           char* fileData = pc_start;
           int pc_end     = pc_stop - pc_start;
 
@@ -134,6 +135,20 @@ namespace GOTHIC_ENGINE {
 
 
 
+  inline bool NeedToReparseOU() {
+    if( !zParserExtender.ExtendedParsingEnabled() )
+      return ForceOUSave != False;
+
+    if( zParserExtender.CompileDatEnabled() )
+      return true;
+
+    return
+       zoptions->Parm( "ZREPARSE" ) ||
+      (zoptions->Parm( "ZREPARSE_GAME" ) && zoptions->Parm( "ZREPARSE_OU" ));
+  }
+
+
+
 
 
   HOOK Ivk_zCParser_CreatePCode AS( &zCParser::CreatePCode, &zCParser::CreatePCode_Union );
@@ -143,41 +158,19 @@ namespace GOTHIC_ENGINE {
 
     THISCALL( Ivk_zCParser_CreatePCode )();
 
-    if( compiled_tmp || !parse_changed )
+    if( !parser || this != parser )
       return;
 
-    if( !add_funclist || add_funclist->GetNum() == 0 )
-      return;
-
-    ogame->GetCutsceneManager()->LibStore( zLIB_STORE_ASCII | zLIB_STORE_BIN );
-
-    ForceOUSave = True;
-    ogame->GetCutsceneManager()->LibLoad_Union( 2 );
-    ForceOUSave = False;
+    zCCSManager* csman = ogame->GetCutsceneManager();
+    csman->LibSortion();
   }
 
 
 
 
-
-  HOOK Ivk_zCCSManager_LibLoad AS( &zCCSManager::LibLoad, &zCCSManager::LibLoad_Union );
-
-  void zCCSManager::LibLoad_Union( int flags ) {
-    if( !library )
-      return;
-
-    if( ForceOUSave | !zoptions->Parm( "ZREPARSE" ) ) {
-      cmd << colParse2 << "zParserExtender: " <<
-             colParse1 << "building "    <<
-             colParse2 << "Output Units" <<
-             colParse3 << endl;
-
-      THISCALL( Ivk_zCCSManager_LibLoad )(flags);
-    }
-    else {
-      library->DeleteLib();
-      library->loaded = True;
-    }
+  void zCCSManager::LibSortion() {
+    if( library )
+      library->ouList.QuickSort();
   }
 
 
@@ -235,7 +228,20 @@ namespace GOTHIC_ENGINE {
     if( text.IsEmpty() )
       return 0;
 
-    zCCSManager* csMan            = ogame->GetCutsceneManager();
+    zCCSManager* csMan = ogame->GetCutsceneManager();
+    int ouValidateIndex = csMan->LibValidateOU( Z name );
+    if( ouValidateIndex != Invalid ) {
+      // Delete equal cutscene block from OU
+      csMan->LibDelOU( ouValidateIndex );
+      cmd << colAtt2 << "zParserExtender: " <<
+             colAtt1 << "Cutscene block "   <<
+             colAtt2 << name                <<
+             colAtt1 << " replaced ("       <<
+             colAtt2 << ouValidateIndex     <<
+             colAtt1 << ")"                 <<
+             colAtt3 << endl;
+    }
+
     zCCSBlock* pBlock             = new zCCSBlock;
     zCCSAtomicBlock* pAtomicBlock = new zCCSAtomicBlock;
     zCEventMessage* newmsg        = csMan->CreateOuMessage();
@@ -253,18 +259,40 @@ namespace GOTHIC_ENGINE {
 
 
 
+  
+
+
+  static string s_LastLibStoreName;
+  static bool   s_SaveLibCopy = false;
+
+  void zCCSManager::LibStoreCopy( int flags ) {
+    s_SaveLibCopy = true;
+    LibStore( flags );
+    s_SaveLibCopy = false;
+
+    Col16  statusColor = CMD_GREEN | CMD_INT;
+    cmd << colParse2   << "zParserExtender: " <<
+           colParse1   << "file "             <<
+           colParse2   << s_LastLibStoreName  <<
+           colParse1   << " saved"            <<
+           colParse3   << endl;
+  }
 
 
 
 
-  /*HOOK Ivk_zCParser_Reset AS( &zCParser::Reset, &zCParser::Reset_Union );
 
-  void zCParser::Reset_Union() {
-    if( add_funclist )
-      for( int i = 0; i < symtab.table.GetNum(); i++ )
-        add_funclist->Remove( &symtab.table[i]->name );
+  HOOK Hook_zCArchiverFactory_CreateArchiverWrite PATCH( &zCArchiverFactory::CreateArchiverWrite, &zCArchiverFactory::CreateArchiverWrite_Union );
 
-    add_funclist = Null;
-    THISCALL( Ivk_zCParser_Reset )();
-  }*/
+  zCArchiver* zCArchiverFactory::CreateArchiverWrite_Union( const zSTRING& __fileName, zTArchiveMode mode, int saveGame, int flags ) {
+    string fileName = __fileName;
+    if( s_SaveLibCopy ) {
+      string name      = fileName.GetPattern( "", ".", -1 );
+      string extension = fileName.GetPattern( ".", "", -1 );
+             fileName  = name + ".EDITED." + extension;
+    }
+
+    s_LastLibStoreName = fileName.GetWord( "\\", -1 );
+    return THISCALL( Hook_zCArchiverFactory_CreateArchiverWrite )(fileName, mode, saveGame, flags );
+  };
 }

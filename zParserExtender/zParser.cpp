@@ -2,20 +2,96 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-  HOOK Ivk_zCParser_SaveDat        AS( &zCParser::SaveDat,        &zCParser::SaveDat_Union );
+  static bool NeedToReparse( string s ) {
+    string parName = s.GetPattern( "\\", "." );
+    if( parName == "GOTHIC"     && zoptions->Parm( "ZREPARSE_GAME"   ) ) return true;
+    if( parName == "SFX"        && zoptions->Parm( "ZREPARSE_SFX"    ) ) return true;
+    if( parName == "PARTICLEFX" && zoptions->Parm( "ZREPARSE_PFX"    ) ) return true;
+    if( parName == "VISUALFX"   && zoptions->Parm( "ZREPARSE_VFX"    ) ) return true;
+    if( parName == "CAMERA"     && zoptions->Parm( "ZREPARSE_CAMERA" ) ) return true;
+    if( parName == "MENU"       && zoptions->Parm( "ZREPARSE_MENU"   ) ) return true;
+    if( parName == "MUSIC"      && zoptions->Parm( "ZREPARSE_MUSIC"  ) ) return true;
+    if( parName == "FIGHT"      && zoptions->Parm( "ZREPARSE_FIGHT"  ) ) return true;
+    return false;
+  }
+
+  static string GetParserNameByDAT( string s ) {
+    string parName = s.GetPattern( "\\", "." );
+    if( parName == "GOTHIC"     ) return "Game";
+    if( parName == "SFX"        ) return "SFX";
+    if( parName == "PARTICLEFX" ) return "PFX";
+    if( parName == "VISUALFX"   ) return "VFX";
+    if( parName == "CAMERA"     ) return "Camera";
+    if( parName == "MENU"       ) return "Menu";
+    if( parName == "MUSIC"      ) return "Music";
+    if( parName == "FIGHT"      ) return "Fight";
+    return s + ".DAT";
+  }
+
+  static string GetDATNameByParser( zCParser* par ) {
+    if( par == Gothic::Parsers::Game   ) return "GOTHIC.DAT";
+    if( par == Gothic::Parsers::SFX    ) return "SFX.DAT";
+    if( par == Gothic::Parsers::PFX    ) return "PARTICLEFX.DAT";
+    if( par == Gothic::Parsers::VFX    ) return "VISUALFX.DAT";
+    if( par == Gothic::Parsers::Camera ) return "CAMERA.DAT";
+    if( par == Gothic::Parsers::Menu   ) return "MENU.DAT";
+    if( par == Gothic::Parsers::Music  ) return "MUSIC.DAT";
+    return "UNKNOWN.DAT";
+  }
+
+
+
+  inline bool NeedToSaveOU() {
+    return
+      zoptions->Parm( "ZREPARSE" ) ||
+      (zoptions->Parm( "ZREPARSE_GAME" ) && zoptions->Parm( "ZREPARSE_OU" ));
+  }
+
+
+
+  HOOK Ivk_zCParser_SaveDat AS( &zCParser::SaveDat, &zCParser::SaveDat_Union );
 
   int zCParser::SaveDat_Union( zSTRING& name ) {
     PostCompileCallReplace();
 
     if( zParserExtender.CompileDatEnabled() ) {
-      if( zParserExtender.ExtendedParsingEnabled() ) {
-        zSTRING clearName = name.GetPattern("", ".", -1);
-        zSTRING extension = name.GetWord( ".", -1 );
-        name = clearName + ".EDITED." + extension;
-      }
+      // Modified save process
+      if( zParserExtender.ExtendedParsingEnabled() )
+        return SaveDatCopy();
       
-      return THISCALL( Ivk_zCParser_SaveDat )( name );
+      // Original save process
+      int Ok = THISCALL( Ivk_zCParser_SaveDat )( name );
+
+      // Compile new OU library
+      if( this == parser && NeedToSaveOU() ) {
+        ogame->GetCutsceneManager()->LibSortion();
+        ogame->GetCutsceneManager()->LibStore( zLIB_STORE_ASCII | zLIB_STORE_BIN );
+        ogame->GetCutsceneManager()->LibLoad( zLIB_STORE_BIN );
+      }
+
+      return Ok;
     }
+
+    return False;
+  }
+
+
+
+  int zCParser::SaveDatCopy() {
+    zSTRING datName   = GetDATNameByParser( this );
+    zSTRING clearName = datName.GetPattern( "", ".", -1 );
+    zSTRING extension = datName.GetWord( ".", -1 );
+            datName   = clearName + ".EDITED." + extension;
+
+    int Ok = THISCALL( Ivk_zCParser_SaveDat )( datName );
+
+    cmd << colParse2 << "zParserExtender: " <<
+           colParse1 << "file "             <<
+           colParse2 << datName             <<
+           colParse1 << " saved"            <<
+           colParse3 << endl;
+
+    return Ok;
   }
 
 
@@ -218,6 +294,51 @@ namespace GOTHIC_ENGINE {
   }
 
 
+
+
+
+
+  HOOK Ivk_zCParser_Parse AS( &zCParser::Parse, &zCParser::Parse_Union );
+
+  int zCParser::Parse_Union( zSTRING s ) {
+    int enableParsing_tmp = enableParsing;
+    enableParsing = enableParsing_tmp || NeedToReparse( s ) ? True : False;
+
+    if( enableParsing ) {
+      cmd << colParse2 << "zParserExtender: " <<
+        colParse1 << "building " <<
+        colParse2 << GetParserNameByDAT( s ) <<
+        colParse1 << " parser" <<
+        colParse3 << endl;
+    }
+
+    int Ok = THISCALL( Ivk_zCParser_Parse )(s);
+
+    enableParsing = enableParsing_tmp;
+    return Ok;
+  }
+
+
+
+
+
+  HOOK Ivk_zCOption_Parm AS( &zCOption::Parm, &zCOption::Parm_Union );
+
+  int zCOption::Parm_Union( const zSTRING& parmname ) {
+    string cmd = commandline;
+    string par = parmname;
+
+    int index = cmd.Search( parmname );
+    if( index != Invalid ) {
+      string key = cmd.GetWordSmartEx( 1, true, index );
+      if( key == par )
+        return True;
+    }
+    
+    return False;
+  }
+
+
   
 
 #if ENGINE >= Engine_G2
@@ -233,7 +354,6 @@ namespace GOTHIC_ENGINE {
     arc.ReadInt( "numSymbols", symNum );
     for( int i = 0; i < symNum; i++ ) {
       symRowName = string::Combine( "symName%i", i );
-      cmd << i << ".\t" << symRowName << endl;
 
       zSTRING symName;
       arc.ReadString( symRowName, symName );
@@ -265,34 +385,4 @@ namespace GOTHIC_ENGINE {
     return True;
   }
 #endif
-
-
-
-
-
-
-  static bool NeedToReparse( string s ) {
-    string parName = s.GetPattern( "\\", "." );
-    if( parName == "GOTHIC"     && zoptions->Parm( "ZREPARSE_GAME"   ) ) return true;
-    if( parName == "SFX"        && zoptions->Parm( "ZREPARSE_SFX"    ) ) return true;
-    if( parName == "PARTICLEFX" && zoptions->Parm( "ZREPARSE_PFX"    ) ) return true;
-    if( parName == "VISUALFX"   && zoptions->Parm( "ZREPARSE_VFX"    ) ) return true;
-    if( parName == "CAMERA"     && zoptions->Parm( "ZREPARSE_CAMERA" ) ) return true;
-    if( parName == "MENU"       && zoptions->Parm( "ZREPARSE_MENU"   ) ) return true;
-    if( parName == "MUSIC"      && zoptions->Parm( "ZREPARSE_MUSIC"  ) ) return true;
-    if( parName == "FIGHT"      && zoptions->Parm( "ZREPARSE_FIGHT"  ) ) return true;
-    return false;
-  }
-
-  HOOK Ivk_zCParser_Parse AS( &zCParser::Parse, &zCParser::Parse_Union );
-
-  int zCParser::Parse_Union( zSTRING s ) {
-    int enableParsing_tmp = enableParsing;
-    enableParsing         = enableParsing_tmp || NeedToReparse( s ) ? True : False;
-
-    int Ok = THISCALL( Ivk_zCParser_Parse )( s );
-
-    enableParsing = enableParsing_tmp;
-    return Ok;
-  }
 }

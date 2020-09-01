@@ -11,19 +11,23 @@ namespace GOTHIC_ENGINE {
   Col16 colParse2 = Col16( CMD_CYAN | CMD_INT );
   Col16 colParse3 = Col16();
 
+  Col16 colAtt1 = Col16( CMD_YELLOW );
+  Col16 colAtt2 = Col16( CMD_YELLOW | CMD_INT );
+  Col16 colAtt3 = Col16();
+
 
 
 
 
   zCParser* GetParserByName( string name ) {
-    if( name.HasWordI( "Game"   ) || name.HasWordI( "parser"           ) ) return Gothic::Parsers::Game;
-    if( name.HasWordI( "Auto"                                          ) ) return Gothic::Parsers::Game;
-    if( name.HasWordI( "SFX"    ) || name.HasWordI( "parserSoundFX"    ) ) return Gothic::Parsers::SFX;
-    if( name.HasWordI( "PFX"    ) || name.HasWordI( "parserParticleFX" ) ) return Gothic::Parsers::PFX;
-    if( name.HasWordI( "VFX"    ) || name.HasWordI( "parserVisualFX"   ) ) return Gothic::Parsers::VFX;
-    if( name.HasWordI( "Camera" ) || name.HasWordI( "parserCamera"     ) ) return Gothic::Parsers::Camera;
-    if( name.HasWordI( "Menu"   ) || name.HasWordI( "parserMenu"       ) ) return Gothic::Parsers::Menu;
-    if( name.HasWordI( "Music"  ) || name.HasWordI( "parserMusic"      ) ) return Gothic::Parsers::Music;
+    if( name == "Game"    || name == "parser"           ) return Gothic::Parsers::Game;
+    if( name == "Auto"                                  ) return Gothic::Parsers::Game;
+    if( name == "SFX"     || name == "parserSoundFX"    ) return Gothic::Parsers::SFX;
+    if( name == "PFX"     || name == "parserParticleFX" ) return Gothic::Parsers::PFX;
+    if( name == "VFX"     || name == "parserVisualFX"   ) return Gothic::Parsers::VFX;
+    if( name == "Camera"  || name == "parserCamera"     ) return Gothic::Parsers::Camera;
+    if( name == "Menu"    || name == "parserMenu"       ) return Gothic::Parsers::Menu;
+    if( name == "Music"   || name == "parserMusic"      ) return Gothic::Parsers::Music;
     return Null;
   }
 
@@ -236,6 +240,7 @@ namespace GOTHIC_ENGINE {
 
   void zCParserExtender::ParseBegin() {
     ParsingEnabled = true;
+
     {
       Array<zCParser*> activeParsers;
       for( uint i = 0; i < CompileQueue.GetNum(); i++ ) {
@@ -301,8 +306,14 @@ namespace GOTHIC_ENGINE {
           RegisterPFXSymbols();
       }
 
+      // New dialogs sortion
+      //ogame->GetCutsceneManager()->LibSortion();
+      //ogame->GetCutsceneManager()->LibStore( zLIB_STORE_ASCII | zLIB_STORE_BIN );
+      //ogame->GetCutsceneManager()->LibLoad( zLIB_LOAD_BIN );
+
       activeParsers.Clear();
     }
+
     ParsingEnabled = false;
   }
 
@@ -385,5 +396,52 @@ namespace GOTHIC_ENGINE {
 
   void ParseExternalScript( string parserName, string scriptName ) {
     zParserExtender.PushExternalScript( parserName, scriptName );
+  }
+
+
+
+
+
+  static int SaveDatEval( const zSTRING& __command, zSTRING& message ) {
+    string command = __command;
+
+    if( command.GetWordSmart( 1 ) == "PARSER" ) {
+      if( command.GetWordSmart( 2 ) == "SAVEDAT" ) {
+        string datName = command.GetWordSmart( 3 );
+        if( datName == "OU" ) {
+          ogame->GetCutsceneManager()->LibStoreCopy( zLIB_STORE_ASCII | zLIB_STORE_BIN );
+          return True;
+        }
+
+        zCParser* par = GetParserByName( datName );
+        if( par ) {
+          par->SaveDatCopy();
+          return True;
+        }
+
+        message = "Unknown or not defined parser!";
+        return True;
+      }
+      
+      message = "Save what ???";
+      return True;
+    }
+
+    return False;
+  }
+
+
+
+
+  void DefineConsoleCommands() {
+    zcon->AddEvalFunc( SaveDatEval );
+    zcon->Register( "PARSER SAVEDAT GAME",   "Save 'Game' dat file"   );
+    zcon->Register( "PARSER SAVEDAT SFX",    "Save 'SFX' dat file"    );
+    zcon->Register( "PARSER SAVEDAT PFX",    "Save 'PFX' dat file"    );
+    zcon->Register( "PARSER SAVEDAT VFX",    "Save 'VFX' dat file"    );
+    zcon->Register( "PARSER SAVEDAT Camera", "Save 'Camera' dat file" );
+    zcon->Register( "PARSER SAVEDAT Menu",   "Save 'Menu' dat file"   );
+    zcon->Register( "PARSER SAVEDAT Music",  "Save 'Music' dat file"  );
+    zcon->Register( "PARSER SAVEDAT OU",     "Save 'Music' dat file"  );
   }
 }
