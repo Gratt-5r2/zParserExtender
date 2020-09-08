@@ -336,6 +336,32 @@ namespace GOTHIC_ENGINE {
 
 
 
+
+  HOOK Hook_zCPar_SymbolTable_Compare AS( &zCPar_SymbolTable::Compare, &zCPar_SymbolTable::Compare_Union );
+
+  template<class T>
+  inline T CompareLerp(T a, T v, T b) {
+    if( v < a || v > b ) {
+      cmd << "CompareLerp: " << a << " " << v << " " << b << endl;
+      return 0;
+    }
+
+    return v;
+  }
+
+  int zCPar_SymbolTable::Compare_Union( void const* a, void const* b ) {
+    int s0 = cur_table->GetNumInList() - 1;
+    int i1 = CompareLerp( 0, *(int*)a, s0 );
+    int i2 = CompareLerp( 0, *(int*)b, s0 );
+
+    char* sa = cur_table->table[i1]->name.ToChar();
+    char* sb = cur_table->table[i2]->name.ToChar();
+
+    return strcmp( sa, sb );
+  }
+
+
+
 #else
 
 

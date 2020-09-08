@@ -229,6 +229,9 @@
     <Filter Include="Plugin\zParserExtender\InstanceItem">
       <UniqueIdentifier>{9c1476e9-e9e5-420c-b5e8-dddcb57b4c87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\zParserExtender\Extender\VariableEditor">
+      <UniqueIdentifier>{30ba6783-3e35-4a4f-90ce-cf45f63336bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2821,6 +2824,9 @@
     </ClInclude>
     <ClInclude Include="zTriggerScript.h">
       <Filter>Plugin\zParserExtender\Externals</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableEditor.cpp">
+      <Filter>Plugin\zParserExtender\Extender\VariableEditor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

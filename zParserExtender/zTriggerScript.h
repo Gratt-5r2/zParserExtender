@@ -3,9 +3,6 @@
 
 namespace GOTHIC_ENGINE {
   struct zTTriggerScript {
-    zTTriggerScript* Prev;
-    zTTriggerScript* Next;
-
     zSTRING FunctionName;
     int Function;
 
@@ -22,6 +19,7 @@ namespace GOTHIC_ENGINE {
 
     zTTriggerScript();
     bool CallTrigger();
+    bool IsLocal();
     void SetAsInstance( zSTRING instName );
     void Archive( zCArchiver& arc );
     void Unarchive( zCArchiver& arc );
@@ -31,9 +29,20 @@ namespace GOTHIC_ENGINE {
     static void DoTriggers();
     static void UpdateFirst();
     static zTTriggerScript* GetFirstTrigger();
-    static void LoadTriggers( zCArchiver& arc );
-    static void SaveTriggers( zCArchiver& arc );
+    static void LoadTriggers( zCArchiver& arc, bool temp );
+    static void SaveTriggers( zCArchiver& arc, bool temp );
+    static void ClearTriggers( bool temp );
   protected:
+
+    friend int AI_GetTriggerByID();
+    friend int AI_GetTriggersNum();
+    friend int AI_GetNextTriggerByFunc();
+    friend int AI_GetNextTriggerByFuncName();
+    friend int AI_GetNextTriggerBySelf();
+    friend int AI_GetNextTriggerByOther();
+    friend int AI_GetNextTriggerByVictim();
+    friend int AI_GetNextTriggerByNPCs();
+
     static Array<zTTriggerScript*> TriggerScripts;
   };
 

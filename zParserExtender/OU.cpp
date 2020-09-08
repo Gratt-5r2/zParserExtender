@@ -104,29 +104,27 @@ namespace GOTHIC_ENGINE {
 
   HOOK Ivk_zCParser_DeclareAssign AS( &zCParser::DeclareAssign, &zCParser::DeclareAssign_Union );
 
+  inline bool IsEOL( const char& sym ) {
+    return
+      sym == '\r' ||
+      sym == '\n' ||
+      sym == '\0';
+  }
+
   void zCParser::DeclareAssign_Union( zSTRING& symName ) {
-    if( SVM || 1 ) {
+    if( SVM ) {
       int index = FindIndexInst_Union( symName );
       if( index != Invalid ) {
-        zCPar_Symbol* sym = symtab.GetSymbol( index );
 
-        if( sym->type == zPAR_TYPE_FUNC ) {
-          char* fileData = pc_start;
-          int pc_end     = pc_stop - pc_start;
+        char* fileData = pc;
+        int lineLength = 0;
 
-          // Collect current row symbols to the string
-          zSTRING text;
-          for( int i = line_start; i < pc_end; i++ ) {
-            if( fileData[i] == '\n' )
-              break;
+        for( ; true; lineLength++ )
+          if( IsEOL( fileData[lineLength] ) )
+            break;
 
-            if( (byte)fileData[i] >= (byte)' ' || (byte)fileData[i] == (byte)'\t' )
-              text += fileData[i];
-          }
-
-          // Write AI_Output information to library
-          WriteAdditionalInfo( text, linec, line_start );
-        }
+        zSTRING lineText = string( fileData, lineLength );
+        WriteAdditionalInfo( lineText, linec, line_start );
       }
     }
 
@@ -135,16 +133,41 @@ namespace GOTHIC_ENGINE {
 
 
 
-  inline bool NeedToReparseOU() {
-    if( !zParserExtender.ExtendedParsingEnabled() )
-      return ForceOUSave != False;
+  HOOK Hook_zCParser_IsInAdditionalInfo AS( &zCParser::IsInAdditionalInfo, &zCParser::IsInAdditionalInfo_Union );
 
-    if( zParserExtender.CompileDatEnabled() )
-      return true;
+  int zCParser::IsInAdditionalInfo_Union( const zSTRING& symName ) {
+    return symName == "AI_Output";
+  }
 
-    return
-       zoptions->Parm( "ZREPARSE" ) ||
-      (zoptions->Parm( "ZREPARSE_GAME" ) && zoptions->Parm( "ZREPARSE_OU" ));
+
+
+  void zDeleteOU();
+
+  HOOK Hook_zInitOptions AS( &zInitOptions, &zDeleteOU );
+
+  void zDeleteOU() {
+    Hook_zInitOptions();
+    if( !NeedToReparseOU() )
+      return;
+
+    auto& optDef  = Union.GetDefaultOption();
+    auto& optGame = Union.GetGameOption();
+
+    string ouFileName = "OU";
+    if( &optDef != &optGame )
+      optGame.Read( ouFileName, "FILES", "OUTPUTUNITS", "OU" );
+
+#if ENGINE >= Engine_G2
+    string ouFullFileName = Union.GetGameDirectory() + A zoptions->GetDirString( DIR_OUTPUTUNITS ) + ouFileName;
+#else
+    string ouFullFileName = Union.GetGameDirectory() + A zoptions->GetDirString( DIR_SCRIPTS ) + "content\\cutscene\\" + ouFileName;
+#endif
+
+    string ouBin = ouFullFileName + ".bin";
+    string ouCsl = ouFullFileName + ".csl";
+
+    DeleteFile( ouBin );
+    DeleteFile( ouCsl );
   }
 
 

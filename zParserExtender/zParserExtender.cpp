@@ -277,9 +277,10 @@ namespace GOTHIC_ENGINE {
                colParse3 << endl;
 
 
-        // So, activate parser for parsing and parse file
-        par->ReserAdditionalInfo();
+        // So, activate parser for parsing
+        par->ResetAdditionalInfo();
         par->SetEnableParsing_Union( True );
+
         if( par->ParseFile( Z scriptInfo.FullName ) != 0 ) {
           bool parsed = activeParsers & par;
           if( !parsed )
@@ -305,11 +306,6 @@ namespace GOTHIC_ENGINE {
         if( CurrentParser == Gothic::Parsers::PFX )
           RegisterPFXSymbols();
       }
-
-      // New dialogs sortion
-      //ogame->GetCutsceneManager()->LibSortion();
-      //ogame->GetCutsceneManager()->LibStore( zLIB_STORE_ASCII | zLIB_STORE_BIN );
-      //ogame->GetCutsceneManager()->LibLoad( zLIB_LOAD_BIN );
 
       activeParsers.Clear();
     }
@@ -393,10 +389,22 @@ namespace GOTHIC_ENGINE {
 
 
 
+  bool zCParserExtender::ExternalScriptsListIsEmpty() {
+    return CompileQueue.GetNum() == 0;
+  }
+
+
+
+
 
   void ParseExternalScript( string parserName, string scriptName ) {
     zParserExtender.PushExternalScript( parserName, scriptName );
   }
+
+
+
+
+  
 
 
 
@@ -406,42 +414,54 @@ namespace GOTHIC_ENGINE {
     string command = __command;
 
     if( command.GetWordSmart( 1 ) == "PARSER" ) {
-      if( command.GetWordSmart( 2 ) == "SAVEDAT" ) {
+      string secondWord = command.GetWordSmart( 2 );
+
+      if( secondWord == "SAVEDAT" ) {
         string datName = command.GetWordSmart( 3 );
+
+        // Save OU bin & csl
         if( datName == "OU" ) {
           ogame->GetCutsceneManager()->LibStoreCopy( zLIB_STORE_ASCII | zLIB_STORE_BIN );
           return True;
         }
 
+        // Save DAT file
         zCParser* par = GetParserByName( datName );
         if( par ) {
           par->SaveDatCopy();
           return True;
         }
 
+        // ... Errors
         message = "Unknown or not defined parser!";
         return True;
       }
+
+      if( secondWord == "VAR" || secondWord == "CONST" ) {
+        VariableEditor( command.GetPattern( secondWord, "" ), message );
+        return True;
+      }
       
-      message = "Save what ???";
+      message = "What ???";
       return True;
     }
 
+    // Command is not 'parser'
     return False;
   }
 
 
 
 
-  void DefineConsoleCommands() {
+  void Plugin_InitConsole() {
     zcon->AddEvalFunc( SaveDatEval );
     zcon->Register( "PARSER SAVEDAT GAME",   "Save 'Game' dat file"   );
     zcon->Register( "PARSER SAVEDAT SFX",    "Save 'SFX' dat file"    );
     zcon->Register( "PARSER SAVEDAT PFX",    "Save 'PFX' dat file"    );
     zcon->Register( "PARSER SAVEDAT VFX",    "Save 'VFX' dat file"    );
-    zcon->Register( "PARSER SAVEDAT Camera", "Save 'Camera' dat file" );
-    zcon->Register( "PARSER SAVEDAT Menu",   "Save 'Menu' dat file"   );
-    zcon->Register( "PARSER SAVEDAT Music",  "Save 'Music' dat file"  );
+    zcon->Register( "PARSER SAVEDAT CAMERA", "Save 'Camera' dat file" );
+    zcon->Register( "PARSER SAVEDAT MENU",   "Save 'Menu' dat file"   );
+    zcon->Register( "PARSER SAVEDAT MUSIC",  "Save 'Music' dat file"  );
     zcon->Register( "PARSER SAVEDAT OU",     "Save 'Music' dat file"  );
   }
 }

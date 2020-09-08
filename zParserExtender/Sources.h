@@ -3,6 +3,7 @@
 
 // Automatically generated block
 #pragma region Includes
+#include "VariableEditor.cpp"
 #include "zParserExtender.cpp"
 #include "zSymbol.cpp"
 #include "zSymbolTable.cpp"

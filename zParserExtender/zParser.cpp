@@ -41,9 +41,9 @@ namespace GOTHIC_ENGINE {
 
 
 
-  inline bool NeedToSaveOU() {
+  static bool NeedToReparseOU() {
     return
-      zoptions->Parm( "ZREPARSE" ) ||
+       zoptions->Parm( "ZREPARSE" ) ||
       (zoptions->Parm( "ZREPARSE_GAME" ) && zoptions->Parm( "ZREPARSE_OU" ));
   }
 
@@ -63,11 +63,16 @@ namespace GOTHIC_ENGINE {
       int Ok = THISCALL( Ivk_zCParser_SaveDat )( name );
 
       // Compile new OU library
-      if( this == parser && NeedToSaveOU() ) {
+      if( this == parser && NeedToReparseOU() ) {
         ogame->GetCutsceneManager()->LibSortion();
         ogame->GetCutsceneManager()->LibStore( zLIB_STORE_ASCII | zLIB_STORE_BIN );
         ogame->GetCutsceneManager()->LibLoad( zLIB_STORE_BIN );
       }
+
+      // Reload a symbol table after clear compilation
+      // for safely symbols loading
+      if( !zParserExtender.ExternalScriptsListIsEmpty() )
+        LoadDat( name );
 
       return Ok;
     }
@@ -93,8 +98,6 @@ namespace GOTHIC_ENGINE {
 
     return Ok;
   }
-
-
 
 
 
@@ -149,8 +152,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
-
   HOOK Ivk_zCParser_ReadWord AS( &zCParser::ReadWord, &zCParser::ReadWord_Union );
 
   void zCParser::ReadWord_Union( zSTRING& word ) {
@@ -160,8 +161,6 @@ namespace GOTHIC_ENGINE {
       THISCALL( Ivk_zCParser_ReadWord )(word);
     }
   }
-
-
 
 
 
@@ -207,8 +206,6 @@ namespace GOTHIC_ENGINE {
 
 
 
-
-
   void zCParser::DeclareBreak_Union() {
     if( op_loop_level <= 0 )
       Error( Z "found empty break operator!", 0 );
@@ -223,8 +220,6 @@ namespace GOTHIC_ENGINE {
 
     PrevWord();
   }
-
-
 
 
 
@@ -245,16 +240,12 @@ namespace GOTHIC_ENGINE {
 
 
 
-
-
   void zCParser::SkipMeta_Union() {
     do {
       ReadWord( aword );
     } while( !aword.IsEmpty() && aword != "}" );
     Match( Z ";" );
   }
-
-
 
 
 
@@ -268,8 +259,6 @@ namespace GOTHIC_ENGINE {
 
 
 
-
-
   void zCParser::CallGameLoop_Union() {
     static int index = GetIndex( "GAMELOOP" );
     if( index == Invalid )
@@ -280,21 +269,9 @@ namespace GOTHIC_ENGINE {
 
 
 
-
-
-  void zCParser::ReserAdditionalInfo() {
+  void zCParser::ResetAdditionalInfo() {
     add_funclist = Null;
   }
-
-
-
-
-  inline bool IsValidIntegerSymbol( zCPar_Symbol* sym ) {
-    return sym && sym->type == zPAR_TYPE_INT && sym->flags == 0;
-  }
-
-
-
 
 
 
@@ -305,11 +282,11 @@ namespace GOTHIC_ENGINE {
     enableParsing = enableParsing_tmp || NeedToReparse( s ) ? True : False;
 
     if( enableParsing ) {
-      cmd << colParse2 << "zParserExtender: " <<
-        colParse1 << "building " <<
-        colParse2 << GetParserNameByDAT( s ) <<
-        colParse1 << " parser" <<
-        colParse3 << endl;
+      cmd << colParse2 << "zParserExtender: "     <<
+             colParse1 << "building "             <<
+             colParse2 << GetParserNameByDAT( s ) <<
+             colParse1 << " parser"               <<
+             colParse3 << endl;
     }
 
     int Ok = THISCALL( Ivk_zCParser_Parse )(s);
@@ -317,8 +294,6 @@ namespace GOTHIC_ENGINE {
     enableParsing = enableParsing_tmp;
     return Ok;
   }
-
-
 
 
 
@@ -339,10 +314,13 @@ namespace GOTHIC_ENGINE {
   }
 
 
-  
 
 #if ENGINE >= Engine_G2
   HOOK Ivk_zCParser_LoadGlobalVars AS( &zCParser::LoadGlobalVars, &zCParser::LoadGlobalVars_Union );
+
+  inline bool IsValidIntegerSymbol( zCPar_Symbol* sym ) {
+    return sym && sym->type == zPAR_TYPE_INT && sym->flags == 0;
+  }
 
   // Parser bugfix
   int zCParser::LoadGlobalVars_Union( zCArchiver& arc ) {

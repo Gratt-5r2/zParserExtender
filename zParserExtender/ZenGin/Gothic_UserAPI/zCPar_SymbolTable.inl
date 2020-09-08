@@ -14,3 +14,4 @@ void CheckNextSymbol( zCPar_Symbol* sym );
 void RemoveSymbolSorted( zCPar_Symbol* sym );
 void RestoreSymbolSorted( zCPar_Symbol* sym );
 void RenameSymbol( zCPar_Symbol* sym, const zSTRING& newName );
+static int Compare_Union( void const*, void const* );

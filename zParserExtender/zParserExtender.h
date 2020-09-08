@@ -44,6 +44,7 @@ namespace GOTHIC_ENGINE {
     bool CompileDatEnabled();
     bool NativeWhileEnabled();
     bool ExtendedParsingEnabled();
+    bool ExternalScriptsListIsEmpty();
   };
 
   zCParserExtender zParserExtender;

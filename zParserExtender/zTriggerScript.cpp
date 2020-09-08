@@ -3,19 +3,18 @@
 
 namespace GOTHIC_ENGINE {
   static Timer triggerTimer;
+  const uint HeroUID = 0xFFFFFFFE;
 
 
   zTTriggerScript::zTTriggerScript() {
-    Prev = Null;
-    Next = Null;
+    Self   = Null;
+    Other  = Null;
+    Victim = Null;
+
     ZeroMemory( &Parser, sizeof( Parser ) );
     Parser.Enabled = True;
 
-    Prev = TriggerScripts.GetNum() ? TriggerScripts.GetLast() : Null;
-    if( Prev )
-      Prev->Next = this;
-
-    TriggerScripts += this;
+    TriggerScripts.InsertSorted( this );
     UpdateFirst();
   }
 
@@ -23,8 +22,8 @@ namespace GOTHIC_ENGINE {
 
   bool zTTriggerScript::CallTrigger() {
     if( Function != Invalid && Parser.Enabled ) {
-      parser->SetInstance( "SELF", Self );
-      parser->SetInstance( "OTHER", Other );
+      parser->SetInstance( "SELF",   Self   );
+      parser->SetInstance( "OTHER",  Other  );
       parser->SetInstance( "VICTIM", Victim );
 
       int Ok = *(int*)parser->CallFunc( Function );
@@ -37,23 +36,56 @@ namespace GOTHIC_ENGINE {
 
 
 
+  bool zTTriggerScript::IsLocal() {
+    return
+      Self   != Null ||
+      Other  != Null ||
+      Victim != Null;
+  }
+
+
+
   void zTTriggerScript::SetAsInstance( zSTRING instName ) {
     parser->SetInstance( "SelfTrigger", &Parser );
   }
 
 
 
+  uint NPC_2_UID( oCNpc* npc ) {
+    if( npc == player )
+      return HeroUID;
+
+    if( npc )
+      return ArchivedNpcUIDs.SearchEqual( npc );
+    
+    return Invalid;
+  }
+
+
+
+  oCNpc* UID_2_NPC( uint uid ) {
+    if( uid == HeroUID )
+      return player;
+
+    if( uid != Invalid )
+      return ArchivedNpcUIDs[uid];
+
+    return Null;
+  }
+
+
+
   void zTTriggerScript::Archive( zCArchiver& arc ) {
     arc.WriteString( "FunctionName", FunctionName );
-    arc.WriteRaw( "Parser", &Parser, sizeof( Parser ) );
-    arc.WriteInt( "Timer", triggerTimer[this].TimeHasPassed() );
+    arc.WriteRaw   ( "Parser", &Parser, sizeof( Parser ) );
+    arc.WriteInt   ( "Timer", triggerTimer[this].TimeHasPassed() );
+    
+    uint selfUID   = NPC_2_UID( Self   );
+    uint OtherUID  = NPC_2_UID( Other  );
+    uint VictimUID = NPC_2_UID( Victim );
 
-    uint selfUID   = Self   ? ArchivedNpcUIDs.SearchEqual( Self )   : Invalid;
-    uint OtherUID  = Other  ? ArchivedNpcUIDs.SearchEqual( Other )  : Invalid;
-    uint VictimUID = Victim ? ArchivedNpcUIDs.SearchEqual( Victim ) : Invalid;
-
-    arc.WriteInt( "Self", selfUID );
-    arc.WriteInt( "Other", OtherUID );
+    arc.WriteInt( "Self",   selfUID );
+    arc.WriteInt( "Other",  OtherUID );
     arc.WriteInt( "Victim", VictimUID );
   }
 
@@ -63,32 +95,32 @@ namespace GOTHIC_ENGINE {
     arc.ReadString( "FunctionName", FunctionName );
     Function = parser->GetIndex( FunctionName );
 
-    arc.ReadRaw( "Parser", &Parser, sizeof( Parser ) );
+    arc.ReadRaw   ( "Parser", &Parser, sizeof( Parser ) );
 
     int_t passedTime;
     arc.ReadInt( "Timer", passedTime );
     triggerTimer[this].ResetTime().TimeAppend( passedTime );
 
-    int selfUID = 0;
-    int OtherUID = 0;
+    int selfUID   = 0;
+    int OtherUID  = 0;
     int VictimUID = 0;
 
-    arc.ReadInt( "Self", selfUID );
-    arc.ReadInt( "Other", OtherUID );
+    arc.ReadInt( "Self",   selfUID );
+    arc.ReadInt( "Other",  OtherUID );
     arc.ReadInt( "Victim", VictimUID );
 
-    Self   = selfUID   != Invalid ? ArchivedNpcUIDs[selfUID]   : Null;
-    Other  = OtherUID  != Invalid ? ArchivedNpcUIDs[OtherUID]  : Null;
-    Victim = VictimUID != Invalid ? ArchivedNpcUIDs[VictimUID] : Null;
+    Self   = UID_2_NPC( selfUID   );
+    Other  = UID_2_NPC( OtherUID  );
+    Victim = UID_2_NPC( VictimUID );
   }
 
 
 
   zTTriggerScript* zTTriggerScript::Create( zSTRING funcName, int delay ) {
     zTTriggerScript* trigger = new zTTriggerScript();
-    trigger->FunctionName = funcName;
-    trigger->Function = parser->GetIndex( funcName );
-    trigger->Parser.Delay = delay;
+    trigger->FunctionName    = funcName;
+    trigger->Function        = parser->GetIndex( funcName );
+    trigger->Parser.Delay    = delay;
     return trigger;
   }
 
@@ -99,18 +131,16 @@ namespace GOTHIC_ENGINE {
 
     byte gamePause = ogame->IsOnPause() ? True : False;
 
-
-
     for( uint i = 0; i < TriggerScripts.GetNum(); i++ ) {
       auto trigger = TriggerScripts[i];
-      uint delay = trigger->Parser.Delay;
+      uint delay   = trigger->Parser.Delay;
 
       // Stop timer processing on the game pause
       triggerTimer[trigger].Suspend( gamePause );
       if( gamePause )
         continue;
 
-      if( triggerTimer[trigger].Await( delay ) ) {
+      if( triggerTimer[trigger].AwaitExact( delay ) ) {
         trigger->SetAsInstance( "SelfTrigger" );
         if( trigger->CallTrigger() ) {
           delete trigger;
@@ -135,11 +165,10 @@ namespace GOTHIC_ENGINE {
 
 
 
-  void zTTriggerScript::LoadTriggers( zCArchiver& arc ) {
-    TriggerScripts.Clear();
+  void zTTriggerScript::LoadTriggers( zCArchiver& arc, bool temp ) {
     int_t triggersNum;
-
     arc.ReadInt( "TriggersNum", triggersNum );
+
     for( int_t i = 0; i < triggersNum; i++ ) {
       zTTriggerScript* trigger = new zTTriggerScript();
       trigger->Unarchive( arc );
@@ -148,44 +177,64 @@ namespace GOTHIC_ENGINE {
 
 
 
-  void zTTriggerScript::SaveTriggers( zCArchiver& arc ) {
-    uint triggersNum = TriggerScripts.GetNum();
+  void zTTriggerScript::SaveTriggers( zCArchiver& arc, bool temp ) {
+    uint triggersNum = 0;
+    if( temp ) {
+      for( uint i = 0; i < TriggerScripts.GetNum(); i++ )
+        if( TriggerScripts[i]->IsLocal() )
+          triggersNum++;
+    }
+    else
+      triggersNum = TriggerScripts.GetNum();
 
     arc.WriteInt( "TriggersNum", triggersNum );
     for( uint i = 0; i < triggersNum; i++ )
-      TriggerScripts[i]->Archive( arc );
+      if( !temp || TriggerScripts[i]->IsLocal() )
+        TriggerScripts[i]->Archive( arc );
+  }
+
+
+
+  void zTTriggerScript::ClearTriggers( bool temp ) {
+    for( uint i = 0; i < TriggerScripts.GetNum(); i++ )
+      if( !temp || TriggerScripts[i]->IsLocal() )
+        delete TriggerScripts[i--];
   }
 
 
 
   zTTriggerScript::~zTTriggerScript() {
-    if( Prev )
-      Prev->Next = Next;
-
-    if( Next )
-      Next->Prev = Prev;
-
-    TriggerScripts -= this;
+    TriggerScripts.RemoveSorted( this );
     UpdateFirst();
   }
 
 
 
+  string GetTriggersArchivePath( string tempName = "" ) {
+    if( !tempName.IsEmpty() )
+      tempName.Put( ".", 0 );
 
-
-  string GetTriggersArchivePath() {
-    string savesDir = zoptions->GetDirString( zTOptionPaths::DIR_SAVEGAMES );
-    string slotDir = "savegame" + A SaveLoadGameInfo.slotID;
-    string archivePath = string::Combine( "%s\\%s\\Triggers.sav", savesDir, slotDir );
+    int slotID         = SaveLoadGameInfo.slotID;
+    string savesDir    = zoptions->GetDirString( zTOptionPaths::DIR_SAVEGAMES );
+    string slotDir     = slotID < 0 ? "Current" : "savegame" + A SaveLoadGameInfo.slotID;
+    string archivePath = string::Combine( "%s\\%s\\Triggers%s.sav", savesDir, slotDir, tempName );
     return archivePath;
   }
 
-  void LoadTriggers() {
-    zCArchiver* ar = zarcFactory->CreateArchiverRead( GetTriggersArchivePath(), 0 );
-    cmd << GetTriggersArchivePath() << endl;
+
+
+
+
+
+
+
+  // Load
+  void LoadTriggers( string archiveName, bool temp ) {
+    zTTriggerScript::ClearTriggers( temp );
+    zCArchiver* ar = zarcFactory->CreateArchiverRead( archiveName, 0 );
 
     if( ar ) {
-      zTTriggerScript::LoadTriggers( *ar );
+      zTTriggerScript::LoadTriggers( *ar, temp );
       ar->Close();
       ar->Release();
     }
@@ -193,25 +242,62 @@ namespace GOTHIC_ENGINE {
     ArchivedNpcUIDs.Clear();
   }
 
-  void SaveTriggers() {
-    zCArchiver* ar = zarcFactory->CreateArchiverWrite( GetTriggersArchivePath(), zARC_MODE_ASCII, 0, 0 );
-    cmd << GetTriggersArchivePath() << " " << (int)ar << endl;
+  // Global
+  void LoadTriggers_Global() {
+    string archiveName = GetTriggersArchivePath();
+    LoadTriggers( archiveName, false );
+  }
+
+  // Temporary
+  void LoadTriggers_Temporary( string __worldName ) {
+    string worldName = __worldName.Replace( "\\", "." ).GetPattern( "", ".", -1 );
+    string archiveName = GetTriggersArchivePath( worldName );
+
+    LoadTriggers( archiveName, true );
+  }
+
+
+
+
+
+
+
+  // Save
+  void SaveTriggers( string archiveName, bool temp ) {
+    zCArchiver* ar = zarcFactory->CreateArchiverWrite( archiveName, zARC_MODE_ASCII, 0, 0 );
 
     if( ar ) {
-      zTTriggerScript::SaveTriggers( *ar );
+      zTTriggerScript::SaveTriggers( *ar, temp );
       ar->Close();
       ar->Release();
     }
 
     ArchivedNpcUIDs.Clear();
   }
+
+  // Global
+  void SaveTriggers_Global() {
+    string archiveName = GetTriggersArchivePath();
+    SaveTriggers( archiveName, false );
+  }
+
+  // Temporary
+  void SaveTriggers_Temporary( string __worldName ) {
+    string worldName   = __worldName.Replace( "\\", "." ).GetPattern( "", ".", -1 );
+    string archiveName = GetTriggersArchivePath( worldName );
+
+    SaveTriggers( archiveName, true );
+  }
+
+
+
 
 
 
   HOOK Hook_oCNpc_Archive PATCH( &oCNpc::Archive, &oCNpc::Archive_Union );
 
   void oCNpc::Archive_Union( zCArchiver& ar ) {
-    THISCALL( Hook_oCNpc_Archive )(ar);
+    THISCALL( Hook_oCNpc_Archive )( ar );
     ArchivedNpcUIDs.Insert( this );
   }
 

@@ -50,15 +50,24 @@ namespace GOTHIC_ENGINE {
   void Game_Init() {
     zParserExtender.ParseBegin();
     parser->CallGameInit_Union();
-    DefineConsoleCommands();
+    Plugin_InitConsole();
   }
 
   void Game_Exit() {
   }
 
+  void Game_PreLoop() {
+  }
+
   void Game_Loop() {
     parser->CallGameLoop_Union();
     zTTriggerScript::DoTriggers();
+  }
+
+  void Game_PostLoop() {
+  }
+
+  void Game_MenuLoop() {
   }
 
   // Information about current saving or loading world
@@ -67,21 +76,26 @@ namespace GOTHIC_ENGINE {
   void Game_SaveBegin() {
   }
 
+  bool SaveTemp = false;
+  string LastWorldName;
+
   void Game_SaveEnd() {
+    if( SaveTemp ) SaveTriggers_Temporary( LastWorldName );
+    else           SaveTriggers_Global();
   }
 
   void LoadBegin() {
   }
 
   void LoadEnd() {
+    LoadTriggers_Global(); // Load all triggers
   }
 
   void Game_LoadBegin_NewGame() {
-    LoadBegin();
+    zTTriggerScript::ClearTriggers( false );
   }
 
   void Game_LoadEnd_NewGame() {
-    LoadEnd();
   }
 
   void Game_LoadBegin_SaveGame() {
@@ -93,11 +107,14 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_LoadBegin_ChangeLevel() {
-    LoadBegin();
+    SaveTemp = true;
+    LastWorldName = A ogame->GetGameWorld()->worldFilename;
   }
 
   void Game_LoadEnd_ChangeLevel() {
-    LoadEnd();
+    string worldName_Next = ogame->GetGameWorld()->worldFilename;
+    LoadTriggers_Temporary( worldName_Next ); // Load local triggers with connected npc's for next world
+    SaveTemp = false;
   }
 
   void Game_LoadBegin_Trigger() {
@@ -150,7 +167,10 @@ namespace GOTHIC_ENGINE {
     Enabled( AppDefault ) Game_Entry,
     Enabled( AppDefault ) Game_Init,
     Enabled( AppDefault ) Game_Exit,
+    Enabled( AppDefault ) Game_PreLoop,
     Enabled( AppDefault ) Game_Loop,
+    Enabled( AppDefault ) Game_PostLoop,
+    Enabled( AppDefault ) Game_MenuLoop,
     Enabled( AppDefault ) Game_SaveBegin,
     Enabled( AppDefault ) Game_SaveEnd,
     Enabled( AppDefault ) Game_LoadBegin_NewGame,

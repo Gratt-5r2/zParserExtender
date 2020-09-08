@@ -24,7 +24,7 @@ int LoadGlobalVars_Union( zCArchiver& );
 int IsInAdditionalInfo_Union( zSTRING const& );
 void RemoveAdditionalInfo_Union( zSTRING& );
 void Reset_Union();
-void ReserAdditionalInfo();
+void ResetAdditionalInfo();
 int Parse_Union( zSTRING s );
 void DeclareFuncCall_Union( zSTRING& s, int n );
 void DeclareAssign_Union_2( zSTRING& );
