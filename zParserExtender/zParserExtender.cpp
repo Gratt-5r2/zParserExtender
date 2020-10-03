@@ -58,6 +58,35 @@ namespace GOTHIC_ENGINE {
     return true;
   }
 
+  static int EngineTagNameToInt( const string& tagName ) {
+    if( tagName == "G1"  ) return Engine_G1;
+    if( tagName == "G1A" ) return Engine_G1A;
+    if( tagName == "G2"  ) return Engine_G2;
+    if( tagName == "G2A" ) return Engine_G2A;
+
+    cmd << colWarn2 << "zParserExtender: "        <<
+           colWarn1 << "unknown engine tag name " <<
+           colWarn2 << tagName                    <<
+           colWarn3 << endl;
+
+    return Invalid;
+  }
+
+  static bool EngineVerToBool( const string& value ) {
+    int engineVersion = Union.GetEngineVersion();
+
+    Array<string> tags = value.Split( "," );
+    for( uint i = 0; i < tags.GetNum(); i++ ) {
+      string tagName = tags[i].Shrink();
+      int tagVersion = EngineTagNameToInt( tagName );
+
+      if( tagVersion == engineVersion )
+        return true;
+    }
+
+    return false;
+  }
+
   void zTScriptInfo::ParseMeta( string& buffer ) {
     // Check meta information
     if( buffer.GetWordSmart( 1 ) == "META" && buffer.GetWordSmart( 2 ) == "{" ) {
@@ -76,6 +105,7 @@ namespace GOTHIC_ENGINE {
              if( parameter == "Parser" )      ParserName              = value;
         else if( parameter == "MergeMode" )   CompileInfo.MergeMode   = StringToBool( value );
         else if( parameter == "NativeWhile" ) CompileInfo.NativeWhile = StringToBool( value );
+        else if( parameter == "Engine" )      CompileInfo.Compilable  = EngineVerToBool( value );
         else {
           // Wut ??
           cmd << colWarn2 << "zParserExtender: "       <<
@@ -104,6 +134,7 @@ namespace GOTHIC_ENGINE {
     option.Read( DefaultCompileInfo.MergeMode,   "ZPARSE_EXTENDER", "MergeMode",   true );
     option.Read( DefaultCompileInfo.CompileDat,  "ZPARSE_EXTENDER", "CompileDat",  false );
     option.Read( DefaultCompileInfo.NativeWhile, "ZPARSE_EXTENDER", "NativeWhile", false );
+    DefaultCompileInfo.Compilable = true;
 
     Array<string> Files = FilesLine.Split( "," );
     for( uint i = 0; i < Files.GetNum(); i++ )
@@ -231,7 +262,8 @@ namespace GOTHIC_ENGINE {
 
     // Add completed file to queue
     scriptInfo.ParseMeta( fileData );
-    CompileQueue.Insert( scriptInfo );
+    if( scriptInfo.CompileInfo.Compilable )
+      CompileQueue.Insert( scriptInfo );
   }
 
 

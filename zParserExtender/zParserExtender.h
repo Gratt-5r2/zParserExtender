@@ -7,6 +7,7 @@ namespace GOTHIC_ENGINE {
     bool CompileDat;
     bool NativeWhile;
     bool Autorun;
+    bool Compilable;
   };
 
 
