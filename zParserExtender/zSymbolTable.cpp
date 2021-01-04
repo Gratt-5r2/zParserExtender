@@ -26,7 +26,7 @@ namespace GOTHIC_ENGINE {
       }
 
       zTCallReplaceInfo& callReplace = CallReplaceInfos.Create();
-      callReplace.ReplaceLength      = zParserExtender.GetParser()->stack.stacksize - 4;
+      callReplace.ReplaceLength      = zParserExtender.GetParser()->stack.GetDynSize() - 4;
       callReplace.Parser             = zParserExtender.GetParser();
       callReplace.OldSymbol          = oldSymbol;
       callReplace.NewSymbol          = newSymbol;
