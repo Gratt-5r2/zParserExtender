@@ -36,6 +36,7 @@ namespace GOTHIC_ENGINE {
     void LoadScriptList( string fileListName );
     void PushExternalSrc( string parserName, string srcName );
     void PushExternalScript( string parserName, string scriptName );
+    void CheckSymbolsHierarchy( zCParser* parser );
     void ParseBegin();
     void RegisterPFXSymbols();
     void InsertPFXSymbol( zCPar_Symbol* sym );
@@ -46,14 +47,23 @@ namespace GOTHIC_ENGINE {
     bool NativeWhileEnabled();
     bool ExtendedParsingEnabled();
     bool ExternalScriptsListIsEmpty();
+
+    static int MessagesLevel;
   };
 
-  zCParserExtender zParserExtender;
+  int zCParserExtender::MessagesLevel = 1;
 
+  zCParserExtender zParserExtender;
 
 
   extern string DataDirectory;
   extern string ScriptsDirectory;
   extern string SystemDirectory;
   extern string AutorunDirectory;
+
+
+
+  static bool NinjaNotInjected() {
+    return GetModuleHandle( "Ninja.dll" ) == Null;
+  }
 }

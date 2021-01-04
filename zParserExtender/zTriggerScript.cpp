@@ -210,13 +210,29 @@ namespace GOTHIC_ENGINE {
 
 
 
+
+
+
+
+
+  string GetSlotNameByID( uint ID ) {
+    if( ID > 0 )
+      return "savegame" + A ID;
+
+    if( ID == 0 )
+      return "quicksave";
+
+    return "current";
+  }
+
+
   string GetTriggersArchivePath( string tempName = "" ) {
     if( !tempName.IsEmpty() )
       tempName.Put( ".", 0 );
 
     int slotID         = SaveLoadGameInfo.slotID;
     string savesDir    = zoptions->GetDirString( zTOptionPaths::DIR_SAVEGAMES );
-    string slotDir     = slotID < 0 ? "Current" : "savegame" + A SaveLoadGameInfo.slotID;
+    string slotDir     = GetSlotNameByID( slotID );
     string archivePath = string::Combine( "%s\\%s\\Triggers%s.sav", savesDir, slotDir, tempName );
     return archivePath;
   }

@@ -47,8 +47,6 @@ namespace GOTHIC_ENGINE {
   };
 
 
-
   Array<zTTriggerScript*> zTTriggerScript::TriggerScripts;
-
   Array<oCNpc*> ArchivedNpcUIDs;
 }

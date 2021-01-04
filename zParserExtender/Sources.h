@@ -3,7 +3,6 @@
 
 // Automatically generated block
 #pragma region Includes
-#include "VariableEditor.cpp"
 #include "zParserExtender.cpp"
 #include "zSymbol.cpp"
 #include "zSymbolTable.cpp"
@@ -12,6 +11,7 @@
 #include "zTriggerScript.cpp"
 #include "zExternals.cpp"
 #include "InstanceItem.cpp"
+#include "Focus.cpp"
 #include "Plugin.cpp"
 #pragma endregion
 

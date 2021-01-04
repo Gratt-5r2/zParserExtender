@@ -2,7 +2,7 @@
 // Union SOURCE file
 
 //
-// Thanks Saturas for help.
+// Thanks @Saturas for help.
 //
 
 #define zFATAL( msg ) zerr->Report( zERR_TYPE_FATAL, 0, msg, -1, 0, __LINE__, __FILE__, 0 )
@@ -256,13 +256,14 @@ namespace GOTHIC_ENGINE {
     if( ouValidateIndex != Invalid ) {
       // Delete equal cutscene block from OU
       csMan->LibDelOU( ouValidateIndex );
-      cmd << colAtt2 << "zParserExtender: " <<
-             colAtt1 << "Cutscene block "   <<
-             colAtt2 << name                <<
-             colAtt1 << " replaced ("       <<
-             colAtt2 << ouValidateIndex     <<
-             colAtt1 << ")"                 <<
-             colAtt3 << endl;
+      if( zCParserExtender::MessagesLevel >= 3 )
+        cmd << colAtt2 << "zParserExtender: " <<
+               colAtt1 << "Cutscene block "   <<
+               colAtt2 << name                <<
+               colAtt1 << " replaced ("       <<
+               colAtt2 << ouValidateIndex     <<
+               colAtt1 << ")"                 <<
+               colAtt3 << endl;
     }
 
     zCCSBlock* pBlock             = new zCCSBlock;
@@ -294,11 +295,12 @@ namespace GOTHIC_ENGINE {
     s_SaveLibCopy = false;
 
     Col16  statusColor = CMD_GREEN | CMD_INT;
-    cmd << colParse2   << "zParserExtender: " <<
-           colParse1   << "file "             <<
-           colParse2   << s_LastLibStoreName  <<
-           colParse1   << " saved"            <<
-           colParse3   << endl;
+    if( zCParserExtender::MessagesLevel >= 2 )
+      cmd << colParse2   << "zParserExtender: " <<
+             colParse1   << "file "             <<
+             colParse2   << s_LastLibStoreName  <<
+             colParse1   << " saved"            <<
+             colParse3   << endl;
   }
 
 

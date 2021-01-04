@@ -3,3 +3,4 @@
 // User API for zCPar_File
 // Add your methods here
 
+zCPar_File* Constructor();

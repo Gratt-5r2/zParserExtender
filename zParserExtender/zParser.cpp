@@ -3,6 +3,9 @@
 
 namespace GOTHIC_ENGINE {
   static bool NeedToReparse( string s ) {
+    if( !zParserExtender.ExtendedParsingEnabled() )
+      return false;
+
     string parName = s.GetPattern( "\\", "." );
     if( parName == "GOTHIC"     && zoptions->Parm( "ZREPARSE_GAME"   ) ) return true;
     if( parName == "SFX"        && zoptions->Parm( "ZREPARSE_SFX"    ) ) return true;
@@ -25,7 +28,7 @@ namespace GOTHIC_ENGINE {
     if( parName == "MENU"       ) return "Menu";
     if( parName == "MUSIC"      ) return "Music";
     if( parName == "FIGHT"      ) return "Fight";
-    return s + ".DAT";
+    return s;
   }
 
   static string GetDATNameByParser( zCParser* par ) {
@@ -49,9 +52,12 @@ namespace GOTHIC_ENGINE {
 
 
 
-  HOOK Ivk_zCParser_SaveDat AS( &zCParser::SaveDat, &zCParser::SaveDat_Union );
+  HOOK Hook_zCParser_SaveDat PATCH( &zCParser::SaveDat, &zCParser::SaveDat_Union );
 
   int zCParser::SaveDat_Union( zSTRING& name ) {
+    if( !zParserExtender.ExtendedParsingEnabled() ) // TO DO
+      return THISCALL( Hook_zCParser_SaveDat )(name);
+
     PostCompileCallReplace();
 
     if( zParserExtender.CompileDatEnabled() ) {
@@ -60,7 +66,7 @@ namespace GOTHIC_ENGINE {
         return SaveDatCopy();
       
       // Original save process
-      int Ok = THISCALL( Ivk_zCParser_SaveDat )( name );
+      int Ok = THISCALL( Hook_zCParser_SaveDat )( name );
 
       // Compile new OU library
       if( this == parser && NeedToReparseOU() ) {
@@ -88,13 +94,14 @@ namespace GOTHIC_ENGINE {
     zSTRING extension = datName.GetWord( ".", -1 );
             datName   = clearName + ".EDITED." + extension;
 
-    int Ok = THISCALL( Ivk_zCParser_SaveDat )( datName );
+    int Ok = THISCALL( Hook_zCParser_SaveDat )( datName );
 
-    cmd << colParse2 << "zParserExtender: " <<
-           colParse1 << "file "             <<
-           colParse2 << datName             <<
-           colParse1 << " saved"            <<
-           colParse3 << endl;
+    if( zCParserExtender::MessagesLevel >= 2 )
+      cmd << colParse2 << "zParserExtender: " <<
+             colParse1 << "file "             <<
+             colParse2 << datName             <<
+             colParse1 << " saved"            <<
+             colParse3 << endl;
 
     return Ok;
   }
@@ -116,12 +123,13 @@ namespace GOTHIC_ENGINE {
 #define WHILE_BEGIN op_loop_level++, op_while_enumerator += 2
 #define WHILE_END   op_loop_level--
 
-  HOOK Ivk_zCParser_ParseBlock AS( &zCParser::ParseBlock, &zCParser::ParseBlock_Union );
+  HOOK Hook_zCParser_ParseBlock PATCH( &zCParser::ParseBlock, &zCParser::ParseBlock_Union );
 
   void zCParser::ParseBlock_Union() {
-    if( !zParserExtender.ExtendedParsingEnabled() )
-      zCParser::ParseBlock_OU_Union();
+    if( !zParserExtender.ExtendedParsingEnabled() ) // TO DO
+      ParseBlock_OU_Union(); //return THISCALL( Hook_zCParser_ParseBlock )();
 
+    //ParseBlock_OU_Union();
     bool whileEnabled = zParserExtender.NativeWhileEnabled();
 
     zSTRING word;
@@ -186,7 +194,7 @@ namespace GOTHIC_ENGINE {
 
       // parse body of the loop
       PrevWord();
-      ParseBlock();
+      ParseBlock_Union();
       ReadWord( aword );
 
     } while( aword != ";" );
@@ -275,21 +283,31 @@ namespace GOTHIC_ENGINE {
 
 
 
-  HOOK Ivk_zCParser_Parse AS( &zCParser::Parse, &zCParser::Parse_Union );
+  HOOK Hook_zCParser_Parse PATCH( &zCParser::Parse, &zCParser::Parse_Union );
 
   int zCParser::Parse_Union( zSTRING s ) {
+    if( !zParserExtender.ExtendedParsingEnabled() )
+      return THISCALL( Hook_zCParser_Parse )(s);
+
     int enableParsing_tmp = enableParsing;
     enableParsing = enableParsing_tmp || NeedToReparse( s ) ? True : False;
 
-    if( enableParsing ) {
-      cmd << colParse2 << "zParserExtender: "     <<
-             colParse1 << "building "             <<
-             colParse2 << GetParserNameByDAT( s ) <<
-             colParse1 << " parser"               <<
-             colParse3 << endl;
+    if( zCParserExtender::MessagesLevel >= 2 ) {
+      cmd << s                          << endl;
+      cmd << "enableParsing: "          << enableParsing << endl;
+      cmd << "ExtendedParsingEnabled: " << zParserExtender.ExtendedParsingEnabled() << endl;
+      cmd << "NeedToReparse: "          << NeedToReparse( s ) << endl;
     }
 
-    int Ok = THISCALL( Ivk_zCParser_Parse )(s);
+    if( enableParsing && zCParserExtender::MessagesLevel >= 1 ) {
+      cmd << colParse2 << "zParserExtender: "      <<
+              colParse1 << "building "             <<
+              colParse2 << GetParserNameByDAT( s ) <<
+              colParse1 << " parser"               <<
+              colParse3 << endl;
+    }
+
+    int Ok = THISCALL( Hook_zCParser_Parse )(s);
 
     enableParsing = enableParsing_tmp;
     return Ok;
@@ -315,8 +333,25 @@ namespace GOTHIC_ENGINE {
 
 
 
+  void zCParser::RenameTreeNode( zCPar_Symbol* sym, zSTRING newName ) {
+    for( int i = 0; i < file.GetNumInList(); i++ ) {
+      if( file[i]->tree ) {
+        zCPar_TreeNode* node = file[i]->tree;
+
+        while( node ) {
+          if( node->name.GetWord( "." ) == sym->GetName() )
+            node->name.Replace( sym->GetName(), newName );
+
+          node = node->next;
+        }
+      }
+    }
+  }
+
+
+
 #if ENGINE >= Engine_G2
-  HOOK Ivk_zCParser_LoadGlobalVars AS( &zCParser::LoadGlobalVars, &zCParser::LoadGlobalVars_Union );
+  HOOK Ivk_zCParser_LoadGlobalVars AS_IF( &zCParser::LoadGlobalVars, &zCParser::LoadGlobalVars_Union, NinjaNotInjected() );
 
   inline bool IsValidIntegerSymbol( zCPar_Symbol* sym ) {
     return sym && sym->type == zPAR_TYPE_INT && sym->flags == 0;

@@ -30,3 +30,11 @@ void DeclareFuncCall_Union( zSTRING& s, int n );
 void DeclareAssign_Union_2( zSTRING& );
 void SetInfoFile_Union( zCList<zSTRING>*, zSTRING const& );
 int SaveDatCopy();
+void* CallFunc_Union( int index, ... );
+
+void PreCompile();
+void RenameTreeNode( zCPar_Symbol* sym, zSTRING newName );
+
+zCPar_TreeNode* PushOnStack_Union( zCPar_TreeNode* node );
+void DeclareFunc_Union();
+int ParseSource_Union( zSTRING& s );

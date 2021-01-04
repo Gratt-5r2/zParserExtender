@@ -50,6 +50,21 @@ namespace GOTHIC_ENGINE {
 
 
 
+  void PrepareParserSymbols( zCParser* par ) {
+    Array<zCParser*> parsers;
+    if( parsers & par )
+      return;
+
+    parsers += par;
+    auto& symbols = par->symtab.table;
+    for( int i = 0; i < symbols.GetNum(); i++ )
+      par->symtab.CheckNextSymbol( symbols[i] );
+  }
+
+
+
+
+
 
   static bool StringToBool( const string& value ) {
     if( value == "false" || value == "0" )
@@ -64,10 +79,11 @@ namespace GOTHIC_ENGINE {
     if( tagName == "G2"  ) return Engine_G2;
     if( tagName == "G2A" ) return Engine_G2A;
 
-    cmd << colWarn2 << "zParserExtender: "        <<
-           colWarn1 << "unknown engine tag name " <<
-           colWarn2 << tagName                    <<
-           colWarn3 << endl;
+    if( zCParserExtender::MessagesLevel >= 1 )
+      cmd << colWarn2 << "zParserExtender: "        <<
+             colWarn1 << "unknown engine tag name " <<
+             colWarn2 << tagName                    <<
+             colWarn3 << endl;
 
     return Invalid;
   }
@@ -106,11 +122,11 @@ namespace GOTHIC_ENGINE {
         else if( parameter == "MergeMode" )   CompileInfo.MergeMode   = StringToBool( value );
         else if( parameter == "NativeWhile" ) CompileInfo.NativeWhile = StringToBool( value );
         else if( parameter == "Engine" )      CompileInfo.Compilable  = EngineVerToBool( value );
-        else {
+        else if( zCParserExtender::MessagesLevel >= 1 ) {
           // Wut ??
-          cmd << colWarn2 << "zParserExtender: "       <<
-                 colWarn1 << "unknown meta parameter " <<
-                 colWarn2 << parameter                 <<
+          cmd << colWarn2 << "zParserExtender: "        <<
+                 colWarn1 << "unknown META parameter: " <<
+                 colWarn2 << parameter                  <<
                  colWarn3 << endl;
         }
       }
@@ -130,10 +146,11 @@ namespace GOTHIC_ENGINE {
     DefaultCompileInfo.Autorun = false;
 
     string FilesLine;
-    option.Read( FilesLine,                      "ZPARSE_EXTENDER", "LoadScript",  "" );
-    option.Read( DefaultCompileInfo.MergeMode,   "ZPARSE_EXTENDER", "MergeMode",   true );
-    option.Read( DefaultCompileInfo.CompileDat,  "ZPARSE_EXTENDER", "CompileDat",  false );
-    option.Read( DefaultCompileInfo.NativeWhile, "ZPARSE_EXTENDER", "NativeWhile", false );
+    option.Read( FilesLine,                      "ZPARSE_EXTENDER", "LoadScript",    "" );
+    option.Read( DefaultCompileInfo.MergeMode,   "ZPARSE_EXTENDER", "MergeMode",     true );
+    option.Read( DefaultCompileInfo.CompileDat,  "ZPARSE_EXTENDER", "CompileDat",    false );
+    option.Read( DefaultCompileInfo.NativeWhile, "ZPARSE_EXTENDER", "NativeWhile",   false );
+    option.Read( MessagesLevel,                  "ZPARSE_EXTENDER", "MessagesLevel", MessagesLevel );
     DefaultCompileInfo.Compilable = true;
 
     Array<string> Files = FilesLine.Split( "," );
@@ -150,10 +167,11 @@ namespace GOTHIC_ENGINE {
   void zCParserExtender::LoadScriptList( string fileListName ) {
     string fileData;
     if( fileData.ReadFromVdf( fileListName, VDF_DEFAULT ) ) {
-      cmd << colWarn2 << "zParserExtender: " <<
-             colWarn1 << "can not read "     <<
-             colWarn2 << fileListName        <<
-             colWarn3 << endl;
+      if( zCParserExtender::MessagesLevel >= 1 )
+        cmd << colWarn2 << "zParserExtender: " <<
+               colWarn1 << "can not read "     <<
+               colWarn2 << fileListName        <<
+               colWarn3 << endl;
       return;
     }
 
@@ -179,10 +197,11 @@ namespace GOTHIC_ENGINE {
 
     // Check src recursion
     if( SrcFilesList.HasEqual( srcName ) ) {
-      cmd << colWarn2 << "zParserExtender: " <<
-             colWarn1 << "recursion of "     <<
-             colWarn2 << srcName             <<
-             colWarn3 << endl;
+      if( zCParserExtender::MessagesLevel >= 2 )
+        cmd << colWarn2 << "zParserExtender: " <<
+               colWarn1 << "recursion of "     <<
+               colWarn2 << srcName             <<
+               colWarn3 << endl;
       return;
     }
 
@@ -197,15 +216,17 @@ namespace GOTHIC_ENGINE {
     // Load script data
     string fileData;
     if( !fileData.ReadFromVdf( root + srcName, VDF_DEFAULT ) ) {
-      cmd << colWarn2 << "zParserExtender: " <<
-             colWarn1 << "can not read "     <<
-             colWarn2 << root + srcName      <<
-             colWarn3 << endl;
+      if( zCParserExtender::MessagesLevel >= 1 )
+        cmd << colWarn2 << "zParserExtender: " <<
+               colWarn1 << "can not read "     <<
+               colWarn2 << root + srcName      <<
+               colWarn3 << endl;
       return;
     }
 
     // Create document file without comments
     fileData.Regex_Replace( "//.*$", "" );
+    fileData.Replace( "/", "\\" );
     CDocument fileDocument = fileData;
 
     // Parse file list
@@ -253,10 +274,11 @@ namespace GOTHIC_ENGINE {
     // Load a script data
     string fileData;
     if( !fileData.ReadFromVdf( root + scriptName, VDF_DEFAULT ) ) {
-      cmd << colWarn2 << "zParserExtender: " <<
-             colWarn1 << "can not read "     <<
-             colWarn2 << root + scriptName   <<
-             colWarn3 << endl;
+      if( zCParserExtender::MessagesLevel >= 1 )
+        cmd << colWarn2 << "zParserExtender: " <<
+               colWarn1 << "can not read "     <<
+               colWarn2 << root + scriptName   <<
+               colWarn3 << endl;
       return;
     }
 
@@ -270,6 +292,19 @@ namespace GOTHIC_ENGINE {
 
 
 
+  inline void SetParsersCompiled() {
+    Gothic::Parsers::Game->compiled   = True;
+    Gothic::Parsers::SFX->compiled    = True;
+    Gothic::Parsers::PFX->compiled    = True;
+    Gothic::Parsers::VFX->compiled    = True;
+    Gothic::Parsers::Camera->compiled = True;
+    Gothic::Parsers::Menu->compiled   = True;
+    Gothic::Parsers::Music->compiled  = True;
+  }
+
+
+
+  int ParStackMaxLength = 0;
   void zCParserExtender::ParseBegin() {
     ParsingEnabled = true;
 
@@ -293,23 +328,27 @@ namespace GOTHIC_ENGINE {
         CurrentParser = par;
 
         if( par == Null ) {
-          cmd << colWarn2 << "zParserExtender: "    <<
-                 colWarn1 << "invalid parser name " <<
-                 colWarn2 << scriptInfo.ParserName  <<
-                 colWarn1 << " in external script " <<
-                 colWarn2 << scriptInfo.FullName    <<
-                 colWarn3 << endl;
+          if( zCParserExtender::MessagesLevel >= 1 )
+            cmd << colWarn2 << "zParserExtender: "    <<
+                   colWarn1 << "invalid parser name " <<
+                   colWarn2 << scriptInfo.ParserName  <<
+                   colWarn1 << " in external script " <<
+                   colWarn2 << scriptInfo.FullName    <<
+                   colWarn3 << endl;
           continue;
         }
 
-        // Okay! begin parsing
-        cmd << colParse2 << "zParserExtender: " <<
-               colParse1 << "start parsing "    <<
-               colParse2 << scriptInfo.FullName <<
-               colParse3 << endl;
+        ParStackMaxLength = parser->stack.GetDynSize() - 4;
 
+        // Okay! begin parsing
+        if( zCParserExtender::MessagesLevel >= 1 )
+          cmd << colParse2 << "zParserExtender: " <<
+                 colParse1 << "start parsing "    <<
+                 colParse2 << scriptInfo.FullName <<
+                 colParse3 << endl;
 
         // So, activate parser for parsing
+        PrepareParserSymbols( par );
         par->ResetAdditionalInfo();
         par->SetEnableParsing_Union( True );
 
@@ -318,10 +357,11 @@ namespace GOTHIC_ENGINE {
           if( !parsed )
             par->SetEnableParsing_Union( False );
 
-          cmd << colWarn2 << "zParserExtender: "   <<
-                 colWarn1 << "Can not parse file " <<
-                 colWarn2 << scriptInfo.FullName   <<
-                 colWarn3 << endl;
+          if( zCParserExtender::MessagesLevel >= 1 )
+            cmd << colWarn2 << "zParserExtender: "   <<
+                   colWarn1 << "Can not parse file " <<
+                   colWarn2 << scriptInfo.FullName   <<
+                   colWarn3 << endl;
           continue;
         }
         else
@@ -466,11 +506,6 @@ namespace GOTHIC_ENGINE {
 
         // ... Errors
         message = "Unknown or not defined parser!";
-        return True;
-      }
-
-      if( secondWord == "VAR" || secondWord == "CONST" ) {
-        VariableEditor( command.GetPattern( secondWord, "" ), message );
         return True;
       }
       

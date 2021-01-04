@@ -3,3 +3,4 @@
 // User API for oCSpell
 // Add your methods here
 
+int IsValidTarget_Union( zCVob* );

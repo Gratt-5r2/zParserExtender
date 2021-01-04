@@ -54,6 +54,33 @@ namespace GOTHIC_ENGINE {
     return 0;
   }
 
+  int Cast_GetClassID() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING className;
+    par->GetParameter( className );
+    int classID = (int)zCClassDef::GetClassDef( className );
+    par->SetReturn( classID );
+    return 0;
+  }
+
+  int Cast_GetVobClassID() {
+    zCParser* par = zCParser::GetParser();
+    zCObject* instance = (zCObject*)par->GetInstance();
+    int classID = (int)instance->_GetClassDef();
+    par->SetReturn( classID );
+    return 0;
+  }
+
+  int Cast_CheckVobClassID() {
+    zCParser* par = zCParser::GetParser();
+    zCObject* instance = (zCObject*)par->GetInstance();
+    int classID;
+    par->GetParameter( classID );
+    int inheritance = zCObject::CheckInheritance( (zCClassDef*)classID, instance->_GetClassDef() );
+    par->SetReturn( inheritance );
+    return 0;
+  }
+
   // HLP
   int Hlp_HasFocusVob() {
     zCParser* par = zCParser::GetParser();
@@ -145,6 +172,12 @@ namespace GOTHIC_ENGINE {
     return 0;
   }
 
+  int Hlp_GetNull() {
+    zCParser* par = zCParser::GetParser();
+    par->SetReturn( Null );
+    return 0;
+  }
+
   int Hlp_ReadOptionInt() {
     zCParser* par = zCParser::GetParser();
     zSTRING optName;
@@ -203,7 +236,8 @@ namespace GOTHIC_ENGINE {
     if( optName == "Mod"        ) Result = A zgameoptions->ReadString( section, parameter, default );
     if( optName == "SystemPack" ) Union.GetSysPackOption().Read( Result, A section, A parameter, default );
 
-    par->SetReturn( Z Result );
+    static zSTRING s_Result = Result;
+    par->SetReturn( s_Result );
     return True;
   }
 
@@ -1024,6 +1058,10 @@ namespace GOTHIC_ENGINE {
     parser->DefineExternal( "Cast_InstanceIsItem",       Cast_InstanceIsItem,       zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
     parser->DefineExternal( "Cast_InstanceIsMob",        Cast_InstanceIsMob,        zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
     parser->DefineExternal( "Cast_GetInstanceIndex",     Cast_GetInstanceIndex,     zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
+    
+    parser->DefineExternal( "Cast_GetClassID",           Cast_GetClassID,           zPAR_TYPE_INT,      zPAR_TYPE_STRING,   0 );
+    parser->DefineExternal( "Cast_GetVobClassID",        Cast_GetVobClassID,        zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
+    parser->DefineExternal( "Cast_CheckVobClassID",      Cast_CheckVobClassID,      zPAR_TYPE_INT,      zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
 
     // HLP
     parser->DefineExternal( "Hlp_HasFocusVob",           Hlp_HasFocusVob,           zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
@@ -1037,6 +1075,7 @@ namespace GOTHIC_ENGINE {
     parser->DefineExternal( "Hlp_GameOnPause",           Hlp_GameOnPause,           zPAR_TYPE_INT,      0 );
     parser->DefineExternal( "Hlp_MessageBox",            Hlp_MessageBox,            zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   0 );
     parser->DefineExternal( "Hlp_PrintConsole",          Hlp_PrintConsole,          zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   0 );
+    parser->DefineExternal( "Hlp_GetNull",              Hlp_GetNull,                zPAR_TYPE_INSTANCE, 0 );
     
     parser->DefineExternal( "Hlp_ReadOptionInt",         Hlp_ReadOptionInt,         zPAR_TYPE_INT,      zPAR_TYPE_STRING,   zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_INT,    0 );
     parser->DefineExternal( "Hlp_ReadOptionFloat",       Hlp_ReadOptionFloat,       zPAR_TYPE_FLOAT,    zPAR_TYPE_STRING,   zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_FLOAT,  0 );

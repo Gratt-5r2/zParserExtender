@@ -6,3 +6,4 @@
 void Archive_Union( zCArchiver& ar );
 void Unarchive_Union( zCArchiver& ar );
 int EV_CallScript_Union( oCMsgManipulate* );
+int IsValidFocusVob( int ptr, int lastPrio );
