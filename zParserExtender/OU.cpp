@@ -127,6 +127,23 @@ namespace GOTHIC_ENGINE {
         WriteAdditionalInfo( lineText, linec, line_start );
       }
     }
+    else if( parser->enableParsing != NinjaParsingID ) {
+      zCPar_Symbol* sym = GetSymbol( symName );
+      if( sym && (sym->type == zPAR_TYPE_INSTANCE || sym->type == zPAR_TYPE_PROTOTYPE) ) {
+        zSTRING wordLeft, wordRight;
+        ReadWord( wordLeft );
+        ReadWord( wordRight );
+        if( wordLeft == "(" && wordRight == ")" ) {
+          treenode = CreateLeaf( zPAR_TOK_CALL, treenode );
+          treenode->name = sym->name;
+          return;
+        }
+        else {
+          PrevWord();
+          PrevWord();
+        }
+      }
+    }
 
     THISCALL( Ivk_zCParser_DeclareAssign )(symName);
   }
@@ -177,8 +194,6 @@ namespace GOTHIC_ENGINE {
   HOOK Ivk_zCParser_CreatePCode AS( &zCParser::CreatePCode, &zCParser::CreatePCode_Union );
 
   void zCParser::CreatePCode_Union() {
-    bool_t compiled_tmp = compiled;
-
     THISCALL( Ivk_zCParser_CreatePCode )();
 
     if( !parser || this != parser )

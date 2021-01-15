@@ -52,8 +52,8 @@ namespace GOTHIC_ENGINE {
   };
 
   int zCParserExtender::MessagesLevel = 1;
-
   zCParserExtender zParserExtender;
+  const int NinjaParsingID = 42;
 
 
   extern string DataDirectory;

@@ -319,7 +319,7 @@ namespace GOTHIC_ENGINE {
 
 
 
-  HOOK Hook_oCNpc_Unarchive PATCH( &oCNpc::Unarchive, &oCNpc::Unarchive_Union );
+  HOOK Hook_oCNpc_Unarchive AS( &oCNpc::Unarchive, &oCNpc::Unarchive_Union );
 
   void oCNpc::Unarchive_Union( zCArchiver& ar ) {
     THISCALL( Hook_oCNpc_Unarchive )(ar);

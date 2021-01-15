@@ -6,3 +6,4 @@
 void LibLoad_Union( int flags );
 void LibSortion();
 void LibStoreCopy( int flags );
+void LibStore_Union( int );

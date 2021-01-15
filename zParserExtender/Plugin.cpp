@@ -43,8 +43,20 @@ namespace GOTHIC_ENGINE {
 
 
 
+  void DisableLoadLibFault() {
+#if ENGINE == Engine_G1
+    PATCH_EXECUTE( memset(0x0041B7B7, '90', 0x0041B7CA - 0x0041B7B7) );
+#endif
+#if ENGINE == Engine_G2A
+    PATCH_EXECUTE( memset(0x0041BC97, '90', 0x0041BCAA - 0x0041BC97) );
+#endif
+  }
+
+
+
   void Game_Entry() {
     DefinePaths();
+    DisableLoadLibFault();
   }
 
   void Game_Init() {

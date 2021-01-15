@@ -55,8 +55,8 @@ namespace GOTHIC_ENGINE {
   HOOK Hook_zCParser_SaveDat PATCH( &zCParser::SaveDat, &zCParser::SaveDat_Union );
 
   int zCParser::SaveDat_Union( zSTRING& name ) {
-    if( !zParserExtender.ExtendedParsingEnabled() ) // TO DO
-      return THISCALL( Hook_zCParser_SaveDat )(name);
+    //if( !zParserExtender.ExtendedParsingEnabled() ) // TO DO
+    //  return THISCALL( Hook_zCParser_SaveDat )(name);
 
     PostCompileCallReplace();
 
@@ -64,7 +64,7 @@ namespace GOTHIC_ENGINE {
       // Modified save process
       if( zParserExtender.ExtendedParsingEnabled() )
         return SaveDatCopy();
-      
+
       // Original save process
       int Ok = THISCALL( Hook_zCParser_SaveDat )( name );
 
@@ -75,10 +75,12 @@ namespace GOTHIC_ENGINE {
         ogame->GetCutsceneManager()->LibLoad( zLIB_STORE_BIN );
       }
 
+#if 0
       // Reload a symbol table after clear compilation
       // for safely symbols loading
       if( !zParserExtender.ExternalScriptsListIsEmpty() )
         LoadDat( name );
+#endif
 
       return Ok;
     }
@@ -153,7 +155,7 @@ namespace GOTHIC_ENGINE {
       else if( word == "}" )
         return;
       else
-        DeclareAssign( word );
+        DeclareAssign_Union( word );
 
       Match( Z ";" );
     }
