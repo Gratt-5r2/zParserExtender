@@ -3,8 +3,8 @@
 
 namespace GOTHIC_ENGINE {
   static bool NeedToReparse( string s ) {
-    if( !zParserExtender.ExtendedParsingEnabled() )
-      return false;
+    //if( !zParserExtender.ExtendedParsingEnabled() )
+    //  return false;
 
     string parName = s.GetPattern( "\\", "." );
     if( parName == "GOTHIC"     && zoptions->Parm( "ZREPARSE_GAME"   ) ) return true;
@@ -329,17 +329,18 @@ namespace GOTHIC_ENGINE {
   HOOK Hook_zCParser_Parse PATCH( &zCParser::Parse, &zCParser::Parse_Union );
 
   int zCParser::Parse_Union( zSTRING s ) {
-    if( !zParserExtender.ExtendedParsingEnabled() )
+    bool needToReparce = NeedToReparse( s ) && enableParsing != NinjaParseID;
+    if( !zParserExtender.ExtendedParsingEnabled() && !needToReparce )
       return THISCALL( Hook_zCParser_Parse )(s);
 
     int enableParsing_tmp = enableParsing;
-    enableParsing = enableParsing_tmp || NeedToReparse( s ) ? True : False;
+    enableParsing = enableParsing_tmp || needToReparce ? PluginParseID : False;
 
     if( zCParserExtender::MessagesLevel >= 2 ) {
       cmd << s                          << endl;
       cmd << "enableParsing: "          << enableParsing << endl;
       cmd << "ExtendedParsingEnabled: " << zParserExtender.ExtendedParsingEnabled() << endl;
-      cmd << "NeedToReparse: "          << NeedToReparse( s ) << endl;
+      cmd << "NeedToReparse: "          << needToReparce << endl;
     }
 
     if( enableParsing && zCParserExtender::MessagesLevel >= 1 ) {
