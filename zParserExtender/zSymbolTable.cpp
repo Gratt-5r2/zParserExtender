@@ -46,10 +46,14 @@ namespace GOTHIC_ENGINE {
     int newPos = symRight->single_intdata;
     int calls  = 0;
     int refs   = 0;
-    int childs = 0;
 
-    if( symLeft->type == zPAR_TYPE_FUNC || symLeft->type == zPAR_TYPE_PROTOTYPE ) {
-      for( int_t i = oldPos; i < length; i++ ) { // TEST: start from first symbol position
+    bool isFunction =
+      symLeft->type == zPAR_TYPE_FUNC ||
+      symLeft->type == zPAR_TYPE_PROTOTYPE ||
+      symLeft->type == zPAR_TYPE_INSTANCE;
+
+    if( isFunction ) {
+      for( int_t i = 0; i < length; i++ ) { // TEST: start from first symbol position
         byte& command = stack.stack[i];
         if( command == zPAR_TOK_CALL ) {
           int& address = (int&)stack.stack[i + 1];
@@ -62,24 +66,13 @@ namespace GOTHIC_ENGINE {
     }
 
     int newIndex = parser->symtab.GetIndex( symRight );
-    for( int_t i = oldPos; i < length; i++ ) {
+    for( int_t i = 0; i < length; i++ ) {
       byte& command = stack.stack[i];
       if( command >= zPAR_TOK_PUSHINT && command <= zPAR_TOK_PUSHSTR ) {
         int& address = (int&)stack.stack[i + 1];
         if( address == oldIndex ) {
           (int&)stack.stack[i + 1] = newIndex;
           refs++;
-        }
-      }
-    }
-
-    if( symRight->type == zPAR_TYPE_CLASS || symRight->type == zPAR_TYPE_PROTOTYPE ) {
-      zCParser* parser = zParserExtender.GetParser();
-      auto& table = parser->symtab.table;
-      for( int i = 0; i < table.GetNum(); i++ ) {
-        if( table[i]->parent == symLeft ) {
-          table[i]->parent = symRight;
-          childs++;
         }
       }
     }
@@ -106,15 +99,6 @@ namespace GOTHIC_ENGINE {
              colParse2 << refs <<
              colParse1 << ")\t" <<
              colParse2 << symRight->name <<
-             colParse3 << endl;
-
-    if( refs && zCParserExtender::MessagesLevel >= 3 )
-      cmd << colParse2 << "zParserExtender: " <<
-             colParse1 << "childs by "        <<
-             colParse2 << symRight->GetName() <<
-             colParse1 << " updated ("        <<
-             colParse2 << childs              <<
-             colParse1 << ")\t"               <<
              colParse3 << endl;
   }
 
@@ -355,6 +339,8 @@ namespace GOTHIC_ENGINE {
             colParse2 << sym->name <<
             colParse1 << " replaced." <<
             colParse3 << endl;
+
+        CheckHookedNpcInstance( sym );
 
         // Add function to the post compile queue.
         // This symbol will be replace the original

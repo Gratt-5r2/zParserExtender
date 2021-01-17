@@ -89,6 +89,7 @@ namespace Gothic_II_Addon {
     zPAR_TOK_INSTANCE    = 96,
     zPAR_TOK_INSTANCEEND = 97,
     zPAR_TOK_NEWSTRING   = 98,
+    zPAR_TOK_PUSHADDRESS = 99,
     zPAR_TOK_FLAGARRAY   = zPAR_TOK_VAR + 128
   };
 

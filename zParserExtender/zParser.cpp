@@ -55,13 +55,43 @@ namespace GOTHIC_ENGINE {
   HOOK Hook_zCParser_SaveDat PATCH( &zCParser::SaveDat, &zCParser::SaveDat_Union );
 
   int zCParser::SaveDat_Union( zSTRING& name ) {
-    //if( !zParserExtender.ExtendedParsingEnabled() ) // TO DO
-    //  return THISCALL( Hook_zCParser_SaveDat )(name);
+    if( zParserExtender.GetParser()->enableParsing == NinjaParseID )
+      return THISCALL( Hook_zCParser_SaveDat )(name);
 
-    PostCompileCallReplace();
+    // Apply all hooks
+    if( zParserExtender.ExtendedParsingEnabled() ) {
+      PostCompileCallReplace();
 
+      // Save edited DAT
+      if( zParserExtender.CompileDatEnabled() )
+        SaveDatCopy();
+
+      // Save edited OU
+      if( this == parser && zParserExtender.CompileOUEnabled() ) {
+        ogame->GetCutsceneManager()->LibSortion();
+        ogame->GetCutsceneManager()->LibStoreCopy( zLIB_STORE_ASCII | zLIB_STORE_BIN );
+      }
+
+      return True;
+    }
+
+    int Ok = THISCALL( Hook_zCParser_SaveDat )(name);
+
+    if( this == parser && NeedToReparseOU() ) {
+      ogame->GetCutsceneManager()->LibSortion();
+      ogame->GetCutsceneManager()->LibStore( zLIB_STORE_ASCII | zLIB_STORE_BIN );
+      ogame->GetCutsceneManager()->LibLoad( zLIB_STORE_BIN ); // Force update library
+    }
+
+    return Ok;
+
+#if 0
+    // Apply all hooks
+    if( zParserExtender.ExtendedParsingEnabled() )
+      PostCompileCallReplace();
+
+    // Dat file saving
     if( zParserExtender.CompileDatEnabled() ) {
-      // Modified save process
       if( zParserExtender.ExtendedParsingEnabled() )
         return SaveDatCopy();
 
@@ -69,10 +99,18 @@ namespace GOTHIC_ENGINE {
       int Ok = THISCALL( Hook_zCParser_SaveDat )( name );
 
       // Compile new OU library
-      if( this == parser && NeedToReparseOU() ) {
-        ogame->GetCutsceneManager()->LibSortion();
-        ogame->GetCutsceneManager()->LibStore( zLIB_STORE_ASCII | zLIB_STORE_BIN );
-        ogame->GetCutsceneManager()->LibLoad( zLIB_STORE_BIN );
+      if( this == parser ) {
+        if( NeedToReparseOU() ) {
+          ogame->GetCutsceneManager()->LibSortion();
+          ogame->GetCutsceneManager()->LibStore( zLIB_STORE_ASCII | zLIB_STORE_BIN );
+          ogame->GetCutsceneManager()->LibLoad( zLIB_STORE_BIN );
+        }
+
+        // OU bin Edited
+        if( zParserExtender.CompileOUEnabled() ) {
+          ogame->GetCutsceneManager()->LibSortion();
+          ogame->GetCutsceneManager()->LibStoreCopy( zLIB_STORE_ASCII | zLIB_STORE_BIN );
+        }
       }
 
 #if 0
@@ -86,6 +124,7 @@ namespace GOTHIC_ENGINE {
     }
 
     return False;
+#endif
   }
 
 
@@ -128,10 +167,12 @@ namespace GOTHIC_ENGINE {
   HOOK Hook_zCParser_ParseBlock PATCH( &zCParser::ParseBlock, &zCParser::ParseBlock_Union );
 
   void zCParser::ParseBlock_Union() {
-    if( !zParserExtender.ExtendedParsingEnabled() ) // TO DO
-      ParseBlock_OU_Union(); //return THISCALL( Hook_zCParser_ParseBlock )();
+    if( zParserExtender.GetParser()->enableParsing == NinjaParseID )
+      return THISCALL( Hook_zCParser_ParseBlock )();
 
-    //ParseBlock_OU_Union();
+    if( !zParserExtender.ExtendedParsingEnabled() )
+      ParseBlock_OU_Union();
+
     bool whileEnabled = zParserExtender.NativeWhileEnabled();
 
     zSTRING word;
@@ -352,8 +393,34 @@ namespace GOTHIC_ENGINE {
 
 
 
+  zCPar_TreeNode* zCParser::CreateLeafCallInstance( const zSTRING& instName, zCPar_TreeNode* leafBase ) {
+    zCPar_Symbol* sym = GetSymbol( instName );
+
+    if( sym->type == zPAR_TYPE_INSTANCE ) {
+      // Push [this] instance owner
+      treenode = CreateLeaf( zPAR_TOK_PUSHINST, treenode );
+      treenode->name = in_func->name;
+      treenode->info = zPAR_TYPE_INSTANCE;
+
+      // Push [this] instance member
+      treenode = CreateLeaf( zPAR_TOK_PUSHINST, treenode );
+      treenode->name = instName;
+      treenode->info = zPAR_TYPE_INSTANCE;
+
+      // Move [this] from owner to member
+      treenode = CreateLeaf( zPAR_TOK_ASSIGNINST, treenode );
+    }
+
+    // Call instance or prototype as function
+    treenode = CreateLeaf( zPAR_TOK_CALL, treenode );
+    treenode->name = instName;
+    return treenode;
+  }
+
+
+
 #if ENGINE >= Engine_G2
-  HOOK Ivk_zCParser_LoadGlobalVars AS_IF( &zCParser::LoadGlobalVars, &zCParser::LoadGlobalVars_Union, NinjaNotInjected() );
+  HOOK Ivk_zCParser_LoadGlobalVars AS_IF( &zCParser::LoadGlobalVars, &zCParser::LoadGlobalVars_Union, !NinjaInjected() );
 
   inline bool IsValidIntegerSymbol( zCPar_Symbol* sym ) {
     return sym && sym->type == zPAR_TYPE_INT && sym->flags == 0;

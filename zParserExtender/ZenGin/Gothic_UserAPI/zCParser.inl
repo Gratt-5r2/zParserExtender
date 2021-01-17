@@ -38,3 +38,4 @@ void RenameTreeNode( zCPar_Symbol* sym, zSTRING newName );
 zCPar_TreeNode* PushOnStack_Union( zCPar_TreeNode* node );
 void DeclareFunc_Union();
 int ParseSource_Union( zSTRING& s );
+zCPar_TreeNode* CreateLeafCallInstance( const zSTRING& instName, zCPar_TreeNode* );

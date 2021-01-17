@@ -5,6 +5,7 @@ namespace GOTHIC_ENGINE {
   struct zTCompileInfo {
     bool MergeMode;
     bool CompileDat;
+    bool CompileOU;
     bool NativeWhile;
     bool Autorun;
     bool Compilable;
@@ -44,6 +45,7 @@ namespace GOTHIC_ENGINE {
 
     bool MergeModeEnabled();
     bool CompileDatEnabled();
+    bool CompileOUEnabled();
     bool NativeWhileEnabled();
     bool ExtendedParsingEnabled();
     bool ExternalScriptsListIsEmpty();
@@ -53,7 +55,8 @@ namespace GOTHIC_ENGINE {
 
   int zCParserExtender::MessagesLevel = 1;
   zCParserExtender zParserExtender;
-  const int NinjaParsingID = 42;
+  const int PluginParseID = 1;
+  const int NinjaParseID  = 42;
 
 
   extern string DataDirectory;
@@ -63,7 +66,7 @@ namespace GOTHIC_ENGINE {
 
 
 
-  static bool NinjaNotInjected() {
-    return GetModuleHandle( "Ninja.dll" ) == Null;
+  static bool NinjaInjected() {
+    return GetModuleHandle( "Ninja.dll" ) != Null;
   }
 }

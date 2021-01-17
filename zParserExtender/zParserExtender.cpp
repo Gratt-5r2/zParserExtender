@@ -19,7 +19,7 @@ namespace GOTHIC_ENGINE {
 
 
 
-  zCParser* GetParserByName( string name ) {
+  zCParser* GetParserByParserName( string name ) {
     if( name == "Game"    || name == "parser"           ) return Gothic::Parsers::Game;
     if( name == "Auto"                                  ) return Gothic::Parsers::Game;
     if( name == "SFX"     || name == "parserSoundFX"    ) return Gothic::Parsers::SFX;
@@ -35,7 +35,7 @@ namespace GOTHIC_ENGINE {
 
 
 
-  string GetNameByParser( zCParser* par ) {
+  string GetParserNameByParser( zCParser* par ) {
     if( par == Gothic::Parsers::Game   ) return "Game";
     if( par == Gothic::Parsers::SFX    ) return "SFX";
     if( par == Gothic::Parsers::PFX    ) return "PFX";
@@ -149,6 +149,7 @@ namespace GOTHIC_ENGINE {
     option.Read( FilesLine,                      "ZPARSE_EXTENDER", "LoadScript",    "" );
     option.Read( DefaultCompileInfo.MergeMode,   "ZPARSE_EXTENDER", "MergeMode",     true );
     option.Read( DefaultCompileInfo.CompileDat,  "ZPARSE_EXTENDER", "CompileDat",    false );
+    option.Read( DefaultCompileInfo.CompileOU,   "ZPARSE_EXTENDER", "CompileOU",     false );
     option.Read( DefaultCompileInfo.NativeWhile, "ZPARSE_EXTENDER", "NativeWhile",   false );
     option.Read( MessagesLevel,                  "ZPARSE_EXTENDER", "MessagesLevel", MessagesLevel );
     DefaultCompileInfo.Compilable = true;
@@ -323,7 +324,7 @@ namespace GOTHIC_ENGINE {
           );
         
         // Search game parser by name
-        zCParser* par = GetParserByName( scriptInfo.ParserName );
+        zCParser* par = GetParserByParserName( scriptInfo.ParserName );
         zCParser::cur_parser = par;
         CurrentParser = par;
 
@@ -370,6 +371,7 @@ namespace GOTHIC_ENGINE {
       }
 
       // Compile parsed scripts...
+      CurrentCompileInfo = DefaultCompileInfo;
       for( uint i = 0; i < activeParsers.GetNum(); i++ ) {
         CurrentParser = activeParsers[i];
         CurrentParser->CreatePCode();
@@ -446,6 +448,14 @@ namespace GOTHIC_ENGINE {
 
 
 
+  bool zCParserExtender::CompileOUEnabled() {
+    return CurrentCompileInfo.CompileOU;
+  }
+
+
+
+
+
   bool zCParserExtender::NativeWhileEnabled() {
     return CurrentCompileInfo.NativeWhile;
   }
@@ -498,7 +508,7 @@ namespace GOTHIC_ENGINE {
         }
 
         // Save DAT file
-        zCParser* par = GetParserByName( datName );
+        zCParser* par = GetParserByParserName( datName );
         if( par ) {
           par->SaveDatCopy();
           return True;

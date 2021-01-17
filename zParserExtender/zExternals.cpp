@@ -551,6 +551,38 @@ namespace GOTHIC_ENGINE {
     return 0;
   }
 
+  int Mdl_ApplyOverlayMds_AtFirst() {
+    zCParser* par = zCParser::GetParser();
+    oCNpc* npc;
+    zSTRING overlay;
+    par->GetParameter( overlay );
+    npc = (oCNpc*)par->GetInstance();
+    
+    if( npc ) {
+      npc->ApplyOverlay_AtFirst( overlay );
+
+      if( npc->GetAnictrl() )
+        npc->GetAnictrl()->InitAnimations();
+    }
+
+    return 0;
+  }
+
+  int oCNpc::ApplyOverlay_AtFirst( const zSTRING& ov ) {
+    zSTRING overlay = ov;
+    overlay.Upper();
+
+    int Ok = ApplyOverlay( overlay );
+    int index = activeOverlays.Search( overlay );
+    if( index != Invalid ) {
+      zSTRING overlay_tmp = activeOverlays[0];
+      activeOverlays[0] = activeOverlays[index];
+      activeOverlays[index] = overlay_tmp;
+    }
+
+    return Ok;
+  }
+
   // NPC
   int Npc_SetAsHero() {
     zCParser* par = zCParser::GetParser();
@@ -1095,15 +1127,16 @@ namespace GOTHIC_ENGINE {
     parser->DefineExternal( "Wld_GetWeatherType",        Wld_GetWeatherType,        zPAR_TYPE_INT,      0 );
 
     // MDL
-    parser->DefineExternal( "Mdl_GetAnimationIndex",     Mdl_GetAnimationIndex,     zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING,   0 );
-    parser->DefineExternal( "Mdl_GetAnimationName",      Mdl_GetAnimationName,      zPAR_TYPE_STRING,   zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Mdl_AnimationIsExists",     Mdl_AnimationIsExists,     zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Mdl_AnimationIsActive",     Mdl_AnimationIsActive,     zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Mdl_SetAllAnimationsFPS",   Mdl_SetAllAnimationsFPS,   zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_FLOAT,    0 );
-    parser->DefineExternal( "Mdl_ResetAllAnimationsFPS", Mdl_ResetAllAnimationsFPS, zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Mdl_SetAnimationFPS",       Mdl_SetAnimationFPS,       zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      zPAR_TYPE_FLOAT,    0 );
-    parser->DefineExternal( "Mdl_ResetAnimationFPS",     Mdl_ResetAnimationFPS,     zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Mdl_SetVisible",            Mdl_SetVisible,            zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
+    parser->DefineExternal( "Mdl_GetAnimationIndex",       Mdl_GetAnimationIndex,       zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING,   0 );
+    parser->DefineExternal( "Mdl_GetAnimationName",        Mdl_GetAnimationName,        zPAR_TYPE_STRING,   zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
+    parser->DefineExternal( "Mdl_AnimationIsExists",       Mdl_AnimationIsExists,       zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
+    parser->DefineExternal( "Mdl_AnimationIsActive",       Mdl_AnimationIsActive,       zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
+    parser->DefineExternal( "Mdl_SetAllAnimationsFPS",     Mdl_SetAllAnimationsFPS,     zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_FLOAT,    0 );
+    parser->DefineExternal( "Mdl_ResetAllAnimationsFPS",   Mdl_ResetAllAnimationsFPS,   zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, 0 );
+    parser->DefineExternal( "Mdl_SetAnimationFPS",         Mdl_SetAnimationFPS,         zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      zPAR_TYPE_FLOAT,    0 );
+    parser->DefineExternal( "Mdl_ResetAnimationFPS",       Mdl_ResetAnimationFPS,       zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
+    parser->DefineExternal( "Mdl_SetVisible",              Mdl_SetVisible,              zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
+    parser->DefineExternal( "Mdl_ApplyOverlayMds_AtFirst", Mdl_ApplyOverlayMds_AtFirst, zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING,   0 );
 
     // NPC
     parser->DefineExternal( "Npc_SetAsHero",             Npc_SetAsHero,             zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, 0 );
