@@ -2828,9 +2828,6 @@
     <ClInclude Include="Focus.cpp">
       <Filter>Plugin\zParserExtender\Focus</Filter>
     </ClInclude>
-    <ClInclude Include="InjectedNPCs.cpp">
-      <Filter>Plugin\zParserExtender\InstanceItem</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".build_settings.inl">

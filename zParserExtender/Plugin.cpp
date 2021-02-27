@@ -86,7 +86,6 @@ namespace GOTHIC_ENGINE {
   TSaveLoadGameInfo& SaveLoadGameInfo = UnionCore::SaveLoadGameInfo;
 
   void Game_SaveBegin() {
-    AdjustEditedNpcObjects();
   }
 
   bool SaveTemp = false;

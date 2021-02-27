@@ -340,8 +340,6 @@ namespace GOTHIC_ENGINE {
             colParse1 << " replaced." <<
             colParse3 << endl;
 
-        CheckHookedNpcInstance( sym );
-
         // Add function to the post compile queue.
         // This symbol will be replace the original
         // call address for new call address. For

@@ -4,7 +4,6 @@
 // Automatically generated block
 #pragma region Includes
 #include "zParserExtender.cpp"
-#include "InjectedNPCs.cpp"
 #include "zSymbol.cpp"
 #include "zSymbolTable.cpp"
 #include "zParser.cpp"
