@@ -50,22 +50,6 @@ namespace GOTHIC_ENGINE {
 
 
 
-  void PrepareParserSymbols( zCParser* par ) {
-    Array<zCParser*> parsers;
-    if( parsers & par )
-      return;
-
-    parsers += par;
-    auto& symbols = par->symtab.table;
-    for( int i = 0; i < symbols.GetNum(); i++ )
-      par->symtab.CheckNextSymbol( symbols[i] );
-  }
-
-
-
-
-
-
   static bool StringToBool( const string& value ) {
     if( value == "false" || value == "0" )
       return false;
@@ -139,6 +123,9 @@ namespace GOTHIC_ENGINE {
 
 
   zCParserExtender::zCParserExtender() {
+    if( !CHECK_THIS_ENGINE )
+      return;
+
     COption& option = &Union.GetGameOption() == &Union.GetDefaultOption() ?
       Union.GetUnionOption() :
       Union.GetGameOption();
@@ -146,12 +133,13 @@ namespace GOTHIC_ENGINE {
     DefaultCompileInfo.Autorun = false;
 
     string FilesLine;
-    option.Read( FilesLine,                      "ZPARSE_EXTENDER", "LoadScript",    "" );
-    option.Read( DefaultCompileInfo.MergeMode,   "ZPARSE_EXTENDER", "MergeMode",     true );
-    option.Read( DefaultCompileInfo.CompileDat,  "ZPARSE_EXTENDER", "CompileDat",    false );
-    option.Read( DefaultCompileInfo.CompileOU,   "ZPARSE_EXTENDER", "CompileOU",     false );
-    option.Read( DefaultCompileInfo.NativeWhile, "ZPARSE_EXTENDER", "NativeWhile",   false );
-    option.Read( MessagesLevel,                  "ZPARSE_EXTENDER", "MessagesLevel", MessagesLevel );
+    option.Read( FilesLine,                      "ZPARSE_EXTENDER", "LoadScript",          "" );
+    option.Read( DefaultCompileInfo.MergeMode,   "ZPARSE_EXTENDER", "MergeMode",           true );
+    option.Read( DefaultCompileInfo.CompileDat,  "ZPARSE_EXTENDER", "CompileDat",          false );
+    option.Read( DefaultCompileInfo.CompileOU,   "ZPARSE_EXTENDER", "CompileOU",           false );
+    option.Read( DefaultCompileInfo.NativeWhile, "ZPARSE_EXTENDER", "NativeWhile",         false );
+    option.Read( MessagesLevel,                  "ZPARSE_EXTENDER", "MessagesLevel",       MessagesLevel );
+    option.Read( StringsIndexingMode,            "ZPARSE_EXTENDER", "StringsIndexingMode", zStringsIndexing_Default );
     DefaultCompileInfo.Compilable = true;
 
     Array<string> Files = FilesLine.Split( "," );
@@ -473,6 +461,14 @@ namespace GOTHIC_ENGINE {
 
   bool zCParserExtender::ExternalScriptsListIsEmpty() {
     return CompileQueue.GetNum() == 0;
+  }
+
+
+
+
+
+  int zCParserExtender::GetStringsIndexingMode() {
+    return StringsIndexingMode;
   }
 
 

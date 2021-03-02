@@ -65,6 +65,7 @@ namespace Gothic_I_Addon {
 
     // Same as union methods
     char& operator[]( unsigned int )        zCall( 0x00447300 );
+    char& operator[]( int index )           zCall( 0x00447300 );
     zSTRING& operator += ( char const* )    zCall( 0x0066C7D0 );
     zSTRING& operator =  ( char const* )    zCall( 0x004D5310 );
     zSTRING& operator =  ( zSTRING const& ) zCall( 0x005988F0 );

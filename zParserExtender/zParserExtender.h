@@ -2,6 +2,15 @@
 // Union HEADER file
 
 namespace GOTHIC_ENGINE {
+  enum zEStringsIndexingMode {
+    zStringsIndexing_Default = -1, // In this version default is Repair
+    zStringsIndexing_None    =  0, // Do nothing
+    zStringsIndexing_FromTop =  1, // Set a parser.stringcount by the last string symbol
+    zStringsIndexing_Repair  =  2  // Check and repair all string symbol names
+  };
+
+
+
   struct zTCompileInfo {
     bool MergeMode;
     bool CompileDat;
@@ -31,6 +40,7 @@ namespace GOTHIC_ENGINE {
     Array<zCPar_Symbol*> PFXSymbols;
     zCParser* CurrentParser;
     bool ParsingEnabled;
+    int StringsIndexingMode;
   public:
 
     zCParserExtender();
@@ -49,6 +59,7 @@ namespace GOTHIC_ENGINE {
     bool NativeWhileEnabled();
     bool ExtendedParsingEnabled();
     bool ExternalScriptsListIsEmpty();
+    int GetStringsIndexingMode();
 
     static int MessagesLevel;
   };

@@ -2,8 +2,8 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-  HOOK Hook_zCPar_SymbolTable_Load_Union AS( &zCPar_SymbolTable::Load,   &zCPar_SymbolTable::Load_Union   );
-  HOOK Hook_zCPar_SymbolTable_Insert     AS( &zCPar_SymbolTable::Insert, &zCPar_SymbolTable::Insert_Union );
+  HOOK Hook_zCPar_SymbolTable_Load      AS( &zCPar_SymbolTable::Load,      &zCPar_SymbolTable::Load_Union );
+  HOOK Hook_zCPar_SymbolTable_Insert    AS( &zCPar_SymbolTable::Insert,    &zCPar_SymbolTable::Insert_Union );
 
 
 
