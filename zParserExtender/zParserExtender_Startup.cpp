@@ -1,4 +1,4 @@
-// Supported with union (c) 2020 Union team
+ï»¿// Supported with union (c) 2020 Union team
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
@@ -7,7 +7,11 @@ namespace GOTHIC_ENGINE {
     if( name[0u] != char( 255 ) )
       return false;
 
-    for( int i = 1; i < name.Length(); i++ ) {
+    int length = name.Length();
+    if( length != 6 )
+      return false;
+
+    for( int i = 1; i < length; i++ ) {
       byte& letter = (byte&)name[i];
       if( letter < '0' || letter > '9' )
         return false;
@@ -36,7 +40,20 @@ namespace GOTHIC_ENGINE {
 
 
 
+  inline void inc_string_numbers( zSTRING& value, const uint& start, const uint& end ) {
+    uint index = end;
+    do {
+      char& dec = value[index--];
+      if( ++dec > '9' )
+        dec = '0';
+      else
+        break;
+
+    } while( index > start );
+  }
+
   static void RepairStringsTable( zCParser* par ) {
+#if 0 // 15-32ms
     int& stringcount = par->stringcount;
     stringcount = 10000;
 
@@ -49,6 +66,22 @@ namespace GOTHIC_ENGINE {
           sym->name = name_expected;
       }
     }
+#else // 0-15ms
+    zSTRING str_stringcount = zSTRING( char( 255 ) ) + "10000";
+
+    zCPar_SymbolTable& table = par->symtab;
+    for( int i = 0; i < table.table.GetNum(); i++ ) {
+      zCPar_Symbol* sym = table.table[i];
+      if( IsUnnamedStringSymbol( sym ) ) {
+        if( sym->name != str_stringcount )
+          sym->name = str_stringcount;
+
+        inc_string_numbers( str_stringcount, 1, str_stringcount.Length() - 1 );
+      }
+    }
+
+    par->stringcount = (int)zSTRING( str_stringcount.ToChar() + 1 ).ToInt32();
+#endif
   }
 
 
@@ -56,7 +89,7 @@ namespace GOTHIC_ENGINE {
 
 
   // @N1kX request: on recompilation DAT file in symbol table
-  // appear string symbols dublicates (ÿ10000 and higher).
+  // appear string symbols dublicates (ï¿½10000 and higher).
   // Thats not critical for Vanilla game with Plugins, but
   // fix maybe need for Ninja patches or Translators.
   static void CheckStringsIndexing( zCParser* par ) {
