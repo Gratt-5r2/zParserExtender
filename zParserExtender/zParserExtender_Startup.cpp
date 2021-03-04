@@ -53,20 +53,6 @@ namespace GOTHIC_ENGINE {
   }
 
   static void RepairStringsTable( zCParser* par ) {
-#if 0 // 15-32ms
-    int& stringcount = par->stringcount;
-    stringcount = 10000;
-
-    zCPar_SymbolTable& table = par->symtab;
-    for( int i = 0; i < table.table.GetNum(); i++ ) {
-      zCPar_Symbol* sym = table.table[i];
-      if( IsUnnamedStringSymbol( sym ) ) {
-        zSTRING name_expected = zSTRING( char( 255 ) ) + Z stringcount++;
-        if( sym->name != name_expected )
-          sym->name = name_expected;
-      }
-    }
-#else // 0-15ms
     zSTRING str_stringcount = zSTRING( char( 255 ) ) + "10000";
 
     zCPar_SymbolTable& table = par->symtab;
@@ -81,7 +67,6 @@ namespace GOTHIC_ENGINE {
     }
 
     par->stringcount = (int)zSTRING( str_stringcount.ToChar() + 1 ).ToInt32();
-#endif
   }
 
 

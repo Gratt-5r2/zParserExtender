@@ -65,7 +65,7 @@ namespace GOTHIC_ENGINE {
       }
     }
 
-    int newIndex = parser->symtab.GetIndex( symRight );
+    int newIndex = zParserExtender.GetParser()->symtab.GetIndex( symRight );
     for( int_t i = 0; i < length; i++ ) {
       byte& command = stack.stack[i];
       if( command >= zPAR_TOK_PUSHINT && command <= zPAR_TOK_PUSHSTR ) {

@@ -3,3 +3,4 @@
 // User API for zCMenu
 // Add your methods here
 
+static void Startup_Union();

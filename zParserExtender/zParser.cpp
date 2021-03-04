@@ -84,47 +84,6 @@ namespace GOTHIC_ENGINE {
     }
 
     return Ok;
-
-#if 0
-    // Apply all hooks
-    if( zParserExtender.ExtendedParsingEnabled() )
-      PostCompileCallReplace();
-
-    // Dat file saving
-    if( zParserExtender.CompileDatEnabled() ) {
-      if( zParserExtender.ExtendedParsingEnabled() )
-        return SaveDatCopy();
-
-      // Original save process
-      int Ok = THISCALL( Hook_zCParser_SaveDat )( name );
-
-      // Compile new OU library
-      if( this == parser ) {
-        if( NeedToReparseOU() ) {
-          ogame->GetCutsceneManager()->LibSortion();
-          ogame->GetCutsceneManager()->LibStore( zLIB_STORE_ASCII | zLIB_STORE_BIN );
-          ogame->GetCutsceneManager()->LibLoad( zLIB_STORE_BIN );
-        }
-
-        // OU bin Edited
-        if( zParserExtender.CompileOUEnabled() ) {
-          ogame->GetCutsceneManager()->LibSortion();
-          ogame->GetCutsceneManager()->LibStoreCopy( zLIB_STORE_ASCII | zLIB_STORE_BIN );
-        }
-      }
-
-#if 0
-      // Reload a symbol table after clear compilation
-      // for safely symbols loading
-      if( !zParserExtender.ExternalScriptsListIsEmpty() )
-        LoadDat( name );
-#endif
-
-      return Ok;
-    }
-
-    return False;
-#endif
   }
 
 
@@ -468,4 +427,18 @@ namespace GOTHIC_ENGINE {
     return True;
   }
 #endif
+
+
+
+
+
+  HOOK Hook_zCMenu_Startup PATCH( &zCMenu::Startup, &zCMenu::Startup_Union );
+
+  void zCMenu::Startup_Union() {
+    static bool initialized = false;
+    if( !initialized ) {
+      Hook_zCMenu_Startup();
+      initialized = true;
+    }
+  }
 }
