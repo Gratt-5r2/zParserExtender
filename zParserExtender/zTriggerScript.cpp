@@ -215,7 +215,7 @@ namespace GOTHIC_ENGINE {
 
 
 
-  string GetSlotNameByID( uint ID ) {
+  string GetSlotNameByID( int ID ) {
     if( ID > 0 )
       return "savegame" + A ID;
 
