@@ -97,10 +97,12 @@ namespace GOTHIC_ENGINE {
   }
 
   int Hlp_GetFocusVobName() {
+    static zSTRING name = "";
     zCParser* par = zCParser::GetParser();
     oCNpc* instance = (oCNpc*)par->GetInstance();
     zCVob* vob = instance->GetFocusVob();
-    par->SetReturn( vob ? (zSTRING&)vob->GetObjectName() : "" );
+    name = vob ? (zSTRING&)vob->GetObjectName() : "";
+    par->SetReturn( name );
     return 0;
   }
 
@@ -1079,6 +1081,62 @@ namespace GOTHIC_ENGINE {
 
 
 
+  int Str_Format() {
+    static zSTRING format;
+    zSTRING parameter_s;
+    int parameter_i;
+    float parameter_f;
+
+    parser->GetParameter( format );
+
+    for( uint i = format.Length() - 1; i > 0; i-- ) {
+      if( format[i - 1] == '%' ) {
+        switch( format[i] ) {
+          case 's':
+            parser->GetParameter( parameter_s );
+            format.Cut( i - 1, 2 );
+            format.Put( parameter_s, i - 1 );
+            break;
+          case 'i':
+            parser->GetParameter( parameter_i );
+            parameter_s = parameter_i;
+            format.Cut( i - 1, 2 );
+            format.Put( parameter_s, i - 1 );
+            break;
+          case 'x':
+            parser->GetParameter( parameter_i );
+            parameter_s = Z AHEX32( parameter_i );
+            format.Cut( i - 1, 2 );
+            format.Put( parameter_s, i - 1 );
+            break;
+          case 'f':
+            parser->GetParameter( parameter_f );
+            parameter_s = parameter_f;
+            format.Cut( i - 1, 2 );
+            format.Put( parameter_s, i - 1 );
+            break;
+          case 'b':
+            parser->GetParameter( parameter_i );
+            parameter_s = parameter_i ? "True" : "False";
+            format.Cut( i - 1, 2 );
+            format.Put( parameter_s, i - 1 );
+            break;
+          case 'p':
+            zCObject* object = (zCObject*)parser->GetInstance();
+            parameter_s = Z AHEX32( object );
+            format.Cut( i - 1, 2 );
+            format.Put( parameter_s, i - 1 );
+            break;
+        }
+      }
+    }
+
+    parser->SetReturn( format );
+    return True;
+  }
+
+
+
 
 
   void DefineExternals() {
@@ -1173,6 +1231,8 @@ namespace GOTHIC_ENGINE {
     parser->DefineExternal( "AI_GetNextTriggerByOther",    AI_GetNextTriggerByOther,    zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
     parser->DefineExternal( "AI_GetNextTriggerByVictim",   AI_GetNextTriggerByVictim,   zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
     parser->DefineExternal( "AI_GetNextTriggerByNPCs",     AI_GetNextTriggerByNPCs,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
+
+    parser->DefineExternal( "Str_Format", Str_Format, zPAR_TYPE_STRING, 0 );
 
     // OTHER
     static float fNan  = NAN;

@@ -39,3 +39,4 @@ zCPar_TreeNode* PushOnStack_Union( zCPar_TreeNode* node );
 void DeclareFunc_Union();
 int ParseSource_Union( zSTRING& s );
 zCPar_TreeNode* CreateLeafCallInstance( const zSTRING& instName, zCPar_TreeNode* );
+zCPar_Symbol* GetNearestVariable( const zSTRING& varName );
