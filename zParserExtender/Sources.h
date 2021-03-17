@@ -13,6 +13,7 @@
 #include "zExternals.cpp"
 #include "InstanceItem.cpp"
 #include "Focus.cpp"
+#include "Menu.cpp"
 #include "Plugin.cpp"
 #pragma endregion
 

@@ -232,6 +232,9 @@
     <Filter Include="Plugin\zParserExtender\Focus">
       <UniqueIdentifier>{05f64e27-c4d3-498a-a45e-626d4a18919e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\zParserExtender\Menu">
+      <UniqueIdentifier>{cca1b340-925e-44a9-81d1-021150724a3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2830,6 +2833,9 @@
     </ClInclude>
     <ClInclude Include="zParserExtender_Startup.cpp">
       <Filter>Plugin\zParserExtender</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.cpp">
+      <Filter>Plugin\zParserExtender\Menu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

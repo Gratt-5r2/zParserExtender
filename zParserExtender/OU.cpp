@@ -257,7 +257,7 @@ namespace GOTHIC_ENGINE {
 
 
 
-  HOOK Ivk_zCParser_WriteAdditionalInfo AS( &zCParser::WriteAdditionalInfo, &zCParser::WriteAdditionalInfo_Union );
+  HOOK Ivk_zCParser_WriteAdditionalInfo PATCH( &zCParser::WriteAdditionalInfo, &zCParser::WriteAdditionalInfo_Union );
   
   int zCParser::WriteAdditionalInfo_Union( zSTRING& str, int line, int index ) {
     string name = str.GetPattern( "\"", "\"" ); // Extract SVM sound name
