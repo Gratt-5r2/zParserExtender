@@ -112,6 +112,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void zCParser::DeclareAssign_Union( zSTRING& symName ) {
+    DynamicLoadExternal( symName );
     if( SVM ) {
       int index = FindIndexInst_Union( symName );
       if( index != Invalid ) {
@@ -195,6 +196,9 @@ namespace GOTHIC_ENGINE {
   HOOK Ivk_zCParser_CreatePCode AS( &zCParser::CreatePCode, &zCParser::CreatePCode_Union );
 
   void zCParser::CreatePCode_Union() {
+    if( parser && this == parser )
+      zTTriggerScript::RegisterClassOffset();
+
     THISCALL( Ivk_zCParser_CreatePCode )();
 
     if( !parser || this != parser )

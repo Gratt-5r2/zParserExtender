@@ -32,6 +32,7 @@ namespace GOTHIC_ENGINE {
     static void LoadTriggers( zCArchiver& arc, bool temp );
     static void SaveTriggers( zCArchiver& arc, bool temp );
     static void ClearTriggers( bool temp );
+    static void RegisterClassOffset();
   protected:
 
     friend int AI_GetTriggerByID();

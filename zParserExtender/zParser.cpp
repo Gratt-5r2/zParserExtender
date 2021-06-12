@@ -170,6 +170,24 @@ namespace GOTHIC_ENGINE {
       SkipMeta_Union();
       THISCALL( Ivk_zCParser_ReadWord )(word);
     }
+
+    ReadMacro( word );
+  }
+
+
+
+  void zCParser::ReadMacro( zSTRING& word ) {
+    string& adigit = (string&)aword;
+    if( adigit.StartWith( "KEY_" ) ) {
+      int value = zInput_GetKeyIndex( adigit );
+      if( value != Invalid )
+        aword = value;
+    }
+    else if( adigit.StartWith( "GAME_" ) ) {
+      int value = zInput_GetLogicalKeyIndex( adigit );
+      if( value != Invalid )
+        aword = value;
+    }
   }
 
 
@@ -260,21 +278,52 @@ namespace GOTHIC_ENGINE {
 
 
   void zCParser::CallGameInit_Union() {
-    static int index = GetIndex( "GAMEINIT" );
+    static zSTRING eventName = "GAMEINIT";
+    int index = GetEventIndex( eventName );
+    if( index != Invalid )
+      CallFunc( index );
+
+    DoEvent( eventName );
+  }
+
+
+
+  void zCParser::DoEvent( const zSTRING& eventName ) {
+    int index = GetEventIndex( eventName );
     if( index == Invalid )
       return;
 
-    CallFunc( index );
+    int indexSort = symtab.tablesort.Search( index );
+
+    while( true ) {
+      index = symtab.tablesort[++indexSort];
+      zCPar_Symbol* sym = GetSymbol( index );
+      if( sym == Null )
+        break;
+
+      if( !sym->name.HasWord( "EVENT." + eventName + "." ) )
+        break;
+
+      CallFunc( index );
+    }
+  }
+
+
+
+  int zCParser::GetEventIndex( const zSTRING& eventName ) {
+    int index = GetIndex( "EVENT." + eventName + ".START" );
+    return index;
   }
 
 
 
   void zCParser::CallGameLoop_Union() {
-    static int index = GetIndex( "GAMELOOP" );
-    if( index == Invalid )
-      return;
+    static zSTRING eventName = "GAMELOOP";
+    int index = GetIndex( eventName );
+    if( index != Invalid )
+      CallFunc( index );
 
-    CallFunc( index );
+    DoEvent( eventName );
   }
 
 
@@ -288,6 +337,7 @@ namespace GOTHIC_ENGINE {
   HOOK Hook_zCParser_Parse PATCH( &zCParser::Parse, &zCParser::Parse_Union );
 
   int zCParser::Parse_Union( zSTRING s ) {
+    cur_parser = this;
     bool needToReparce = NeedToReparse( s ) && enableParsing != NinjaParseID;
     if( !zParserExtender.ExtendedParsingEnabled() && !needToReparce )
       return THISCALL( Hook_zCParser_Parse )(s);
@@ -394,10 +444,10 @@ namespace GOTHIC_ENGINE {
   zCPar_Symbol* zCParser::GetNearestVariable( const zSTRING& varName ) {
     zCPar_Symbol* symbol = Null;
     if( in_func )
-      symbol = parser->GetSymbol( in_func->name + "." + varName );
+      symbol = GetSymbol( in_func->name + "." + varName );
 
     if( !symbol )
-      symbol = parser->GetSymbol( varName );
+      symbol = GetSymbol( varName );
 
     return symbol;
   }
@@ -410,8 +460,23 @@ namespace GOTHIC_ENGINE {
     return word.IsNumber() && !WordIsFloat( word );
   }
 
+  extern bool PostLoadExternal( const string& funcName );
+
+  bool zCParser::DynamicLoadExternal( const zSTRING& symName, const bool& forceReplace ) {
+    if( symName == "" )
+      return false;
+
+    zCPar_Symbol* sym = GetSymbol( symName );
+    if( sym && !forceReplace )
+      return false;
+
+    return PostLoadExternal( symName );
+  }
+
   void zCParser::DeclareFuncCall_Union( zSTRING& name, int typematch ) {
     string functionName = in_func->name;
+    DynamicLoadExternal( name );
+
     if( name != "STR_FORMAT" )
       return THISCALL( Hook_zCParser_DeclareFuncCall )(name, typematch);
 
@@ -455,7 +520,6 @@ namespace GOTHIC_ENGINE {
 
       // Is a variable
       zCPar_Symbol* sym = GetNearestVariable( word );
-      cmd << word << "  " << AHEX32( sym ) << endl;
       switch( sym->type ) {
         case zPAR_TYPE_INT:
           treenode->SetNext( ParseExpression() );
@@ -553,5 +617,48 @@ namespace GOTHIC_ENGINE {
       Hook_zCMenu_Startup();
       initialized = true;
     }
+  }
+
+
+
+  HOOK Hook_zCParser_ReadFuncType PATCH( &zCParser::ReadFuncType, &zCParser::ReadFuncType_Union );
+
+  static bool s_RenameTreeNode = false;
+
+  int zCParser::ReadFuncType_Union() {
+    ReadWord( aword );
+    if( aword == "EVENT" ) {
+      s_DeclareEvent = true;
+      s_RenameTreeNode = true;
+      return zPAR_TYPE_VOID;
+    }
+
+    PrevWord();
+
+    THISCALL( Hook_zCParser_ReadFuncType )();
+  }
+
+
+
+  HOOK Hook_zCParser_DeclareFunc PATCH( &zCParser::DeclareFunc, &zCParser::DeclareFunc_Union );
+
+  void zCParser::DeclareFunc_Union() {
+    auto treenode_old = treenode;
+    THISCALL( Hook_zCParser_DeclareFunc )();
+
+    if( s_RenameTreeNode ) {
+      auto treenode_func = treenode_old->next;
+      treenode_func->name = Z string::Combine( "EVENT.%z.%z", treenode_func->name, fname.GetPattern( "\\", "." ) );
+      s_RenameTreeNode = false;
+    }
+  }
+
+
+
+  HOOK Hook_zCParser_LoadDat PATCH( &zCParser::LoadDat, &zCParser::LoadDat_Union );
+
+  int zCParser::LoadDat_Union( zSTRING& datName ) {
+    cur_parser = this;
+    return THISCALL( Hook_zCParser_LoadDat )(datName);
   }
 }

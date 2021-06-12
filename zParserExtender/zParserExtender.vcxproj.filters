@@ -235,6 +235,9 @@
     <Filter Include="Plugin\zParserExtender\Menu">
       <UniqueIdentifier>{cca1b340-925e-44a9-81d1-021150724a3e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\zParserExtender\Animations">
+      <UniqueIdentifier>{6a6ea6f0-03c4-454b-8c74-a1ec7f0f3f48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2836,6 +2839,18 @@
     </ClInclude>
     <ClInclude Include="Menu.cpp">
       <Filter>Plugin\zParserExtender\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="zExternals_Vobs.cpp">
+      <Filter>Plugin\zParserExtender\Externals</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoMan.cpp">
+      <Filter>Plugin\zParserExtender\OU</Filter>
+    </ClInclude>
+    <ClInclude Include="zParser_Utils.inl">
+      <Filter>Plugin\zParserExtender\Extender</Filter>
+    </ClInclude>
+    <ClInclude Include="Animations.cpp">
+      <Filter>Plugin\zParserExtender\Animations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

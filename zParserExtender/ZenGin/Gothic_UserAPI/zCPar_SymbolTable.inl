@@ -5,6 +5,7 @@
 
 void PostDefineExternal_Union( zCPar_Symbol* external );
 void Load_Union( zFILE* f );
+void RegisterEvent( const zSTRING& name );
 int Insert_Union( zCPar_Symbol* sym );
 int InsertAt_Union( zCPar_Symbol* sym, int alloc, bool checkHierarchy );
 int GetIndex_Safe( zSTRING const& );

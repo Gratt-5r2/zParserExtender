@@ -27,19 +27,33 @@ namespace GOTHIC_ENGINE {
     string ParserName;
     string FullName;
     string Name;
+    Array<string> Dependencies;
 
+    void LoadDependency( string dependencyName );
+    void CheckDependencies();
     void ParseMeta( string& buffer );
+    bool operator == ( const string& name ) const;
+    bool operator == ( const zTScriptInfo& other ) const;
+    bool operator <  ( const string& name ) const;
+    bool operator >  ( const string& name ) const;
   };
+
+  static bool operator == ( zTScriptInfo* info, const string& name ) { return *info == name; }
+  static bool operator <  ( zTScriptInfo* info, const string& name ) { return *info < name; }
+  static bool operator >  ( zTScriptInfo* info, const string& name ) { return *info > name; }
+
 
 
 
   class zCParserExtender {
     zTCompileInfo DefaultCompileInfo;
     zTCompileInfo CurrentCompileInfo;
-    Array<zTScriptInfo> CompileQueue;
+    Array<zTScriptInfo*> CompileQueue;
     Array<zCPar_Symbol*> PFXSymbols;
     zCParser* CurrentParser;
+    zCParser* ParserExternals;
     bool ParsingEnabled;
+    bool InjectUnionMenu;
     int StringsIndexingMode;
   public:
 
@@ -52,6 +66,8 @@ namespace GOTHIC_ENGINE {
     void RegisterPFXSymbols();
     void InsertPFXSymbol( zCPar_Symbol* sym );
     zCParser* GetParser();
+    zCParser* GetParserExternals();
+    zCPar_Symbol* GetExternalFunction( const string& symName );
 
     bool MergeModeEnabled();
     bool CompileDatEnabled();
@@ -59,6 +75,11 @@ namespace GOTHIC_ENGINE {
     bool NativeWhileEnabled();
     bool ExtendedParsingEnabled();
     bool ExternalScriptsListIsEmpty();
+
+    void GetCompilableScriptList( zTScriptInfo* root, Array<zTScriptInfo*>& queue );
+    Array<zTScriptInfo*> GetCompilableScriptList();
+    bool HasExternalScript( const string& scriptName );
+    bool CheckValidityRecursive( zTScriptInfo* root );
     int GetStringsIndexingMode();
 
     static int MessagesLevel;

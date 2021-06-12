@@ -35,7 +35,6 @@ namespace GOTHIC_ENGINE {
           SystemDirectory.Cut( 0, 1 );
 
         SystemDirectory.Replace( "$DATA$", DataDirectory );
-        SystemDirectory += "Autorun\\";
         AutorunDirectory = SystemDirectory + "Autorun\\";
       }
     }
@@ -66,6 +65,18 @@ namespace GOTHIC_ENGINE {
     zParserExtender.ParseBegin();
     parser->CallGameInit_Union();
     Plugin_InitConsole();
+
+    /*cmd << "Table length: " << parser->symtab.tablesort.GetNum() << endl << endl;
+    for( uint i = 0; i < 10; i++ ) 		{
+      cmd << i << endl;
+      cmd << "Index sorted: " << parser->symtab.tablesort[i] << endl;
+      cmd << "Name:         " << parser->symtab.table[parser->symtab.tablesort[i]]->name << endl;
+      cmd << "Type:         " << parser->symtab.table[parser->symtab.tablesort[i]]->type << endl;
+      cmd << "Flags:        " << parser->symtab.table[parser->symtab.tablesort[i]]->flags << endl;
+      cmd << "Ele:          " << parser->symtab.table[parser->symtab.tablesort[i]]->ele << endl;
+      cmd << "Single data:  " << parser->symtab.table[parser->symtab.tablesort[i]]->single_intdata << endl;
+      cmd << endl << endl;
+    }*/
   }
 
   void Game_Exit() {
@@ -100,6 +111,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void LoadBegin() {
+    ResetModelSpeedList();
   }
 
   void LoadEnd() {

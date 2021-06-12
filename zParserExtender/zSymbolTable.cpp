@@ -126,8 +126,9 @@ namespace GOTHIC_ENGINE {
 
   void zCPar_SymbolTable::PostDefineExternal_Union( zCPar_Symbol* external ) {
     // Restore function & arguments of function
+    int ele = external->ele;
     zCPar_Symbol* Symbol = external;
-    while( Symbol ) {
+    while( Symbol && ele-- >= 0 ) {
       Insert_Union( Symbol );
       Symbol = Symbol->next;
 
@@ -139,16 +140,19 @@ namespace GOTHIC_ENGINE {
 
 
 
-
+  //extern Array<zCPar_Symbol*> LoadedExternals;
   void zCPar_SymbolTable::Load_Union( zFILE* f ) {
+    zCParser* par = zCParser::GetParser();
     zCPar_Symbol* Symbol;
-    Array<zCPar_Symbol*> Externals;
+    Array<zCPar_Symbol*> StartupExternals;
+    Array<zCPar_Symbol*> LoadedExternals;
 
     if( !zParserExtender.MergeModeEnabled() ) {
       for( int i = 0; i < table.GetNumInList(); i++ ) {
         Symbol = table[i];
+
         if( Symbol->HasFlag( zPAR_FLAG_EXTERNAL ) ) {
-          Externals += Symbol;
+          StartupExternals += Symbol;
           table.RemoveIndex( i-- );
         }
       }
@@ -181,6 +185,7 @@ namespace GOTHIC_ENGINE {
     zSTRING ParentFuncName;
     zCPar_Symbol* ParentFuncSymbol = Null;
     zCPar_Symbol* PreviousSymbol = Null;
+    bool SkipNextFunction = false;
 
     for( int i = 0; i < SymCount; i++ ) {
       Symbol = preAllocatedSymbols + (nextPreAllocated--);
@@ -192,6 +197,9 @@ namespace GOTHIC_ENGINE {
           ParentFuncSymbol = Symbol;
           PreviousSymbol = Symbol;
           ParentFuncName = Symbol->name;
+
+          if( Symbol->HasFlag( zPAR_FLAG_EXTERNAL ) )
+            LoadedExternals.Insert( Symbol );
         }
       }
 
@@ -201,25 +209,41 @@ namespace GOTHIC_ENGINE {
           PreviousSymbol->next = Symbol;
           PreviousSymbol = Symbol;
         }
-        else
+        else {
           ParentFuncSymbol = Null;
+          SkipNextFunction = false;
+        }
       }
 
       // load parent symbol
       bool32 ParentIndex = Invalid;
       f->Read( &ParentIndex, sizeof( ParentIndex ) );
-      if( ParentIndex != Invalid )
-        Symbol->SetParent( GetSymbol( ParentIndex ) );
 
-      table.InsertEnd( Symbol );
+      if( !SkipNextFunction ) {
+        if( ParentIndex != Invalid )
+          Symbol->SetParent( GetSymbol( ParentIndex ) );
+
+        table.InsertEnd( Symbol );
+      }
+    }
+
+
+    for( uint i = 0; i < LoadedExternals.GetNum(); i++ ) {
+      zCPar_Symbol* OldExternal = LoadedExternals[i];
+      zCPar_Symbol* NewExternal = zParserExtender.GetExternalFunction( OldExternal->name );
+      if( NewExternal ) {
+        int StackAddress;
+        OldExternal->GetStackPos( StackAddress, 0 );
+        NewExternal->SetStackPos( StackAddress, 0 );
+      }
     }
 
     // restore external functions
     if( !zParserExtender.MergeModeEnabled() ) {
-      for( uint i = 0; i < Externals.GetNum(); i++ ) {
-        zCPar_Symbol*& OldExternal = Externals[i];
+      for( uint i = 0; i < StartupExternals.GetNum(); i++ ) {
+        zCPar_Symbol*& OldExternal = StartupExternals[i];
         zCPar_Symbol* NewExternal = GetSymbol( OldExternal->name );
-
+        
         if( NewExternal ) {
           int StackAddress;
           OldExternal->GetStackPos( StackAddress, 0 );
@@ -227,10 +251,11 @@ namespace GOTHIC_ENGINE {
 
           // copy arguments from old to new
           NewExternal->next = OldExternal->next;
-          delete OldExternal;
+          // delete OldExternal;
         }
-        else
+        else {
           PostDefineExternal_Union( OldExternal );
+        }
       }
     }
   }
@@ -239,7 +264,42 @@ namespace GOTHIC_ENGINE {
 
 
 
+  
+
+
+  int zCPar_SymbolTable::GetIndex_Safe( const zSTRING& name ) {
+    for( int i = 0; i < table.GetNum(); i++ )
+      if( table[i] && table[i]->name == name )
+        return i;
+      
+    return Invalid;
+  }
+
+
+  void zCPar_SymbolTable::RegisterEvent( const zSTRING& name ) {
+    zSTRING eventName = Z string::Combine( "EVENT.%z.START", name );
+    if( GetIndex( eventName ) != Invalid )
+      return;
+
+    zCPar_Symbol* sym = new zCPar_Symbol();
+    sym->name = eventName;
+    sym->type = zPAR_TYPE_VOID;
+    InsertAt_Union( sym, 0, false );
+  }
+
+
+
+  static bool s_DeclareEvent = false;
+
   int zCPar_SymbolTable::Insert_Union( zCPar_Symbol* sym ) {
+    if( s_DeclareEvent ) {
+      s_DeclareEvent = false;
+      RegisterEvent( sym->name );
+
+      zSTRING& fname = zCParser::cur_parser->fname.GetPattern( "\\", "." );
+      sym->name = Z string::Combine( "EVENT.%z.%z", sym->name, fname );
+    }
+
     return InsertAt_Union( sym, True, true );
   }
 
@@ -324,13 +384,14 @@ namespace GOTHIC_ENGINE {
       zParserExtender.InsertPFXSymbol( sym );
 
     int index = GetIndex( sym->name );
+
     if( index != Invalid ) {
       zCPar_Symbol* oldSym = table[index];
 
       // Replace 'declaration to definition' or 'external func to internal'
-      bool externalFunc = !sym->HasFlag( zPAR_FLAG_EXTERNAL ) && oldSym->HasFlag( zPAR_FLAG_EXTERNAL );
+      bool internatToExternal = !sym->HasFlag( zPAR_FLAG_EXTERNAL ) && oldSym->HasFlag( zPAR_FLAG_EXTERNAL );
 
-      if( externalFunc || zParserExtender.MergeModeEnabled() ) {
+      if( internatToExternal || zParserExtender.MergeModeEnabled() ) {
         RenameSymbol( oldSym, oldSym->GetName() + "_OLD", sym );
 
         if( zCParserExtender::MessagesLevel >= 3 )
@@ -359,7 +420,6 @@ namespace GOTHIC_ENGINE {
     }
 
     cur_table = this;
-
     table.InsertEnd( sym );
     tablesort.InsertSort( table.GetNumInList() - 1 );
 
@@ -408,9 +468,10 @@ namespace GOTHIC_ENGINE {
   FASTHOOK( zCPar_SymbolTable, GetSymbol );
 
   zCPar_Symbol* zCPar_SymbolTable::GetSymbol_Union( const zSTRING& s ) {
-    if( s.IsEmpty() )
+    if( s.IsEmpty() || s[0u] == ',' )
       return Null;
 
+    //cmd << s << endl;
     return GetSymbol( GetIndex( s ) );
   }
 }

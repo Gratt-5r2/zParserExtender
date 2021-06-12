@@ -4,12 +4,15 @@
 // Automatically generated block
 #pragma region Includes
 #include "zParserExtender_Startup.cpp"
+#include "Animations.cpp"
 #include "zParserExtender.cpp"
 #include "zSymbol.cpp"
 #include "zSymbolTable.cpp"
 #include "zParser.cpp"
+#include "InfoMan.cpp"
 #include "OU.cpp"
 #include "zTriggerScript.cpp"
+#include "zExternals_Vobs.cpp"
 #include "zExternals.cpp"
 #include "InstanceItem.cpp"
 #include "Focus.cpp"

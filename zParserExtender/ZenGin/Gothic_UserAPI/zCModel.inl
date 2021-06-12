@@ -3,3 +3,4 @@
 // User API for zCModel
 // Add your methods here
 
+void AdvanceAnis_Union();

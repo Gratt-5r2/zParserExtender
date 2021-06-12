@@ -27,16 +27,28 @@ void Reset_Union();
 void ResetAdditionalInfo();
 int Parse_Union( zSTRING s );
 void DeclareFuncCall_Union( zSTRING& s, int n );
+bool DynamicLoadExternal( const zSTRING&, const bool& = false );
 void DeclareAssign_Union_2( zSTRING& );
 void SetInfoFile_Union( zCList<zSTRING>*, zSTRING const& );
 int SaveDatCopy();
 void* CallFunc_Union( int index, ... );
+void DeclareFunc_Union();
+int ReadFuncType_Union();
+void DoEvent( const zSTRING& eventName );
+int GetEventIndex( const zSTRING& eventName );
+int ReadInt_Union();
+int GetNextToken_Union();
+zCPar_TreeNode* CreateFloatLeaf_Union();
+float ReadFloat_Union();
+void ReadMacro( zSTRING& );
+int LoadDat_Union( zSTRING& datName );
 
 void PreCompile();
 void RenameTreeNode( zCPar_Symbol* sym, zSTRING newName );
 
 zCPar_TreeNode* PushOnStack_Union( zCPar_TreeNode* node );
-void DeclareFunc_Union();
 int ParseSource_Union( zSTRING& s );
 zCPar_TreeNode* CreateLeafCallInstance( const zSTRING& instName, zCPar_TreeNode* );
 zCPar_Symbol* GetNearestVariable( const zSTRING& varName );
+
+void __cdecl DefineExternal_Union( zSTRING const&, int( __cdecl* )(), int, int, ... );

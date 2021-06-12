@@ -87,6 +87,41 @@ namespace GOTHIC_ENGINE {
     return false;
   }
 
+  static Array<string> ParameterToArray( const string& value ) {
+    Array<string> array = value.Split( "," );
+    for( uint i = 0; i < array.GetNum(); i++ )
+      array[i].Shrink();
+    
+    return array;
+  }
+
+  void zTScriptInfo::LoadDependency( string dependencyName ) {
+    char buffer[1024];
+    long filesCount = vdf_searchfile( dependencyName.ToChar(), buffer );
+
+    if( filesCount == 0 )
+      return;
+
+    Array<string> files = (A buffer).Split( "|" );
+    files.QuickSort();
+    for( uint fileID = 0; fileID < files.GetNum(); fileID++ ) {
+      string& file = files[fileID];
+      uint index = file.Search( "AUTORUN", 0, true );
+      if( index != Invalid ) {
+        file.Cut( 0, index + 1 );
+        zParserExtender.PushExternalScript( "Auto", file );
+        break;
+      }
+    }
+  }
+
+  void zTScriptInfo::CheckDependencies() {
+    for( uint i = 0; i < Dependencies.GetNum(); i++ ) {
+      string& dependency = Dependencies[i];
+      LoadDependency( dependency );
+    }
+  }
+
   void zTScriptInfo::ParseMeta( string& buffer ) {
     // Check meta information
     if( buffer.GetWordSmart( 1 ) == "META" && buffer.GetWordSmart( 2 ) == "{" ) {
@@ -106,6 +141,7 @@ namespace GOTHIC_ENGINE {
         else if( parameter == "MergeMode" )   CompileInfo.MergeMode   = StringToBool( value );
         else if( parameter == "NativeWhile" ) CompileInfo.NativeWhile = StringToBool( value );
         else if( parameter == "Engine" )      CompileInfo.Compilable  = EngineVerToBool( value );
+        else if( parameter == "After" )       Dependencies            = ParameterToArray( value );
         else if( zCParserExtender::MessagesLevel >= 1 ) {
           // Wut ??
           cmd << colWarn2 << "zParserExtender: "        <<
@@ -113,10 +149,27 @@ namespace GOTHIC_ENGINE {
                  colWarn2 << parameter                  <<
                  colWarn3 << endl;
         }
+
+        CheckDependencies();
       }
     }
   }
 
+  bool zTScriptInfo::operator == ( const string& name ) const {
+    return Name == name;
+  }
+
+  bool zTScriptInfo::operator == ( const zTScriptInfo& other ) const {
+    return Name == other.Name;
+  }
+
+  bool zTScriptInfo::operator <  ( const string& name ) const {
+    return Name < name;
+  }
+
+  bool zTScriptInfo::operator >  ( const string& name ) const {
+    return Name > name;
+  }
 
 
 
@@ -140,6 +193,7 @@ namespace GOTHIC_ENGINE {
     option.Read( DefaultCompileInfo.NativeWhile, "ZPARSE_EXTENDER", "NativeWhile",         false );
     option.Read( MessagesLevel,                  "ZPARSE_EXTENDER", "MessagesLevel",       MessagesLevel );
     option.Read( StringsIndexingMode,            "ZPARSE_EXTENDER", "StringsIndexingMode", zStringsIndexing_Default );
+    //option.Read( InjectUnionMenu,                "ZPARSE_EXTENDER", "InjectUnionMenu",     true );
     DefaultCompileInfo.Compilable = true;
 
     Array<string> Files = FilesLine.Split( "," );
@@ -147,6 +201,7 @@ namespace GOTHIC_ENGINE {
       LoadScriptList( Files[i].Shrink() );
 
     ParsingEnabled = false;
+    ParserExternals = Null;
   }
 
 
@@ -210,6 +265,8 @@ namespace GOTHIC_ENGINE {
                colWarn1 << "can not read "     <<
                colWarn2 << root + srcName      <<
                colWarn3 << endl;
+
+      SrcFilesList.Remove( srcName );
       return;
     }
 
@@ -244,19 +301,20 @@ namespace GOTHIC_ENGINE {
 
     // Ignore exists
     for( uint i = 0; i < CompileQueue.GetNum(); i++ )
-      if( CompileQueue[i].FullName == fullName )
+      if( CompileQueue[i]->FullName == fullName )
         return;
 
     // Create a default script info
-    zTScriptInfo scriptInfo;
-    scriptInfo.CompileInfo         = DefaultCompileInfo;
-    scriptInfo.ParserName          = parserName;
-    scriptInfo.FullName            = fullName;
-    scriptInfo.Name                = scriptName.GetWord( "\\", -1 );
-    scriptInfo.CompileInfo.Autorun = parserName == "Auto";
+    zTScriptInfo*& scriptInfo       = CompileQueue.Create();
+    scriptInfo                      = new zTScriptInfo();
+    scriptInfo->CompileInfo         = DefaultCompileInfo;
+    scriptInfo->ParserName          = parserName;
+    scriptInfo->FullName            = fullName;
+    scriptInfo->Name                = scriptName.GetWord( "\\", -1 );
+    scriptInfo->CompileInfo.Autorun = parserName == "Auto";
 
     // Check directory of the current script
-    string root = scriptInfo.CompileInfo.Autorun ?
+    string root = scriptInfo->CompileInfo.Autorun ?
       AutorunDirectory :
       ScriptsDirectory;
 
@@ -272,9 +330,123 @@ namespace GOTHIC_ENGINE {
     }
 
     // Add completed file to queue
-    scriptInfo.ParseMeta( fileData );
-    if( scriptInfo.CompileInfo.Compilable )
-      CompileQueue.Insert( scriptInfo );
+    scriptInfo->ParseMeta( fileData );
+    if( !scriptInfo->CompileInfo.Compilable )
+      CompileQueue.Remove( scriptInfo );
+  }
+
+
+
+
+  static void InsertExternalScriptQueue( zTScriptInfo& info, Array<zTScriptInfo>& oldList, Array<zTScriptInfo>& newList ) {
+    static Array<string> recursionProtect;
+    if( recursionProtect.HasEqual( info.Name ) )
+      return;
+
+    if( newList.HasEqual( info ) )
+      return;
+
+    recursionProtect += info.Name;
+
+    for( uint i = 0; i < info.Dependencies.GetNum(); i++ ) {
+      uint index = oldList.SearchEqual( info.Dependencies[i] );
+      cmd << index << info.Dependencies[i] << endl;
+      if( index != Invalid )
+        InsertExternalScriptQueue( oldList[index], oldList, newList );
+    }
+
+    newList += info;
+    recursionProtect -= info.Name;
+  }
+
+
+
+
+
+  void zCParserExtender::GetCompilableScriptList( zTScriptInfo* root, Array<zTScriptInfo*>& queue ) {
+    if( !root->CompileInfo.Compilable )
+      return;
+
+    if( queue.HasEqual( root ) )
+      return;
+
+    for( uint i = 0; i < root->Dependencies.GetNum(); i++ ) {
+      string& dependecy = root->Dependencies[i];
+      uint index = CompileQueue.SearchEqual( dependecy );
+      if( index == Invalid ) // maybe ??
+        continue;
+
+      GetCompilableScriptList( CompileQueue[index], queue );
+    }
+
+    queue += root;
+  }
+
+
+
+
+  bool zCParserExtender::CheckValidityRecursive( zTScriptInfo* root ) {
+    static Array<string> recursionProtect;
+
+    bool& compilable = root->CompileInfo.Compilable;
+    if( !compilable )
+      return false;
+
+    if( recursionProtect.HasEqual( root->Name ) ) {
+        cmd << colWarn2 << "zParserExtender: "         <<
+               colWarn1 << "recursive dependecies in " <<
+               colWarn2 << root->Name                  <<
+               colWarn3 << endl;
+      return false;
+    }
+
+    recursionProtect += root->Name; // Queue IN
+
+    for( uint i = 0; i < root->Dependencies.GetNum(); i++ ) {
+      string& dependency = root->Dependencies[i];
+      uint index = CompileQueue.SearchEqual( dependency );
+      if( index == Invalid ) {
+        cmd << colAtt2 << "zParserExtender: "        <<
+               colAtt1 << "dependecy "               <<
+               colAtt2 << dependency                 <<
+               colAtt1 << " not found in "           <<
+               colAtt2 << root->Name                  <<
+               colAtt1 << ", script will be skipped" <<
+               colAtt3 << endl;
+        compilable = false;
+        continue;
+      }
+
+      zTScriptInfo* info = CompileQueue[index];
+      if( !CheckValidityRecursive( info ) )
+        compilable = false;
+    }
+
+    recursionProtect -= root->Name; // Queue OUT
+    return compilable;
+  }
+
+
+
+
+
+  Array<zTScriptInfo*> zCParserExtender::GetCompilableScriptList() {
+    for( uint i = 0; i < CompileQueue.GetNum(); i++ )
+      CheckValidityRecursive( CompileQueue[i] );
+
+    Array<zTScriptInfo*> queue;
+    for( uint i = 0; i < CompileQueue.GetNum(); i++ )
+      GetCompilableScriptList( CompileQueue[i], queue );
+
+    return queue;
+  }
+
+
+
+
+
+  bool zCParserExtender::HasExternalScript( const string& scriptName ) {
+    return CompileQueue.HasEqual( scriptName );
   }
 
 
@@ -295,12 +467,16 @@ namespace GOTHIC_ENGINE {
 
   int ParStackMaxLength = 0;
   void zCParserExtender::ParseBegin() {
+    //if( InjectUnionMenu )
+    //  ParseExternalScript( "Auto", "Menu\\zUnionMenu.d" );
+
+    Array<zTScriptInfo*> compilableList = GetCompilableScriptList();
     ParsingEnabled = true;
 
     {
       Array<zCParser*> activeParsers;
-      for( uint i = 0; i < CompileQueue.GetNum(); i++ ) {
-        zTScriptInfo& scriptInfo = CompileQueue[i];
+      for( uint i = 0; i < compilableList.GetNum(); i++ ) {
+        zTScriptInfo& scriptInfo = *compilableList[i];
         CurrentCompileInfo       = scriptInfo.CompileInfo;
 
         // Set root directory of
@@ -414,6 +590,29 @@ namespace GOTHIC_ENGINE {
 
   zCParser* zCParserExtender::GetParser() {
     return CurrentParser;
+  }
+
+
+
+
+  zCParser* zCParserExtender::GetParserExternals() {
+    if( !ParserExternals )
+      ParserExternals = new zCParser();
+
+    return ParserExternals;
+  }
+
+
+
+
+  zCPar_Symbol* zCParserExtender::GetExternalFunction( const string& symName ) {
+    zCParser* par = GetParserExternals();
+    zCPar_Symbol* symbol = par->GetSymbol( symName );
+    if( !symbol )
+      if( par->DynamicLoadExternal( symName ) )
+        return par->GetSymbol( symName );
+
+    return symbol;
   }
 
 

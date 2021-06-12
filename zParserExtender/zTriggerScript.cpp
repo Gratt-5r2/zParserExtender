@@ -46,7 +46,7 @@ namespace GOTHIC_ENGINE {
 
 
   void zTTriggerScript::SetAsInstance( zSTRING instName ) {
-    parser->SetInstance( "SelfTrigger", &Parser );
+    parser->SetInstance( "SelfTrigger", this );
   }
 
 
@@ -132,8 +132,8 @@ namespace GOTHIC_ENGINE {
     byte gamePause = ogame->IsOnPause() ? True : False;
 
     for( uint i = 0; i < TriggerScripts.GetNum(); i++ ) {
-      auto trigger = TriggerScripts[i];
-      uint delay   = trigger->Parser.Delay;
+      auto& trigger = TriggerScripts[i];
+      uint  delay   = trigger->Parser.Delay;
 
       // Stop timer processing on the game pause
       triggerTimer[trigger].Suspend( gamePause );
@@ -154,7 +154,7 @@ namespace GOTHIC_ENGINE {
 
   void zTTriggerScript::UpdateFirst() {
     zTTriggerScript* first = GetFirstTrigger();
-    parser->SetInstance( "FirstTrigger", &first->Parser );
+    parser->SetInstance( "FirstTrigger", first );
   }
 
 
@@ -199,6 +199,12 @@ namespace GOTHIC_ENGINE {
     for( uint i = 0; i < TriggerScripts.GetNum(); i++ )
       if( !temp || TriggerScripts[i]->IsLocal() )
         delete TriggerScripts[i--];
+  }
+
+
+  void zTTriggerScript::RegisterClassOffset() {
+    zTTriggerScript* trigger = Null;
+    parser->AddClassOffset( Z "C_TRIGGER", (int)&trigger->Parser );
   }
 
 
