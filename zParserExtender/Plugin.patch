@@ -1,0 +1,21 @@
+
+#engine [G2A]
+	#patch
+		HEX @0x008BC1F4 = ";,=><*+-/?'%()/&!|{}[]\"~\0"
+	#/patch
+#/engine
+#engine [G2]
+	#patch
+		HEX @0x008A83E4 = ";,=><*+-/?'%()/&!|{}[]\"~\0"
+	#/patch
+#/engine
+#engine [G1A]
+	#patch
+		HEX @0x00898908 = ";,=><*+-/?'%()/&!|{}[]\"~\0"
+	#/patch
+#/engine
+#engine [G1]
+	#patch
+		HEX @0x0085259C = ";,=><*+-/?'%()/&!|{}[]\"~\0"
+	#/patch
+#/engine

@@ -492,6 +492,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Namespace.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="OU.cpp">
       <SubType>
       </SubType>
@@ -510,6 +514,11 @@
     <ClCompile Include="ZenGin\Gothic_I_Classic\ClassDeclarators_G1.cpp" />
     <ClCompile Include="ZenGin\Gothic_I_Classic\Globals_G1.cpp" />
     <ClCompile Include="ZenGin\Gothic_I_Classic\Statics_G1.cpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="VaFunctions.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="zExternals.cpp">
       <SubType>
       </SubType>
@@ -1397,6 +1406,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".build_settings.inl" />
+    <None Include="Plugin.patch" />
     <None Include="ZenGin\Gothic_UserAPI\CGameManager.inl" />
     <None Include="ZenGin\Gothic_UserAPI\oCAIArrow.inl" />
     <None Include="ZenGin\Gothic_UserAPI\oCAIArrowBase.inl" />
@@ -2021,6 +2031,9 @@
     <None Include="ZenGin\Gothic_UserAPI\zVEC2.inl" />
     <None Include="ZenGin\Gothic_UserAPI\zVEC3.inl" />
     <None Include="ZenGin\Gothic_UserAPI\zVEC4.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

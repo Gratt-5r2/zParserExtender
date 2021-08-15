@@ -142,6 +142,7 @@ namespace GOTHIC_ENGINE {
         else if( parameter == "NativeWhile" ) CompileInfo.NativeWhile = StringToBool( value );
         else if( parameter == "Engine" )      CompileInfo.Compilable  = EngineVerToBool( value );
         else if( parameter == "After" )       Dependencies            = ParameterToArray( value );
+        else if( parameter == "Namespace" )   CompileInfo.Namespace   = value.Upper();
         else if( zCParserExtender::MessagesLevel >= 1 ) {
           // Wut ??
           cmd << colWarn2 << "zParserExtender: "        <<
@@ -305,13 +306,14 @@ namespace GOTHIC_ENGINE {
         return;
 
     // Create a default script info
-    zTScriptInfo*& scriptInfo       = CompileQueue.Create();
-    scriptInfo                      = new zTScriptInfo();
-    scriptInfo->CompileInfo         = DefaultCompileInfo;
-    scriptInfo->ParserName          = parserName;
-    scriptInfo->FullName            = fullName;
-    scriptInfo->Name                = scriptName.GetWord( "\\", -1 );
-    scriptInfo->CompileInfo.Autorun = parserName == "Auto";
+    zTScriptInfo*& scriptInfo         = CompileQueue.Create();
+    scriptInfo                        = new zTScriptInfo();
+    scriptInfo->CompileInfo           = DefaultCompileInfo;
+    scriptInfo->ParserName            = parserName;
+    scriptInfo->FullName              = fullName;
+    scriptInfo->Name                  = scriptName.GetWord( "\\", -1 );
+    scriptInfo->CompileInfo.Autorun   = parserName == "Auto";
+    scriptInfo->CompileInfo.Namespace = "";
 
     // Check directory of the current script
     string root = scriptInfo->CompileInfo.Autorun ?
@@ -491,6 +493,7 @@ namespace GOTHIC_ENGINE {
         zCParser* par = GetParserByParserName( scriptInfo.ParserName );
         zCParser::cur_parser = par;
         CurrentParser = par;
+        CurrentParser->InitializeNamespace( GetDefaultNamespace() );
 
         if( par == Null ) {
           if( zCParserExtender::MessagesLevel >= 1 )
@@ -660,6 +663,10 @@ namespace GOTHIC_ENGINE {
 
   bool zCParserExtender::ExternalScriptsListIsEmpty() {
     return CompileQueue.GetNum() == 0;
+  }
+
+  const string& zCParserExtender::GetDefaultNamespace() {
+    return CurrentCompileInfo.Namespace;
   }
 
 

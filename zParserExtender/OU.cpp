@@ -25,13 +25,15 @@ namespace GOTHIC_ENGINE {
 
 
 
-
   HOOK Ivk_zCParser_DeclareInstance AS( &zCParser::DeclareInstance, &zCParser::DeclareInstance_Union );
 
   void zCParser::DeclareInstance_Union() {
     // Checkpoint to track new symbols after DeclareInstance
     LastSym = symtab.lastsym;
+
+    DeclareNamespaceForNextWord( 1, true );
     THISCALL( Ivk_zCParser_DeclareInstance )();
+    DeclareNamespaceForNextWord( 0 );
   }
 
 
@@ -113,6 +115,8 @@ namespace GOTHIC_ENGINE {
 
   void zCParser::DeclareAssign_Union( zSTRING& symName ) {
     DynamicLoadExternal( symName );
+    AddNamespace( symName );
+
     if( SVM ) {
       int index = FindIndexInst_Union( symName );
       if( index != Invalid ) {

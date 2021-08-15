@@ -9,6 +9,8 @@
 #include "zSymbol.cpp"
 #include "zSymbolTable.cpp"
 #include "zParser.cpp"
+#include "VaFunctions.cpp"
+#include "Namespace.cpp"
 #include "InfoMan.cpp"
 #include "OU.cpp"
 #include "zTriggerScript.cpp"

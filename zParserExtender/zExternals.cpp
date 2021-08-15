@@ -1396,7 +1396,7 @@ extern void MessageExternalDefined( const string & funcName );
     EXTERNAL_READ_BEGIN( AI_GetNextTriggerByNPCs     ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE EXTERNAL_READ_END
     
     // STR
-    EXTERNAL_READ_BEGIN( Str_Format             ) zPAR_TYPE_STRING                                                                         EXTERNAL_READ_END
+    EXTERNAL_READ_BEGIN( Str_Format             ) zPAR_TYPE_STRING, zPAR_TYPE_VA                                                           EXTERNAL_READ_END
     EXTERNAL_READ_BEGIN( Str_GetLocalizedString ) zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_STRING EXTERNAL_READ_END
     EXTERNAL_READ_BEGIN( Str_UTF8_to_ANSI       ) zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_INT                                        EXTERNAL_READ_END
     EXTERNAL_READ_BEGIN( Str_GetCurrentCP       ) zPAR_TYPE_INT                                                                            EXTERNAL_READ_END

@@ -171,6 +171,7 @@ namespace GOTHIC_ENGINE {
       THISCALL( Ivk_zCParser_ReadWord )(word);
     }
 
+    CheckNamespace( word );
     ReadMacro( word );
   }
 
@@ -270,7 +271,7 @@ namespace GOTHIC_ENGINE {
 
   void zCParser::SkipMeta_Union() {
     do {
-      ReadWord( aword );
+      THISCALL( Ivk_zCParser_ReadWord )(aword); // ReadWord( aword );
     } while( !aword.IsEmpty() && aword != "}" );
     Match( Z ";" );
   }
@@ -437,7 +438,6 @@ namespace GOTHIC_ENGINE {
     while( classObject && classObject->type != zPAR_TYPE_CLASS )
       classObject = classObject->GetParent();
     
-    cmd << classObject->name << endl;
     return classObject;
   }
 
@@ -450,14 +450,6 @@ namespace GOTHIC_ENGINE {
       symbol = GetSymbol( varName );
 
     return symbol;
-  }
-
-  bool WordIsFloat( const string& word ) {
-    return word.IsNumber() && word.Search( "." ) != Invalid;
-  }
-
-  bool WordIsInteger( const string& word ) {
-    return word.IsNumber() && !WordIsFloat( word );
   }
 
   extern bool PostLoadExternal( const string& funcName );
@@ -473,86 +465,24 @@ namespace GOTHIC_ENGINE {
     return PostLoadExternal( symName );
   }
 
+  bool zCParser::IsVaExternal( const zSTRING& name ) {
+     zCPar_Symbol* sym = GetSymbol( name );
+     if( !sym || !sym->HasFlag( zPAR_FLAG_EXTERNAL ) )
+       return false;
+
+     return sym->next && sym->next->type == zPAR_TYPE_VA;
+  }
+
   void zCParser::DeclareFuncCall_Union( zSTRING& name, int typematch ) {
     string functionName = in_func->name;
     DynamicLoadExternal( name );
 
-    if( name != "STR_FORMAT" )
-      return THISCALL( Hook_zCParser_DeclareFuncCall )(name, typematch);
+    if( IsVaExternal( name ) )
+      return DeclareVaFuncCall( name );
 
-    zSTRING word;
-    Match( Z "(" );
-
-    // Is a format line - main argument of this function.
-    // Should add this argument in the end of procedure.
-    zCPar_TreeNode* formatLeaf = CreateStringLeaf();
-
-    while( true ) {
-      ReadWord( word );
-      if( word != "," ) {
-        PrevWord();
-        break;
-      }
-
-      // Is a string line
-      ReadWord( word );
-      PrevWord();
-      if( word == "\"" ) {
-        treenode->SetNext( CreateStringLeaf() );
-        while( treenode->next ) treenode = treenode->next;
-        continue;
-      }
-
-      // Is a float value
-      if( WordIsFloat( word ) ) {
-        treenode->SetNext( CreateFloatLeaf() );
-        treenode = treenode->next;
-        continue;
-      }
-
-      // Is an integer value
-      if( WordIsInteger( word ) ) {
-        treenode->SetNext( ParseExpression() );
-        while( treenode->next ) treenode = treenode->next;
-        PrevWord();
-        continue;
-      }
-
-      // Is a variable
-      zCPar_Symbol* sym = GetNearestVariable( word );
-      switch( sym->type ) {
-        case zPAR_TYPE_INT:
-          treenode->SetNext( ParseExpression() );
-          while( treenode->next ) treenode = treenode->next;
-          PrevWord();
-          break;
-        case zPAR_TYPE_FLOAT:
-          treenode->SetNext( CreateFloatLeaf() );
-          treenode = treenode->next;
-          break;
-        case zPAR_TYPE_STRING:
-          treenode->SetNext( CreateStringLeaf() );
-          while( treenode->next ) treenode = treenode->next;
-          break;
-        default: // case zPAR_TYPE_INSTANCE:
-          ReadWord( aword );
-          treenode = CreateLeaf( zPAR_TOK_PUSHINST, treenode );
-          treenode->name = word;
-          treenode->value = GetBaseClass( sym );
-          treenode->info = zPAR_TYPE_INSTANCE;
-          break;
-      }
-
-    }
-
-    treenode->SetNext( formatLeaf );
-    while( treenode->next ) treenode = treenode->next;
-
-    Match( Z ")" );
-
-    treenode = CreateLeaf( zPAR_TOK_CALL, treenode );
-    treenode->name = "STR_FORMAT";
+    THISCALL( Hook_zCParser_DeclareFuncCall )(name, typematch);
   }
+
 
 
 
@@ -643,6 +573,9 @@ namespace GOTHIC_ENGINE {
   HOOK Hook_zCParser_DeclareFunc PATCH( &zCParser::DeclareFunc, &zCParser::DeclareFunc_Union );
 
   void zCParser::DeclareFunc_Union() {
+    if( !s_RenameTreeNode )
+      DeclareNamespaceForNextWord( 3, true );
+
     auto treenode_old = treenode;
     THISCALL( Hook_zCParser_DeclareFunc )();
 

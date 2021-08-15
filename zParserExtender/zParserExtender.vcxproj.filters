@@ -238,6 +238,9 @@
     <Filter Include="Plugin\zParserExtender\Animations">
       <UniqueIdentifier>{6a6ea6f0-03c4-454b-8c74-a1ec7f0f3f48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\zParserExtender\VaFunctions">
+      <UniqueIdentifier>{bf672ecb-5bac-4e01-8864-9c25d66caf75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2852,6 +2855,13 @@
     <ClInclude Include="Animations.cpp">
       <Filter>Plugin\zParserExtender\Animations</Filter>
     </ClInclude>
+    <ClInclude Include="Namespace.cpp">
+      <Filter>Plugin\zParserExtender\Extender</Filter>
+    </ClInclude>
+    <ClInclude Include="VaFunctions.cpp">
+      <Filter>Plugin\zParserExtender\VaFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".build_settings.inl">
@@ -4729,5 +4739,11 @@
     <None Include="ZenGin\Gothic_UserAPI\zCLine2D.inl">
       <Filter>Engine SDK\User API\zEngine\L</Filter>
     </None>
+    <None Include="Plugin.patch">
+      <Filter>Plugin\Workspace\Plugin</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc" />
   </ItemGroup>
 </Project>

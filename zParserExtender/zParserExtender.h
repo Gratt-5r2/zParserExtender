@@ -9,6 +9,11 @@ namespace GOTHIC_ENGINE {
     zStringsIndexing_Repair  =  2  // Check and repair all string symbol names
   };
 
+  enum {
+    zPAR_TYPE_VA = zPAR_TYPE_INSTANCE + 1,
+  };
+
+
 
 
   struct zTCompileInfo {
@@ -18,6 +23,7 @@ namespace GOTHIC_ENGINE {
     bool NativeWhile;
     bool Autorun;
     bool Compilable;
+    string Namespace;
   };
 
 
@@ -75,6 +81,7 @@ namespace GOTHIC_ENGINE {
     bool NativeWhileEnabled();
     bool ExtendedParsingEnabled();
     bool ExternalScriptsListIsEmpty();
+    const string& GetDefaultNamespace();
 
     void GetCompilableScriptList( zTScriptInfo* root, Array<zTScriptInfo*>& queue );
     Array<zTScriptInfo*> GetCompilableScriptList();
