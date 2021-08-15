@@ -32,8 +32,8 @@ namespace GOTHIC_ENGINE {
     LastSym = symtab.lastsym;
 
     DeclareNamespaceForNextWord( 1, true );
-    THISCALL( Ivk_zCParser_DeclareInstance )();
-    DeclareNamespaceForNextWord( 0 );
+    DeclareNamespaceForNextParenthesis();
+    return THISCALL( Ivk_zCParser_DeclareInstance )();
   }
 
 

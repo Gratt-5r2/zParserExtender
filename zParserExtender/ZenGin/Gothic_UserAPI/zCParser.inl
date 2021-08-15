@@ -66,6 +66,7 @@ void NamespaceAddEntry( zSTRING& );
 void NamespaceRemoveEntry( zSTRING& );
 void CheckNamespace( zSTRING& );
 void DeclareNamespaceForNextWord( const uint& wordID, bool newSymbol = false );
+void DeclareNamespaceForNextParenthesis();
 void AddNamespace( zSTRING&, bool newSymbol = false );
 zSTRING GetNamespacePrefix(const uint& levelUp);
 

@@ -8,6 +8,11 @@ namespace GOTHIC_ENGINE {
     NamespaceInfo( const string& name ) : Entries( 1 ) {
       Name = name;
     }
+
+    NamespaceInfo( const NamespaceInfo& other ) {
+      Name = other.Name;
+      Entries = other.Entries;
+    }
   };
 
   Array<NamespaceInfo> Namespaces;
@@ -22,12 +27,10 @@ namespace GOTHIC_ENGINE {
 
 
   void zCParser::NamespaceBegin( zSTRING& word ) {
+    THISCALL( Ivk_zCParser_ReadWord )(word);
+    Namespaces.Create( word );
+    THISCALL( Ivk_zCParser_ReadWord )(word);
     ReadWord( word );
-    string namespaceName = word;
-    ReadWord( word );
-    ReadWord( word );
-
-    Namespaces.Create( namespaceName );
   }
 
 
@@ -51,8 +54,8 @@ namespace GOTHIC_ENGINE {
     NamespaceInfo& namespaceInfo = Namespaces.GetLast();
     if( --namespaceInfo.Entries == 0 ) {
       Namespaces.RemoveAt( Namespaces.GetNum() - 1 );
-      ReadWord( word );
-      ReadWord( word );
+      THISCALL( Ivk_zCParser_ReadWord )(word);
+      ReadWord(word);
     }
   }
 
@@ -60,6 +63,7 @@ namespace GOTHIC_ENGINE {
 
   static uint AddNamespaceAfter = 0;
   static bool NewSymbolExpected = false;
+  static bool NewParenthesisExpected = false;
 
   inline bool IsWord( const zSTRING& word ) {
     if( word.Length() == 0 || word == "CONST" ) // For example CONST leaf is "this pattern"
@@ -69,14 +73,18 @@ namespace GOTHIC_ENGINE {
   }
 
   void zCParser::CheckNamespace( zSTRING& word ) {
-         if( word == "NAMESPACE" ) NamespaceBegin( word );
-    else if( word == "{" )         NamespaceAddEntry( word );
-    else if( word == "}" )         NamespaceRemoveEntry( word );
+    if( word == "NAMESPACE" ) NamespaceBegin( word );
+    if( word == "{" )         NamespaceAddEntry( word );
+    if( word == "}" )         NamespaceRemoveEntry( word );
 
     if( !NamespaceIsActive() )
       return;
 
-    if( AddNamespaceAfter && --AddNamespaceAfter == 0 ) {
+    if( NewParenthesisExpected && word == "(" ) {
+      DeclareNamespaceForNextWord( 2 );
+      NewParenthesisExpected = false;
+    }
+    else if( AddNamespaceAfter && --AddNamespaceAfter == 0 ) {
       AddNamespace( word, NewSymbolExpected );
       NewSymbolExpected = false;
     }
@@ -138,8 +146,20 @@ namespace GOTHIC_ENGINE {
 
 
   void zCParser::DeclareNamespaceForNextWord( const uint& wordID, bool newSymbol ) {
+    if( !NamespaceIsActive() )
+      return;
+
     AddNamespaceAfter = wordID;
     NewSymbolExpected = newSymbol;
+  }
+
+
+
+  void zCParser::DeclareNamespaceForNextParenthesis() {
+    if( !NamespaceIsActive() )
+      return;
+
+    NewParenthesisExpected = true;
   }
 
 
@@ -193,9 +213,8 @@ namespace GOTHIC_ENGINE {
 
   zCPar_TreeNode* zCParser::CreateStringLeaf_Union() {
     DeclareNamespaceForNextWord( 1 );
-    zCPar_TreeNode* node = THISCALL( Hook_zCParser_CreateStringLeaf )();
-    DeclareNamespaceForNextWord( 0 );
-    return node;
+    DeclareNamespaceForNextParenthesis();
+    return THISCALL( Hook_zCParser_CreateStringLeaf )();
   }
 
 
@@ -203,9 +222,7 @@ namespace GOTHIC_ENGINE {
 
   zCPar_TreeNode* zCParser::CreateFloatLeaf_Union() {
     DeclareNamespaceForNextWord( 1 );
-    zCPar_TreeNode* node = THISCALL( Hook_zCParser_CreateFloatLeaf )();
-    DeclareNamespaceForNextWord( 0 );
-    return node;
+    return THISCALL( Hook_zCParser_CreateFloatLeaf )();
   }
 
 
@@ -222,7 +239,7 @@ namespace GOTHIC_ENGINE {
   HOOK Hook_zCParser_DeclareClass PATCH( &zCParser::DeclareClass, &zCParser::DeclareClass_Union );
 
   void zCParser::DeclareClass_Union() {
-    DeclareNamespaceForNextWord( 3, true );
+    DeclareNamespaceForNextWord( 1, true );
     return THISCALL( Hook_zCParser_DeclareClass )();
   }
 
@@ -230,7 +247,7 @@ namespace GOTHIC_ENGINE {
   HOOK Hook_zCParser_DeclarePrototype PATCH( &zCParser::DeclarePrototype, &zCParser::DeclarePrototype_Union );
 
   void zCParser::DeclarePrototype_Union() {
-    DeclareNamespaceForNextWord( 3, true );
+    DeclareNamespaceForNextWord( 1, true );
     return THISCALL( Hook_zCParser_DeclarePrototype )();
   }
 }
