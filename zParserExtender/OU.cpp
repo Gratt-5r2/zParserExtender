@@ -24,7 +24,6 @@ namespace GOTHIC_ENGINE {
   };
 
 
-
   HOOK Ivk_zCParser_DeclareInstance AS( &zCParser::DeclareInstance, &zCParser::DeclareInstance_Union );
 
   void zCParser::DeclareInstance_Union() {
@@ -35,8 +34,6 @@ namespace GOTHIC_ENGINE {
     DeclareNamespaceForNextParenthesis();
     return THISCALL( Ivk_zCParser_DeclareInstance )();
   }
-
-
 
 
   /*
@@ -81,9 +78,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
-
-
   // CRASH FIX after double-use FindIndex
   int zCParser::FindIndexInst_Union( zSTRING& symName ) {
     int index = Invalid;
@@ -99,10 +93,7 @@ namespace GOTHIC_ENGINE {
 
     return index;
   }
-
-
-
-
+  
 
   HOOK Ivk_zCParser_DeclareAssign AS( &zCParser::DeclareAssign, &zCParser::DeclareAssign_Union );
 
@@ -152,16 +143,12 @@ namespace GOTHIC_ENGINE {
     THISCALL( Ivk_zCParser_DeclareAssign )(symName);
   }
 
-
-
-
-
+  
   HOOK Hook_zCParser_IsInAdditionalInfo AS( &zCParser::IsInAdditionalInfo, &zCParser::IsInAdditionalInfo_Union );
 
   int zCParser::IsInAdditionalInfo_Union( const zSTRING& symName ) {
     return symName == "AI_Output";
   }
-
 
 
   void zDeleteOU();
@@ -194,9 +181,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
-
-
   HOOK Ivk_zCParser_CreatePCode AS( &zCParser::CreatePCode, &zCParser::CreatePCode_Union );
 
   void zCParser::CreatePCode_Union() {
@@ -213,21 +197,16 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
-
   void zCCSManager::LibSortion() {
     if( library )
       library->ouList.QuickSort();
   }
 
 
-
-
-
   HOOK Ivk_zCParser_Error_Union AS( &zCParser::Error, &zCParser::Error_Union );
 
+  // More details report
   void zCParser::Error_Union( zSTRING& reason, int line ) {
-
     zSTRING message;
     zSTRING upar = "U:PAR: ";
     if( linkingnr < 0 || line < 0 ) {
@@ -244,9 +223,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
-
-
   void oCMsgConversation::MD_SetInfo_Union( zSTRING const& inf ) {
     zSTRING s = inf;
     switch( subType ) {
@@ -260,9 +236,6 @@ namespace GOTHIC_ENGINE {
       case oCMsgConversation::EV_LOOKAT:    targetVobName = s; break;
     }
   }
-
-
-
 
 
   HOOK Ivk_zCParser_WriteAdditionalInfo PATCH( &zCParser::WriteAdditionalInfo, &zCParser::WriteAdditionalInfo_Union );
@@ -306,10 +279,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
-  
-
-
   static string s_LastLibStoreName;
   static bool   s_SaveLibCopy = false;
 
@@ -326,9 +295,6 @@ namespace GOTHIC_ENGINE {
              colParse1   << " saved"            <<
              colParse3   << endl;
   }
-
-
-
 
 
   HOOK Hook_zCArchiverFactory_CreateArchiverWrite PATCH( &zCArchiverFactory::CreateArchiverWrite, &zCArchiverFactory::CreateArchiverWrite_Union );

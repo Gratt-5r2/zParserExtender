@@ -21,9 +21,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
-
-
   static void DefineStringsTableSize( zCParser* par ) {
     zCPar_SymbolTable& table = par->symtab;
     for( int i = table.table.GetNum() - 1; i >= 0; i-- ) {
@@ -37,9 +34,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
-
-
   inline void inc_string_numbers( zSTRING& value, const uint& start, const uint& end ) {
     uint index = end;
     do {
@@ -51,6 +45,7 @@ namespace GOTHIC_ENGINE {
 
     } while( index > start );
   }
+
 
   static void RepairStringsTable( zCParser* par ) {
     zSTRING str_stringcount = zSTRING( char( 255 ) ) + "10000";
@@ -68,9 +63,6 @@ namespace GOTHIC_ENGINE {
 
     par->stringcount = (int)zSTRING( str_stringcount.ToChar() + 1 ).ToInt32();
   }
-
-
-
 
 
   // @N1kX request: on recompilation DAT file in symbol table
@@ -96,9 +88,6 @@ namespace GOTHIC_ENGINE {
         DefineStringsTableSize( par );
     }
   }
-
-
-
 
 
   static void PrepareParserSymbols( zCParser* par ) {

@@ -2,11 +2,6 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-  HOOK Hook_zCPar_SymbolTable_Load      AS( &zCPar_SymbolTable::Load,      &zCPar_SymbolTable::Load_Union );
-  HOOK Hook_zCPar_SymbolTable_Insert    AS( &zCPar_SymbolTable::Insert,    &zCPar_SymbolTable::Insert_Union );
-
-
-
   struct zTCallReplaceInfo {
     static Array<zTCallReplaceInfo> CallReplaceInfos;
 
@@ -38,8 +33,6 @@ namespace GOTHIC_ENGINE {
   Array<zTCallReplaceInfo> zTCallReplaceInfo::CallReplaceInfos;
 
 
-
-
   // Find and replace call address to other function
   void ReplaceStackCallAddress( zCPar_Stack& stack, zCPar_Symbol* symLeft, zCPar_Symbol* symRight, int_t oldIndex, int_t length ) {
     int oldPos = symLeft->single_intdata;
@@ -68,7 +61,7 @@ namespace GOTHIC_ENGINE {
     int newIndex = zParserExtender.GetParser()->symtab.GetIndex( symRight );
     for( int_t i = 0; i < length; i++ ) {
       byte& command = stack.stack[i];
-      if( command >= zPAR_TOK_PUSHINT && command <= zPAR_TOK_PUSHSTR ) {
+      if( command == zPAR_TOK_PUSHVAR || command == zPAR_TOK_PUSHSTR ) {
         int& address = (int&)stack.stack[i + 1];
         if( address == oldIndex ) {
           (int&)stack.stack[i + 1] = newIndex;
@@ -101,7 +94,6 @@ namespace GOTHIC_ENGINE {
              colParse2 << symRight->name <<
              colParse3 << endl;
   }
-
   
 
   void PostCompileCallReplace() {
@@ -122,8 +114,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
-
   void zCPar_SymbolTable::PostDefineExternal_Union( zCPar_Symbol* external ) {
     // Restore function & arguments of function
     int ele = external->ele;
@@ -138,9 +128,8 @@ namespace GOTHIC_ENGINE {
   }
 
 
+  HOOK Hook_zCPar_SymbolTable_Load AS( &zCPar_SymbolTable::Load, &zCPar_SymbolTable::Load_Union );
 
-
-  //extern Array<zCPar_Symbol*> LoadedExternals;
   void zCPar_SymbolTable::Load_Union( zFILE* f ) {
     zCParser* par = zCParser::GetParser();
     zCPar_Symbol* Symbol;
@@ -261,12 +250,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
-
-
-  
-
-
   int zCPar_SymbolTable::GetIndex_Safe( const zSTRING& name ) {
     for( int i = 0; i < table.GetNum(); i++ )
       if( table[i] && table[i]->name == name )
@@ -288,6 +271,7 @@ namespace GOTHIC_ENGINE {
   }
 
 
+  HOOK Hook_zCPar_SymbolTable_Insert    AS( &zCPar_SymbolTable::Insert, &zCPar_SymbolTable::Insert_Union );
 
   static bool s_DeclareEvent = false;
 
@@ -302,8 +286,6 @@ namespace GOTHIC_ENGINE {
 
     return InsertAt_Union( sym, True, true );
   }
-
-
 
 
   void zCPar_SymbolTable::CheckNextSymbol( zCPar_Symbol* sym ) {
@@ -332,7 +314,6 @@ namespace GOTHIC_ENGINE {
 
     return child->name.GetWord( "." ) == base;
   }
-
 
 
   uint zCPar_SymbolTable::RenameSymbol( zCPar_Symbol* sym, const zSTRING& newName, zCPar_Symbol* newSym ) {
@@ -370,11 +351,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
-
-
-
-
   int zCPar_SymbolTable::InsertAt_Union( zCPar_Symbol* sym, int alloc, bool checkHierarchy ) {
     if( !sym )
       return False;
@@ -396,9 +372,9 @@ namespace GOTHIC_ENGINE {
 
         if( zCParserExtender::MessagesLevel >= 3 )
           cmd << colParse2 << "zParserExtender: " <<
-            colParse1 << "symbol " <<
-            colParse2 << sym->name <<
-            colParse1 << " replaced." <<
+            colParse1 << "symbol "                <<
+            colParse2 << sym->name                <<
+            colParse1 << " replaced."             <<
             colParse3 << endl;
 
         // Add function to the post compile queue.
@@ -434,8 +410,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
-
   HOOK Hook_zCPar_SymbolTable_Compare AS( &zCPar_SymbolTable::Compare, &zCPar_SymbolTable::Compare_Union );
 
   template<class T>
@@ -447,6 +421,7 @@ namespace GOTHIC_ENGINE {
 
     return v;
   }
+
 
   int zCPar_SymbolTable::Compare_Union( void const* a, void const* b ) {
     int s0 = cur_table->GetNumInList() - 1;
@@ -460,18 +435,12 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
-
-
-
-
-  FASTHOOK( zCPar_SymbolTable, GetSymbol );
+  HOOK Hook_zCPar_SymbolTable_GetSymbol AS( &zCPar_SymbolTable::GetSymbol, &zCPar_SymbolTable::GetSymbol_Union );
 
   zCPar_Symbol* zCPar_SymbolTable::GetSymbol_Union( const zSTRING& s ) {
     if( s.IsEmpty() || s[0u] == ',' )
       return Null;
 
-    //cmd << s << endl;
     return GetSymbol( GetIndex( s ) );
   }
 }

@@ -9,11 +9,10 @@ namespace GOTHIC_ENGINE {
     zStringsIndexing_Repair  =  2  // Check and repair all string symbol names
   };
 
+
   enum {
     zPAR_TYPE_VA = zPAR_TYPE_INSTANCE + 1,
   };
-
-
 
 
   struct zTCompileInfo {
@@ -25,7 +24,6 @@ namespace GOTHIC_ENGINE {
     bool Compilable;
     string Namespace;
   };
-
 
 
   struct zTScriptInfo {
@@ -44,11 +42,10 @@ namespace GOTHIC_ENGINE {
     bool operator >  ( const string& name ) const;
   };
 
+
   static bool operator == ( zTScriptInfo* info, const string& name ) { return *info == name; }
   static bool operator <  ( zTScriptInfo* info, const string& name ) { return *info < name; }
   static bool operator >  ( zTScriptInfo* info, const string& name ) { return *info > name; }
-
-
 
 
   class zCParserExtender {
@@ -92,6 +89,7 @@ namespace GOTHIC_ENGINE {
     static int MessagesLevel;
   };
 
+
   int zCParserExtender::MessagesLevel = 1;
   zCParserExtender zParserExtender;
   const int PluginParseID = 1;
@@ -102,7 +100,6 @@ namespace GOTHIC_ENGINE {
   extern string ScriptsDirectory;
   extern string SystemDirectory;
   extern string AutorunDirectory;
-
 
 
   static bool NinjaInjected() {

@@ -2,8 +2,6 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-
-
   bool WordIsFloat( const string& word ) {
     return word.IsNumber() && word.Search( "." ) != Invalid;
   }

@@ -40,7 +40,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   HOOK Hook_DefineMenuScriptFunctions PATCH( &DefineMenuScriptFunctions, &DefineMenuScriptFunctions_Union );
 
   int DefineMenuScriptFunctions_Union() {

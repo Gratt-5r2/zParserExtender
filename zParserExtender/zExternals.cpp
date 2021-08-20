@@ -1287,7 +1287,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
 extern void MessageExternalDefined( const string & funcName );
 
 #define EXTERNAL_READ_BEGIN( f ) else if( funcName == #f ) { MessageExternalDefined( #f ); parser->DefineExternal( #f, f,
@@ -1410,120 +1409,5 @@ extern void MessageExternalDefined( const string & funcName );
                                              
 
   void DefineExternals() {
-#if 0
-    // CAST
-    parser->DefineExternal( "Cast_PointerToInstance",    Cast_PointerToInstance,    zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Cast_PointerToNpc",         Cast_PointerToInstance,    zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Cast_PointerToItem",        Cast_PointerToInstance,    zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Cast_InstanceToPointer",    Cast_InstanceToPointer,    zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Cast_InstanceIsNpc",        Cast_InstanceIsNpc,        zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Cast_InstanceIsItem",       Cast_InstanceIsItem,       zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Cast_InstanceIsMob",        Cast_InstanceIsMob,        zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Cast_GetInstanceIndex",     Cast_GetInstanceIndex,     zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
-    
-    parser->DefineExternal( "Cast_GetClassID",           Cast_GetClassID,           zPAR_TYPE_INT,      zPAR_TYPE_STRING,   0 );
-    parser->DefineExternal( "Cast_GetVobClassID",        Cast_GetVobClassID,        zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Cast_CheckVobClassID",      Cast_CheckVobClassID,      zPAR_TYPE_INT,      zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
-
-    // HLP
-    parser->DefineExternal( "Hlp_HasFocusVob",           Hlp_HasFocusVob,           zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Hlp_GetFocusVob",           Hlp_GetFocusVob,           zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Hlp_GetFocusVobName",       Hlp_GetFocusVobName,       zPAR_TYPE_STRING,   zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Hlp_GetStringLength",       Hlp_GetStringLength,       zPAR_TYPE_INT,      zPAR_TYPE_STRING,   0 );
-    parser->DefineExternal( "Hlp_IsNAN",                 Hlp_IsNAN,                 zPAR_TYPE_INT,      zPAR_TYPE_FLOAT,    0 );
-    parser->DefineExternal( "Hlp_IsNull",                Hlp_IsNull,                zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Hlp_KeyToggled",            Hlp_KeyToggled,            zPAR_TYPE_INT,      zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Hlp_KeyPressed",            Hlp_KeyPressed,            zPAR_TYPE_INT,      zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Hlp_LogicalKeyToggled",     Hlp_LogicalKeyToggled,     zPAR_TYPE_INT,      zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Hlp_GameOnPause",           Hlp_GameOnPause,           zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Hlp_MessageBox",            Hlp_MessageBox,            zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   0 );
-    parser->DefineExternal( "Hlp_PrintConsole",          Hlp_PrintConsole,          zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   0 );
-    parser->DefineExternal( "Hlp_GetNull",               Hlp_GetNull,               zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Hlp_DoEvent",               Hlp_DoEvent,               zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   0 );
-    
-    parser->DefineExternal( "Hlp_ReadOptionInt",         Hlp_ReadOptionInt,         zPAR_TYPE_INT,      zPAR_TYPE_STRING,   zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_INT,    0 );
-    parser->DefineExternal( "Hlp_ReadOptionFloat",       Hlp_ReadOptionFloat,       zPAR_TYPE_FLOAT,    zPAR_TYPE_STRING,   zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_FLOAT,  0 );
-    parser->DefineExternal( "Hlp_ReadOptionString",      Hlp_ReadOptionString,      zPAR_TYPE_STRING,   zPAR_TYPE_STRING,   zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_STRING, 0 );
-    parser->DefineExternal( "Hlp_OptionIsExists",        Hlp_OptionIsExists,        zPAR_TYPE_INT,      zPAR_TYPE_STRING,   zPAR_TYPE_STRING, 0 );
-    parser->DefineExternal( "Hlp_WriteOptionInt",        Hlp_WriteOptionInt,        zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_INT,    0 );
-    parser->DefineExternal( "Hlp_WriteOptionFloat",      Hlp_WriteOptionFloat,      zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_FLOAT,  0 );
-    parser->DefineExternal( "Hlp_WriteOptionString",     Hlp_WriteOptionString,     zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_STRING, 0 );
-
-    // WLD
-    parser->DefineExternal( "Wld_ChangeLevel",           Wld_ChangeLevel,           zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   zPAR_TYPE_STRING,   0 );
-    parser->DefineExternal( "Wld_FindVob",               Wld_FindVob,               zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING,   0 );
-    parser->DefineExternal( "Wld_PlayEffectVob",         Wld_PlayEffectVob,         zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   zPAR_TYPE_INSTANCE, zPAR_TYPE_INT, zPAR_TYPE_INT, zPAR_TYPE_INT, zPAR_TYPE_INT, 0 );
-    parser->DefineExternal( "Wld_PlayEffectAt",          Wld_PlayEffectAt,          zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   zPAR_TYPE_INSTANCE, zPAR_TYPE_INT, zPAR_TYPE_INT, zPAR_TYPE_INT, zPAR_TYPE_INT, 0 );
-    parser->DefineExternal( "Wld_ToggleRain",            Wld_ToggleRain,            zPAR_TYPE_VOID,     zPAR_TYPE_FLOAT,    zPAR_TYPE_FLOAT,    0 );
-    parser->DefineExternal( "Wld_SetWeatherType",        Wld_SetWeatherType,        zPAR_TYPE_VOID,     zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Wld_GetWeatherType",        Wld_GetWeatherType,        zPAR_TYPE_INT,      0 );
-    
-    // MDL
-    parser->DefineExternal( "Mdl_GetAnimationIndex",       Mdl_GetAnimationIndex,       zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING,   0 );
-    parser->DefineExternal( "Mdl_GetAnimationName",        Mdl_GetAnimationName,        zPAR_TYPE_STRING,   zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Mdl_AnimationIsExists",       Mdl_AnimationIsExists,       zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Mdl_AnimationIsActive",       Mdl_AnimationIsActive,       zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Mdl_SetAllAnimationsFPS",     Mdl_SetAllAnimationsFPS,     zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_FLOAT,    0 );
-    parser->DefineExternal( "Mdl_ResetAllAnimationsFPS",   Mdl_ResetAllAnimationsFPS,   zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Mdl_SetAnimationFPS",         Mdl_SetAnimationFPS,         zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      zPAR_TYPE_FLOAT,    0 );
-    parser->DefineExternal( "Mdl_ResetAnimationFPS",       Mdl_ResetAnimationFPS,       zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Mdl_SetVisible",              Mdl_SetVisible,              zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "Mdl_ApplyOverlayMds_AtFirst", Mdl_ApplyOverlayMds_AtFirst, zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING,   0 );
-    parser->DefineExternal( "Mdl_SetNpcSpeedMultiplier",   Mdl_SetNpcSpeedMultiplier,   zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_FLOAT,    0 );
-    parser->DefineExternal( "Mdl_ResetNpcSpeedMultiplier", Mdl_ResetNpcSpeedMultiplier, zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, 0 );
-
-    // NPC
-    parser->DefineExternal( "Npc_SetAsHero",             Npc_SetAsHero,             zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Npc_OpenInventory",         Npc_OpenInventory,         zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Npc_OpenInventorySteal",    Npc_OpenInventorySteal,    zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Npc_OpenInventoryTrade",    Npc_OpenInventoryTrade,    zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Npc_GetLeftHandItem",       Npc_GetLeftHandItem,       zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Npc_GetRightHandItem",      Npc_GetRightHandItem,      zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Npc_GetSlotItem",           Npc_GetSlotItem,           zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING,   0 );
-    
-    // MOB
-    parser->DefineExternal( "Mob_Destroy",               Mob_Destroy,               zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Mob_RemoveItem",            Mob_RemoveItem,            zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,    0 );
-    parser->DefineExternal( "Mob_RemoveItems",           Mob_RemoveItems,           zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,    zPAR_TYPE_INT, 0 );
-    parser->DefineExternal( "Mob_InsertItem",            Mob_InsertItem,            zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,    0 );
-    parser->DefineExternal( "Mob_InsertItems",           Mob_InsertItems,           zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,    zPAR_TYPE_INT, 0 );
-    parser->DefineExternal( "Mob_GetLockCombination",    Mob_GetLockCombination,    zPAR_TYPE_STRING,   zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Mob_SetLockCombination",    Mob_SetLockCombination,    zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING, 0 );
-    parser->DefineExternal( "Mob_IsLocked",              Mob_IsLocked,              zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Mob_SetLocked",             Mob_SetLocked,             zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,    0 );
-    parser->DefineExternal( "Mob_GetKeyInstance",        Mob_GetKeyInstance,        zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Mob_SetKeyInstance",        Mob_SetKeyInstance,        zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,    0 );
-    
-    // AI
-    parser->DefineExternal( "AI_CallScript",             AI_CallScript,             zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "AI_StartTriggerScript",     AI_StartTriggerScript,     zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING,   zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "AI_StartTriggerScriptEx",   AI_StartTriggerScriptEx,   zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING,   zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "AI_GetTriggerByID",         AI_GetTriggerByID,         zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "AI_GetTriggersNum",         AI_GetTriggersNum,         zPAR_TYPE_INT,      0 );
-    parser->DefineExternal( "AI_GetTriggerNPC",          AI_GetTriggerNPC,          zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INT, 0 );
-    parser->DefineExternal( "AI_GetTriggerFunc",         AI_GetTriggerFunc,         zPAR_TYPE_FUNC,     zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "AI_GetTriggerFuncName",     AI_GetTriggerFuncName,     zPAR_TYPE_STRING,   zPAR_TYPE_INSTANCE, 0 );
-    
-    parser->DefineExternal( "AI_GetNextTriggerByFunc",     AI_GetNextTriggerByFunc,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_FUNC,     0 );
-    parser->DefineExternal( "AI_GetNextTriggerByFuncName", AI_GetNextTriggerByFuncName, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING,   0 );
-    parser->DefineExternal( "AI_GetNextTriggerBySelf",     AI_GetNextTriggerBySelf,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "AI_GetNextTriggerByOther",    AI_GetNextTriggerByOther,    zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "AI_GetNextTriggerByVictim",   AI_GetNextTriggerByVictim,   zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "AI_GetNextTriggerByNPCs",     AI_GetNextTriggerByNPCs,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    
-    // STR
-    parser->DefineExternal( "Str_Format",             Str_Format,             zPAR_TYPE_STRING, 0 );
-    parser->DefineExternal( "Str_GetLocalizedString", Str_GetLocalizedString, zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_STRING, 0 );
-    parser->DefineExternal( "Str_UTF8_to_ANSI",       Str_UTF8_to_ANSI,       zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_INT, 0 );
-    parser->DefineExternal( "Str_GetCurrentCP",       Str_GetCurrentCP,       zPAR_TYPE_INT,    0 );
-
-    DefineExternals_Vobs();
-
-    // OTHER
-    static float fNan  = NAN;
-    static void* pNull = Null;
-    parser->DefineExternalVar( "NAN",  &fNan,  zPAR_TYPE_FLOAT,    1 );
-    parser->DefineExternalVar( "NULL", &pNull, zPAR_TYPE_INSTANCE, 1 );
-#endif
   }
 }

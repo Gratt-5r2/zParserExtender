@@ -69,5 +69,6 @@ void DeclareNamespaceForNextWord( const uint& wordID, bool newSymbol = false );
 void DeclareNamespaceForNextParenthesis();
 void AddNamespace( zSTRING&, bool newSymbol = false );
 zSTRING GetNamespacePrefix(const uint& levelUp);
+void ExportStringList();
 
 void __cdecl DefineExternal_Union( zSTRING const&, int( __cdecl* )(), int, int, ... );

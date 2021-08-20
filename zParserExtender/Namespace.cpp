@@ -19,11 +19,9 @@ namespace GOTHIC_ENGINE {
   static char* prevNamespacePos = (char*)Invalid;
 
 
-
   void zCParser::InitializeNamespace( const zSTRING& defaultNamespace ) {
     Namespaces.Clear();
   }
-
 
 
   void zCParser::NamespaceBegin( zSTRING& word ) {
@@ -34,7 +32,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   void zCParser::NamespaceAddEntry( zSTRING& word ) {
     if( Namespaces.GetNum() == 0 || prevNamespacePos == pc )
       return;
@@ -43,7 +40,6 @@ namespace GOTHIC_ENGINE {
     NamespaceInfo& namespaceInfo = Namespaces.GetLast();
     namespaceInfo.Entries++;
   }
-
 
 
   void zCParser::NamespaceRemoveEntry( zSTRING& word ) {
@@ -58,7 +54,6 @@ namespace GOTHIC_ENGINE {
       ReadWord(word);
     }
   }
-
 
 
   static uint AddNamespaceAfter = 0;
@@ -85,6 +80,8 @@ namespace GOTHIC_ENGINE {
       NewParenthesisExpected = false;
     }
     else if( AddNamespaceAfter && --AddNamespaceAfter == 0 ) {
+      if( word.HasWord( "ATTRIBUTE !!" ) )
+        cmd << word << endl;
       AddNamespace( word, NewSymbolExpected );
       NewSymbolExpected = false;
     }
@@ -92,6 +89,12 @@ namespace GOTHIC_ENGINE {
 
 
   zCPar_Symbol* zCParser::GetLocalSymbol( zSTRING& word ) {
+    if( word.HasWord( "." ) ) {
+      int index = FindInstanceVar( word );
+      if( index != Invalid )
+        return GetSymbol( index );
+    }
+
     if( in_class ) {
       zSTRING symName = in_class->name + "." + word;
       zCPar_Symbol* sym = GetSymbol( symName );
@@ -110,10 +113,18 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   void zCParser::AddNamespace( zSTRING& word, bool newSymbol ) {
     if( !IsWord( word ) )
       return;
+
+    // Is a class var
+    if( word.HasWord( "." ) ) {
+      zSTRING instanceName = word.GetWord( ".", 1 );
+      zSTRING propertyName = word.GetWord( ".", 2 );
+      AddNamespace( instanceName );
+      word = instanceName + "." + propertyName;
+      return;
+    }
 
     // At first check primary source of this symbol.
     // Colon char at 0 index of the word defines
@@ -154,7 +165,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   void zCParser::DeclareNamespaceForNextParenthesis() {
     if( !NamespaceIsActive() )
       return;
@@ -163,13 +173,11 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   bool zCParser::NamespaceIsActive() {
     return
       Namespaces.GetNum() > 0 ||
       zParserExtender.GetDefaultNamespace().Length() > 0;
   }
-
 
 
   zSTRING zCParser::GetNamespacePrefix( const uint& levelUp ) {
@@ -192,13 +200,6 @@ namespace GOTHIC_ENGINE {
 
     return defaultNamespace + namespaceName;
   }
-
-
-
-
-
-
-
 
 
   HOOK Hook_zCParser_Parse_Expression_Primary PATCH( &zCParser::Parse_Expression_Primary, &zCParser::Parse_Expression_Primary_Union );

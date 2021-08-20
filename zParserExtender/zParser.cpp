@@ -18,6 +18,7 @@ namespace GOTHIC_ENGINE {
     return false;
   }
 
+
   static string GetParserNameByDAT( string s ) {
     string parName = s.GetPattern( "\\", "." );
     if( parName == "GOTHIC"     ) return "Game";
@@ -31,6 +32,7 @@ namespace GOTHIC_ENGINE {
     return s;
   }
 
+
   static string GetDATNameByParser( zCParser* par ) {
     if( par == Gothic::Parsers::Game   ) return "GOTHIC.DAT";
     if( par == Gothic::Parsers::SFX    ) return "SFX.DAT";
@@ -43,13 +45,11 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   static bool NeedToReparseOU() {
     return
        zoptions->Parm( "ZREPARSE" ) ||
       (zoptions->Parm( "ZREPARSE_GAME" ) && zoptions->Parm( "ZREPARSE_OU" ));
   }
-
 
 
   HOOK Hook_zCParser_SaveDat PATCH( &zCParser::SaveDat, &zCParser::SaveDat_Union );
@@ -87,7 +87,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   int zCParser::SaveDatCopy() {
     zSTRING datName   = GetDATNameByParser( this );
     zSTRING clearName = datName.GetPattern( "", ".", -1 );
@@ -107,14 +106,10 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   void zCParser::SetEnableParsing_Union( bool_t enabled ) {
     mergemode = enabled && zParserExtender.MergeModeEnabled();
     compiled = !enabled;
   }
-
-
-
 
 
   static int op_loop_level       = 0;
@@ -176,7 +171,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   void zCParser::ReadMacro( zSTRING& word ) {
     string& adigit = (string&)aword;
     if( adigit.StartWith( "KEY_" ) ) {
@@ -190,7 +184,6 @@ namespace GOTHIC_ENGINE {
         aword = value;
     }
   }
-
 
 
   void zCParser::DeclareWhile_Union() {
@@ -234,10 +227,9 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   void zCParser::DeclareBreak_Union() {
     if( op_loop_level <= 0 )
-      Error( Z "found empty break operator!", 0 );
+      Error( Z "Found empty break operator!", 0 );
 
     do {
       // break from top loop
@@ -251,10 +243,9 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   void zCParser::DeclareContinue_Union() {
     if( op_loop_level <= 0 )
-      Error( Z "found empty continue operator!", 0 );
+      Error( Z "Found empty continue operator!", 0 );
 
     do {
       // break from top loop
@@ -268,14 +259,12 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   void zCParser::SkipMeta_Union() {
     do {
-      THISCALL( Ivk_zCParser_ReadWord )(aword); // ReadWord( aword );
+      THISCALL( Ivk_zCParser_ReadWord )(aword);
     } while( !aword.IsEmpty() && aword != "}" );
     Match( Z ";" );
   }
-
 
 
   void zCParser::CallGameInit_Union() {
@@ -286,7 +275,6 @@ namespace GOTHIC_ENGINE {
 
     DoEvent( eventName );
   }
-
 
 
   void zCParser::DoEvent( const zSTRING& eventName ) {
@@ -310,12 +298,10 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   int zCParser::GetEventIndex( const zSTRING& eventName ) {
     int index = GetIndex( "EVENT." + eventName + ".START" );
     return index;
   }
-
 
 
   void zCParser::CallGameLoop_Union() {
@@ -328,11 +314,9 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   void zCParser::ResetAdditionalInfo() {
     add_funclist = Null;
   }
-
 
 
   HOOK Hook_zCParser_Parse PATCH( &zCParser::Parse, &zCParser::Parse_Union );
@@ -354,11 +338,11 @@ namespace GOTHIC_ENGINE {
     }
 
     if( enableParsing && zCParserExtender::MessagesLevel >= 1 ) {
-      cmd << colParse2 << "zParserExtender: "      <<
-              colParse1 << "building "             <<
-              colParse2 << GetParserNameByDAT( s ) <<
-              colParse1 << " parser"               <<
-              colParse3 << endl;
+      cmd << colParse2 << "zParserExtender: "     <<
+             colParse1 << "building "             <<
+             colParse2 << GetParserNameByDAT( s ) <<
+             colParse1 << " parser"               <<
+             colParse3 << endl;
     }
 
     int Ok = THISCALL( Hook_zCParser_Parse )(s);
@@ -366,7 +350,6 @@ namespace GOTHIC_ENGINE {
     enableParsing = enableParsing_tmp;
     return Ok;
   }
-
 
 
   HOOK Ivk_zCOption_Parm AS( &zCOption::Parm, &zCOption::Parm_Union );
@@ -386,7 +369,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   void zCParser::RenameTreeNode( zCPar_Symbol* sym, zSTRING newName ) {
     for( int i = 0; i < file.GetNumInList(); i++ ) {
       if( file[i]->tree ) {
@@ -401,7 +383,6 @@ namespace GOTHIC_ENGINE {
       }
     }
   }
-
 
 
   zCPar_TreeNode* zCParser::CreateLeafCallInstance( const zSTRING& instName, zCPar_TreeNode* leafBase ) {
@@ -429,8 +410,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
-
   HOOK Hook_zCParser_DeclareFuncCall PATCH( &zCParser::DeclareFuncCall, &zCParser::DeclareFuncCall_Union );
 
   inline zCPar_Symbol* GetClassObject( zCPar_Symbol* object ) {
@@ -440,6 +419,7 @@ namespace GOTHIC_ENGINE {
     
     return classObject;
   }
+
 
   zCPar_Symbol* zCParser::GetNearestVariable( const zSTRING& varName ) {
     zCPar_Symbol* symbol = Null;
@@ -451,6 +431,7 @@ namespace GOTHIC_ENGINE {
 
     return symbol;
   }
+
 
   extern bool PostLoadExternal( const string& funcName );
 
@@ -465,6 +446,7 @@ namespace GOTHIC_ENGINE {
     return PostLoadExternal( symName );
   }
 
+
   bool zCParser::IsVaExternal( const zSTRING& name ) {
      zCPar_Symbol* sym = GetSymbol( name );
      if( !sym || !sym->HasFlag( zPAR_FLAG_EXTERNAL ) )
@@ -472,6 +454,7 @@ namespace GOTHIC_ENGINE {
 
      return sym->next && sym->next->type == zPAR_TYPE_VA;
   }
+
 
   void zCParser::DeclareFuncCall_Union( zSTRING& name, int typematch ) {
     string functionName = in_func->name;
@@ -484,14 +467,13 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
-
 #if ENGINE >= Engine_G2
   HOOK Ivk_zCParser_LoadGlobalVars AS_IF( &zCParser::LoadGlobalVars, &zCParser::LoadGlobalVars_Union, !NinjaInjected() );
 
   inline bool IsValidIntegerSymbol( zCPar_Symbol* sym ) {
     return sym && sym->type == zPAR_TYPE_INT && sym->flags == 0;
   }
+
 
   // Parser bugfix
   int zCParser::LoadGlobalVars_Union( zCArchiver& arc ) {
@@ -536,9 +518,6 @@ namespace GOTHIC_ENGINE {
 #endif
 
 
-
-
-
   HOOK Hook_zCMenu_Startup PATCH( &zCMenu::Startup, &zCMenu::Startup_Union );
 
   void zCMenu::Startup_Union() {
@@ -548,7 +527,6 @@ namespace GOTHIC_ENGINE {
       initialized = true;
     }
   }
-
 
 
   HOOK Hook_zCParser_ReadFuncType PATCH( &zCParser::ReadFuncType, &zCParser::ReadFuncType_Union );
@@ -569,7 +547,6 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   HOOK Hook_zCParser_DeclareFunc PATCH( &zCParser::DeclareFunc, &zCParser::DeclareFunc_Union );
 
   void zCParser::DeclareFunc_Union() {
@@ -587,11 +564,43 @@ namespace GOTHIC_ENGINE {
   }
 
 
-
   HOOK Hook_zCParser_LoadDat PATCH( &zCParser::LoadDat, &zCParser::LoadDat_Union );
 
   int zCParser::LoadDat_Union( zSTRING& datName ) {
     cur_parser = this;
     return THISCALL( Hook_zCParser_LoadDat )(datName);
+  }
+
+
+  inline string StringSymbolToString( zCPar_Symbol* sym ) {
+    int ele = sym->ele;
+    string symName = sym->name;
+
+    if( ele == 1 ) {
+      string value = *sym->stringdata;
+      return string::Combine( "const string %s = \"%s\";", symName, value );
+    }
+
+    string values;
+    for( int i = 0; i < ele; i++ ) {
+      values += string::Combine( "\n\t\"%z\"", sym->stringdata[i] );
+      if( i < ele - 1 )
+        values += ",";
+    }
+
+    return string::Combine( "const string %s[%i] =\n{%s\n};", symName, ele, values );
+  }
+
+
+  void zCParser::ExportStringList() {
+    rowString stringList;
+    for( int i = 0; i < symtab.GetNumInList(); i++ ) {
+      zCPar_Symbol* sym = symtab.table[i];
+      if( sym->type == zPAR_TYPE_STRING )
+        if( sym->HasFlag( zPAR_FLAG_CONST ) )
+          stringList.InsertLines( StringSymbolToString( sym ) );
+    }
+
+    stringList.WriteToFile( "_work\\Data\\Scripts\\Exports\\StringList.d" );
   }
 }

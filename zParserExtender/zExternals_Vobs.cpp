@@ -484,23 +484,6 @@ namespace GOTHIC_ENGINE {
 #undef END
   
   void DefineExternals_Vobs() {
-#if 0
-    parser->DefineExternal( "Vob_GetVobPosition",      Vob_GetVobPosition,      zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Vob_SetVobPosition",      Vob_SetVobPosition,      zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Vob_GetVobData",          Vob_GetVobData,          zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Vob_SetVobData",          Vob_SetVobData,          zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Vob_GetLightData",        Vob_GetLightData,        zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Vob_SetLightData",        Vob_SetLightData,        zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Vob_ClearLightAniList",   Vob_ClearLightAniList,   zPAR_TYPE_VOID,     0 );
-    parser->DefineExternal( "Vob_AddLightAniColor",    Vob_AddLightAniColor,    zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Vob_AddLightAniColorRGB", Vob_AddLightAniColorRGB, zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,      zPAR_TYPE_INT, zPAR_TYPE_INT, 0 );
-    parser->DefineExternal( "Vob_GetMobData",          Vob_GetMobData,          zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Vob_SetMobData",          Vob_SetMobData,          zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Vob_GetMobInterData",     Vob_GetMobInterData,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Vob_SetMobInterData",     Vob_SetMobInterData,     zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Vob_GetMobLockableData",  Vob_GetMobLockableData,  zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-    parser->DefineExternal( "Vob_SetMobLockableData",  Vob_SetMobLockableData,  zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, 0 );
-#endif
   }
 
 #define A (string)

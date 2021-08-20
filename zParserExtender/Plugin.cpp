@@ -42,20 +42,8 @@ namespace GOTHIC_ENGINE {
 
 
 
-  void DisableLoadLibFault() {
-#if ENGINE == Engine_G1
-    PATCH_EXECUTE( memset(0x0041B7B7, '90', 0x0041B7CA - 0x0041B7B7) );
-#endif
-#if ENGINE == Engine_G2A
-    PATCH_EXECUTE( memset(0x0041BC97, '90', 0x0041BCAA - 0x0041BC97) );
-#endif
-  }
-
-
-
   void Game_Entry() {
     DefinePaths();
-    DisableLoadLibFault();
   }
 
   void Game_Init() {
@@ -65,18 +53,6 @@ namespace GOTHIC_ENGINE {
     zParserExtender.ParseBegin();
     parser->CallGameInit_Union();
     Plugin_InitConsole();
-
-    /*cmd << "Table length: " << parser->symtab.tablesort.GetNum() << endl << endl;
-    for( uint i = 0; i < 10; i++ ) 		{
-      cmd << i << endl;
-      cmd << "Index sorted: " << parser->symtab.tablesort[i] << endl;
-      cmd << "Name:         " << parser->symtab.table[parser->symtab.tablesort[i]]->name << endl;
-      cmd << "Type:         " << parser->symtab.table[parser->symtab.tablesort[i]]->type << endl;
-      cmd << "Flags:        " << parser->symtab.table[parser->symtab.tablesort[i]]->flags << endl;
-      cmd << "Ele:          " << parser->symtab.table[parser->symtab.tablesort[i]]->ele << endl;
-      cmd << "Single data:  " << parser->symtab.table[parser->symtab.tablesort[i]]->single_intdata << endl;
-      cmd << endl << endl;
-    }*/
   }
 
   void Game_Exit() {

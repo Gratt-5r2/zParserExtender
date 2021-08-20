@@ -2,6 +2,7 @@
 #engine [G2A]
 	#patch
 		HEX @0x008BC1F4 = ";,=><*+-/?'%()/&!|{}[]\"~\0"
+		memset(0x0041BC97, '90', 0x0041BCAA - 0x0041BC97)
 	#/patch
 #/engine
 #engine [G2]
@@ -17,5 +18,6 @@
 #engine [G1]
 	#patch
 		HEX @0x0085259C = ";,=><*+-/?'%()/&!|{}[]\"~\0"
+		memset(0x0041B7B7, '90', 0x0041B7CA - 0x0041B7B7)
 	#/patch
 #/engine
