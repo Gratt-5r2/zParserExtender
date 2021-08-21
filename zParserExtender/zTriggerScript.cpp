@@ -43,7 +43,7 @@ namespace GOTHIC_ENGINE {
 
 
   void zTTriggerScript::SetAsInstance( zSTRING instName ) {
-    parser->SetInstance( "SELFTRIGGER", this );
+    parser->SetInstance( instName, this );
   }
 
 
@@ -132,7 +132,8 @@ namespace GOTHIC_ENGINE {
         continue;
 
       if( triggerTimer[trigger].AwaitExact( delay ) ) {
-        trigger->SetAsInstance( "SelfTrigger" );
+        trigger->SetAsInstance( "SELFTRIGGER" );
+        trigger->SetAsInstance( "ZPARSEREXTENDER:SELFTRIGGER" );
         if( trigger->CallTrigger() ) {
           delete trigger;
           i--;
@@ -145,6 +146,7 @@ namespace GOTHIC_ENGINE {
   void zTTriggerScript::UpdateFirst() {
     zTTriggerScript* first = GetFirstTrigger();
     parser->SetInstance( "FIRSTTRIGGER", first );
+    parser->SetInstance( "ZPARSEREXTENDER:FIRSTTRIGGER", first );
   }
 
 

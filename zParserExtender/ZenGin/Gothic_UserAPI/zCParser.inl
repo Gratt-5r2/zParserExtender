@@ -49,6 +49,7 @@ float ReadFloat_Union();
 void ReadMacro( zSTRING& );
 int LoadDat_Union( zSTRING& datName );
 bool NamespaceIsActive();
+bool UsingNamespace( zSTRING& word );
 
 void PreCompile();
 void RenameTreeNode( zCPar_Symbol* sym, zSTRING newName );

@@ -16,19 +16,37 @@ namespace GOTHIC_ENGINE {
   };
 
   Array<NamespaceInfo> Namespaces;
+  Array<string> UsingNamespaces;
   static char* prevNamespacePos = (char*)Invalid;
 
 
   void zCParser::InitializeNamespace( const zSTRING& defaultNamespace ) {
     Namespaces.Clear();
+    UsingNamespaces.Clear();
+    UsingNamespaces |= zParserExtender.GetUsingNamespaces();
   }
 
 
   void zCParser::NamespaceBegin( zSTRING& word ) {
+    if( in_func || in_class )
+      Error( Z "U:PAR: 'namespace' can not be defined in function or class.", zERROR_LEVEL::zERR_FAULT );
+
     THISCALL( Ivk_zCParser_ReadWord )(word);
     Namespaces.Create( word );
     THISCALL( Ivk_zCParser_ReadWord )(word);
     ReadWord( word );
+  }
+
+
+  bool zCParser::UsingNamespace( zSTRING& word ) {
+    if( in_func || in_class )
+      Error( Z "U:PAR: 'using' can not be defined in function or class.", zERROR_LEVEL::zERR_FAULT );
+
+    THISCALL( Ivk_zCParser_ReadWord )(word);
+    UsingNamespaces |= word;
+    Match( Z ";" );
+    ReadWord(word);
+    return true;
   }
 
 
@@ -68,6 +86,12 @@ namespace GOTHIC_ENGINE {
   }
 
   void zCParser::CheckNamespace( zSTRING& word ) {
+    if( word == "USING" ) {
+      UsingNamespace( word );
+      return;
+    }
+
+
     if( word == "NAMESPACE" ) NamespaceBegin( word );
     if( word == "{" )         NamespaceAddEntry( word );
     if( word == "}" )         NamespaceRemoveEntry( word );
@@ -80,8 +104,6 @@ namespace GOTHIC_ENGINE {
       NewParenthesisExpected = false;
     }
     else if( AddNamespaceAfter && --AddNamespaceAfter == 0 ) {
-      if( word.HasWord( "ATTRIBUTE !!" ) )
-        cmd << word << endl;
       AddNamespace( word, NewSymbolExpected );
       NewSymbolExpected = false;
     }
@@ -152,6 +174,16 @@ namespace GOTHIC_ENGINE {
     zSTRING fullSymName = GetNamespacePrefix( levelUp ) + word;
     if( newSymbol || GetSymbol( fullSymName ) || !GetLocalSymbol( word ) )
       word = fullSymName;
+    
+    if( !GetSymbol( word ) ) {
+      for( uint i = 0; i < UsingNamespaces.GetNum(); i++ ) {
+        zSTRING fullSymName = Z UsingNamespaces[i] + ":" + word;
+        if( GetSymbol( fullSymName ) ) {
+          word = fullSymName;
+          break;
+        }
+      }
+    }
   }
 
 

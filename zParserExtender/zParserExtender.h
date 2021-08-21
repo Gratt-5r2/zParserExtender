@@ -23,6 +23,7 @@ namespace GOTHIC_ENGINE {
     bool Autorun;
     bool Compilable;
     string Namespace;
+    Array<string> Using;
   };
 
 
@@ -79,6 +80,7 @@ namespace GOTHIC_ENGINE {
     bool ExtendedParsingEnabled();
     bool ExternalScriptsListIsEmpty();
     const string& GetDefaultNamespace();
+    const Array<string>& GetUsingNamespaces();
 
     void GetCompilableScriptList( zTScriptInfo* root, Array<zTScriptInfo*>& queue );
     Array<zTScriptInfo*> GetCompilableScriptList();

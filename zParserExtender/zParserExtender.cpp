@@ -130,6 +130,17 @@ namespace GOTHIC_ENGINE {
         if( line.Shrink().IsEmpty() )
           continue;
 
+        if( !line.EndWith( ";" ) ) {
+          line += ";";
+          if( zParserExtender.MessagesLevel > 1 )
+             cmd << colAtt2 << "zParserExtender: "   <<
+                    colAtt1 << "expected '"          <<
+                    colAtt2 << ";"                   <<
+                    colAtt1 << "' in META block in " <<
+                    colAtt2 << Name                  <<
+                    colAtt3 << endl;
+        }
+
         string parameter = line.GetPattern( "",  "=" ).Shrink();
         string value     = line.GetPattern( "=", ";" ).Shrink();
 
@@ -140,14 +151,17 @@ namespace GOTHIC_ENGINE {
         else if( parameter == "Engine" )      CompileInfo.Compilable  = EngineVerToBool( value );
         else if( parameter == "After" )       Dependencies            = ParameterToArray( value );
         else if( parameter == "Namespace" )   CompileInfo.Namespace   = value.Upper();
+        else if( parameter == "Using" )       CompileInfo.Using       = ParameterToArray( value.Upper() );
         else if( zCParserExtender::MessagesLevel >= 1 ) {
           // Wut ??
           cmd << colWarn2 << "zParserExtender: "        <<
                  colWarn1 << "unknown META parameter: " <<
                  colWarn2 << parameter                  <<
+                 colWarn1 << " in "                     <<
+                 colWarn2 << Name                       <<
                  colWarn3 << endl;
         }
-
+        
         CheckDependencies();
       }
     }
@@ -611,6 +625,11 @@ namespace GOTHIC_ENGINE {
 
   const string& zCParserExtender::GetDefaultNamespace() {
     return CurrentCompileInfo.Namespace;
+  }
+
+
+  const Array<string>& zCParserExtender::GetUsingNamespaces() {
+    return CurrentCompileInfo.Using;
   }
 
 

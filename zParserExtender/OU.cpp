@@ -19,7 +19,6 @@ namespace GOTHIC_ENGINE {
   int oCGame::LoadParserFile_Union( zSTRING const& parserfile ) {
     funclist.Insert( new zSTRING( "AI_OUTPUT" ) );
     parser->SetInfoFile( &funclist, "OuInfo.inf" );
-
     return THISCALL( Ivk_oCGame_LoadParserFile )(parserfile);
   };
 
@@ -29,7 +28,6 @@ namespace GOTHIC_ENGINE {
   void zCParser::DeclareInstance_Union() {
     // Checkpoint to track new symbols after DeclareInstance
     LastSym = symtab.lastsym;
-
     DeclareNamespaceForNextWord( 1, true );
     DeclareNamespaceForNextParenthesis();
     return THISCALL( Ivk_zCParser_DeclareInstance )();
