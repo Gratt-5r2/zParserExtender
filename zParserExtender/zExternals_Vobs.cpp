@@ -5,6 +5,8 @@ namespace GOTHIC_ENGINE {
 #pragma warning(push)
 #pragma warning(disable: 4244)
 
+#pragma push_macro("A")
+#pragma push_macro("Z")
 #undef A
 #undef Z
   // zCOLOR
@@ -47,8 +49,6 @@ namespace GOTHIC_ENGINE {
 
     return 0;
   }
-
-
 
   // zCVob
   struct C_VOB_DATA {
@@ -116,8 +116,6 @@ namespace GOTHIC_ENGINE {
     return 0;
   }
 
-
-
   // zCVobLight
   struct C_LIGHT_DATA {
     int R;
@@ -143,8 +141,8 @@ namespace GOTHIC_ENGINE {
 
   int Vob_GetLightData() {
     static C_LIGHT_DATA vobData;
-    zCParser* par                = zCParser::GetParser();
-    zCVob* vob                   = (zCVob*)par->GetInstance();
+    zCParser* par            = zCParser::GetParser();
+    zCVob* vob               = (zCVob*)par->GetInstance();
 
     zCVobLight* light = vob->CastTo<zCVobLight>();
     if( !light ) {
@@ -177,9 +175,9 @@ namespace GOTHIC_ENGINE {
   }
 
   int Vob_SetLightData() {
-    zCParser* par             = zCParser::GetParser();
-    C_LIGHT_DATA& vobData     = *(C_LIGHT_DATA*)par->GetInstance();
-    zCVob* vob                = (zCVob*)par->GetInstance();
+    zCParser* par                     = zCParser::GetParser();
+    C_LIGHT_DATA& vobData             = *(C_LIGHT_DATA*)par->GetInstance();
+    zCVob* vob                        = (zCVob*)par->GetInstance();
 
     zCVobLight* light = vob->CastTo<zCVobLight>();
     if( !light )
@@ -246,8 +244,6 @@ namespace GOTHIC_ENGINE {
     light->lightData.colorAniList.Insert( zCOLOR( r, g, b ) );
     return 0;
   }
-
-
 
   // oCMob
   struct C_MOB_DATA {
@@ -324,8 +320,6 @@ namespace GOTHIC_ENGINE {
     return 0;
   }
 
-
-
   // oCMobInter
   struct C_MOBINTER_DATA {
     zSTRING TriggerTarget;
@@ -392,8 +386,6 @@ namespace GOTHIC_ENGINE {
     return 0;
   }
 
-
-
   // oCMobLockable
   struct C_MOBLOCKABLE_DATA {
     int Locked;
@@ -442,51 +434,39 @@ namespace GOTHIC_ENGINE {
     return 0;
   }
 
-  void MessageExternalDefined( const string& funcName ) {
-    if( zCParserExtender::MessagesLevel <= 0 )
-      return;
+  bool ActivateDynamicExternal_Vobs( const zSTRING& funcName, bool createFuncList ) {
+    zCParser* par = Null;
+    if( !createFuncList ) {
+      par = zCParser::GetParser();
+      if( par->GetIndex( funcName ) != Invalid )
+        return true;
 
-    Col16 cl1;
-    Col16 cl2( CMD_CYAN );
-    Col16 cl3( CMD_CYAN | CMD_INT );
+      if( funcName.IsEmpty() )
+        return false;
+    }
 
-    cmd << cl3 << "zParserExtender: "
-        << cl2 << "new external defined - "
-        << cl3 << funcName
-        << cl1 << endl;
-  }
-
-#define EXTERNAL_READ_BEGIN( f ) else if( funcName == #f ) { MessageExternalDefined( #f ); parser->DefineExternal( #f, f,
-#define EXTERNAL_READ_END , 0); return true; }
-  bool PostLoadExternal_Vobs( const zSTRING& funcName ) {
-    zCParser* parser = zCParser::GetParser();
-    if( funcName.IsEmpty() )
-      return false;
-
-    EXTERNAL_READ_BEGIN( Vob_GetVobPosition      ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                                  EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Vob_SetVobPosition      ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                              EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Vob_GetVobData          ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                                  EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Vob_SetVobData          ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                              EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Vob_GetLightData        ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                                  EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Vob_SetLightData        ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                              EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Vob_ClearLightAniList   ) zPAR_TYPE_VOID                                                                          EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Vob_AddLightAniColor    ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                              EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Vob_AddLightAniColorRGB ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,     zPAR_TYPE_INT, zPAR_TYPE_INT EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Vob_GetMobData          ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                                  EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Vob_SetMobData          ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                              EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Vob_GetMobInterData     ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                                  EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Vob_SetMobInterData     ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                              EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Vob_GetMobLockableData  ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                                  EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Vob_SetMobLockableData  ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                              EXTERNAL_READ_END
+    EXTERNAL_DEFINE_BEGIN( Vob_GetVobPosition      ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Vob_SetVobPosition      ) zPAR_TYPE_VOID, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Vob_GetVobData          ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Vob_SetVobData          ) zPAR_TYPE_VOID, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Vob_GetLightData        ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Vob_SetLightData        ) zPAR_TYPE_VOID, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Vob_ClearLightAniList   ) zPAR_TYPE_VOID                                                                  EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Vob_AddLightAniColor    ) zPAR_TYPE_VOID, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Vob_AddLightAniColorRGB ) zPAR_TYPE_VOID, zPAR_TYPE_INSTANCE, zPAR_TYPE_INT, zPAR_TYPE_INT, zPAR_TYPE_INT EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Vob_GetMobData          ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Vob_SetMobData          ) zPAR_TYPE_VOID, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Vob_GetMobInterData     ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Vob_SetMobInterData     ) zPAR_TYPE_VOID, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Vob_GetMobLockableData  ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Vob_SetMobLockableData  ) zPAR_TYPE_VOID, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                          EXTERNAL_DEFINE_END
     return false;
   }
-#undef EXTERNAL_BEGIN
-#undef END
   
   void DefineExternals_Vobs() {
   }
 
-#define A (string)
-#define Z (zSTRING)
+#pragma pop_macro("A")
+#pragma pop_macro("Z")
 #pragma warning(pop)
 }

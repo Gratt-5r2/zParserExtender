@@ -152,6 +152,7 @@ namespace GOTHIC_ENGINE {
         else if( parameter == "After" )       Dependencies            = ParameterToArray( value );
         else if( parameter == "Namespace" )   CompileInfo.Namespace   = value.Upper();
         else if( parameter == "Using" )       CompileInfo.Using       = ParameterToArray( value.Upper() );
+        else if( parameter == "Mod" )         Mods                    = ParameterToArray( value );
         else if( zCParserExtender::MessagesLevel >= 1 ) {
           // Wut ??
           cmd << colWarn2 << "zParserExtender: "        <<
@@ -206,14 +207,17 @@ namespace GOTHIC_ENGINE {
     option.Read( DefaultCompileInfo.NativeWhile, "ZPARSE_EXTENDER", "NativeWhile",         false );
     option.Read( MessagesLevel,                  "ZPARSE_EXTENDER", "MessagesLevel",       MessagesLevel );
     option.Read( StringsIndexingMode,            "ZPARSE_EXTENDER", "StringsIndexingMode", zStringsIndexing_Default );
+    option.Read( TestStack,                      "ZPARSE_EXTENDER", "TestStack",           false );
     DefaultCompileInfo.Compilable = true;
 
     Array<string> Files = FilesLine.Split( "," );
     for( uint i = 0; i < Files.GetNum(); i++ )
       LoadScriptList( Files[i].Shrink() );
 
-    ParsingEnabled = false;
-    ParserExternals = Null;
+    ParsingEnabled           = false;
+    ParserExternals          = Null;
+    ExtendedSymbolRangeStart = Invalid;
+    ExtendedSymbolRangeEnd   = Invalid;
   }
 
 
@@ -419,6 +423,15 @@ namespace GOTHIC_ENGINE {
         compilable = false;
     }
 
+    for( uint i = 0; i < root->Mods.GetNum(); i++ ) {
+      string& dependency = root->Mods[i];
+      string fullVolumeName = Union.GetGameDirectory() + "Data\\" + dependency;
+      if( _access( fullVolumeName, None ) == -1 ) {
+        compilable = false;
+        break;
+      }
+    }
+
     recursionProtect -= root->Name; // Queue OUT
     return compilable;
   }
@@ -452,13 +465,49 @@ namespace GOTHIC_ENGINE {
   }
 
 
+  void zCParserExtender::CheckExtendedSymbolsStart( zCParser* par ) {
+    if( ExtendedSymbolRangeStart != Invalid || par != parser )
+      return;
+
+    ExtendedSymbolRangeStart = par->symtab.table.GetNum();
+  }
+
+
+  void zCParserExtender::CheckExtendedSymbolsEnd( zCParser* par ) {
+    if( par != parser )
+      return;
+
+    ExtendedSymbolRangeEnd = par->symtab.table.GetNum() - 1;
+  }
+
+
+  bool zCParserExtender::IsExtendedSymbolID( const int& id ) {
+    return id >= ExtendedSymbolRangeStart && id <= ExtendedSymbolRangeEnd;
+  }
+
+
+  bool zCParserExtender::IsExtendedSymbol( zCPar_Symbol* sym ) {
+    int index = parser->symtab.GetIndex( sym );
+    if( index == Invalid )
+      return false;
+
+    return IsExtendedSymbolID( index );
+  }
+
+#if ENGINE == Engine_G1A || ENGINE == Engine_G2
+  static auto patch_physical_first = CreateSharedPatchSym<CPatchInteger>( "s_physical_first", 0 );
+#endif
+
   int ParStackMaxLength = 0;
   void zCParserExtender::ParseBegin() {
-    //if( InjectUnionMenu )
-    //  ParseExternalScript( "Auto", "Menu\\zUnionMenu.d" );
-
     Array<zTScriptInfo*> compilableList = GetCompilableScriptList();
     ParsingEnabled = true;
+#if ENGINE == Engine_G1 || ENGINE == Engine_G2A
+    int physicalFirst = zFILE_VDFS::s_physical_first;
+    zFILE_VDFS::s_physical_first = True;
+#else
+    patch_physical_first->SetValue( 1 );
+#endif
 
     {
       Array<zCParser*> activeParsers;
@@ -466,6 +515,7 @@ namespace GOTHIC_ENGINE {
         zTScriptInfo& scriptInfo = *compilableList[i];
         CurrentCompileInfo       = scriptInfo.CompileInfo;
 
+#if 0
         // Set root directory of
         // current external script
         zoptions->ChangeDir(
@@ -473,7 +523,16 @@ namespace GOTHIC_ENGINE {
           DIR_SYSTEM :
           DIR_SCRIPTS
           );
-        
+#else
+        // Set root directory of
+        // current external script
+        static zFILE* fakeSystem = new zFILE_VDFS( "\\SYSTEM\\" );
+        if( CurrentCompileInfo.Autorun )
+          fakeSystem->ChangeDir( false );
+        else
+          zoptions->ChangeDir( DIR_SCRIPTS );
+#endif
+
         // Search game parser by name
         zCParser* par = GetParserByParserName( scriptInfo.ParserName );
         zCParser::cur_parser = par;
@@ -505,7 +564,11 @@ namespace GOTHIC_ENGINE {
         par->ResetAdditionalInfo();
         par->SetEnableParsing_Union( True );
 
-        if( par->ParseFile( Z scriptInfo.FullName ) != 0 ) {
+        CheckExtendedSymbolsStart( par );
+        int parsed = par->ParseFile( Z scriptInfo.FullName );
+        CheckExtendedSymbolsEnd( par );
+
+        if( parsed != 0 ) {
           bool parsed = activeParsers & par;
           if( !parsed )
             par->SetEnableParsing_Union( False );
@@ -536,7 +599,13 @@ namespace GOTHIC_ENGINE {
       activeParsers.Clear();
     }
 
+#if ENGINE == Engine_G1 || ENGINE == Engine_G2A
+    zFILE_VDFS::s_physical_first = physicalFirst;
+#else
+    patch_physical_first->SetValue( 0 );
+#endif
     ParsingEnabled = false;
+    zCParser::cur_parser = parser;
   }
 
 
@@ -623,6 +692,10 @@ namespace GOTHIC_ENGINE {
     return CompileQueue.GetNum() == 0;
   }
 
+  bool zCParserExtender::NeedToTestStack() {
+    return TestStack;
+  }
+
   const string& zCParserExtender::GetDefaultNamespace() {
     return CurrentCompileInfo.Namespace;
   }
@@ -640,70 +713,5 @@ namespace GOTHIC_ENGINE {
 
   void ParseExternalScript( string parserName, string scriptName ) {
     zParserExtender.PushExternalScript( parserName, scriptName );
-  }
-
-
-  static int SaveDatEval( const zSTRING& __command, zSTRING& message ) {
-    string command = __command;
-
-    if( command.GetWordSmart( 1 ) == "PARSER" ) {
-      string secondWord = command.GetWordSmart( 2 );
-
-      if( secondWord == "SAVEDAT" ) {
-        string datName = command.GetWordSmart( 3 );
-
-        // Save OU bin & csl
-        if( datName == "OU" ) {
-          ogame->GetCutsceneManager()->LibStoreCopy( zLIB_STORE_ASCII | zLIB_STORE_BIN );
-          return True;
-        }
-
-        // Save DAT file
-        zCParser* par = GetParserByParserName( datName );
-        if( par ) {
-          par->SaveDatCopy();
-          return True;
-        }
-
-        message = "Parser name error. Use: Game, SFX, PFX, VFX, Camera, Menu, Music.";
-        return True;
-      }
-
-      if( secondWord == "EXPORT" ) {
-        string what = command.GetWordSmart( 3 );
-
-        if( what == "STRINGLIST" ) {
-          string datName = command.GetWordSmart( 4 );
-          zCParser* par = GetParserByParserName( datName );
-          if( par ) {
-            par->ExportStringList();
-            return True;
-          }
-
-          message = "Parser name error. Use: Game, SFX, PFX, VFX, Camera, Menu, Music.";
-          return False;
-        }
-      }
-      
-      message = "What ???";
-      return True;
-    }
-
-    // Command is not 'parser'
-    return False;
-  }
-
-
-  void Plugin_InitConsole() {
-    zcon->AddEvalFunc( SaveDatEval );
-    zcon->Register( "parser savedat game",      "Save 'Game' dat file"   );
-    zcon->Register( "parser savedat sfx",       "Save 'SFX' dat file"    );
-    zcon->Register( "parser savedat pfx",       "Save 'PFX' dat file"    );
-    zcon->Register( "parser savedat vfx",       "Save 'VFX' dat file"    );
-    zcon->Register( "parser savedat camera",    "Save 'Camera' dat file" );
-    zcon->Register( "parser savedat menu",      "Save 'Menu' dat file"   );
-    zcon->Register( "parser savedat music",     "Save 'Music' dat file"  );
-    zcon->Register( "parser savedat ou",        "Save 'Music' dat file"  );
-    zcon->Register( "parser export stringlist", "Export string symbols"  );
   }
 }

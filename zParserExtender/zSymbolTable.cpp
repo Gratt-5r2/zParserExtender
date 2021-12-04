@@ -32,77 +32,76 @@ namespace GOTHIC_ENGINE {
 
   Array<zTCallReplaceInfo> zTCallReplaceInfo::CallReplaceInfos;
 
+  inline string IntToIndex( const int& id ) {
+    string ID = A "ID " + id;
+    for( uint i = ID.Length(); i < 10; i++ )
+      ID += " ";
+    
+    return ID;
+  }
 
   // Find and replace call address to other function
-  void ReplaceStackCallAddress( zCPar_Stack& stack, zCPar_Symbol* symLeft, zCPar_Symbol* symRight, int_t oldIndex, int_t length ) {
-    int oldPos = symLeft->single_intdata;
-    int newPos = symRight->single_intdata;
-    int calls  = 0;
-    int refs   = 0;
+  void ReplaceStackCallAddress( TReferralTokenList& referalTokens, zCPar_Stack& stack, zCPar_Symbol* symLeft, zCPar_Symbol* symRight, int_t oldIndex, int_t length ) {
+    int oldPos       = symLeft->single_intdata;
+    int newPos       = symRight->single_intdata;
+    int newIndex     = zParserExtender.GetParser()->symtab.GetIndex_Safe( symRight );
+    int calls        = 0;
+    int refs         = 0;
+    int symType      = symLeft->type;
+    bool isClass     = symType == zPAR_TYPE_CLASS;
+    bool isFunc      = symType == zPAR_TYPE_FUNC;
+    bool isInstance  = symType == zPAR_TYPE_PROTOTYPE || symType == zPAR_TYPE_INSTANCE;
+    bool isVariable  = symType == zPAR_TYPE_FLOAT || symType == zPAR_TYPE_INT || symType == zPAR_TYPE_STRING;
 
-    bool isFunction =
-      symLeft->type == zPAR_TYPE_FUNC ||
-      symLeft->type == zPAR_TYPE_PROTOTYPE ||
-      symLeft->type == zPAR_TYPE_INSTANCE;
 
-    if( isFunction ) {
-      for( int_t i = 0; i < length; i++ ) { // TEST: start from first symbol position
-        byte& command = stack.stack[i];
-        if( command == zPAR_TOK_CALL ) {
-          int& address = (int&)stack.stack[i + 1];
-          if( address == oldPos ) {
-            (int&)stack.stack[i + 1] = newPos;
-            calls++;
-          }
-        }
-      }
-    }
+    if( isFunc || isInstance )            calls += referalTokens.ReplaceJumps( oldPos, newPos, length );
+    if( isInstance )                      refs  += referalTokens.ReplaceIndexes( oldIndex, newIndex, zREF_TYPE_INST,     length );
+    if( isFunc || isInstance || isClass ) refs  += referalTokens.ReplaceIndexes( oldIndex, newIndex, zREF_TYPE_INT,      length );
+    if( isVariable )                      refs  += referalTokens.ReplaceIndexes( oldIndex, newIndex, zREF_TYPE_VAR,      length );
+    if( isVariable )                      refs  += referalTokens.ReplaceIndexes( oldIndex, newIndex, zREF_TYPE_VARARRAY, length );
 
-    int newIndex = zParserExtender.GetParser()->symtab.GetIndex( symRight );
-    for( int_t i = 0; i < length; i++ ) {
-      byte& command = stack.stack[i];
-      if( command == zPAR_TOK_PUSHVAR || command == zPAR_TOK_PUSHSTR ) {
-        int& address = (int&)stack.stack[i + 1];
-        if( address == oldIndex ) {
-          (int&)stack.stack[i + 1] = newIndex;
-          refs++;
-        }
-      }
-    }
 
     if( calls && zCParserExtender::MessagesLevel >= 3 )
-      cmd << colParse2 << "zParserExtender: " <<
-             colParse1 << "func calls " <<
-             colParse2 << AHEX32( oldPos ) <<
-             colParse1 << " -> " <<
-             colParse2 << AHEX32( newPos ) <<
-             colParse1 << " replaced (" <<
-             colParse2 << calls <<
-             colParse1 << ")\t" <<
-             colParse2 << symRight->name <<
+      cmd << colParse2 << "zParserExtender: "                  <<
+             colParse1 << "func calls "                        <<
+             colParse2 << AHEX32( oldPos )                     <<
+             colParse1 << " -> "                               <<
+             colParse2 << AHEX32( newPos )                     <<
+             colParse1 << " replaced ("                        <<
+             colParse2 << calls                                <<
+             colParse1 << ")\t"                                <<
+             colParse2 << SymbolTypeToString( symRight->type ) <<
+             colParse1 << "  "                                 <<
+             colParse2 << symRight->name                       <<
              colParse3 << endl;
 
     if( refs && zCParserExtender::MessagesLevel >= 3 )
-      cmd << colParse2 << "zParserExtender: " <<
-             colParse1 << "references " <<
-             colParse2 << AHEX32( oldIndex ) <<
-             colParse1 << " -> " <<
-             colParse2 << AHEX32( newIndex ) <<
-             colParse1 << " replaced (" <<
-             colParse2 << refs <<
-             colParse1 << ")\t" <<
-             colParse2 << symRight->name <<
+      cmd << colParse2 << "zParserExtender: "                  <<
+             colParse1 << "references "                        <<
+             colParse2 << AHEX32( oldIndex )                   <<
+             colParse1 << " -> "                               <<
+             colParse2 << AHEX32( newIndex )                   <<
+             colParse1 << " replaced ("                        <<
+             colParse2 << refs                                 <<
+             colParse1 << ")\t"                                <<
+             colParse2 << SymbolTypeToString( symRight->type ) <<
+             colParse1 << "  "                                 <<
+             colParse2 << symRight->name                       <<
              colParse3 << endl;
   }
   
 
   void PostCompileCallReplace() {
+    TReferralTokenList referalTokens;
+    referalTokens.Init( zParserExtender.GetParser()->stack );
+
     for( uint i = 0; i < zTCallReplaceInfo::CallReplaceInfos.GetNum(); i++ ) {
       zTCallReplaceInfo& info = zTCallReplaceInfo::CallReplaceInfos[i];
       if( info.Parser != zParserExtender.GetParser() )
         continue;
 
       ReplaceStackCallAddress(
+        referalTokens,
         info.Parser->stack,
         info.OldSymbol,
         info.NewSymbol,
@@ -115,7 +114,7 @@ namespace GOTHIC_ENGINE {
 
 
   void zCPar_SymbolTable::PostDefineExternal_Union( zCPar_Symbol* external ) {
-    // Restore function & arguments of function
+    // Restore the function & arguments of the function
     int ele = external->ele;
     zCPar_Symbol* Symbol = external;
     while( Symbol && ele-- >= 0 ) {
@@ -258,6 +257,14 @@ namespace GOTHIC_ENGINE {
     return Invalid;
   }
 
+  int zCPar_SymbolTable::GetIndex_Safe( zCPar_Symbol* symbol ) {
+    int index = GetIndex( symbol );
+    if( index == Invalid )
+      return GetIndex_Safe( symbol->name );
+
+    return index;
+  }
+
 
   void zCPar_SymbolTable::RegisterEvent( const zSTRING& name ) {
     zSTRING eventName = Z string::Combine( "EVENT.%z.START", name );
@@ -271,17 +278,24 @@ namespace GOTHIC_ENGINE {
   }
 
 
-  HOOK Hook_zCPar_SymbolTable_Insert    AS( &zCPar_SymbolTable::Insert, &zCPar_SymbolTable::Insert_Union );
+  HOOK Hook_zCPar_SymbolTable_Insert AS( &zCPar_SymbolTable::Insert, &zCPar_SymbolTable::Insert_Union );
 
   static bool s_DeclareEvent = false;
 
   int zCPar_SymbolTable::Insert_Union( zCPar_Symbol* sym ) {
     if( s_DeclareEvent ) {
       s_DeclareEvent = false;
-      RegisterEvent( sym->name );
+      // RegisterEvent( sym->name );
 
-      zSTRING& fname = zCParser::cur_parser->fname.GetPattern( "\\", "." );
-      sym->name = Z string::Combine( "EVENT.%z.%z", sym->name, fname );
+      zSTRING& fileName = zCParser::cur_parser->fname.GetPattern( "\\", "." );
+      string keyName    = sym->name;
+      sym->name         = Z string::Combine( "EVENT.%z.%z", sym->name, fileName );
+      int ok            = InsertAt_Union( sym, True, true );
+      int symIndex      = table.Search( sym );
+      zCParser* parser  = zCParser::GetParser();
+
+      zTEventFuncCollection::GetCollection( parser ).PushIndex( keyName, symIndex );
+      return ok;
     }
 
     return InsertAt_Union( sym, True, true );
@@ -382,6 +396,14 @@ namespace GOTHIC_ENGINE {
         // call address for new call address. For
         // calling origin func - use '_old' suffix.
         if( !oldSym->HasFlag( zPAR_FLAG_EXTERNAL ) ) {
+          if( oldSym->type != sym->type ) {
+            string symName     = sym->name;
+            string oldTypeName = SymbolTypeToString( oldSym->type );
+            string newTypeName = SymbolTypeToString( sym->type );
+            string errorText   = string::Combine( "The replacement symbol '%z' has incorrect type! Src '%z' != new '%z'", sym->name, oldTypeName, newTypeName );
+            zParserExtender.GetParser()->Error( Z errorText, 0 );
+          }
+
           zTCallReplaceInfo::Create(
             zParserExtender.GetParser()->stack.GetDynSize() - 4,
             zParserExtender.GetParser(),
@@ -435,7 +457,7 @@ namespace GOTHIC_ENGINE {
   }
 
 
-  HOOK Hook_zCPar_SymbolTable_GetSymbol AS( &zCPar_SymbolTable::GetSymbol, &zCPar_SymbolTable::GetSymbol_Union );
+  HOOK Hook_zCPar_SymbolTable_GetSymbol PATCH( &zCPar_SymbolTable::GetSymbol, &zCPar_SymbolTable::GetSymbol_Union );
 
   zCPar_Symbol* zCPar_SymbolTable::GetSymbol_Union( const zSTRING& s ) {
     if( s.IsEmpty() || s[0u] == ',' )

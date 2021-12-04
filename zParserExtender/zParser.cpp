@@ -141,6 +141,8 @@ namespace GOTHIC_ENGINE {
         DeclareReturn();
       else if( word == "IF" )
         DeclareIf();
+      else if( zParserExtender.ExtendedParsingEnabled() && word == "TEST" )
+        DeclareTest();
       else if( whileEnabled && word == "WHILE" )
         DeclareWhile_Union();
       else if( whileEnabled && word == "BREAK" )
@@ -157,10 +159,241 @@ namespace GOTHIC_ENGINE {
   }
 
 
+
+  void zCParser::ParseOperatorLine() {
+    if( !zParserExtender.ExtendedParsingEnabled() )
+      ParseBlock_OU_Union();
+
+    bool whileEnabled = zParserExtender.NativeWhileEnabled();
+
+    zSTRING word;
+    while( pc < pc_stop ) {
+      ReadWord( word );
+      if( word == "VAR" )
+        DeclareVar( False );
+      else if( word == "CONST" )
+        DeclareVar( True );
+      else if( word == "RETURN" )
+        DeclareReturn();
+      else if( word == "IF" )
+        DeclareIf();
+      else if( word == "TEST" )
+        DeclareTest();
+      else if( whileEnabled && word == "WHILE" )
+        DeclareWhile_Union();
+      else if( whileEnabled && word == "BREAK" )
+        DeclareBreak_Union();
+      else if( whileEnabled && word == "CONTINUE" )
+        DeclareContinue_Union();
+      else if( word == "FUNC" )
+        DeclareFunc();
+      else if( word == "CLASS" )
+        DeclareClass();
+      else if( word == "INSTANCE" )
+        DeclareInstance();
+      else if( word == "PROTOTYPE" )
+        DeclarePrototype();
+      else if( word == ";" )
+        return;
+      else
+        DeclareAssign_Union( word );
+    }
+  }
+
+
+
+  static auto patch_ParseFile = CreateSharedPatchSym<CPatchInteger>( "ParseFileWord", (int)TInstance( &zCParser::ParseFileWord ).data );
+  int zCParser::ParseFileWord( const zSTRING& word ) {
+    if( word == "TEST" ) {
+      DeclareTest();
+      return True;
+    }
+    else if( word == "EXTERN" ) {
+      DeclareExtern();
+      return True;
+    }
+
+    return False;
+  }
+
+
+  bool zCParser::ParseBlockOrOperatorLine() {
+    zSTRING word;
+    ReadWord( word );
+    if( word == "{" ) {
+      int entries = 1;
+      while( true ) {
+        ParseOperatorLine();
+        ReadWord( word );
+        if( word == "}" ) {
+          if( --entries <= 0 )
+            break;
+        }
+        else if( word.IsEmpty() ) {
+          Error();
+          return false;
+        }
+        else
+          PrevWord();
+      }
+
+      return false;
+    }
+    else {
+      PrevWord();
+      ParseOperatorLine();
+      return true;
+    }
+  }
+
+
+  void zCParser::DeclareTest() {
+    zSTRING word;
+    bool test = TestSymbol();
+
+    if( test ) {
+      bool opline = ParseBlockOrOperatorLine();
+      ReadWord( word );
+      if( word == "ELSE" ) {
+        if( SkipBlock() )
+          PrevWord();
+      }
+      else {
+        PrevWord();
+        if( opline )
+          PrevWord();
+      }
+    }
+    else {
+      bool opline = SkipBlock();
+      ReadWord( word );
+      if( word == "ELSE" ) {
+        bool opline = ParseBlockOrOperatorLine();
+        if( opline )
+          PrevWord();
+      }
+      else {
+        PrevWord();
+        if( opline )
+          PrevWord();
+      }
+    }
+  }
+
+  void zCParser::DeclareExtern() {
+    zSTRING word;
+    ReadWord( word );
+    if( word == "CONST" || word == "VAR" || word == "FUNC" ) {
+      ReadWord( word );
+      ReadWord( word );
+      PrevWord();
+      PrevWord();
+    }
+    else {
+      ReadWord( word );
+      PrevWord();
+    }
+
+    PrevWord();
+
+    int index = symtab.GetIndex_Safe( word );
+    if( index != Invalid ) {
+      SkipOperatorsLine();
+      PrevWord();
+    }
+    else {
+      ParseOperatorLine();
+      PrevWord();
+    }
+  }
+
+  bool zCParser::TestSymbol() {
+    zSTRING word;
+    ReadWord( word );
+    if( word == "(" ) {
+      bool ok = TestSymbol();
+      Match( Z ")" );
+      return ok;
+    }
+    else if( word == "!" )
+      return !TestSymbol();
+
+    int index = symtab.GetIndex_Safe( word );
+    return index != Invalid;
+  }
+
+  void zCParser::SkipOperatorsLine() {
+    zSTRING word;
+    int entries = 0;
+    while( true ) {
+      ReadWord( word );
+      if( word == "\"" ) {
+        PrevWord();
+        SkipString();
+      }
+      else if( word == "{" ) {
+        entries++;
+      }
+      else if( word == "}" ) {
+        entries--;
+      }
+      else if( entries <= 0 && word == ";" )
+        break;
+    }
+  }
+
+  bool zCParser::SkipBlock() {
+    zSTRING word;
+    ReadWord( word );
+    if( word != "{" ) {
+      SkipOperatorsLine();
+      return true;
+    }
+
+    int entries = 1;
+    while( true ) {
+      ReadWord( word );
+      if( word == "{" )
+        entries++;
+      else if( word == "}" ) {
+        if( --entries <= 0 )
+          break;
+      }
+      else if( word == "\"" ) {
+        PrevWord();
+        SkipString();
+      }
+      else if( word.IsEmpty() )
+        Error();
+    }
+
+    return false;
+  }
+
+  void zCParser::SkipString() {
+    zSTRING word;
+    Match( Z "\"" );
+    int entries = 1;
+    while( true ) {
+      ReadWord( word );
+      if( word == "\"" )
+        break;
+
+      if( word.IsEmpty() ) {
+        Error();
+        break;
+      }
+    }
+  }
+
+
   HOOK Ivk_zCParser_ReadWord AS( &zCParser::ReadWord, &zCParser::ReadWord_Union );
 
   void zCParser::ReadWord_Union( zSTRING& word ) {
+    int _prevword_nr = (prevword_nr + 1) & 15;
     THISCALL( Ivk_zCParser_ReadWord )(word);
+    prevword_nr = _prevword_nr;
+
     if( prevword_index[prevword_nr] == pc_start && word == "META" ) {
       SkipMeta_Union();
       THISCALL( Ivk_zCParser_ReadWord )(word);
@@ -173,7 +406,7 @@ namespace GOTHIC_ENGINE {
 
   void zCParser::ReadMacro( zSTRING& word ) {
     string& adigit = (string&)aword;
-    if( adigit.StartWith( "KEY_" ) ) {
+    if( adigit.StartWith( "KEY_" ) || adigit.StartWith( "MOUSE_" ) ) {
       int value = zInput_GetKeyIndex( adigit );
       if( value != Invalid )
         aword = value;
@@ -269,47 +502,19 @@ namespace GOTHIC_ENGINE {
 
   void zCParser::CallGameInit_Union() {
     static zSTRING eventName = "GAMEINIT";
-    int index = GetEventIndex( eventName );
-    if( index != Invalid )
-      CallFunc( index );
-
     DoEvent( eventName );
   }
 
 
   void zCParser::DoEvent( const zSTRING& eventName ) {
-    int index = GetEventIndex( eventName );
-    if( index == Invalid )
-      return;
-
-    int indexSort = symtab.tablesort.Search( index );
-
-    while( true ) {
-      index = symtab.tablesort[++indexSort];
-      zCPar_Symbol* sym = GetSymbol( index );
-      if( sym == Null )
-        break;
-
-      if( !sym->name.HasWord( "EVENT." + eventName + "." ) )
-        break;
-
-      CallFunc( index );
-    }
-  }
-
-
-  int zCParser::GetEventIndex( const zSTRING& eventName ) {
-    int index = GetIndex( "EVENT." + eventName + ".START" );
-    return index;
+    const Array<int>& indexes = zTEventFuncCollection::GetCollection( this ).GetIndexes( eventName );
+    for( uint i = 0; i < indexes.GetNum(); i++ )
+      CallFunc( indexes[i] );
   }
 
 
   void zCParser::CallGameLoop_Union() {
     static zSTRING eventName = "GAMELOOP";
-    int index = GetIndex( eventName );
-    if( index != Invalid )
-      CallFunc( index );
-
     DoEvent( eventName );
   }
 
@@ -421,19 +626,7 @@ namespace GOTHIC_ENGINE {
   }
 
 
-  zCPar_Symbol* zCParser::GetNearestVariable( const zSTRING& varName ) {
-    zCPar_Symbol* symbol = Null;
-    if( in_func )
-      symbol = GetSymbol( in_func->name + "." + varName );
-
-    if( !symbol )
-      symbol = GetSymbol( varName );
-
-    return symbol;
-  }
-
-
-  extern bool PostLoadExternal( const string& funcName );
+  extern bool ActivateDynamicExternal( const string& funcName );
 
   bool zCParser::DynamicLoadExternal( const zSTRING& symName, const bool& forceReplace ) {
     if( symName == "" )
@@ -443,7 +636,7 @@ namespace GOTHIC_ENGINE {
     if( sym && !forceReplace )
       return false;
 
-    return PostLoadExternal( symName );
+    return ActivateDynamicExternal( symName );
   }
 
 

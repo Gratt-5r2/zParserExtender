@@ -95,6 +95,7 @@ namespace GOTHIC_ENGINE {
     if( word == "NAMESPACE" ) NamespaceBegin( word );
     if( word == "{" )         NamespaceAddEntry( word );
     if( word == "}" )         NamespaceRemoveEntry( word );
+    if( word == "[" )         AddNamespaceAfter += 3;
 
     if( !NamespaceIsActive() )
       return;
@@ -107,6 +108,15 @@ namespace GOTHIC_ENGINE {
       AddNamespace( word, NewSymbolExpected );
       NewSymbolExpected = false;
     }
+  }
+
+
+  zCPar_Symbol* zCParser::GetNearestVariable( zSTRING& word ) {
+    zCPar_Symbol* symbol = GetLocalSymbol( word );
+    if( symbol )
+      return symbol;
+
+    return GetSymbol( word );
   }
 
 
@@ -131,7 +141,7 @@ namespace GOTHIC_ENGINE {
         return sym;
     }
 
-    return GetSymbol( word );
+    return Null;
   }
 
 
@@ -168,19 +178,35 @@ namespace GOTHIC_ENGINE {
     if( DynamicLoadExternal( word ) )
       return;
 
-
-    // If this symbol is not global, try
-    // to find symbol in the current namespace.
-    zSTRING fullSymName = GetNamespacePrefix( levelUp ) + word;
-    if( newSymbol || GetSymbol( fullSymName ) || !GetLocalSymbol( word ) )
-      word = fullSymName;
+    // Define new symbol
+    if( newSymbol ) {
+      word = GetNamespacePrefix( levelUp ) + word;
+      return;
+    }
     
+    // Check local variable
+    if( GetLocalSymbol( word ) )
+      return;
+
+    // Check upper namespaces
+    int startLevel = levelUp;
+    int endLevel   = GetNamespaceLevel();
+    for( int i = startLevel; i <= endLevel; i++ ) {
+      zSTRING namespacePrefix = GetNamespacePrefix( i );
+      zSTRING fullSymName = namespacePrefix + word;
+      if( GetSymbol( fullSymName ) ) {
+        word = fullSymName;
+        return;
+      }
+    }
+    
+    // Check using namespaces
     if( !GetSymbol( word ) ) {
       for( uint i = 0; i < UsingNamespaces.GetNum(); i++ ) {
         zSTRING fullSymName = Z UsingNamespaces[i] + ":" + word;
         if( GetSymbol( fullSymName ) ) {
           word = fullSymName;
-          break;
+          return;
         }
       }
     }
@@ -234,6 +260,11 @@ namespace GOTHIC_ENGINE {
   }
 
 
+  int zCParser::GetNamespaceLevel() {
+    return (int)Namespaces.GetNum();
+  }
+
+
   HOOK Hook_zCParser_Parse_Expression_Primary PATCH( &zCParser::Parse_Expression_Primary, &zCParser::Parse_Expression_Primary_Union );
 
   zCPar_TreeNode* zCParser::Parse_Expression_Primary_Union( int& token ) {
@@ -282,5 +313,13 @@ namespace GOTHIC_ENGINE {
   void zCParser::DeclarePrototype_Union() {
     DeclareNamespaceForNextWord( 1, true );
     return THISCALL( Hook_zCParser_DeclarePrototype )();
+  }
+
+
+  HOOK Hook_zCParser_DeclareAssignFunc PATCH( &zCParser::DeclareAssignFunc, &zCParser::DeclareAssignFunc_Union );
+
+  void zCParser::DeclareAssignFunc_Union( zSTRING& name ) {
+    DeclareNamespaceForNextWord( 2, true );
+    return THISCALL( Hook_zCParser_DeclareAssignFunc )(name);
   }
 }

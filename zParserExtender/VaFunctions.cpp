@@ -12,7 +12,7 @@ namespace GOTHIC_ENGINE {
   }
 
 
-	void zCParser::DeclareVaFuncCall( zSTRING& funcName ) {
+  void zCParser::DeclareVaFuncCall( zSTRING& funcName ) {
     zSTRING leafNodeName = funcName;
     zSTRING word;
     Match( Z "(" );
@@ -53,7 +53,7 @@ namespace GOTHIC_ENGINE {
       }
 
       // Is a variable
-      zCPar_Symbol* sym = GetLocalSymbol( word );
+      zCPar_Symbol* sym = GetNearestVariable( word );
       switch( sym->type ) {
         case zPAR_TYPE_INT:
           treenode->SetNext( ParseExpression() );
@@ -86,5 +86,5 @@ namespace GOTHIC_ENGINE {
 
     treenode = CreateLeaf( zPAR_TOK_CALL, treenode );
     treenode->name = leafNodeName;
-	}
+  }
 }

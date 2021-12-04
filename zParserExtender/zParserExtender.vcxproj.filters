@@ -2862,6 +2862,15 @@
       <Filter>Plugin\zParserExtender\VaFunctions</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Console.cpp">
+      <Filter>Plugin\zParserExtender\Extender</Filter>
+    </ClInclude>
+    <ClInclude Include="ReferralToken.cpp">
+      <Filter>Plugin\zParserExtender</Filter>
+    </ClInclude>
+    <ClInclude Include="ReferralToken.h">
+      <Filter>Plugin\zParserExtender</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".build_settings.inl">

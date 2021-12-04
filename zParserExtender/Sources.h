@@ -6,6 +6,7 @@
 #include "zParserExtender_Startup.cpp"
 #include "Animations.cpp"
 #include "zParserExtender.cpp"
+#include "ReferralToken.cpp"
 #include "zSymbol.cpp"
 #include "zSymbolTable.cpp"
 #include "zParser.cpp"
@@ -19,6 +20,7 @@
 #include "InstanceItem.cpp"
 #include "Focus.cpp"
 #include "Menu.cpp"
+#include "Console.cpp"
 #include "Plugin.cpp"
 #pragma endregion
 

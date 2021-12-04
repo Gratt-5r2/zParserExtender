@@ -50,6 +50,17 @@ void ReadMacro( zSTRING& );
 int LoadDat_Union( zSTRING& datName );
 bool NamespaceIsActive();
 bool UsingNamespace( zSTRING& word );
+void DeclareAssignFunc_Union( zSTRING& name );
+void* GetInstance( const int& index );
+bool ParseBlockOrOperatorLine();
+void ParseOperatorLine();
+void DeclareTest();
+void DeclareExtern();
+bool TestSymbol();
+void SkipOperatorsLine();
+bool SkipBlock();
+void SkipString();
+int ParseFileWord( const zSTRING& word );
 
 void PreCompile();
 void RenameTreeNode( zCPar_Symbol* sym, zSTRING newName );
@@ -57,7 +68,7 @@ void RenameTreeNode( zCPar_Symbol* sym, zSTRING newName );
 zCPar_TreeNode* PushOnStack_Union( zCPar_TreeNode* node );
 int ParseSource_Union( zSTRING& s );
 zCPar_TreeNode* CreateLeafCallInstance( const zSTRING& instName, zCPar_TreeNode* );
-zCPar_Symbol* GetNearestVariable( const zSTRING& varName );
+zCPar_Symbol* GetNearestVariable( zSTRING& word );
 zCPar_Symbol* GetLocalSymbol( zSTRING& word );
 bool IsVaExternal( const zSTRING& funcName );
 
@@ -70,6 +81,7 @@ void DeclareNamespaceForNextWord( const uint& wordID, bool newSymbol = false );
 void DeclareNamespaceForNextParenthesis();
 void AddNamespace( zSTRING&, bool newSymbol = false );
 zSTRING GetNamespacePrefix(const uint& levelUp);
+int GetNamespaceLevel();
 void ExportStringList();
 
 void __cdecl DefineExternal_Union( zSTRING const&, int( __cdecl* )(), int, int, ... );

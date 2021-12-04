@@ -11,3 +11,4 @@ int ApplyOverlay_AtFirst( zSTRING const& );
 void Archive2( zCArchiver& );
 void Unarchive2( zCArchiver& );
 void InitByScript_Union( int, int );
+void UnShrink_Union();

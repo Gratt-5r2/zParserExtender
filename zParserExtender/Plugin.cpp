@@ -11,6 +11,9 @@ namespace GOTHIC_ENGINE {
 
 
   void DefinePaths() {
+    string gameDir = Union.GetGameDirectory();
+    string sysDir  = Union.GetSystemDirectory();
+    
     CDocument Paths;
     Paths.ReadFromFile( Union.GetSystemDirectory() + "Paths.d" );
     
@@ -29,6 +32,7 @@ namespace GOTHIC_ENGINE {
 
         ScriptsDirectory.Replace( "$DATA$\\", DataDirectory );
       }
+#if 0
       else if( line.HasWord( "DIR_SYSTEM" ) ) {
         SystemDirectory = line.GetPattern( "\"", "\"" );
         if( SystemDirectory.First() == '\\' )
@@ -37,10 +41,12 @@ namespace GOTHIC_ENGINE {
         SystemDirectory.Replace( "$DATA$", DataDirectory );
         AutorunDirectory = SystemDirectory + "Autorun\\";
       }
+#endif
     }
   }
 
 
+  extern CApplication* lpApplication;
 
   void Game_Entry() {
     DefinePaths();
@@ -52,7 +58,7 @@ namespace GOTHIC_ENGINE {
 
     zParserExtender.ParseBegin();
     parser->CallGameInit_Union();
-    Plugin_InitConsole();
+    Game_InitConsole_Union();
   }
 
   void Game_Exit() {
@@ -62,6 +68,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_Loop() {
+    WaitFocusReturn();
     parser->CallGameLoop_Union();
     zTTriggerScript::DoTriggers();
   }
@@ -70,6 +77,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_MenuLoop() {
+    WaitFocusReturn();
   }
 
   // Information about current saving or loading world

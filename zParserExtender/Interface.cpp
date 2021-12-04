@@ -5,16 +5,13 @@
 using namespace Gdiplus;
 
 
-
-
-
-
 namespace Gothic_I_Classic  { extern void ParseExternalScript( string parser, string script ); }
 namespace Gothic_I_Addon    { extern void ParseExternalScript( string parser, string script ); }
 namespace Gothic_II_Classic { extern void ParseExternalScript( string parser, string script ); }
 namespace Gothic_II_Addon   { extern void ParseExternalScript( string parser, string script ); }
 
-extern "C" __declspec(dllexport) void ParseExternalScript( string parser, string script ) {
+extern "C" __declspec(dllexport)
+void ParseExternalScript( string parser, string script ) {
 #ifdef __G1
   if( Union.GetEngineVersion() == Engine_G1 )
     Gothic_I_Classic::ParseExternalScript( parser, script );
@@ -34,9 +31,39 @@ extern "C" __declspec(dllexport) void ParseExternalScript( string parser, string
 }
 
 
+namespace Gothic_I_Classic  { extern bool ActivateDynamicExternal( const string& funcName ); }
+namespace Gothic_I_Addon    { extern bool ActivateDynamicExternal( const string& funcName ); }
+namespace Gothic_II_Classic { extern bool ActivateDynamicExternal( const string& funcName ); }
+namespace Gothic_II_Addon   { extern bool ActivateDynamicExternal( const string& funcName ); }
+
+extern "C" __declspec(dllexport)
+bool ActivateExternalFunc( const string& funcName ) {
+#ifdef __G1
+  if( Union.GetEngineVersion() == Engine_G1 )
+    return Gothic_I_Classic::ActivateDynamicExternal( funcName );
+#endif
+#ifdef __G1A
+  if( Union.GetEngineVersion() == Engine_G1A )
+    return Gothic_I_Addon::ActivateDynamicExternal( funcName );
+#endif
+#ifdef __G2
+  if( Union.GetEngineVersion() == Engine_G2 )
+    return Gothic_II_Classic::ActivateDynamicExternal( funcName );
+#endif
+#ifdef __G2A
+  if( Union.GetEngineVersion() == Engine_G2A )
+    return Gothic_II_Addon::ActivateDynamicExternal( funcName );
+#endif
+  return false;
+}
 
 
+static Array<string> DynamicExternalFuncList;
 
+extern "C" __declspec(dllexport)
+const Array<string>& GetDynamicExternalFuncList() {
+  return DynamicExternalFuncList;
+}
 
 
 // Check executed engine with current source code
@@ -45,7 +72,6 @@ extern "C" __declspec(dllexport) void ParseExternalScript( string parser, string
 #define Engine_G1A 2
 #define Engine_G2  3
 #define Engine_G2A 4
-
 
 
 // Include headers
@@ -69,7 +95,6 @@ extern "C" __declspec(dllexport) void ParseExternalScript( string parser, string
 #define ENGINE Engine_G2A
 #include "Headers.h"
 #endif
-
 
 
 // Include source files (with same as header parameters)

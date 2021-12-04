@@ -151,6 +151,22 @@ namespace GOTHIC_ENGINE {
     MAP_REGISTERKEY( KEY_MYCOMPUTER );
     MAP_REGISTERKEY( KEY_MAIL );
     MAP_REGISTERKEY( KEY_MEDIASELECT );
+    MAP_REGISTERKEY( MOUSE_DX );
+    MAP_REGISTERKEY( MOUSE_DY );
+    MAP_REGISTERKEY( MOUSE_UP );
+    MAP_REGISTERKEY( MOUSE_DOWN );
+    MAP_REGISTERKEY( MOUSE_LEFT );
+    MAP_REGISTERKEY( MOUSE_RIGHT );
+    MAP_REGISTERKEY( MOUSE_WHEELUP );
+    MAP_REGISTERKEY( MOUSE_WHEELDOWN );
+    MAP_REGISTERKEY( MOUSE_BUTTONLEFT );
+    MAP_REGISTERKEY( MOUSE_BUTTONRIGHT );
+    MAP_REGISTERKEY( MOUSE_BUTTONMID );
+    MAP_REGISTERKEY( MOUSE_XBUTTON1 );
+    MAP_REGISTERKEY( MOUSE_XBUTTON2 );
+    MAP_REGISTERKEY( MOUSE_XBUTTON3 );
+    MAP_REGISTERKEY( MOUSE_XBUTTON4 );
+    MAP_REGISTERKEY( MOUSE_XBUTTON5 );
     return map;
   }
 
@@ -206,4 +222,42 @@ namespace GOTHIC_ENGINE {
   }
 
 #undef MAP_REGISTERKEY
+
+  struct zTEventFuncCollection {
+    static Array<zTEventFuncCollection> Collections;
+    zCParser* Parser;
+    MapArray<string, int> EventIndexes;
+
+    zTEventFuncCollection() { Parser = Null; }
+    zTEventFuncCollection( zCParser* par ) { Parser = par; }
+
+    bool operator >  ( zCParser* par ) const { return Parser >  par; }
+    bool operator <  ( zCParser* par ) const { return Parser <  par; }
+    bool operator == ( zCParser* par ) const { return Parser == par; }
+
+    const Array<int>& GetIndexes( const string& funcName ) {
+      static Array<int> EmptyArray;
+      auto& pair = EventIndexes[funcName];
+      if( pair.IsNull() )
+        return EmptyArray;
+
+      return pair;
+    }
+
+    void PushIndex( const string& funcName, const int& index ) {
+      EventIndexes.Insert( funcName, index );
+    }
+
+    static zTEventFuncCollection& GetCollection( zCParser* par ) {
+      uint index = Collections.SearchEqualSorted( par );
+      if( index != Invalid )
+        return Collections[index];
+
+      zTEventFuncCollection& collection = Collections.CreateSorted( par );
+      collection.Parser = par;
+      return collection;
+    }
+  };
+
+  Array<zTEventFuncCollection> zTEventFuncCollection::Collections;
 }

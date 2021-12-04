@@ -33,6 +33,7 @@ namespace GOTHIC_ENGINE {
     string FullName;
     string Name;
     Array<string> Dependencies;
+    Array<string> Mods;
 
     void LoadDependency( string dependencyName );
     void CheckDependencies();
@@ -59,6 +60,12 @@ namespace GOTHIC_ENGINE {
     bool ParsingEnabled;
     bool InjectUnionMenu;
     int StringsIndexingMode;
+    int TestStack;
+    int ExtendedSymbolRangeStart;
+    int ExtendedSymbolRangeEnd;
+
+    void CheckExtendedSymbolsStart( zCParser* parser );
+    void CheckExtendedSymbolsEnd( zCParser* parser );
   public:
 
     zCParserExtender();
@@ -79,6 +86,9 @@ namespace GOTHIC_ENGINE {
     bool NativeWhileEnabled();
     bool ExtendedParsingEnabled();
     bool ExternalScriptsListIsEmpty();
+    bool NeedToTestStack();
+    bool IsExtendedSymbol( zCPar_Symbol* sym );
+    bool IsExtendedSymbolID( const int& id );
     const string& GetDefaultNamespace();
     const Array<string>& GetUsingNamespaces();
 

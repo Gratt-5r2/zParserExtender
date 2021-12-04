@@ -4,20 +4,84 @@
 		HEX @0x008BC1F4 = ";,=><*+-/?'%()/&!|{}[]\"~\0"
 		memset(0x0041BC97, '90', 0x0041BCAA - 0x0041BC97)
 	#/patch
+
+	#assembler [0x0078FA73]
+		lea     ecx, [esp+1Ch]
+		push	ecx
+		mov		ecx, esi
+		call	dword ptr[$ParseFileWord]
+		test	eax, eax
+		jnz		0x0078FC18
+		orgcode
+	#/assembler
 #/engine
 #engine [G2]
 	#patch
 		HEX @0x008A83E4 = ";,=><*+-/?'%()/&!|{}[]\"~\0"
 	#/patch
+
+	#assembler [0x00730033]
+		lea     ecx, [esp+1Ch]
+		push	ecx
+		mov		ecx, esi
+		call	dword ptr[$ParseFileWord]
+		test	eax, eax
+		jnz		0x007301D8
+		orgcode
+	#/assembler
+
+	#assembler [0x00448832]
+		mov		ecx, dword ptr [$s_physical_first]
+		test	ecx, ecx
+		jnz		phyFirst
+		push	3
+		jmp		return
+	phyFirst:
+		push	7
+	return:
+		orgcode +1
+	#/assembler
 #/engine
 #engine [G1A]
 	#patch
 		HEX @0x00898908 = ";,=><*+-/?'%()/&!|{}[]\"~\0"
 	#/patch
+
+	#assembler [0x0071F50F]
+		lea     ecx, [esp+20h]
+		push	ecx
+		mov		ecx, esi
+		call	dword ptr[$ParseFileWord]
+		test	eax, eax
+		jnz		0x0071F6BE
+		orgcode
+	#/assembler
+
+	#assembler [0x0044AA42]
+		mov		ecx, dword ptr [$s_physical_first]
+		test	ecx, ecx
+		jnz		phyFirst
+		push	3
+		jmp		return
+	phyFirst:
+		push	7
+	return:
+		orgcode +1
+	#/assembler
 #/engine
 #engine [G1]
 	#patch
 		HEX @0x0085259C = ";,=><*+-/?'%()/&!|{}[]\"~\0"
 		memset(0x0041B7B7, '90', 0x0041B7CA - 0x0041B7B7)
 	#/patch
+
+	#assembler [0x006E6851]
+		lea     ecx, [esp+20h]
+		push	ecx
+		mov		ecx, esi
+		call	dword ptr[$ParseFileWord]
+		test	eax, eax
+		jnz		0x006E69F7
+		orgcode
+	#/assembler
 #/engine

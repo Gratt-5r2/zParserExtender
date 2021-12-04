@@ -25,6 +25,13 @@ namespace GOTHIC_ENGINE {
     return 0;
   }
 
+  int Cast_PointerToItem() {
+    zCParser* par = zCParser::GetParser();
+    void* instance = par->GetInstance();
+    par->SetReturn( (int)instance );
+    return 0;
+  }
+
   int Cast_InstanceIsNpc() {
     zCParser* par = zCParser::GetParser();
     zCObject* instance = (zCObject*)par->GetInstance();
@@ -566,9 +573,14 @@ namespace GOTHIC_ENGINE {
     float multiplier;
     par->GetParameter( multiplier );
     npc = (oCNpc*)par->GetInstance();
-    zCModel* model = npc->GetModel();
-    if( model )
-      SetModelSpeed( model, multiplier );
+
+    if( npc ) {
+      zCModel* model = npc->GetModel();
+      if( model )
+        SetModelSpeed( model, multiplier );
+      else
+        s_NpcSpeedListTemp.Insert( npc, multiplier );
+    }
 
     return 0;
   }
@@ -576,9 +588,13 @@ namespace GOTHIC_ENGINE {
   int Mdl_ResetNpcSpeedMultiplier() {
     zCParser* par = zCParser::GetParser();
     oCNpc* npc = (oCNpc*)par->GetInstance();
-    zCModel* model = npc->GetModel();
-    if( model )
-      ResetModelSpeed( model );
+    if( npc ) {
+      zCModel* model = npc->GetModel();
+      if( model )
+        ResetModelSpeed( model );
+      else
+        s_NpcSpeedListTemp.Remove( npc );
+    }
 
     return 0;
   }
@@ -1282,132 +1298,252 @@ namespace GOTHIC_ENGINE {
     string ansi = UTF8_To_ANSI( (byte*)src[lang].ToChar(), src[lang].Length(), cp[lang] );
     result = Z ansi;
     par->SetReturn( result );
-
     return 0;
   }
 
+#if 0 // Not now . . .
+  int Par_GetSymbolExists() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING symName;
+    int index = par->GetIndex( symName );
+    par->SetReturn( index != Invalid );
+  }
 
-extern void MessageExternalDefined( const string & funcName );
+  int Par_GetSymbolIndex() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING symName;
+    int index = par->GetIndex( symName );
+    par->SetReturn( index );
+    return 0;
+  }
 
-#define EXTERNAL_READ_BEGIN( f ) else if( funcName == #f ) { MessageExternalDefined( #f ); parser->DefineExternal( #f, f,
-#define EXTERNAL_READ_END , 0); return true; }
-  bool PostLoadExternal( const string& funcName ) {
-    zCParser* parser = zCParser::GetParser();
-    if( funcName.IsEmpty() )
-      return false;
+  int Par_GetSymbolIntData() {
+    zCParser* par = zCParser::GetParser();
+    int symIndex;
+    par->GetParameter( symIndex );
+    zCPar_Symbol* sym = par->GetSymbol( symIndex );
+    int result = 0;
+    if( sym )
+      sym->GetValue( result, 0 );
+    par->SetReturn( result );
+    return 0;
+  }
 
-    // CAST
-    EXTERNAL_READ_BEGIN( Cast_PointerToInstance ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INT                         EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Cast_PointerToInstance ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INT                         EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Cast_PointerToInstance ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INT                         EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Cast_PointerToInstance ) zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE                    EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Cast_PointerToInstance ) zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE                    EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Cast_PointerToInstance ) zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE                    EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Cast_PointerToInstance ) zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE                    EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Cast_PointerToInstance ) zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE                    EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Cast_PointerToInstance ) zPAR_TYPE_INT,      zPAR_TYPE_STRING                      EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Cast_PointerToInstance ) zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE                    EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Cast_PointerToInstance ) zPAR_TYPE_INT,      zPAR_TYPE_INT,     zPAR_TYPE_INSTANCE EXTERNAL_READ_END
+  int Par_GetSymbolFloatData() {
+    zCParser* par = zCParser::GetParser();
+    int symIndex;
+    par->GetParameter( symIndex );
+    zCPar_Symbol* sym = par->GetSymbol( symIndex );
+    float result = 0.0f;
+    if( sym )
+      sym->GetValue( result, 0 );
+    par->SetReturn( result );
+    return 0;
+  }
 
-    // HLP
-    EXTERNAL_READ_BEGIN( Hlp_HasFocusVob       )    zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE                                                      EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_GetFocusVob       )    zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                                      EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_GetFocusVobName   )    zPAR_TYPE_STRING,   zPAR_TYPE_INSTANCE                                                      EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_GetStringLength   )    zPAR_TYPE_INT,      zPAR_TYPE_STRING                                                        EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_IsNAN             )    zPAR_TYPE_INT,      zPAR_TYPE_FLOAT                                                         EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_IsNull            )    zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE                                                      EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_KeyToggled        )    zPAR_TYPE_INT,      zPAR_TYPE_INT                                                           EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_KeyPressed        )    zPAR_TYPE_INT,      zPAR_TYPE_INT                                                           EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_LogicalKeyToggled )    zPAR_TYPE_INT,      zPAR_TYPE_INT                                                           EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_GameOnPause       )    zPAR_TYPE_INT                                                                               EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_MessageBox        )    zPAR_TYPE_VOID,     zPAR_TYPE_STRING                                                        EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_PrintConsole      )    zPAR_TYPE_VOID,     zPAR_TYPE_STRING                                                        EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_GetNull           )    zPAR_TYPE_INSTANCE                                                                          EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_DoEvent           )    zPAR_TYPE_VOID,     zPAR_TYPE_STRING                                                        EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_ReadOptionInt     )    zPAR_TYPE_INT,      zPAR_TYPE_STRING,  zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_INT    EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_ReadOptionFloat   )    zPAR_TYPE_FLOAT,    zPAR_TYPE_STRING,  zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_FLOAT  EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_ReadOptionString  )    zPAR_TYPE_STRING,   zPAR_TYPE_STRING,  zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_STRING EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_OptionIsExists    )    zPAR_TYPE_INT,      zPAR_TYPE_STRING,  zPAR_TYPE_STRING                                     EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_WriteOptionInt    )    zPAR_TYPE_VOID,     zPAR_TYPE_STRING,  zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_INT    EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_WriteOptionFloat  )    zPAR_TYPE_VOID,     zPAR_TYPE_STRING,  zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_FLOAT  EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Hlp_WriteOptionString )    zPAR_TYPE_VOID,     zPAR_TYPE_STRING,  zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_STRING EXTERNAL_READ_END
+  int Par_GetSymbolStringData() {
+    zCParser* par = zCParser::GetParser();
+    int symIndex;
+    par->GetParameter( symIndex );
+    zCPar_Symbol* sym = par->GetSymbol( symIndex );
+    static zSTRING result;
+    result.Clear();
+    if( sym )
+      sym->GetValue( result, 0 );
+    par->SetReturn( result );
+    return 0;
+  }
 
-    // WLD
-    EXTERNAL_READ_BEGIN( Wld_ChangeLevel    ) zPAR_TYPE_VOID,     zPAR_TYPE_STRING, zPAR_TYPE_STRING                                                               EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Wld_FindVob        ) zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING                                                                                 EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Wld_PlayEffectVob  ) zPAR_TYPE_VOID,     zPAR_TYPE_STRING, zPAR_TYPE_INSTANCE, zPAR_TYPE_INT, zPAR_TYPE_INT, zPAR_TYPE_INT, zPAR_TYPE_INT EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Wld_PlayEffectAt   ) zPAR_TYPE_VOID,     zPAR_TYPE_STRING, zPAR_TYPE_INSTANCE, zPAR_TYPE_INT, zPAR_TYPE_INT, zPAR_TYPE_INT, zPAR_TYPE_INT EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Wld_ToggleRain     ) zPAR_TYPE_VOID,     zPAR_TYPE_FLOAT,  zPAR_TYPE_FLOAT                                                                EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Wld_SetWeatherType ) zPAR_TYPE_VOID,     zPAR_TYPE_INT                                                                                    EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Wld_GetWeatherType ) zPAR_TYPE_INT                                                                                                        EXTERNAL_READ_END
+  int Par_GetSymbolArrayLength() {
+    zCParser* par = zCParser::GetParser();
+    int symIndex;
+    par->GetParameter( symIndex );
+    zCPar_Symbol* sym = par->GetSymbol( symIndex );
+    if( sym )
+      par->SetReturn( sym->ele );
+    else
+      par->SetReturn( -1 );
+    return 0;
+  }
+
+  int Par_GetSymbolIntArrayData() {
+    zCParser* par = zCParser::GetParser();
+    int symIndex;
+    int arrayIndex;
+    par->GetParameter( arrayIndex );
+    par->GetParameter( symIndex );
+    zCPar_Symbol* sym = par->GetSymbol( symIndex );
+    int result = 0;
+    if( sym )
+      sym->GetValue( result, arrayIndex );
+    par->SetReturn( result );
+    return 0;
+  }
+
+  int Par_GetSymbolFloatArrayData() {
+    zCParser* par = zCParser::GetParser();
+    int symIndex;
+    int arrayIndex;
+    par->GetParameter( arrayIndex );
+    par->GetParameter( symIndex );
+    zCPar_Symbol* sym = par->GetSymbol( symIndex );
+    float result = 0.0f;
+    if( sym )
+      sym->GetValue( result, arrayIndex );
+    par->SetReturn( result );
+    return 0;
+  }
+
+  int Par_GetSymbolStringArrayData() {
+    zCParser* par = zCParser::GetParser();
+    int symIndex;
+    int arrayIndex;
+    par->GetParameter( arrayIndex );
+    par->GetParameter( symIndex );
+    zCPar_Symbol* sym = par->GetSymbol( symIndex );
+    static zSTRING result;
+    result.Clear();
+    if( sym )
+      sym->GetValue( result, arrayIndex );
+    par->SetReturn( result );
+    return 0;
+  }
+#endif
+
+
+  extern bool ActivateDynamicExternal_Vobs( const zSTRING& funcName, bool createFuncList );
+  extern bool ActivateDynamicExternal_Menu( const zSTRING& funcName, bool createFuncList );
+
+#pragma push_macro("VOID")
+#define INT  zPAR_TYPE_INT
+#define FLT  zPAR_TYPE_FLOAT
+#define INST zPAR_TYPE_INSTANCE
+#define FUNC zPAR_TYPE_FUNC
+#define STR  zPAR_TYPE_STRING
+#define VOID zPAR_TYPE_VOID
+#define VAA  zPAR_TYPE_VA
+
+  bool ActivateDynamicExternal( const string& funcName, bool createFuncList ) {
+    zCParser* par = Null;
+    if( !createFuncList ) {
+      par = zCParser::GetParser();
+      if( par->GetIndex( funcName ) != Invalid )
+        return true;
+
+      if( funcName.IsEmpty() )
+        return false;
+    }
+
+    EXTERNAL_DEFINE_BEGIN( Cast_PointerToInstance      ) INST, INT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_PointerToNpc           ) INST, INT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_PointerToItem          ) INST, INT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_InstanceToPointer      ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_InstanceIsNpc          ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_InstanceIsItem         ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_InstanceIsMob          ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_GetInstanceIndex       ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_GetClassID             ) INT,  STR                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_GetVobClassID          ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_CheckVobClassID        ) INT,  INT,  INST                         EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_HasFocusVob             ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_GetFocusVob             ) INST, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_GetFocusVobName         ) STR,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_GetStringLength         ) INT,  STR                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_IsNAN                   ) INT,  FLT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_IsNull                  ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_KeyToggled              ) INT,  INT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_KeyPressed              ) INT,  INT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_LogicalKeyToggled       ) INT,  INT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_GameOnPause             ) INT                                      EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_MessageBox              ) VOID, STR                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_PrintConsole            ) VOID, STR                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_GetNull                 ) INST                                     EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_DoEvent                 ) VOID, STR                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_ReadOptionInt           ) INT,  STR,  STR,  STR,  INT              EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_ReadOptionFloat         ) FLT,  STR,  STR,  STR,  FLT              EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_ReadOptionString        ) STR,  STR,  STR,  STR,  STR              EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_OptionIsExists          ) INT,  STR,  STR                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_WriteOptionInt          ) VOID, STR,  STR,  STR,  INT              EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_WriteOptionFloat        ) VOID, STR,  STR,  STR,  FLT              EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_WriteOptionString       ) VOID, STR,  STR,  STR,  STR              EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Wld_ChangeLevel             ) VOID, STR,  STR                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Wld_FindVob                 ) INST, STR                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Wld_PlayEffectVob           ) VOID, STR,  INST, INT,  INT,  INT,  INT  EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Wld_PlayEffectAt            ) VOID, STR,  INST, INT,  INT,  INT,  INT  EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Wld_ToggleRain              ) VOID, FLT,  FLT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Wld_SetWeatherType          ) VOID, INT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Wld_GetWeatherType          ) INT                                      EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_GetAnimationIndex       ) INT,  INST, STR                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_GetAnimationName        ) STR,  INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_AnimationIsExists       ) INT,  INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_AnimationIsActive       ) INT,  INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_SetAllAnimationsFPS     ) VOID, INST, FLT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_ResetAllAnimationsFPS   ) VOID, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_SetAnimationFPS         ) VOID, INST, INT,  FLT                    EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_ResetAnimationFPS       ) VOID, INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_SetVisible              ) VOID, INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_ApplyOverlayMds_AtFirst ) VOID, INST, STR                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_SetNpcSpeedMultiplier   ) VOID, INST, FLT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_ResetNpcSpeedMultiplier ) VOID, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Npc_SetAsHero               ) VOID, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Npc_OpenInventory           ) VOID, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Npc_OpenInventorySteal      ) VOID, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Npc_OpenInventoryTrade      ) VOID, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Npc_GetLeftHandItem         ) INST, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Npc_GetRightHandItem        ) INST, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Npc_GetSlotItem             ) INST, INST, STR                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_Destroy                 ) VOID, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_RemoveItem              ) VOID, INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_RemoveItems             ) VOID, INST, INT,  INT                    EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_InsertItem              ) VOID, INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_InsertItems             ) VOID, INST, INT,  INT                    EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_GetLockCombination      ) STR,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_SetLockCombination      ) VOID, INST, STR                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_IsLocked                ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_SetLocked               ) VOID, INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_GetKeyInstance          ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_SetKeyInstance          ) VOID, INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_CallScript               ) VOID, STR,  INST, INST                   EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_StartTriggerScript       ) INST, STR,  INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_StartTriggerScriptEx     ) INST, STR,  INT,  INST, INST, INST       EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetTriggerByID           ) INST, INT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetTriggersNum           ) INT                                      EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetTriggerNPC            ) INST, INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetTriggerFunc           ) FUNC,       INST                         EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetTriggerFuncName       ) STR,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerByFunc     ) INST, INST, FUNC                         EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerByFuncName ) INST, INST, STR                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerBySelf     ) INST, INST, INST                         EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerByOther    ) INST, INST, INST                         EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerByVictim   ) INST, INST, INST                         EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerByNPCs     ) INST, INST, INST, INST, INST             EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Str_Format                  ) STR,  VAA                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Str_GetLocalizedString      ) STR,  STR,  STR,  STR,  STR              EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Str_UTF8_to_ANSI            ) STR,  STR,  INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Str_GetCurrentCP            ) INT                                      EXTERNAL_DEFINE_END
+
+    if( ActivateDynamicExternal_Vobs( funcName, createFuncList ) )
+      return true;
     
-    // MDL
-    EXTERNAL_READ_BEGIN( Mdl_GetAnimationIndex       ) zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING                 EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mdl_GetAnimationName        ) zPAR_TYPE_STRING,   zPAR_TYPE_INSTANCE, zPAR_TYPE_INT                    EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mdl_AnimationIsExists       ) zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, zPAR_TYPE_INT                    EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mdl_AnimationIsActive       ) zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, zPAR_TYPE_INT                    EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mdl_SetAllAnimationsFPS     ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_FLOAT                  EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mdl_ResetAllAnimationsFPS   ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE                                   EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mdl_SetAnimationFPS         ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,   zPAR_TYPE_FLOAT EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mdl_ResetAnimationFPS       ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT                    EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mdl_SetVisible              ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT                    EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mdl_ApplyOverlayMds_AtFirst ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING                 EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mdl_SetNpcSpeedMultiplier   ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_FLOAT                  EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mdl_ResetNpcSpeedMultiplier ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE                                   EXTERNAL_READ_END
-
-    // NPC
-    EXTERNAL_READ_BEGIN( Npc_SetAsHero          ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE                   EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Npc_OpenInventory      ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE                   EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Npc_OpenInventorySteal ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE                   EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Npc_OpenInventoryTrade ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE                   EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Npc_GetLeftHandItem    ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                   EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Npc_GetRightHandItem   ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                   EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Npc_GetSlotItem        ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING EXTERNAL_READ_END
-    
-    // MOB
-    EXTERNAL_READ_BEGIN( Mob_Destroy            ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE                                 EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mob_RemoveItem         ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT                  EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mob_RemoveItems        ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,   zPAR_TYPE_INT EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mob_InsertItem         ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT                  EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mob_InsertItems        ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT,   zPAR_TYPE_INT EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mob_GetLockCombination ) zPAR_TYPE_STRING,   zPAR_TYPE_INSTANCE                                 EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mob_SetLockCombination ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING               EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mob_IsLocked           ) zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE                                 EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mob_SetLocked          ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT                  EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mob_GetKeyInstance     ) zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE                                 EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Mob_SetKeyInstance     ) zPAR_TYPE_VOID,     zPAR_TYPE_INSTANCE, zPAR_TYPE_INT                  EXTERNAL_READ_END
-    
-    // AI
-    EXTERNAL_READ_BEGIN( AI_CallScript           ) zPAR_TYPE_VOID,     zPAR_TYPE_STRING,   zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                         EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( AI_StartTriggerScript   ) zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING,   zPAR_TYPE_INT                                                                  EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( AI_StartTriggerScriptEx ) zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING,   zPAR_TYPE_INT,      zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( AI_GetTriggerByID       ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INT                                                                                      EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( AI_GetTriggersNum       ) zPAR_TYPE_INT                                                                                                          EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( AI_GetTriggerNPC        ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INT                                                                  EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( AI_GetTriggerFunc       ) zPAR_TYPE_FUNC,     zPAR_TYPE_INSTANCE                                                                                 EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( AI_GetTriggerFuncName   ) zPAR_TYPE_STRING,   zPAR_TYPE_INSTANCE                                                                                 EXTERNAL_READ_END
-    
-    EXTERNAL_READ_BEGIN( AI_GetNextTriggerByFunc     ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_FUNC                                             EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( AI_GetNextTriggerByFuncName ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_STRING                                           EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( AI_GetNextTriggerBySelf     ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                         EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( AI_GetNextTriggerByOther    ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                         EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( AI_GetNextTriggerByVictim   ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                         EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( AI_GetNextTriggerByNPCs     ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE EXTERNAL_READ_END
-    
-    // STR
-    EXTERNAL_READ_BEGIN( Str_Format             ) zPAR_TYPE_STRING, zPAR_TYPE_VA                                                           EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Str_GetLocalizedString ) zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_STRING EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Str_UTF8_to_ANSI       ) zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_INT                                        EXTERNAL_READ_END
-    EXTERNAL_READ_BEGIN( Str_GetCurrentCP       ) zPAR_TYPE_INT                                                                            EXTERNAL_READ_END
-    else if( PostLoadExternal_Vobs( funcName ) )
+    if( ActivateDynamicExternal_Menu( funcName, createFuncList ) )
       return true;
 
     return false;
   }
-#undef EXTERNAL_READ_BEGIN                        
-#undef EXTERNAL_READ_END                                   
-                                             
+
+#undef INT
+#undef FLT
+#undef INST
+#undef FUNC
+#undef STR
+#undef VAA
+#pragma pop_macro("VOID")
+
+  bool ActivateDynamicExternal( const string& funcName ) {
+    return ActivateDynamicExternal( funcName, false );
+  }
 
   void DefineExternals() {
+    ActivateDynamicExternal( "", true );
   }
 }
