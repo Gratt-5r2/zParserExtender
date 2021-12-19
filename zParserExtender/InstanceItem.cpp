@@ -2,7 +2,7 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-  HOOK Hook_oCItem_InitByScript AS( &oCItem::InitByScript, &oCItem::InitByScript_Union );
+  HOOK Hook_oCItem_InitByScript PATCH( &oCItem::InitByScript, &oCItem::InitByScript_Union );
 
   void* zCParser::GetInstance( const int& index ) {
     zCPar_Symbol* sym = GetSymbol( index );

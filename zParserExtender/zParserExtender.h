@@ -59,6 +59,7 @@ namespace GOTHIC_ENGINE {
     zCParser* ParserExternals;
     bool ParsingEnabled;
     bool InjectUnionMenu;
+    bool EarlyParsing;
     int StringsIndexingMode;
     int TestStack;
     int ExtendedSymbolRangeStart;
@@ -67,8 +68,8 @@ namespace GOTHIC_ENGINE {
     void CheckExtendedSymbolsStart( zCParser* parser );
     void CheckExtendedSymbolsEnd( zCParser* parser );
   public:
-
     zCParserExtender();
+    void StartUp();
     void LoadScriptList( string fileListName );
     void PushExternalSrc( string parserName, string srcName );
     void PushExternalScript( string parserName, string scriptName );
@@ -87,6 +88,7 @@ namespace GOTHIC_ENGINE {
     bool ExtendedParsingEnabled();
     bool ExternalScriptsListIsEmpty();
     bool NeedToTestStack();
+    bool NeedToEarlyParsing();
     bool IsExtendedSymbol( zCPar_Symbol* sym );
     bool IsExtendedSymbolID( const int& id );
     const string& GetDefaultNamespace();

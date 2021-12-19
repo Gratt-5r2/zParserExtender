@@ -1171,6 +1171,7 @@ namespace GOTHIC_ENGINE {
 
   // STR
   int Str_Format() {
+    zCParser* parser = zCParser::GetParser();
     static zSTRING format;
     zSTRING parameter_s;
     int parameter_i;
@@ -1301,114 +1302,286 @@ namespace GOTHIC_ENGINE {
     return 0;
   }
 
-#if 0 // Not now . . .
-  int Par_GetSymbolExists() {
+  enum {
+    zPAR_UNKNOWN = -1,
+    zPAR_GAME,
+    zPAR_SFX,
+    zPAR_PFX,
+    zPAR_VFX,
+    zPAR_CAMERA,
+    zPAR_MENU,
+    zPAR_MUSIC,
+    zPAR_MAX
+  };
+
+  zCParser** Parsers[] = {
+    &Gothic::Parsers::Game,
+    &Gothic::Parsers::SFX,
+    &Gothic::Parsers::PFX,
+    &Gothic::Parsers::VFX,
+    &Gothic::Parsers::Camera,
+    &Gothic::Parsers::Menu,
+    &Gothic::Parsers::Music
+  };
+
+#pragma region parser get
+  int Par_GetParserID() {
     zCParser* par = zCParser::GetParser();
-    zSTRING symName;
-    int index = par->GetIndex( symName );
-    par->SetReturn( index != Invalid );
+    zSTRING parName;
+    par->GetParameter( parName );
+    int parId = zPAR_UNKNOWN;
+
+         if( parName == "GAME" )   parId = zPAR_GAME;
+    else if( parName == "SFX" )    parId = zPAR_SFX;
+    else if( parName == "PFX" )    parId = zPAR_PFX;
+    else if( parName == "VFX" )    parId = zPAR_VFX;
+    else if( parName == "CAMERA" ) parId = zPAR_CAMERA;
+    else if( parName == "MENU" )   parId = zPAR_MENU;
+    else if( parName == "MUSIC" )  parId = zPAR_MUSIC;
+
+    par->SetReturn( parId );
+    return 0;
   }
 
-  int Par_GetSymbolIndex() {
+  int Par_GetSymbolID() {
     zCParser* par = zCParser::GetParser();
+    int parId;
     zSTRING symName;
-    int index = par->GetIndex( symName );
+    par->GetParameter( symName );
+    par->GetParameter( parId );
+    if( parId == zPAR_UNKNOWN ) {
+      par->SetReturn( Invalid );
+      return 0;
+    }
+
+    zCParser* other = *Parsers[parId];
+    int index = other->GetIndex( symName );
     par->SetReturn( index );
     return 0;
   }
 
-  int Par_GetSymbolIntData() {
+  int Par_GetSymbolLength() {
     zCParser* par = zCParser::GetParser();
-    int symIndex;
-    par->GetParameter( symIndex );
-    zCPar_Symbol* sym = par->GetSymbol( symIndex );
-    int result = 0;
-    if( sym )
-      sym->GetValue( result, 0 );
-    par->SetReturn( result );
+    int parId;
+    int symId;
+    par->GetParameter( symId );
+    par->GetParameter( parId );
+    zCParser* other = *Parsers[parId];
+    zCPar_Symbol* sym = other->GetSymbol( symId );
+    par->SetReturn( (int)sym->ele );
     return 0;
   }
 
-  int Par_GetSymbolFloatData() {
+  int Par_GetSymbolValueInt() {
     zCParser* par = zCParser::GetParser();
-    int symIndex;
-    par->GetParameter( symIndex );
-    zCPar_Symbol* sym = par->GetSymbol( symIndex );
-    float result = 0.0f;
-    if( sym )
-      sym->GetValue( result, 0 );
-    par->SetReturn( result );
+    int parId;
+    int symId;
+    par->GetParameter( symId );
+    par->GetParameter( parId );
+    zCParser* other = *Parsers[parId];
+    zCPar_Symbol* sym = other->GetSymbol( symId );
+    int value = 0;
+    sym->GetValue( value, 0 );
+    par->SetReturn( value );
     return 0;
   }
 
-  int Par_GetSymbolStringData() {
+  int Par_GetSymbolValueFloat() {
     zCParser* par = zCParser::GetParser();
-    int symIndex;
-    par->GetParameter( symIndex );
-    zCPar_Symbol* sym = par->GetSymbol( symIndex );
-    static zSTRING result;
-    result.Clear();
-    if( sym )
-      sym->GetValue( result, 0 );
-    par->SetReturn( result );
+    int parId;
+    int symId;
+    par->GetParameter( symId );
+    par->GetParameter( parId );
+    zCParser* other = *Parsers[parId];
+    zCPar_Symbol* sym = other->GetSymbol( symId );
+    float value = 0;
+    sym->GetValue( value, 0 );
+    par->SetReturn( value );
     return 0;
   }
 
-  int Par_GetSymbolArrayLength() {
+  int Par_GetSymbolValueString() {
     zCParser* par = zCParser::GetParser();
-    int symIndex;
-    par->GetParameter( symIndex );
-    zCPar_Symbol* sym = par->GetSymbol( symIndex );
-    if( sym )
-      par->SetReturn( sym->ele );
-    else
-      par->SetReturn( -1 );
+    int parId;
+    int symId;
+    par->GetParameter( symId );
+    par->GetParameter( parId );
+    zCParser* other = *Parsers[parId];
+    zCPar_Symbol* sym = other->GetSymbol( symId );
+    static zSTRING value;
+    sym->GetValue( value, 0 );
+    par->SetReturn( value );
     return 0;
   }
 
-  int Par_GetSymbolIntArrayData() {
+  int Par_GetSymbolValueInstance() {
     zCParser* par = zCParser::GetParser();
-    int symIndex;
-    int arrayIndex;
-    par->GetParameter( arrayIndex );
-    par->GetParameter( symIndex );
-    zCPar_Symbol* sym = par->GetSymbol( symIndex );
-    int result = 0;
-    if( sym )
-      sym->GetValue( result, arrayIndex );
-    par->SetReturn( result );
+    int parId;
+    int symId;
+    par->GetParameter( symId );
+    par->GetParameter( parId );
+    zCParser* other = *Parsers[parId];
+    zCPar_Symbol* sym = other->GetSymbol( symId );
+    void* value = sym->instance_adr;
+    par->SetReturn( value );
     return 0;
   }
 
-  int Par_GetSymbolFloatArrayData() {
+  int Par_GetSymbolValueIntArray() {
     zCParser* par = zCParser::GetParser();
-    int symIndex;
-    int arrayIndex;
-    par->GetParameter( arrayIndex );
-    par->GetParameter( symIndex );
-    zCPar_Symbol* sym = par->GetSymbol( symIndex );
-    float result = 0.0f;
-    if( sym )
-      sym->GetValue( result, arrayIndex );
-    par->SetReturn( result );
+    int parId;
+    int symId;
+    int arrayId;
+    par->GetParameter( arrayId );
+    par->GetParameter( symId );
+    par->GetParameter( parId );
+    zCParser* other = *Parsers[parId];
+    zCPar_Symbol* sym = other->GetSymbol( symId );
+    int value = 0;
+    sym->GetValue( value, arrayId );
+    par->SetReturn( value );
     return 0;
   }
 
-  int Par_GetSymbolStringArrayData() {
+  int Par_GetSymbolValueFloatArray() {
     zCParser* par = zCParser::GetParser();
-    int symIndex;
-    int arrayIndex;
-    par->GetParameter( arrayIndex );
-    par->GetParameter( symIndex );
-    zCPar_Symbol* sym = par->GetSymbol( symIndex );
-    static zSTRING result;
-    result.Clear();
-    if( sym )
-      sym->GetValue( result, arrayIndex );
-    par->SetReturn( result );
+    int parId;
+    int symId;
+    int arrayId;
+    par->GetParameter( arrayId );
+    par->GetParameter( symId );
+    par->GetParameter( parId );
+    zCParser* other = *Parsers[parId];
+    zCPar_Symbol* sym = other->GetSymbol( symId );
+    float value = 0;
+    sym->GetValue( value, arrayId );
+    par->SetReturn( value );
     return 0;
   }
-#endif
+
+  int Par_GetSymbolValueStringArray() {
+    zCParser* par = zCParser::GetParser();
+    int parId;
+    int symId;
+    int arrayId;
+    par->GetParameter( arrayId );
+    par->GetParameter( symId );
+    par->GetParameter( parId );
+    zCParser* other = *Parsers[parId];
+    zCPar_Symbol* sym = other->GetSymbol( symId );
+    static zSTRING value;
+    sym->GetValue( value, arrayId );
+    par->SetReturn( value );
+    return 0;
+  }
+#pragma endregion
+
+#pragma region parser set
+  int Par_SetSymbolValueInt() {
+    zCParser* par = zCParser::GetParser();
+    int value;
+    int parId;
+    int symId;
+    par->GetParameter( symId );
+    par->GetParameter( parId );
+    par->GetParameter( value );
+    zCParser* other = *Parsers[parId];
+    zCPar_Symbol* sym = other->GetSymbol( symId );
+    sym->SetValue( value, 0 );
+    return 0;
+  }
+
+  int Par_SetSymbolValueFloat() {
+    zCParser* par = zCParser::GetParser();
+    float value;
+    int parId;
+    int symId;
+    par->GetParameter( symId );
+    par->GetParameter( parId );
+    par->GetParameter( value );
+    zCParser* other = *Parsers[parId];
+    zCPar_Symbol* sym = other->GetSymbol( symId );
+    sym->SetValue( value, 0 );
+    return 0;
+  }
+
+  int Par_SetSymbolValueString() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING value;
+    int parId;
+    int symId;
+    par->GetParameter( symId );
+    par->GetParameter( parId );
+    par->GetParameter( value );
+    zCParser* other = *Parsers[parId];
+    zCPar_Symbol* sym = other->GetSymbol( symId );
+    sym->SetValue( value, 0 );
+    return 0;
+  }
+
+  int Par_SetSymbolValueInstance() {
+    zCParser* par = zCParser::GetParser();
+    void* value;
+    int parId;
+    int symId;
+    par->GetParameter( symId );
+    par->GetParameter( parId );
+    value = par->GetInstance();
+    zCParser* other = *Parsers[parId];
+    zCPar_Symbol* sym = other->GetSymbol( symId );
+    sym->instance_adr = value;
+    return 0;
+  }
+
+  int Par_SetSymbolValueIntArray() {
+    zCParser* par = zCParser::GetParser();
+    int value;
+    int parId;
+    int symId;
+    int arrayId;
+    par->GetParameter( arrayId );
+    par->GetParameter( symId );
+    par->GetParameter( parId );
+    par->GetParameter( value );
+    zCParser* other = *Parsers[parId];
+    zCPar_Symbol* sym = other->GetSymbol( symId );
+    sym->SetValue( value, arrayId );
+    return 0;
+  }
+
+  int Par_SetSymbolValueFloatArray() {
+    zCParser* par = zCParser::GetParser();
+    float value;
+    int parId;
+    int symId;
+    int arrayId;
+    par->GetParameter( arrayId );
+    par->GetParameter( symId );
+    par->GetParameter( parId );
+    par->GetParameter( value );
+    zCParser* other = *Parsers[parId];
+    zCPar_Symbol* sym = other->GetSymbol( symId );
+    sym->SetValue( value, arrayId );
+    return 0;
+  }
+
+  int Par_SetSymbolValueStringArray() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING value;
+    int parId;
+    int symId;
+    int arrayId;
+    par->GetParameter( arrayId );
+    par->GetParameter( symId );
+    par->GetParameter( parId );
+    par->GetParameter( value );
+    zCParser* other = *Parsers[parId];
+    zCPar_Symbol* sym = other->GetSymbol( symId );
+    sym->SetValue( value, arrayId );
+    return 0;
+  }
+#pragma endregion
+
 
 
   extern bool ActivateDynamicExternal_Vobs( const zSTRING& funcName, bool createFuncList );
@@ -1434,93 +1607,110 @@ namespace GOTHIC_ENGINE {
         return false;
     }
 
-    EXTERNAL_DEFINE_BEGIN( Cast_PointerToInstance      ) INST, INT                                EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Cast_PointerToNpc           ) INST, INT                                EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Cast_PointerToItem          ) INST, INT                                EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Cast_InstanceToPointer      ) INT,  INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Cast_InstanceIsNpc          ) INT,  INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Cast_InstanceIsItem         ) INT,  INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Cast_InstanceIsMob          ) INT,  INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Cast_GetInstanceIndex       ) INT,  INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Cast_GetClassID             ) INT,  STR                                EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Cast_GetVobClassID          ) INT,  INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Cast_CheckVobClassID        ) INT,  INT,  INST                         EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_HasFocusVob             ) INT,  INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_GetFocusVob             ) INST, INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_GetFocusVobName         ) STR,  INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_GetStringLength         ) INT,  STR                                EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_IsNAN                   ) INT,  FLT                                EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_IsNull                  ) INT,  INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_KeyToggled              ) INT,  INT                                EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_KeyPressed              ) INT,  INT                                EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_LogicalKeyToggled       ) INT,  INT                                EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_GameOnPause             ) INT                                      EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_MessageBox              ) VOID, STR                                EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_PrintConsole            ) VOID, STR                                EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_GetNull                 ) INST                                     EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_DoEvent                 ) VOID, STR                                EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_ReadOptionInt           ) INT,  STR,  STR,  STR,  INT              EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_ReadOptionFloat         ) FLT,  STR,  STR,  STR,  FLT              EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_ReadOptionString        ) STR,  STR,  STR,  STR,  STR              EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_OptionIsExists          ) INT,  STR,  STR                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_WriteOptionInt          ) VOID, STR,  STR,  STR,  INT              EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_WriteOptionFloat        ) VOID, STR,  STR,  STR,  FLT              EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Hlp_WriteOptionString       ) VOID, STR,  STR,  STR,  STR              EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Wld_ChangeLevel             ) VOID, STR,  STR                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Wld_FindVob                 ) INST, STR                                EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Wld_PlayEffectVob           ) VOID, STR,  INST, INT,  INT,  INT,  INT  EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Wld_PlayEffectAt            ) VOID, STR,  INST, INT,  INT,  INT,  INT  EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Wld_ToggleRain              ) VOID, FLT,  FLT                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Wld_SetWeatherType          ) VOID, INT                                EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Wld_GetWeatherType          ) INT                                      EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mdl_GetAnimationIndex       ) INT,  INST, STR                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mdl_GetAnimationName        ) STR,  INST, INT                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mdl_AnimationIsExists       ) INT,  INST, INT                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mdl_AnimationIsActive       ) INT,  INST, INT                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mdl_SetAllAnimationsFPS     ) VOID, INST, FLT                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mdl_ResetAllAnimationsFPS   ) VOID, INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mdl_SetAnimationFPS         ) VOID, INST, INT,  FLT                    EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mdl_ResetAnimationFPS       ) VOID, INST, INT                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mdl_SetVisible              ) VOID, INST, INT                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mdl_ApplyOverlayMds_AtFirst ) VOID, INST, STR                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mdl_SetNpcSpeedMultiplier   ) VOID, INST, FLT                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mdl_ResetNpcSpeedMultiplier ) VOID, INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Npc_SetAsHero               ) VOID, INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Npc_OpenInventory           ) VOID, INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Npc_OpenInventorySteal      ) VOID, INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Npc_OpenInventoryTrade      ) VOID, INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Npc_GetLeftHandItem         ) INST, INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Npc_GetRightHandItem        ) INST, INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Npc_GetSlotItem             ) INST, INST, STR                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mob_Destroy                 ) VOID, INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mob_RemoveItem              ) VOID, INST, INT                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mob_RemoveItems             ) VOID, INST, INT,  INT                    EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mob_InsertItem              ) VOID, INST, INT                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mob_InsertItems             ) VOID, INST, INT,  INT                    EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mob_GetLockCombination      ) STR,  INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mob_SetLockCombination      ) VOID, INST, STR                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mob_IsLocked                ) INT,  INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mob_SetLocked               ) VOID, INST, INT                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mob_GetKeyInstance          ) INT,  INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Mob_SetKeyInstance          ) VOID, INST, INT                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( AI_CallScript               ) VOID, STR,  INST, INST                   EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( AI_StartTriggerScript       ) INST, STR,  INT                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( AI_StartTriggerScriptEx     ) INST, STR,  INT,  INST, INST, INST       EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( AI_GetTriggerByID           ) INST, INT                                EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( AI_GetTriggersNum           ) INT                                      EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( AI_GetTriggerNPC            ) INST, INST, INT                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( AI_GetTriggerFunc           ) FUNC,       INST                         EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( AI_GetTriggerFuncName       ) STR,  INST                               EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerByFunc     ) INST, INST, FUNC                         EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerByFuncName ) INST, INST, STR                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerBySelf     ) INST, INST, INST                         EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerByOther    ) INST, INST, INST                         EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerByVictim   ) INST, INST, INST                         EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerByNPCs     ) INST, INST, INST, INST, INST             EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Str_Format                  ) STR,  VAA                                EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Str_GetLocalizedString      ) STR,  STR,  STR,  STR,  STR              EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Str_UTF8_to_ANSI            ) STR,  STR,  INT                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Str_GetCurrentCP            ) INT                                      EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_PointerToInstance         ) INST, INT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_PointerToNpc              ) INST, INT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_PointerToItem             ) INST, INT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_InstanceToPointer         ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_InstanceIsNpc             ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_InstanceIsItem            ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_InstanceIsMob             ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_GetInstanceIndex          ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_GetClassID                ) INT,  STR                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_GetVobClassID             ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Cast_CheckVobClassID           ) INT,  INT,  INST                         EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_HasFocusVob                ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_GetFocusVob                ) INST, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_GetFocusVobName            ) STR,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_GetStringLength            ) INT,  STR                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_IsNAN                      ) INT,  FLT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_IsNull                     ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_KeyToggled                 ) INT,  INT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_KeyPressed                 ) INT,  INT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_LogicalKeyToggled          ) INT,  INT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_GameOnPause                ) INT                                      EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_MessageBox                 ) VOID, STR                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_PrintConsole               ) VOID, STR                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_GetNull                    ) INST                                     EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_DoEvent                    ) VOID, STR                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_ReadOptionInt              ) INT,  STR,  STR,  STR,  INT              EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_ReadOptionFloat            ) FLT,  STR,  STR,  STR,  FLT              EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_ReadOptionString           ) STR,  STR,  STR,  STR,  STR              EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_OptionIsExists             ) INT,  STR,  STR                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_WriteOptionInt             ) VOID, STR,  STR,  STR,  INT              EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_WriteOptionFloat           ) VOID, STR,  STR,  STR,  FLT              EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Hlp_WriteOptionString          ) VOID, STR,  STR,  STR,  STR              EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Wld_ChangeLevel                ) VOID, STR,  STR                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Wld_FindVob                    ) INST, STR                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Wld_PlayEffectVob              ) VOID, STR,  INST, INT,  INT,  INT,  INT  EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Wld_PlayEffectAt               ) VOID, STR,  INST, INT,  INT,  INT,  INT  EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Wld_ToggleRain                 ) VOID, FLT,  FLT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Wld_SetWeatherType             ) VOID, INT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Wld_GetWeatherType             ) INT                                      EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_GetAnimationIndex          ) INT,  INST, STR                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_GetAnimationName           ) STR,  INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_AnimationIsExists          ) INT,  INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_AnimationIsActive          ) INT,  INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_SetAllAnimationsFPS        ) VOID, INST, FLT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_ResetAllAnimationsFPS      ) VOID, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_SetAnimationFPS            ) VOID, INST, INT,  FLT                    EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_ResetAnimationFPS          ) VOID, INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_SetVisible                 ) VOID, INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_ApplyOverlayMds_AtFirst    ) VOID, INST, STR                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_SetNpcSpeedMultiplier      ) VOID, INST, FLT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mdl_ResetNpcSpeedMultiplier    ) VOID, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Npc_SetAsHero                  ) VOID, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Npc_OpenInventory              ) VOID, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Npc_OpenInventorySteal         ) VOID, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Npc_OpenInventoryTrade         ) VOID, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Npc_GetLeftHandItem            ) INST, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Npc_GetRightHandItem           ) INST, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Npc_GetSlotItem                ) INST, INST, STR                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_Destroy                    ) VOID, INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_RemoveItem                 ) VOID, INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_RemoveItems                ) VOID, INST, INT,  INT                    EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_InsertItem                 ) VOID, INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_InsertItems                ) VOID, INST, INT,  INT                    EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_GetLockCombination         ) STR,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_SetLockCombination         ) VOID, INST, STR                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_IsLocked                   ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_SetLocked                  ) VOID, INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_GetKeyInstance             ) INT,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Mob_SetKeyInstance             ) VOID, INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_CallScript                  ) VOID, STR,  INST, INST                   EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_StartTriggerScript          ) INST, STR,  INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_StartTriggerScriptEx        ) INST, STR,  INT,  INST, INST, INST       EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetTriggerByID              ) INST, INT                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetTriggersNum              ) INT                                      EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetTriggerNPC               ) INST, INST, INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetTriggerFunc              ) FUNC,       INST                         EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetTriggerFuncName          ) STR,  INST                               EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerByFunc        ) INST, INST, FUNC                         EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerByFuncName    ) INST, INST, STR                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerBySelf        ) INST, INST, INST                         EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerByOther       ) INST, INST, INST                         EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerByVictim      ) INST, INST, INST                         EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( AI_GetNextTriggerByNPCs        ) INST, INST, INST, INST, INST             EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Str_Format                     ) STR,  VAA                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Str_GetLocalizedString         ) STR,  STR,  STR,  STR,  STR              EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Str_UTF8_to_ANSI               ) STR,  STR,  INT                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Str_GetCurrentCP               ) INT                                      EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_GetParserID                ) INT,  STR                                EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_GetSymbolID                ) INT,  INT, STR                           EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_GetSymbolLength            ) INT,  INT, INT                           EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_GetSymbolValueInt          ) INT,  INT, INT                           EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_GetSymbolValueFloat        ) FLT,  INT, INT                           EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_GetSymbolValueString       ) STR,  INT, INT                           EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_GetSymbolValueInstance     ) INST, INT, INT                           EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_GetSymbolValueIntArray     ) INT,  INT, INT, INT                      EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_GetSymbolValueFloatArray   ) FLT,  INT, INT, INT                      EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_GetSymbolValueStringArray  ) STR,  INT, INT, INT                      EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_SetSymbolValueInt          ) VOID, INT, INT, INT                      EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_SetSymbolValueFloat        ) VOID, INT, INT, FLT                      EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_SetSymbolValueString       ) VOID, INT, INT, STR                      EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_SetSymbolValueInstance     ) VOID, INT, INT, INST                     EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_SetSymbolValueIntArray     ) VOID, INT, INT, INT, INT                 EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_SetSymbolValueFloatArray   ) VOID, INT, INT, INT, FLT                 EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Par_SetSymbolValueStringArray  ) VOID, INT, INT, INT, STR                 EXTERNAL_DEFINE_END
 
     if( ActivateDynamicExternal_Vobs( funcName, createFuncList ) )
       return true;

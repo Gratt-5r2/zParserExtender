@@ -83,5 +83,6 @@ void AddNamespace( zSTRING&, bool newSymbol = false );
 zSTRING GetNamespacePrefix(const uint& levelUp);
 int GetNamespaceLevel();
 void ExportStringList();
+void DoStack_Union( int );
 
 void __cdecl DefineExternal_Union( zSTRING const&, int( __cdecl* )(), int, int, ... );

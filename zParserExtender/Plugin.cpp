@@ -53,10 +53,9 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_Init() {
-    zCMenu::CreateParser();
-    zCMenu::Startup_Union();
+    if( !zParserExtender.NeedToEarlyParsing() )
+      zParserExtender.StartUp();
 
-    zParserExtender.ParseBegin();
     parser->CallGameInit_Union();
     Game_InitConsole_Union();
   }

@@ -12,18 +12,22 @@ namespace GOTHIC_ENGINE {
   bool_t SVM            = False;
   zCPar_Symbol* LastSym = Null;
 
-  HOOK Ivk_oCGame_LoadParserFile AS( &oCGame::LoadParserFile, &oCGame::LoadParserFile_Union );
+  HOOK Ivk_oCGame_LoadParserFile PATCH( &oCGame::LoadParserFile, &oCGame::LoadParserFile_Union );
 
   static zCList<zSTRING> funclist;
 
   int oCGame::LoadParserFile_Union( zSTRING const& parserfile ) {
     funclist.Insert( new zSTRING( "AI_OUTPUT" ) );
     parser->SetInfoFile( &funclist, "OuInfo.inf" );
-    return THISCALL( Ivk_oCGame_LoadParserFile )(parserfile);
+    int ok = THISCALL( Ivk_oCGame_LoadParserFile )(parserfile);
+    if( zParserExtender.NeedToEarlyParsing() )
+      zParserExtender.StartUp();
+
+    return ok;
   };
 
 
-  HOOK Ivk_zCParser_DeclareInstance AS( &zCParser::DeclareInstance, &zCParser::DeclareInstance_Union );
+  HOOK Ivk_zCParser_DeclareInstance PATCH( &zCParser::DeclareInstance, &zCParser::DeclareInstance_Union );
 
   void zCParser::DeclareInstance_Union() {
     // Checkpoint to track new symbols after DeclareInstance
@@ -93,7 +97,7 @@ namespace GOTHIC_ENGINE {
   }
   
 
-  HOOK Ivk_zCParser_DeclareAssign AS( &zCParser::DeclareAssign, &zCParser::DeclareAssign_Union );
+  HOOK Ivk_zCParser_DeclareAssign PATCH( &zCParser::DeclareAssign, &zCParser::DeclareAssign_Union );
 
   inline bool IsEOL( const char& sym ) {
     return
@@ -142,7 +146,7 @@ namespace GOTHIC_ENGINE {
   }
 
   
-  HOOK Hook_zCParser_IsInAdditionalInfo AS( &zCParser::IsInAdditionalInfo, &zCParser::IsInAdditionalInfo_Union );
+  HOOK Hook_zCParser_IsInAdditionalInfo PATCH( &zCParser::IsInAdditionalInfo, &zCParser::IsInAdditionalInfo_Union );
 
   int zCParser::IsInAdditionalInfo_Union( const zSTRING& symName ) {
     return symName == "AI_Output";
@@ -151,7 +155,7 @@ namespace GOTHIC_ENGINE {
 
   void zDeleteOU();
 
-  HOOK Hook_zInitOptions AS( &zInitOptions, &zDeleteOU );
+  HOOK Hook_zInitOptions PATCH( &zInitOptions, &zDeleteOU );
 
   void zDeleteOU() {
     Hook_zInitOptions();
@@ -179,7 +183,7 @@ namespace GOTHIC_ENGINE {
   }
 
 
-  HOOK Ivk_zCParser_CreatePCode AS( &zCParser::CreatePCode, &zCParser::CreatePCode_Union );
+  HOOK Ivk_zCParser_CreatePCode PATCH( &zCParser::CreatePCode, &zCParser::CreatePCode_Union );
 
   void zCParser::CreatePCode_Union() {
     if( parser && this == parser )
@@ -201,7 +205,7 @@ namespace GOTHIC_ENGINE {
   }
 
 
-  HOOK Ivk_zCParser_Error_Union AS( &zCParser::Error, &zCParser::Error_Union );
+  HOOK Ivk_zCParser_Error_Union PATCH( &zCParser::Error, &zCParser::Error_Union );
 
   // More details report
   void zCParser::Error_Union( zSTRING& reason, int line ) {

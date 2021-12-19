@@ -387,13 +387,13 @@ namespace GOTHIC_ENGINE {
   }
 
 
-  HOOK Ivk_zCParser_ReadWord AS( &zCParser::ReadWord, &zCParser::ReadWord_Union );
+  HOOK Ivk_zCParser_ReadWord PATCH( &zCParser::ReadWord, &zCParser::ReadWord_Union );
 
   void zCParser::ReadWord_Union( zSTRING& word ) {
     int _prevword_nr = (prevword_nr + 1) & 15;
     THISCALL( Ivk_zCParser_ReadWord )(word);
     prevword_nr = _prevword_nr;
-
+    ogame;
     if( prevword_index[prevword_nr] == pc_start && word == "META" ) {
       SkipMeta_Union();
       THISCALL( Ivk_zCParser_ReadWord )(word);
@@ -557,7 +557,7 @@ namespace GOTHIC_ENGINE {
   }
 
 
-  HOOK Ivk_zCOption_Parm AS( &zCOption::Parm, &zCOption::Parm_Union );
+  HOOK Ivk_zCOption_Parm PATCH( &zCOption::Parm, &zCOption::Parm_Union );
 
   int zCOption::Parm_Union( const zSTRING& parmname ) {
     string cmd = commandline;

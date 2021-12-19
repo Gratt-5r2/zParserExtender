@@ -774,9 +774,9 @@ namespace Gothic_II_Addon {
   };
 
   template <class T, int SIZE> class zCMatrixStack {
+  public:
     int pos;
     T stack[SIZE];
-  public:
     zCMatrixStack() : pos( 0 ) {}
 
     void Push( const T& m ) {

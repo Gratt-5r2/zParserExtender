@@ -208,6 +208,7 @@ namespace GOTHIC_ENGINE {
     option.Read( MessagesLevel,                  "ZPARSE_EXTENDER", "MessagesLevel",       MessagesLevel );
     option.Read( StringsIndexingMode,            "ZPARSE_EXTENDER", "StringsIndexingMode", zStringsIndexing_Default );
     option.Read( TestStack,                      "ZPARSE_EXTENDER", "TestStack",           false );
+    option.Read( EarlyParsing,                   "ZPARSE_EXTENDER", "EarlyParsing",        true );
     DefaultCompileInfo.Compilable = true;
 
     Array<string> Files = FilesLine.Split( "," );
@@ -218,6 +219,13 @@ namespace GOTHIC_ENGINE {
     ParserExternals          = Null;
     ExtendedSymbolRangeStart = Invalid;
     ExtendedSymbolRangeEnd   = Invalid;
+  }
+
+
+  void zCParserExtender::StartUp() {
+    zCMenu::CreateParser();
+    zCMenu::Startup_Union();
+    zParserExtender.ParseBegin();
   }
 
 
@@ -500,6 +508,7 @@ namespace GOTHIC_ENGINE {
 
   int ParStackMaxLength = 0;
   void zCParserExtender::ParseBegin() {
+    zCParser* savedParser = zCParser::cur_parser;
     Array<zTScriptInfo*> compilableList = GetCompilableScriptList();
     ParsingEnabled = true;
 #if ENGINE == Engine_G1 || ENGINE == Engine_G2A
@@ -587,6 +596,7 @@ namespace GOTHIC_ENGINE {
 
       // Compile parsed scripts...
       CurrentCompileInfo = DefaultCompileInfo;
+      activeParsers.Insert( parser );
       for( uint i = 0; i < activeParsers.GetNum(); i++ ) {
         CurrentParser = activeParsers[i];
         CurrentParser->CreatePCode();
@@ -605,7 +615,8 @@ namespace GOTHIC_ENGINE {
     patch_physical_first->SetValue( 0 );
 #endif
     ParsingEnabled = false;
-    zCParser::cur_parser = parser;
+    zCParser::cur_parser = savedParser;
+    zCPar_SymbolTable::cur_table = &savedParser->symtab;
   }
 
 
@@ -694,6 +705,10 @@ namespace GOTHIC_ENGINE {
 
   bool zCParserExtender::NeedToTestStack() {
     return TestStack;
+  }
+
+  bool zCParserExtender::NeedToEarlyParsing() {
+    return EarlyParsing;
   }
 
   const string& zCParserExtender::GetDefaultNamespace() {

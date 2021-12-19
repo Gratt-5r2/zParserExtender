@@ -8,7 +8,7 @@ namespace GOTHIC_ENGINE {
       return false;
 
     int length = name.Length();
-    if( length != 6 )
+    if( length < 5 )
       return false;
 
     for( int i = 1; i < length; i++ ) {
@@ -38,17 +38,20 @@ namespace GOTHIC_ENGINE {
     uint index = end;
     do {
       char& dec = value[index--];
-      if( ++dec > '9' )
+      if( ++dec > '9' ) {
         dec = '0';
+        if( index + 1 == start )
+          value.Put( "1", start );
+      }
       else
         break;
 
-    } while( index > start );
+    } while( index >= start );
   }
 
 
   static void RepairStringsTable( zCParser* par ) {
-    zSTRING str_stringcount = zSTRING( char( 255 ) ) + "10000";
+    zSTRING str_stringcount = zSTRING( char( 255 ) ) + "9999";
 
     zCPar_SymbolTable& table = par->symtab;
     for( int i = 0; i < table.table.GetNum(); i++ ) {
@@ -91,7 +94,7 @@ namespace GOTHIC_ENGINE {
 
 
   static void PrepareParserSymbols( zCParser* par ) {
-    Array<zCParser*> parsers;
+    static Array<zCParser*> parsers;
     if( parsers & par )
       return;
 
