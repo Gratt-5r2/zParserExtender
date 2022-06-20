@@ -12,6 +12,7 @@ namespace GOTHIC_ENGINE {
     zSTRING mask      = "";
 
     par->GetParameter( mask );
+    mask.Upper();
     for( int i = 0, id = 1; i < symTable.GetNum(); i++ ) {
       zCPar_Symbol* sym = symTable[i];
       string& symName   = (string&)sym->name;
@@ -25,6 +26,7 @@ namespace GOTHIC_ENGINE {
 
   static int SwitchToWaitFocusReturn = 0;
 
+
   int Open_Link() {
     zCParser* par = zCParser::GetParser();
     zSTRING link;
@@ -35,7 +37,7 @@ namespace GOTHIC_ENGINE {
       SwitchToWaitFocusReturn = 2;
     }
 
-    system( "start " + link );
+    oSteamworks::GetInstance().OpenUrl( link );
     return 0;
   }
 

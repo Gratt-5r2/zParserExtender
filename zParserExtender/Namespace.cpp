@@ -77,6 +77,7 @@ namespace GOTHIC_ENGINE {
   static uint AddNamespaceAfter = 0;
   static bool NewSymbolExpected = false;
   static bool NewParenthesisExpected = false;
+  static uint NewTypedDeclarations = 0;
 
   inline bool IsWord( const zSTRING& word ) {
     if( word.Length() == 0 || word == "CONST" ) // For example CONST leaf is "this pattern"
@@ -85,12 +86,22 @@ namespace GOTHIC_ENGINE {
     return word[0u] == ':' || word[0u] == '_' || (word[0u] >= 'A' && word[0u] <= 'Z');
   }
 
+  // Symbols can be repeated for example
+  // after ReadWord-PrevWord construction
+  inline bool IsUniqueWord( const zSTRING& word ) {
+    static zSTRING lastWord;
+    if( word == lastWord )
+      return false;
+
+    lastWord = word;
+    return true;
+  }
+
   void zCParser::CheckNamespace( zSTRING& word ) {
     if( word == "USING" ) {
       UsingNamespace( word );
       return;
     }
-
 
     if( word == "NAMESPACE" ) NamespaceBegin( word );
     if( word == "{" )         NamespaceAddEntry( word );
@@ -103,10 +114,19 @@ namespace GOTHIC_ENGINE {
     if( NewParenthesisExpected && word == "(" ) {
       DeclareNamespaceForNextWord( 2 );
       NewParenthesisExpected = false;
+      return;
     }
-    else if( AddNamespaceAfter && --AddNamespaceAfter == 0 ) {
+
+    if( !IsUniqueWord( word ) )
+      return;
+
+    if( AddNamespaceAfter && --AddNamespaceAfter == 0 ) {
       AddNamespace( word, NewSymbolExpected );
       NewSymbolExpected = false;
+    }
+    else if( NewTypedDeclarations ) {
+      AddNamespace( word, false );
+      NewTypedDeclarations--;
     }
   }
 
@@ -295,8 +315,9 @@ namespace GOTHIC_ENGINE {
   void zCParser::DeclareVar_Union( int isConstant ) {
     if( !in_func && !in_class )
       DeclareNamespaceForNextWord( 2, true );
-
-    return THISCALL( Hook_zCParser_DeclareVar )(isConstant);
+    
+    NewTypedDeclarations = 1;
+    THISCALL( Hook_zCParser_DeclareVar )(isConstant);
   }
 
 
@@ -319,7 +340,7 @@ namespace GOTHIC_ENGINE {
   HOOK Hook_zCParser_DeclareAssignFunc PATCH( &zCParser::DeclareAssignFunc, &zCParser::DeclareAssignFunc_Union );
 
   void zCParser::DeclareAssignFunc_Union( zSTRING& name ) {
-    DeclareNamespaceForNextWord( 2, true );
+    DeclareNamespaceForNextWord( 2, false );
     return THISCALL( Hook_zCParser_DeclareAssignFunc )(name);
   }
 }

@@ -2,6 +2,8 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
+  bool zCParser::OverrideNextSymbol = false;
+
   static bool NeedToReparse( string s ) {
     //if( !zParserExtender.ExtendedParsingEnabled() )
     //  return false;
@@ -168,7 +170,7 @@ namespace GOTHIC_ENGINE {
 
     zSTRING word;
     while( pc < pc_stop ) {
-      ReadWord( word );
+      ReadWord_Union( word );
       if( word == "VAR" )
         DeclareVar( False );
       else if( word == "CONST" )
@@ -219,12 +221,12 @@ namespace GOTHIC_ENGINE {
 
   bool zCParser::ParseBlockOrOperatorLine() {
     zSTRING word;
-    ReadWord( word );
+    ReadWordBase( word );
     if( word == "{" ) {
       int entries = 1;
       while( true ) {
         ParseOperatorLine();
-        ReadWord( word );
+        ReadWordBase( word );
         if( word == "}" ) {
           if( --entries <= 0 )
             break;
@@ -247,13 +249,41 @@ namespace GOTHIC_ENGINE {
   }
 
 
+  HOOK Ivk_zCParser_ReadWord PATCH( &zCParser::ReadWord, &zCParser::ReadWord_Union );
+
+  void zCParser::ReadWord_Union( zSTRING& word ) {
+    int _prevword_nr = (prevword_nr + 1) & 15;
+    ReadWordBase(word);
+    prevword_nr = _prevword_nr;
+
+    if( prevword_index[prevword_nr] == pc_start && word == "META" ) {
+      SkipMeta_Union();
+      ReadWordBase( word );
+    }
+
+    // TODO
+    // if( word == "ONCE" ) {
+    //   OverrideNextSymbol = true;
+    //   return THISCALL( Ivk_zCParser_ReadWord )(word);
+    // }
+
+    CheckNamespace( word );
+    ReadMacro( word );
+  }
+
+
+  void zCParser::ReadWordBase( zSTRING& word ) {
+    THISCALL( Ivk_zCParser_ReadWord )(word);
+  }
+
+
   void zCParser::DeclareTest() {
     zSTRING word;
-    bool test = TestSymbol();
+    bool test = TestSymbolExpresstion();
 
     if( test ) {
       bool opline = ParseBlockOrOperatorLine();
-      ReadWord( word );
+      ReadWordBase( word );
       if( word == "ELSE" ) {
         if( SkipBlock() )
           PrevWord();
@@ -266,7 +296,7 @@ namespace GOTHIC_ENGINE {
     }
     else {
       bool opline = SkipBlock();
-      ReadWord( word );
+      ReadWordBase( word );
       if( word == "ELSE" ) {
         bool opline = ParseBlockOrOperatorLine();
         if( opline )
@@ -282,9 +312,9 @@ namespace GOTHIC_ENGINE {
 
   void zCParser::DeclareExtern() {
     zSTRING word;
-    ReadWord( word );
+    ReadWordBase( word );
     if( word == "CONST" || word == "VAR" || word == "FUNC" ) {
-      ReadWord( word );
+      ReadWordBase( word );
       ReadWord( word );
       PrevWord();
       PrevWord();
@@ -307,26 +337,93 @@ namespace GOTHIC_ENGINE {
     }
   }
 
+  bool CheckSteamEnabled() {
+    return
+      GetModuleHandle( "GameOverlayRenderer.dll" ) ||
+      GetModuleHandle( "GameOverlayRenderer.dll.tmp" );
+  }
+
+
   bool zCParser::TestSymbol() {
     zSTRING word;
-    ReadWord( word );
-    if( word == "(" ) {
-      bool ok = TestSymbol();
+    ReadWordBase( word );
+    if( word == "!" ) {
+      return !TestSymbol();
+    }
+    else if( word == "(" ) {
+      int ok = TestSymbolExpresstion();
       Match( Z ")" );
       return ok;
     }
-    else if( word == "!" )
-      return !TestSymbol();
 
-    int index = symtab.GetIndex_Safe( word );
-    return index != Invalid;
+         if( word == "STEAM" && CheckSteamEnabled() ) return true;
+    else if( word == "G1"  && ENGINE == Engine_G1   ) return true;
+    else if( word == "G1A" && ENGINE == Engine_G1A  ) return true;
+    else if( word == "G2"  && ENGINE == Engine_G2   ) return true;
+    else if( word == "G2A" && ENGINE == Engine_G2A  ) return true;
+    else                                              return symtab.GetIndex_Safe( word ) != Invalid;
+    return false;
+  }
+
+  inline zSTRING GetNextTestOperator( zCParser* par ) {
+    zSTRING word;
+    par->ReadWordBase(word);
+    if( word == "&" ) {
+      par->ReadWordBase(word);
+      if( word == "&" )
+        return "&&";
+      else {
+        par->PrevWord();
+        return "&";
+      }
+    }
+    else if( word == "|" ) {
+      par->ReadWordBase(word);
+      if( word == "|" )
+        return "||";
+      else {
+        par->PrevWord();
+        return "|";
+      }
+    }
+    else
+      return word;
+  }
+
+  bool zCParser::TestSymbolExpresstion() {
+    bool ok = TestSymbol();
+
+    zSTRING word;
+    while( true )
+    {
+      word = GetNextTestOperator( this );
+      if( word == "!" ) {
+        ok = !TestSymbol();
+      }
+      else if( word == "&&" ) {
+        ok = TestSymbol() && ok;
+      }
+      else if( word == "||" ) {
+        ok = TestSymbol() || ok;
+      }
+      else if( word == ")" ) {
+        PrevWord();
+        return ok;
+      }
+      else {
+        PrevWord();
+        break;
+      }
+    }
+
+    return ok;
   }
 
   void zCParser::SkipOperatorsLine() {
     zSTRING word;
     int entries = 0;
     while( true ) {
-      ReadWord( word );
+      ReadWordBase( word );
       if( word == "\"" ) {
         PrevWord();
         SkipString();
@@ -344,15 +441,16 @@ namespace GOTHIC_ENGINE {
 
   bool zCParser::SkipBlock() {
     zSTRING word;
-    ReadWord( word );
+    ReadWordBase( word );
     if( word != "{" ) {
+      PrevWord();
       SkipOperatorsLine();
       return true;
     }
 
     int entries = 1;
     while( true ) {
-      ReadWord( word );
+      ReadWordBase( word );
       if( word == "{" )
         entries++;
       else if( word == "}" ) {
@@ -371,36 +469,9 @@ namespace GOTHIC_ENGINE {
   }
 
   void zCParser::SkipString() {
-    zSTRING word;
     Match( Z "\"" );
-    int entries = 1;
-    while( true ) {
-      ReadWord( word );
-      if( word == "\"" )
-        break;
-
-      if( word.IsEmpty() ) {
-        Error();
-        break;
-      }
-    }
-  }
-
-
-  HOOK Ivk_zCParser_ReadWord PATCH( &zCParser::ReadWord, &zCParser::ReadWord_Union );
-
-  void zCParser::ReadWord_Union( zSTRING& word ) {
-    int _prevword_nr = (prevword_nr + 1) & 15;
-    THISCALL( Ivk_zCParser_ReadWord )(word);
-    prevword_nr = _prevword_nr;
-    ogame;
-    if( prevword_index[prevword_nr] == pc_start && word == "META" ) {
-      SkipMeta_Union();
-      THISCALL( Ivk_zCParser_ReadWord )(word);
-    }
-
-    CheckNamespace( word );
-    ReadMacro( word );
+    FindNext( "\"" );
+    pc++;
   }
 
 
@@ -527,6 +598,7 @@ namespace GOTHIC_ENGINE {
   HOOK Hook_zCParser_Parse PATCH( &zCParser::Parse, &zCParser::Parse_Union );
 
   int zCParser::Parse_Union( zSTRING s ) {
+    cmd << s << endl;
     cur_parser = this;
     bool needToReparce = NeedToReparse( s ) && enableParsing != NinjaParseID;
     if( !zParserExtender.ExtendedParsingEnabled() && !needToReparce )
@@ -656,6 +728,7 @@ namespace GOTHIC_ENGINE {
     if( IsVaExternal( name ) )
       return DeclareVaFuncCall( name );
 
+    AddNamespace( name );
     THISCALL( Hook_zCParser_DeclareFuncCall )(name, typematch);
   }
 
@@ -742,11 +815,14 @@ namespace GOTHIC_ENGINE {
 
   HOOK Hook_zCParser_DeclareFunc PATCH( &zCParser::DeclareFunc, &zCParser::DeclareFunc_Union );
 
+  extern uint NewTypedDeclarations;
+
   void zCParser::DeclareFunc_Union() {
     if( !s_RenameTreeNode )
       DeclareNamespaceForNextWord( 3, true );
 
     auto treenode_old = treenode;
+    NewTypedDeclarations = 2;
     THISCALL( Hook_zCParser_DeclareFunc )();
 
     if( s_RenameTreeNode ) {
@@ -796,4 +872,91 @@ namespace GOTHIC_ENGINE {
 
     stringList.WriteToFile( "_work\\Data\\Scripts\\Exports\\StringList.d" );
   }
+
+
+  HOOK Hook_zCParser_ReadString AS_IF( &zCParser::ReadString, &zCParser::ReadString_Union, 0 );
+
+  void zCParser::ReadString_Union( zSTRING& s ) {
+    ReadWord( aword );
+    zCPar_Symbol* sym = GetSymbol( aword );
+    if( sym ) {
+      ReadWord( aword );
+      if( aword[0] == '[' ) {
+        int index = ReadInt();
+        Match( Z "]" );
+        s = sym->stringdata[index];
+      }
+      else {
+        PrevWord();
+        s = sym->stringdata[0];
+      }
+
+      return;
+    }
+
+    PrevWord();
+    THISCALL( Hook_zCParser_ReadString )( s );
+  }
+
+
+
+  HOOK Hook_zCParser_CreateStringLeaf_Array PATCH( &zCParser::CreateStringLeaf, &zCParser::CreateStringLeafArray );
+
+  zCPar_TreeNode* zCParser::CreateStringLeafArray() {
+    auto node = THISCALL( Hook_zCParser_CreateStringLeaf_Array )(); // Call-order bugfix
+
+    if( node->token == zPAR_TOK_VAR ) {
+      ReadWord( aword );
+      if( aword[0] == '[' ) {
+        zCPar_Symbol* sym = GetSymbol( node->name );
+        if( sym ) {
+          int index = ReadInt();
+          Match( Z "]" );
+
+          node->token = zPAR_TOK_NEWSTRING;
+          node->name = sym->stringdata[index];
+          node->value = 0;
+          node->info = zPAR_TYPE_STRING;
+          return node;
+        }
+      }
+
+      PrevWord();
+    }
+
+    return node;
+  }
+
+
+  HOOK Hook_zCParser_DeclareReturn PATCH( &zCParser::DeclareReturn, &zCParser::DeclareReturn_Union );
+
+  void zCParser::DeclareReturn_Union() {
+    if( !zParserExtender.ExtendedParsingEnabled() || parser->enableParsing == NinjaParseID )
+      return THISCALL( Hook_zCParser_DeclareReturn )();
+
+    if( !in_func || !in_func->HasFlag( zPAR_FLAG_RETURN ) )
+      return THISCALL( Hook_zCParser_DeclareReturn )();
+
+    if( in_func->GetOffset() == zPAR_TYPE_INSTANCE ) {
+      ReadWord( aword );
+      treenode = CreateLeaf( zPAR_TOK_INSTANCE, treenode );
+      auto symbol = GetLocalSymbol( aword );
+      if( symbol ) {
+        treenode->name = symbol->name;
+        treenode->info = zPAR_TYPE_INSTANCE;
+        treenode->token = zPAR_TOK_PUSHINST;
+        treenode = CreateLeaf( zPAR_TOK_RET, treenode );
+        return;
+      }
+    }
+
+    THISCALL( Hook_zCParser_DeclareReturn )();
+  }
+
+
+  // HOOK Hook_zCParser_ReadVarType PATCH( &zCParser::ReadVarType, &zCParser::ReadVarType_Union );
+  // 
+  // int zCParser::ReadVarType_Union() {
+	// ReadWord(aword);
+  // }
 }

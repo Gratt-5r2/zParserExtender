@@ -7,7 +7,7 @@ namespace GOTHIC_ENGINE {
   }
 
 
-  bool TReferralTokenList::IsIllegalToken( const byte& token ) {
+  bool TReferralTokenList::IsLegalToken( const byte& token ) {
     switch( token ) {
       // 1 byte instructions
       case zPAR_OP_IS:
@@ -96,7 +96,7 @@ namespace GOTHIC_ENGINE {
           break;
 
         default:
-          if( !zParserExtender.NeedToTestStack() || IsIllegalToken( token ) )
+          if( !zParserExtender.NeedToTestStack() || IsLegalToken( token ) )
             break;
 
           string tokSym = string( token, 16 ) + "h";

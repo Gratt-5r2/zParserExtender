@@ -14,11 +14,14 @@ namespace GOTHIC_ENGINE {
 
   HOOK Ivk_oCGame_LoadParserFile PATCH( &oCGame::LoadParserFile, &oCGame::LoadParserFile_Union );
 
-  static zCList<zSTRING> funclist;
+  zCList<zSTRING> GetFuncListSVM() {
+    static zCList<zSTRING>* funclist = new zCList<zSTRING>();
+    return *funclist;
+  }
 
   int oCGame::LoadParserFile_Union( zSTRING const& parserfile ) {
-    funclist.Insert( new zSTRING( "AI_OUTPUT" ) );
-    parser->SetInfoFile( &funclist, "OuInfo.inf" );
+    GetFuncListSVM().Insert(new zSTRING("AI_OUTPUT"));
+    parser->SetInfoFile( &GetFuncListSVM(), "OuInfo.inf");
     int ok = THISCALL( Ivk_oCGame_LoadParserFile )(parserfile);
     if( zParserExtender.NeedToEarlyParsing() )
       zParserExtender.StartUp();

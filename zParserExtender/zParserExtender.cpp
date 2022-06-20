@@ -222,9 +222,27 @@ namespace GOTHIC_ENGINE {
   }
 
 
+  void zCAICamera::CreateParser() {
+    zCAICamera* aiCam = new zCAICamera();
+    aiCam->StartUp();
+    aiCam->Release();
+  }
+
+
+  // void oCNpc::InitFightAI() {
+  //   zoptions->ChangeDir( DIR_SCRIPTS );
+  // 
+  //   zCParser* p = zNEW( zCParser( 100 ) );
+  //   p->Parse( filename + ".src" );
+  //   p->CreatePCode();
+  // }
+
+
   void zCParserExtender::StartUp() {
     zCMenu::CreateParser();
     zCMenu::Startup_Union();
+    zCAICamera::CreateParser();
+    
     zParserExtender.ParseBegin();
   }
 
@@ -320,8 +338,7 @@ namespace GOTHIC_ENGINE {
         return;
 
     // Create a default script info
-    zTScriptInfo*& scriptInfo         = CompileQueue.Create();
-    scriptInfo                        = new zTScriptInfo();
+    zTScriptInfo* scriptInfo          = new zTScriptInfo();
     scriptInfo->CompileInfo           = DefaultCompileInfo;
     scriptInfo->ParserName            = parserName;
     scriptInfo->FullName              = fullName;
@@ -342,13 +359,17 @@ namespace GOTHIC_ENGINE {
                colWarn1 << "can not read "     <<
                colWarn2 << root + scriptName   <<
                colWarn3 << endl;
+
+      delete scriptInfo;
       return;
     }
 
     // Add completed file to queue
     scriptInfo->ParseMeta( fileData );
-    if( !scriptInfo->CompileInfo.Compilable )
-      CompileQueue.Remove( scriptInfo );
+    if( scriptInfo->CompileInfo.Compilable )
+      CompileQueue.Insert( scriptInfo );
+    else
+      delete scriptInfo;
   }
 
 

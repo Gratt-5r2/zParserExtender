@@ -30,7 +30,7 @@ namespace GOTHIC_ENGINE {
       int_t newPos,
       int_t length );
 
-    bool IsIllegalToken( const byte& token );
+    bool IsLegalToken( const byte& token );
     void Clear();
     int_t GetIndex( byte* bytecode );
   };

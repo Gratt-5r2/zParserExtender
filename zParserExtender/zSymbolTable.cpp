@@ -347,8 +347,11 @@ namespace GOTHIC_ENGINE {
       int index = GetIndex( list );
       zParserExtender.GetParser()->RenameTreeNode( list, newName );
       tablesort.RemoveOrder( index );
-      list->name.Replace( oldName, newName );
-      tablesort.InsertSort( index );
+      if( !zCParser::OverrideNextSymbol ) {
+        list->name.Replace( oldName, newName );
+        tablesort.InsertSort( index );
+      }
+      // TODO fix mem leaks
 
       // Get next local variable
       // of the function symbol
@@ -361,8 +364,12 @@ namespace GOTHIC_ENGINE {
         break;
     }
 
+    // if( zCParser::OverrideNextSymbol )
+    //   zCParser::OverrideNextSymbol = false;
+
     return collisions;
   }
+
 
 
   int zCPar_SymbolTable::InsertAt_Union( zCPar_Symbol* sym, int alloc, bool checkHierarchy ) {
@@ -379,9 +386,9 @@ namespace GOTHIC_ENGINE {
       zCPar_Symbol* oldSym = table[index];
 
       // Replace 'declaration to definition' or 'external func to internal'
-      bool internatToExternal = !sym->HasFlag( zPAR_FLAG_EXTERNAL ) && oldSym->HasFlag( zPAR_FLAG_EXTERNAL );
+      bool internalToExternal = !sym->HasFlag( zPAR_FLAG_EXTERNAL ) && oldSym->HasFlag( zPAR_FLAG_EXTERNAL );
 
-      if( internatToExternal || zParserExtender.MergeModeEnabled() ) {
+      if( internalToExternal || zParserExtender.MergeModeEnabled() ) {
         RenameSymbol( oldSym, oldSym->GetName() + "_OLD", sym );
 
         if( zCParserExtender::MessagesLevel >= 3 )
@@ -416,6 +423,9 @@ namespace GOTHIC_ENGINE {
       else
         return False;
     }
+
+    if( zCParser::OverrideNextSymbol )
+      zCParser::OverrideNextSymbol = false;
 
     cur_table = this;
     table.InsertEnd( sym );

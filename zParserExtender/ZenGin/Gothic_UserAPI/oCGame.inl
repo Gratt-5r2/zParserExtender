@@ -5,3 +5,4 @@
 
 int LoadParserFile_Union( zSTRING const& parserfile );
 void SetupPlayers_Union( oCNpc*&, zSTRING const& );
+void CamInit_Temp();

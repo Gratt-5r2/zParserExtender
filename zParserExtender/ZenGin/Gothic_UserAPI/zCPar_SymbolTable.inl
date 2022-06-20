@@ -15,6 +15,7 @@ void CheckNextSymbol( zCPar_Symbol* sym );
 void RemoveSymbolSorted( zCPar_Symbol* sym );
 void RestoreSymbolSorted( zCPar_Symbol* sym );
 uint RenameSymbol( zCPar_Symbol* sym, const zSTRING& newName, zCPar_Symbol* newSym );
+bool ReplaceSymbol( zCPar_Symbol* sym, zCPar_Symbol* newSym );
 static int Compare_Union( void const*, void const* );
 zCPar_Symbol* zCPar_SymbolTable::GetSymbol_Union( const zSTRING& s );
 void zCPar_SymbolTable::CheckSymbolsHierarchy();
