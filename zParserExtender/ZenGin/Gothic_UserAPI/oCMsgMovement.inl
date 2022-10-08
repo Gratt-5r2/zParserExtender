@@ -3,3 +3,4 @@
 // User API for oCMsgMovement
 // Add your methods here
 
+int IsOverlay_Union();

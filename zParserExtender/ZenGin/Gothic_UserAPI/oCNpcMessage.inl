@@ -2,4 +2,3 @@
 
 // User API for oCNpcMessage
 // Add your methods here
-

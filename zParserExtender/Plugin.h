@@ -25,6 +25,13 @@ namespace GOTHIC_ENGINE {
   else if( funcName == #f ) {                                 \
     MessageExternalDefined( #f ); par->DefineExternal( #f, f, \
 
+#define EXTERNAL_DEFINE_BEGIN_EX( n, f )                      \
+  if( createFuncList ) {                                      \
+    AddDynamicExternalFuncToList( n );                        \
+  }                                                           \
+  else if( funcName == n ) {                                  \
+    MessageExternalDefined( n );  par->DefineExternal( n, f,  \
+
 #define EXTERNAL_DEFINE_END \
     , 0);                   \
     return true;            \

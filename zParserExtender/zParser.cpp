@@ -361,7 +361,7 @@ namespace GOTHIC_ENGINE {
     else if( word == "G1A" && ENGINE == Engine_G1A  ) return true;
     else if( word == "G2"  && ENGINE == Engine_G2   ) return true;
     else if( word == "G2A" && ENGINE == Engine_G2A  ) return true;
-    else                                              return symtab.GetIndex_Safe( word ) != Invalid;
+    else                                              return symtab.GetIndex_Safe( word.Upper() ) != Invalid;
     return false;
   }
 
@@ -598,7 +598,6 @@ namespace GOTHIC_ENGINE {
   HOOK Hook_zCParser_Parse PATCH( &zCParser::Parse, &zCParser::Parse_Union );
 
   int zCParser::Parse_Union( zSTRING s ) {
-    cmd << s << endl;
     cur_parser = this;
     bool needToReparce = NeedToReparse( s ) && enableParsing != NinjaParseID;
     if( !zParserExtender.ExtendedParsingEnabled() && !needToReparce )
@@ -663,6 +662,9 @@ namespace GOTHIC_ENGINE {
 
 
   zCPar_TreeNode* zCParser::CreateLeafCallInstance( const zSTRING& instName, zCPar_TreeNode* leafBase ) {
+    if( in_func && in_func->name == instName )
+      Error( Z string::Combine( "Instance call recursion (%z)", instName ), 0 );
+
     zCPar_Symbol* sym = GetSymbol( instName );
 
     if( sym->type == zPAR_TYPE_INSTANCE ) {
@@ -722,6 +724,12 @@ namespace GOTHIC_ENGINE {
 
 
   void zCParser::DeclareFuncCall_Union( zSTRING& name, int typematch ) {
+    if( in_func && in_func->name == name ) {
+      string message = string::Combine( "Function call recursion (%z)", name );
+      zerr->Warning( message );
+      cmd << Col16( CMD_YELLOW | CMD_INT ) << message << Col16() << endl;
+    }
+
     string functionName = in_func->name;
     DynamicLoadExternal( name );
 
@@ -804,6 +812,7 @@ namespace GOTHIC_ENGINE {
     if( aword == "EVENT" ) {
       s_DeclareEvent = true;
       s_RenameTreeNode = true;
+      DeclareNamespaceForNextWord( 0, false );
       return zPAR_TYPE_VOID;
     }
 
@@ -818,8 +827,10 @@ namespace GOTHIC_ENGINE {
   extern uint NewTypedDeclarations;
 
   void zCParser::DeclareFunc_Union() {
-    if( !s_RenameTreeNode )
-      DeclareNamespaceForNextWord( 3, true );
+    if( !s_RenameTreeNode ) {
+      // DeclareNamespaceForNextWord( 3, true ); // FIXME
+      DeclareNamespaceForNextWord( 2, true );
+    }
 
     auto treenode_old = treenode;
     NewTypedDeclarations = 2;
@@ -952,11 +963,4 @@ namespace GOTHIC_ENGINE {
 
     THISCALL( Hook_zCParser_DeclareReturn )();
   }
-
-
-  // HOOK Hook_zCParser_ReadVarType PATCH( &zCParser::ReadVarType, &zCParser::ReadVarType_Union );
-  // 
-  // int zCParser::ReadVarType_Union() {
-	// ReadWord(aword);
-  // }
 }

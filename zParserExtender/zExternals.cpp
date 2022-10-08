@@ -716,6 +716,37 @@ namespace GOTHIC_ENGINE {
     return 0;
   }
 
+  int Npc_PutInSlot() {
+    zCParser* par = zCParser::GetParser();
+    oCNpc* npc;
+    zSTRING slotName;
+    oCItem* item;
+    int inInventory;
+    par->GetParameter( inInventory );
+    item = (oCItem*)par->GetInstance();
+    par->GetParameter( slotName );
+    npc = (oCNpc*)par->GetInstance();
+    npc->PutInSlot( slotName, item, inInventory );
+    return 0;
+  }
+
+  int Npc_RemoveFromSlot() {
+    zCParser* par = zCParser::GetParser();
+    oCNpc* npc;
+    zSTRING slotName;
+    int drop;
+    par->GetParameter( drop );
+    par->GetParameter( slotName );
+    npc = (oCNpc*)par->GetInstance();
+#if ENGINE == Engine_G2A
+    npc->RemoveFromSlot( slotName, drop, 1 );
+#else
+    npc->RemoveFromSlot( slotName, drop );
+#endif
+    return 0;
+  }
+
+  // MOB
   int Mob_Destroy() {
     zCParser* par = zCParser::GetParser();
     oCMOB* mob;
@@ -724,7 +755,6 @@ namespace GOTHIC_ENGINE {
     return 0;
   }
 
-  // MOB
   int Mob_RemoveItem() {
     zCParser* par = zCParser::GetParser();
     oCMOB* mob;
@@ -1588,10 +1618,10 @@ namespace GOTHIC_ENGINE {
     int parId;
     int symId;
     int arrayId;
+    par->GetParameter( value );
     par->GetParameter( arrayId );
     par->GetParameter( symId );
     par->GetParameter( parId );
-    par->GetParameter( value );
     zCParser* other = *Parsers[parId];
     zCPar_Symbol* sym = other->GetSymbol( symId );
     sym->SetValue( value, arrayId );
@@ -1604,10 +1634,10 @@ namespace GOTHIC_ENGINE {
     int parId;
     int symId;
     int arrayId;
+    par->GetParameter( value );
     par->GetParameter( arrayId );
     par->GetParameter( symId );
     par->GetParameter( parId );
-    par->GetParameter( value );
     zCParser* other = *Parsers[parId];
     zCPar_Symbol* sym = other->GetSymbol( symId );
     sym->SetValue( value, arrayId );
@@ -1620,16 +1650,77 @@ namespace GOTHIC_ENGINE {
     int parId;
     int symId;
     int arrayId;
+    par->GetParameter( value );
     par->GetParameter( arrayId );
     par->GetParameter( symId );
     par->GetParameter( parId );
-    par->GetParameter( value );
     zCParser* other = *Parsers[parId];
     zCPar_Symbol* sym = other->GetSymbol( symId );
     sym->SetValue( value, arrayId );
     return 0;
   }
 #pragma endregion
+
+#pragma region log
+  int Log_GetTopicStatus() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING value;
+    par->GetParameter( value );
+    oCLogManager& logs = oCLogManager::GetLogManager();
+
+    auto* list = &logs.m_lstTopics;
+    while( list ) {
+      auto topic = list->data;
+      if( topic && topic->m_strDescription == value ) {
+        par->SetReturn( topic->m_enuStatus );
+        return 0;
+      }
+      list = list->next;
+    }
+
+    par->SetReturn( -1 );
+    return 0;
+  }
+
+  int Log_GetTopicSection() {
+    zCParser* par = zCParser::GetParser();
+    zSTRING value;
+    par->GetParameter( value );
+    oCLogManager& logs = oCLogManager::GetLogManager();
+
+    auto* list = &logs.m_lstTopics;
+    while( list ) {
+      auto topic = list->data;
+      if( topic && topic->m_strDescription == value ) {
+        par->SetReturn( topic->m_enuSection );
+        return 0;
+      }
+      list = list->next;
+    }
+
+    par->SetReturn( -1 );
+    return 0;
+  }
+#pragma endregion
+
+
+
+  int Shi_Alloc() {
+    zCParser* par = zCParser::GetParser();
+    int count;
+    par->GetParameter( count );
+    void* ptr = shi_malloc( count + 64 );
+    par->SetReturn( (int)ptr );
+    return 0;
+  }
+
+  int Shi_Free() {
+    zCParser* par = zCParser::GetParser();
+    int ptr;
+    par->GetParameter( ptr );
+    shi_free( (void*)ptr );
+    return 0;
+  }
 
 
 
@@ -1715,6 +1806,8 @@ namespace GOTHIC_ENGINE {
     EXTERNAL_DEFINE_BEGIN( Npc_GetLeftHandItem            ) INST, INST                                        EXTERNAL_DEFINE_END
     EXTERNAL_DEFINE_BEGIN( Npc_GetRightHandItem           ) INST, INST                                        EXTERNAL_DEFINE_END
     EXTERNAL_DEFINE_BEGIN( Npc_GetSlotItem                ) INST, INST, STR                                   EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Npc_PutInSlot                  ) VOID, INST, STR,  INST, INT                       EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Npc_RemoveFromSlot             ) VOID, INST, STR,  INT                             EXTERNAL_DEFINE_END
     EXTERNAL_DEFINE_BEGIN( Mob_Destroy                    ) VOID, INST                                        EXTERNAL_DEFINE_END
     EXTERNAL_DEFINE_BEGIN( Mob_RemoveItem                 ) VOID, INST, INT                                   EXTERNAL_DEFINE_END
     EXTERNAL_DEFINE_BEGIN( Mob_RemoveItems                ) VOID, INST, INT,  INT                             EXTERNAL_DEFINE_END
@@ -1763,6 +1856,10 @@ namespace GOTHIC_ENGINE {
     EXTERNAL_DEFINE_BEGIN( Par_SetSymbolValueIntArray     ) VOID, INT, INT, INT, INT                          EXTERNAL_DEFINE_END
     EXTERNAL_DEFINE_BEGIN( Par_SetSymbolValueFloatArray   ) VOID, INT, INT, INT, FLT                          EXTERNAL_DEFINE_END
     EXTERNAL_DEFINE_BEGIN( Par_SetSymbolValueStringArray  ) VOID, INT, INT, INT, STR                          EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Log_GetTopicStatus             ) INT,  STR                                         EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Log_GetTopicSection            ) INT,  STR                                         EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Shi_Alloc                      ) INT,  INT                                         EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Shi_Free                       ) VOID                                              EXTERNAL_DEFINE_END
 
     if( ActivateDynamicExternal_Vobs( funcName, createFuncList ) )
       return true;

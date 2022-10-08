@@ -86,6 +86,10 @@ namespace GOTHIC_ENGINE {
     return word[0u] == ':' || word[0u] == '_' || (word[0u] >= 'A' && word[0u] <= 'Z');
   }
 
+  inline bool IsIndex( const zSTRING& word ) {
+    return word[0u] == '[' || word[0u] == ']' || isdigit( word[0u] );
+  }
+
   // Symbols can be repeated for example
   // after ReadWord-PrevWord construction
   inline bool IsUniqueWord( const zSTRING& word ) {
@@ -117,8 +121,17 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
+    // if( !IsWord( word ) )
+    // if( word[0u] != ':' && word[0u] != '_' && !(word[0u] >= 'A' && word[0u] <= 'Z') )
+    // if( AddNamespaceAfter && word[0u] == '[' ) {
+    //   AddNamespaceAfter += 3;
+    // }
     if( !IsUniqueWord( word ) )
       return;
+
+    // if( AddNamespaceAfter > 0 )
+    //   cmd << "  ? " << AddNamespaceAfter << "  " << word << endl;
+
 
     if( AddNamespaceAfter && --AddNamespaceAfter == 0 ) {
       AddNamespace( word, NewSymbolExpected );
@@ -201,6 +214,7 @@ namespace GOTHIC_ENGINE {
     // Define new symbol
     if( newSymbol ) {
       word = GetNamespacePrefix( levelUp ) + word;
+      // cmd << "  " << word << endl;
       return;
     }
     
@@ -216,6 +230,7 @@ namespace GOTHIC_ENGINE {
       zSTRING fullSymName = namespacePrefix + word;
       if( GetSymbol( fullSymName ) ) {
         word = fullSymName;
+        // cmd << "  " << word << endl;
         return;
       }
     }
@@ -226,6 +241,7 @@ namespace GOTHIC_ENGINE {
         zSTRING fullSymName = Z UsingNamespaces[i] + ":" + word;
         if( GetSymbol( fullSymName ) ) {
           word = fullSymName;
+          // cmd << "  " << word << endl;
           return;
         }
       }
@@ -340,7 +356,49 @@ namespace GOTHIC_ENGINE {
   HOOK Hook_zCParser_DeclareAssignFunc PATCH( &zCParser::DeclareAssignFunc, &zCParser::DeclareAssignFunc_Union );
 
   void zCParser::DeclareAssignFunc_Union( zSTRING& name ) {
-    DeclareNamespaceForNextWord( 2, false );
+    // DeclareNamespaceForNextWord( 2, false );
+    DeclareNamespaceForNextWord( 2, true );
+    // cmd << name << endl;
     return THISCALL( Hook_zCParser_DeclareAssignFunc )(name);
+  }
+
+
+  void zCParser::CheckTreeNodeName( zCPar_TreeNode* node ) {
+    int index = FindIndex( node->name );
+    if( index != Invalid )
+      return;
+
+    zSTRING nameSpace = node->name.GetPattern( "", ":", -1 );
+    if( nameSpace.IsEmpty() )
+      return;
+
+    zSTRING name = node->name.GetWord( ":", -1 );
+    while( true ) {
+      nameSpace = nameSpace.GetPattern( "", ":", -1 );
+      if( nameSpace.IsEmpty() )
+        break;
+
+      zSTRING newSymName = nameSpace + ":" + name;
+      index = FindIndex( newSymName );
+      if( index != Invalid ) {
+        node->name = newSymName;
+        return;
+      }
+    }
+
+    if( FindIndex( name ) != Invalid ) {
+      node->name = name;
+      return;
+    }
+  }
+
+
+  HOOK Hook_zCParser_PushOnStack PATCH( &zCParser::PushOnStack, &zCParser::PushOnStack_Union );
+
+  zCPar_TreeNode* zCParser::PushOnStack_Union( zCPar_TreeNode* node ) {
+    if( node->token == zPAR_TOK_PUSHINDEX && zParserExtender.ExtendedParsingEnabled() )
+      CheckTreeNodeName( node );
+
+    return THISCALL( Hook_zCParser_PushOnStack )(node);
   }
 }

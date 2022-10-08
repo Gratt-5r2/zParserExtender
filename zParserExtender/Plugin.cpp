@@ -49,6 +49,7 @@ namespace GOTHIC_ENGINE {
   extern CApplication* lpApplication;
 
   void Game_Entry() {
+    // vftable_oCMsgMovement::GetTable().names.f04_IsOverlay = &oCMsgMovement::IsOverlay_Union;
     DefinePaths();
   }
 
@@ -58,6 +59,9 @@ namespace GOTHIC_ENGINE {
 
     parser->CallGameInit_Union();
     Game_InitConsole_Union();
+
+    // InitializeColorConstants();
+    // InitializePositionConstants();
   }
 
   void Game_Exit() {

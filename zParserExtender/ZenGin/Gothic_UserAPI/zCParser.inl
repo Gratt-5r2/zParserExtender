@@ -70,6 +70,7 @@ void PreCompile();
 void RenameTreeNode( zCPar_Symbol* sym, zSTRING newName );
 
 zCPar_TreeNode* PushOnStack_Union( zCPar_TreeNode* node );
+void CheckTreeNodeName( zCPar_TreeNode* node );
 int ParseSource_Union( zSTRING& s );
 zCPar_TreeNode* CreateLeafCallInstance( const zSTRING& instName, zCPar_TreeNode* );
 zCPar_Symbol* GetNearestVariable( zSTRING& word );
@@ -90,6 +91,7 @@ void ExportStringList();
 void DoStack_Union( int );
 void DeclareReturn_Union();
 int ReadVarType_Union();
+int FindIndex_Union( zSTRING& );
 
 void __cdecl DefineExternal_Union( zSTRING const&, int( __cdecl* )(), int, int, ... );
 static bool OverrideNextSymbol;

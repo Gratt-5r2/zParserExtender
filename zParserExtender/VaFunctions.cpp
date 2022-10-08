@@ -54,6 +54,19 @@ namespace GOTHIC_ENGINE {
 
       // Is a variable
       zCPar_Symbol* sym = GetNearestVariable( word );
+      if( !sym ) {
+        int index = symtab.GetIndex_Safe( word );
+        if( index == Invalid ) {
+          auto& arr = symtab.table;
+          for( int i = 0; i < arr.GetNum(); i++ )
+            cmd << arr[i]->name << endl;
+
+          Error( Z "Unknown identifier : " + word, 0 );
+        }
+
+        sym = GetSymbol( index );
+      }
+
       switch( sym->type ) {
         case zPAR_TYPE_INT:
           treenode->SetNext( ParseExpression() );

@@ -1234,10 +1234,10 @@ namespace Gothic_II_Classic {
   class zCList {
   public:
     zMEMPOOL_DECLARATION_TEMPLATE( zCList, 0x008C9D18 );
+  public:
 
     T *data;
     zCList *next;
-  public:
     zCList() {
       next = 0;
       data = 0;

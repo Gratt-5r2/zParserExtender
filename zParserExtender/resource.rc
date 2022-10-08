@@ -59,8 +59,8 @@ IDR_PATCH1              PATCH                   "Plugin.patch"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,2,0,1
- PRODUCTVERSION 1,2,0,1
+ FILEVERSION 1,2,0,142
+ PRODUCTVERSION 1,2,0,142
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -77,12 +77,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Gothic community"
             VALUE "FileDescription", "Plugin for Gothic"
-            VALUE "FileVersion", "1.2.0.1"
+            VALUE "FileVersion", "1.2.0.142"
             VALUE "InternalName", "Plugin"
             VALUE "LegalCopyright", "Copyright (C) 2021"
             VALUE "OriginalFilename", "Plugin"
             VALUE "ProductName", "Plugin"
-            VALUE "ProductVersion", "1.2.0.1"
+            VALUE "ProductVersion", "1.2.0.142"
         END
     END
     BLOCK "VarFileInfo"

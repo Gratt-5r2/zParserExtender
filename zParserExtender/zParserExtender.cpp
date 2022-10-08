@@ -307,7 +307,7 @@ namespace GOTHIC_ENGINE {
     }
 
     // Create document file without comments
-    fileData.Regex_Replace( "//.*$", "" );
+    fileData.Regex_Replace( "//.*", "" );
     fileData.Replace( "/", "\\" );
     CDocument fileDocument = fileData;
 

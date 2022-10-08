@@ -17,12 +17,38 @@ namespace GOTHIC_ENGINE {
     int A;
   };
 
+  void InitializeColorVariables() {
+    zCPar_Symbol* classSym = parser->GetSymbol( "ZPARSEREXTENDER:C_COLOR" );
+    if( !classSym )
+      return;
+
+    auto& symtable = parser->symtab.table;
+    for( int i = 0; i < symtable.GetNum(); i++ ) {
+      zCPar_Symbol* sym = symtable[i];
+      if( sym->parent == classSym && sym->type == zPAR_TYPE_INSTANCE )
+        sym->offset = (int)new C_COLOR();
+    }
+  }
+
   // zVEC3
   struct C_POSITION {
     int X;
     int Y;
     int Z;
   };
+
+  void InitializePositionVariables() {
+    zCPar_Symbol* classSym = parser->GetSymbol( "ZPARSEREXTENDER:C_POSITION" );
+    if( !classSym )
+      return;
+
+    auto& symtable = parser->symtab.table;
+    for( int i = 0; i < symtable.GetNum(); i++ ) {
+      zCPar_Symbol* sym = symtable[i];
+      if( sym->parent == classSym && sym->type == zPAR_TYPE_INSTANCE )
+        sym->offset = (int)new C_POSITION();
+    }
+  }
 
   int Vob_GetVobPosition() {
     static C_POSITION vobPosition;
@@ -39,13 +65,14 @@ namespace GOTHIC_ENGINE {
 
   int Vob_SetVobPosition() {
     zCParser* par = zCParser::GetParser();
-    C_POSITION& vobPosition = *(C_POSITION*)par->GetInstance();
+    C_POSITION* vobPosition = (C_POSITION*)par->GetInstance();
     zCVob* vob = (zCVob*)par->GetInstance();
+    cmd << string::Combine( "%x %x", vobPosition, vob ) << endl;
 
     vob->SetPositionWorld( zVEC3(
-      (float)vobPosition.X,
-      (float)vobPosition.Y,
-      (float)vobPosition.Z ) );
+      (float)vobPosition->X,
+      (float)vobPosition->Y,
+      (float)vobPosition->Z ) );
 
     return 0;
   }
@@ -451,7 +478,7 @@ namespace GOTHIC_ENGINE {
     EXTERNAL_DEFINE_BEGIN( Vob_SetVobData          ) zPAR_TYPE_VOID, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                          EXTERNAL_DEFINE_END
     EXTERNAL_DEFINE_BEGIN( Vob_GetLightData        ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                          EXTERNAL_DEFINE_END
     EXTERNAL_DEFINE_BEGIN( Vob_SetLightData        ) zPAR_TYPE_VOID, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                          EXTERNAL_DEFINE_END
-    EXTERNAL_DEFINE_BEGIN( Vob_ClearLightAniList   ) zPAR_TYPE_VOID                                                                  EXTERNAL_DEFINE_END
+    EXTERNAL_DEFINE_BEGIN( Vob_ClearLightAniList   ) zPAR_TYPE_VOID, zPAR_TYPE_INSTANCE                                              EXTERNAL_DEFINE_END
     EXTERNAL_DEFINE_BEGIN( Vob_AddLightAniColor    ) zPAR_TYPE_VOID, zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                          EXTERNAL_DEFINE_END
     EXTERNAL_DEFINE_BEGIN( Vob_AddLightAniColorRGB ) zPAR_TYPE_VOID, zPAR_TYPE_INSTANCE, zPAR_TYPE_INT, zPAR_TYPE_INT, zPAR_TYPE_INT EXTERNAL_DEFINE_END
     EXTERNAL_DEFINE_BEGIN( Vob_GetMobData          ) zPAR_TYPE_INSTANCE, zPAR_TYPE_INSTANCE                                          EXTERNAL_DEFINE_END

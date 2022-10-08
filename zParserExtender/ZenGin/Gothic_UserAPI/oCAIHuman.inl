@@ -3,3 +3,5 @@
 // User API for oCAIHuman
 // Add your methods here
 
+void Moving_Union();
+void DoAI_Union( zCVob* vob, zBOOL& vobDeleted );

@@ -12,3 +12,5 @@ void Archive2( zCArchiver& );
 void Unarchive2( zCArchiver& );
 void InitByScript_Union( int, int );
 void UnShrink_Union();
+void AddItemEffects_Union( oCItem* item );
+void RemoveItemEffects_Union( oCItem* item );
