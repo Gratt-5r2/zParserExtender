@@ -151,14 +151,6 @@ namespace GOTHIC_ENGINE {
     THISCALL( Ivk_zCParser_DeclareAssign )(symName);
   }
 
-  
-  HOOK Hook_zCParser_IsInAdditionalInfo PATCH( &zCParser::IsInAdditionalInfo, &zCParser::IsInAdditionalInfo_Union );
-
-  int zCParser::IsInAdditionalInfo_Union( const zSTRING& symName ) {
-    return symName == "AI_Output";
-  }
-
-
   void zDeleteOU();
 
   HOOK Hook_zInitOptions PATCH( &zInitOptions, &zDeleteOU );
