@@ -23,7 +23,6 @@ void CallGameLoop_Union();
 void ReadWord_Union( zSTRING& );
 void ReadWordBase( zSTRING& );
 int LoadGlobalVars_Union( zCArchiver& );
-int IsInAdditionalInfo_Union( zSTRING const& );
 void RemoveAdditionalInfo_Union( zSTRING& );
 void Reset_Union();
 void ResetAdditionalInfo();
