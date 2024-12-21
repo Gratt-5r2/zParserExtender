@@ -11,7 +11,7 @@ namespace GOTHIC_ENGINE {
     zCPar_Symbol* NewSymbol;
     int_t OldIndex;
 
-    static zTCallReplaceInfo& Create( int_t replaceLength, zCParser* parser, zCPar_Symbol* oldSymbol, zCPar_Symbol* newSymbol, int_t oldIndex ) {
+    static zTCallReplaceInfo& Create( int_t replaceLength, zCParser* scriptParser, zCPar_Symbol* oldSymbol, zCPar_Symbol* newSymbol, int_t oldIndex ) {
       for( uint i = 0; i < CallReplaceInfos.GetNum(); i++ ) {
         if( CallReplaceInfos[i].NewSymbol == oldSymbol ) {
           CallReplaceInfos[i].NewSymbol = newSymbol;
@@ -21,8 +21,8 @@ namespace GOTHIC_ENGINE {
       }
 
       zTCallReplaceInfo& callReplace = CallReplaceInfos.Create();
-      callReplace.ReplaceLength      = zParserExtender.GetParser()->stack.GetDynSize() - 4;
-      callReplace.Parser             = zParserExtender.GetParser();
+      callReplace.ReplaceLength      = replaceLength;
+      callReplace.Parser             = scriptParser;
       callReplace.OldSymbol          = oldSymbol;
       callReplace.NewSymbol          = newSymbol;
       callReplace.OldIndex           = oldIndex;
