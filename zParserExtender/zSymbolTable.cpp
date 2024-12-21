@@ -333,13 +333,13 @@ namespace GOTHIC_ENGINE {
   }
 
 
-  uint zCPar_SymbolTable::RenameSymbol( zCPar_Symbol* sym, const zSTRING& newName, zCPar_Symbol* newSym ) {
+  uint zCPar_SymbolTable::RenameSymbol( zCParser* scriptParser, zCPar_Symbol* sym, const zSTRING& newName, zCPar_Symbol* newSym ) {
     uint collisions = 1;
 
     int nextIndex = GetIndex( newName );
     if( nextIndex != Invalid ) {
       zCPar_Symbol* nextSym = table[nextIndex];
-      collisions += RenameSymbol( nextSym, nextSym->GetName() + "_OLD", sym );
+      collisions += RenameSymbol( scriptParser, nextSym, nextSym->GetName() + "_OLD", sym );
     }
 
     cur_table          = this;
@@ -348,7 +348,7 @@ namespace GOTHIC_ENGINE {
 
     while( list ) {
       int index = GetIndex( list );
-      zParserExtender.GetParser()->RenameTreeNode( list, newName );
+      scriptParser->RenameTreeNode( list, newName );
       tablesort.RemoveOrder( index );
       if( !zCParser::OverrideNextSymbol ) {
         list->name.Replace( oldName, newName );
