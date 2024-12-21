@@ -695,6 +695,11 @@ namespace GOTHIC_ENGINE {
   }
 
 
+  int zCParserExtender::GetParseID() {
+    return zCParser::enableParsing;
+  }
+
+
   bool zCParserExtender::MergeModeEnabled() {
     return CurrentCompileInfo.MergeMode && ParsingEnabled;
   }

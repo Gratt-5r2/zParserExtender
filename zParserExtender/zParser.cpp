@@ -57,7 +57,7 @@ namespace GOTHIC_ENGINE {
   HOOK Hook_zCParser_SaveDat PATCH( &zCParser::SaveDat, &zCParser::SaveDat_Union );
 
   int zCParser::SaveDat_Union( zSTRING& name ) {
-    if( zParserExtender.GetParser()->enableParsing == NinjaParseID )
+    if( zParserExtender.GetParseID() == NinjaParseID )
       return THISCALL( Hook_zCParser_SaveDat )(name);
 
     // Apply all hooks
@@ -123,7 +123,7 @@ namespace GOTHIC_ENGINE {
   HOOK Hook_zCParser_ParseBlock PATCH( &zCParser::ParseBlock, &zCParser::ParseBlock_Union );
 
   void zCParser::ParseBlock_Union() {
-    if( zParserExtender.GetParser()->enableParsing == NinjaParseID )
+    if( zParserExtender.GetParseID() == NinjaParseID )
       return THISCALL( Hook_zCParser_ParseBlock )();
 
     if( !zParserExtender.ExtendedParsingEnabled() )

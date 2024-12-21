@@ -80,6 +80,7 @@ namespace GOTHIC_ENGINE {
     zCParser* GetParser();
     zCParser* GetParserExternals();
     zCPar_Symbol* GetExternalFunction( const string& symName );
+    int GetParseID();
 
     bool MergeModeEnabled();
     bool CompileDatEnabled();
