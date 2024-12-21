@@ -41,10 +41,10 @@ namespace GOTHIC_ENGINE {
   }
 
   // Find and replace call address to other function
-  void ReplaceStackCallAddress( TReferralTokenList& referalTokens, zCPar_Stack& stack, zCPar_Symbol* symLeft, zCPar_Symbol* symRight, int_t oldIndex, int_t length ) {
+  void ReplaceStackCallAddress( TReferralTokenList& referalTokens, zCParser& scriptParser, zCPar_Symbol* symLeft, zCPar_Symbol* symRight, int_t oldIndex, int_t length ) {
     int oldPos       = symLeft->single_intdata;
     int newPos       = symRight->single_intdata;
-    int newIndex     = zParserExtender.GetParser()->symtab.GetIndex_Safe( symRight );
+    int newIndex     = scriptParser.symtab.GetIndex_Safe( symRight );
     int calls        = 0;
     int refs         = 0;
     int symType      = symLeft->type;
@@ -92,17 +92,21 @@ namespace GOTHIC_ENGINE {
   
 
   void PostCompileCallReplace() {
+    zCParser* extParser = zParserExtender.GetParser();
+    if ( !extParser ) {
+      return;
+    }
     TReferralTokenList referalTokens;
-    referalTokens.Init( zParserExtender.GetParser()->stack );
+    referalTokens.Init( extParser->stack );
 
     for( uint i = 0; i < zTCallReplaceInfo::CallReplaceInfos.GetNum(); i++ ) {
       zTCallReplaceInfo& info = zTCallReplaceInfo::CallReplaceInfos[i];
-      if( info.Parser != zParserExtender.GetParser() )
+      if( info.Parser != extParser )
         continue;
 
       ReplaceStackCallAddress(
         referalTokens,
-        info.Parser->stack,
+        *info.Parser,
         info.OldSymbol,
         info.NewSymbol,
         info.OldIndex,
