@@ -379,8 +379,14 @@ namespace GOTHIC_ENGINE {
     if( !sym )
       return False;
 
+    zCParser* extParser = zParserExtender.GetParser();
+
+    if ( !extParser  || &extParser->symtab != this ) {
+        return (this->*Hook_zCPar_SymbolTable_Insert)(sym);
+    }
+
     // Search new PFX symbols for creation new emitters
-    if( zParserExtender.ExtendedParsingEnabled() && zParserExtender.GetParser() == Gothic::Parsers::PFX )
+    if( zParserExtender.ExtendedParsingEnabled() && extParser == Gothic::Parsers::PFX )
       zParserExtender.InsertPFXSymbol( sym );
 
     int index = GetIndex( sym->name );
@@ -392,7 +398,7 @@ namespace GOTHIC_ENGINE {
       bool internalToExternal = !sym->HasFlag( zPAR_FLAG_EXTERNAL ) && oldSym->HasFlag( zPAR_FLAG_EXTERNAL );
 
       if( internalToExternal || zParserExtender.MergeModeEnabled() ) {
-        RenameSymbol( oldSym, oldSym->GetName() + "_OLD", sym );
+        RenameSymbol( extParser, oldSym, oldSym->GetName() + "_OLD", sym );
 
         if( zCParserExtender::MessagesLevel >= 3 )
           cmd << colParse2 << "zParserExtender: " <<
@@ -411,12 +417,12 @@ namespace GOTHIC_ENGINE {
             string oldTypeName = SymbolTypeToString( oldSym->type );
             string newTypeName = SymbolTypeToString( sym->type );
             string errorText   = string::Combine( "The replacement symbol '%z' has incorrect type! Src '%z' != new '%z'", sym->name, oldTypeName, newTypeName );
-            zParserExtender.GetParser()->Error( Z errorText, 0 );
+            extParser->Error( Z errorText, 0 );
           }
 
           zTCallReplaceInfo::Create(
-            zParserExtender.GetParser()->stack.GetDynSize() - 4,
-            zParserExtender.GetParser(),
+            extParser->stack.GetDynSize() - 4,
+            extParser,
             oldSym,
             sym,
             index
