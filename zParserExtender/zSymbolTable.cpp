@@ -283,7 +283,7 @@ namespace GOTHIC_ENGINE {
   static bool s_DeclareEvent = false;
 
   int zCPar_SymbolTable::Insert_Union( zCPar_Symbol* sym ) {
-    if( s_DeclareEvent ) {
+    if( s_DeclareEvent && zCParser::cur_parser ) {
       s_DeclareEvent = false;
       // RegisterEvent( sym->name );
 
@@ -292,9 +292,8 @@ namespace GOTHIC_ENGINE {
       sym->name         = Z string::Combine( "EVENT.%z.%z", sym->name, fileName );
       int ok            = InsertAt_Union( sym, True, true );
       int symIndex      = table.Search( sym );
-      zCParser* parser  = zCParser::GetParser();
 
-      zTEventFuncCollection::GetCollection( parser ).PushIndex( keyName, symIndex );
+      zTEventFuncCollection::GetCollection( zCParser::cur_parser ).PushIndex( keyName, symIndex );
       return ok;
     }
 
