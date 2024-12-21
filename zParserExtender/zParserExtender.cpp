@@ -618,7 +618,10 @@ namespace GOTHIC_ENGINE {
 
       // Compile parsed scripts...
       CurrentCompileInfo = DefaultCompileInfo;
-      activeParsers.Insert( parser );
+      if( !activeParsers.HasEqual( parser ) ) {
+        activeParsers.Insert( parser );
+      }
+
       for( uint i = 0; i < activeParsers.GetNum(); i++ ) {
         CurrentParser = activeParsers[i];
         CurrentParser->CreatePCode();
