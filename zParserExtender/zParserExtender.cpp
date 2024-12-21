@@ -565,9 +565,6 @@ namespace GOTHIC_ENGINE {
 
         // Search game parser by name
         zCParser* par = GetParserByParserName( scriptInfo.ParserName );
-        zCParser::cur_parser = par;
-        CurrentParser = par;
-        CurrentParser->InitializeNamespace( GetDefaultNamespace() );
 
         if( par == Null ) {
           if( zCParserExtender::MessagesLevel >= 1 )
@@ -579,6 +576,10 @@ namespace GOTHIC_ENGINE {
                    colWarn3 << endl;
           continue;
         }
+
+        zCParser::cur_parser = par;
+        CurrentParser = par;
+        CurrentParser->InitializeNamespace( GetDefaultNamespace() );
 
         ParStackMaxLength = parser->stack.GetDynSize() - 4;
 
