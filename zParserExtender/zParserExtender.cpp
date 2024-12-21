@@ -599,7 +599,7 @@ namespace GOTHIC_ENGINE {
         CheckExtendedSymbolsEnd( par );
 
         if( parsed != 0 ) {
-          bool parsed = activeParsers & par;
+          parsed = activeParsers & par;
           if( !parsed )
             par->SetEnableParsing_Union( False );
 
