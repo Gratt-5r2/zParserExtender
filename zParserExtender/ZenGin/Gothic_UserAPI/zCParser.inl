@@ -94,3 +94,5 @@ int FindIndex_Union( zSTRING& );
 
 void __cdecl DefineExternal_Union( zSTRING const&, int( __cdecl* )(), int, int, ... );
 static bool OverrideNextSymbol;
+
+int IsExternalFunctionDefined(zCPar_Symbol* funcSym);
