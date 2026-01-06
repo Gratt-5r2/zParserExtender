@@ -698,7 +698,18 @@ namespace GOTHIC_ENGINE {
     
     return classObject;
   }
-
+  
+  int zCParser::IsExternalFunctionDefined(zCPar_Symbol* funcSym)
+  {
+    // Check if function is external
+    if (!funcSym || funcSym->type != zPAR_TYPE_FUNC || !funcSym->HasFlag(zPAR_FLAG_EXTERNAL))
+      return -1;
+    
+    // if function is external and has 0 stack position, then it is not defined
+    int stackPos;
+    funcSym->GetStackPos(stackPos, 0);
+    return stackPos > 0;
+  }
 
   extern bool ActivateDynamicExternal( const string& funcName );
 
@@ -707,7 +718,7 @@ namespace GOTHIC_ENGINE {
       return false;
 
     zCPar_Symbol* sym = GetSymbol( symName );
-    if( sym && !forceReplace )
+    if( sym && (!forceReplace || IsExternalFunctionDefined(sym)))
       return false;
 
     return ActivateDynamicExternal( symName );

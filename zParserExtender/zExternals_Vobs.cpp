@@ -465,8 +465,8 @@ namespace GOTHIC_ENGINE {
     zCParser* par = Null;
     if( !createFuncList ) {
       par = zCParser::GetParser();
-      if( par->GetIndex( funcName ) != Invalid )
-        return true;
+      // if( par->GetIndex( funcName ) != Invalid )
+      //   return true;
 
       if( funcName.IsEmpty() )
         return false;
