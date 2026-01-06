@@ -11,7 +11,7 @@ namespace GOTHIC_ENGINE {
     zCPar_Symbol* NewSymbol;
     int_t OldIndex;
 
-    static zTCallReplaceInfo& Create( int_t replaceLength, zCParser* parser, zCPar_Symbol* oldSymbol, zCPar_Symbol* newSymbol, int_t oldIndex ) {
+    static zTCallReplaceInfo& Create( int_t replaceLength, zCParser* scriptParser, zCPar_Symbol* oldSymbol, zCPar_Symbol* newSymbol, int_t oldIndex ) {
       for( uint i = 0; i < CallReplaceInfos.GetNum(); i++ ) {
         if( CallReplaceInfos[i].NewSymbol == oldSymbol ) {
           CallReplaceInfos[i].NewSymbol = newSymbol;
@@ -21,8 +21,8 @@ namespace GOTHIC_ENGINE {
       }
 
       zTCallReplaceInfo& callReplace = CallReplaceInfos.Create();
-      callReplace.ReplaceLength      = zParserExtender.GetParser()->stack.GetDynSize() - 4;
-      callReplace.Parser             = zParserExtender.GetParser();
+      callReplace.ReplaceLength      = replaceLength;
+      callReplace.Parser             = scriptParser;
       callReplace.OldSymbol          = oldSymbol;
       callReplace.NewSymbol          = newSymbol;
       callReplace.OldIndex           = oldIndex;
@@ -41,10 +41,10 @@ namespace GOTHIC_ENGINE {
   }
 
   // Find and replace call address to other function
-  void ReplaceStackCallAddress( TReferralTokenList& referalTokens, zCPar_Stack& stack, zCPar_Symbol* symLeft, zCPar_Symbol* symRight, int_t oldIndex, int_t length ) {
+  void ReplaceStackCallAddress( TReferralTokenList& referalTokens, zCParser& scriptParser, zCPar_Symbol* symLeft, zCPar_Symbol* symRight, int_t oldIndex, int_t length ) {
     int oldPos       = symLeft->single_intdata;
     int newPos       = symRight->single_intdata;
-    int newIndex     = zParserExtender.GetParser()->symtab.GetIndex_Safe( symRight );
+    int newIndex     = scriptParser.symtab.GetIndex_Safe( symRight );
     int calls        = 0;
     int refs         = 0;
     int symType      = symLeft->type;
@@ -92,17 +92,21 @@ namespace GOTHIC_ENGINE {
   
 
   void PostCompileCallReplace() {
+    zCParser* extParser = zParserExtender.GetParser();
+    if ( !extParser ) {
+      return;
+    }
     TReferralTokenList referalTokens;
-    referalTokens.Init( zParserExtender.GetParser()->stack );
+    referalTokens.Init( extParser->stack );
 
     for( uint i = 0; i < zTCallReplaceInfo::CallReplaceInfos.GetNum(); i++ ) {
       zTCallReplaceInfo& info = zTCallReplaceInfo::CallReplaceInfos[i];
-      if( info.Parser != zParserExtender.GetParser() )
+      if( info.Parser != extParser )
         continue;
 
       ReplaceStackCallAddress(
         referalTokens,
-        info.Parser->stack,
+        *info.Parser,
         info.OldSymbol,
         info.NewSymbol,
         info.OldIndex,
@@ -283,7 +287,7 @@ namespace GOTHIC_ENGINE {
   static bool s_DeclareEvent = false;
 
   int zCPar_SymbolTable::Insert_Union( zCPar_Symbol* sym ) {
-    if( s_DeclareEvent ) {
+    if( s_DeclareEvent && zCParser::cur_parser ) {
       s_DeclareEvent = false;
       // RegisterEvent( sym->name );
 
@@ -292,9 +296,8 @@ namespace GOTHIC_ENGINE {
       sym->name         = Z string::Combine( "EVENT.%z.%z", sym->name, fileName );
       int ok            = InsertAt_Union( sym, True, true );
       int symIndex      = table.Search( sym );
-      zCParser* parser  = zCParser::GetParser();
 
-      zTEventFuncCollection::GetCollection( parser ).PushIndex( keyName, symIndex );
+      zTEventFuncCollection::GetCollection( zCParser::cur_parser ).PushIndex( keyName, symIndex );
       return ok;
     }
 
@@ -330,13 +333,13 @@ namespace GOTHIC_ENGINE {
   }
 
 
-  uint zCPar_SymbolTable::RenameSymbol( zCPar_Symbol* sym, const zSTRING& newName, zCPar_Symbol* newSym ) {
+  uint zCPar_SymbolTable::RenameSymbol( zCParser* scriptParser, zCPar_Symbol* sym, const zSTRING& newName, zCPar_Symbol* newSym ) {
     uint collisions = 1;
 
     int nextIndex = GetIndex( newName );
     if( nextIndex != Invalid ) {
       zCPar_Symbol* nextSym = table[nextIndex];
-      collisions += RenameSymbol( nextSym, nextSym->GetName() + "_OLD", sym );
+      collisions += RenameSymbol( scriptParser, nextSym, nextSym->GetName() + "_OLD", sym );
     }
 
     cur_table          = this;
@@ -345,7 +348,7 @@ namespace GOTHIC_ENGINE {
 
     while( list ) {
       int index = GetIndex( list );
-      zParserExtender.GetParser()->RenameTreeNode( list, newName );
+      scriptParser->RenameTreeNode( list, newName );
       tablesort.RemoveOrder( index );
       if( !zCParser::OverrideNextSymbol ) {
         list->name.Replace( oldName, newName );
@@ -376,8 +379,14 @@ namespace GOTHIC_ENGINE {
     if( !sym )
       return False;
 
+    zCParser* extParser = zParserExtender.GetParser();
+
+    if ( !extParser  || &extParser->symtab != this ) {
+        return (this->*Hook_zCPar_SymbolTable_Insert)(sym);
+    }
+
     // Search new PFX symbols for creation new emitters
-    if( zParserExtender.ExtendedParsingEnabled() && zParserExtender.GetParser() == Gothic::Parsers::PFX )
+    if( zParserExtender.ExtendedParsingEnabled() && extParser == Gothic::Parsers::PFX )
       zParserExtender.InsertPFXSymbol( sym );
 
     int index = GetIndex( sym->name );
@@ -389,7 +398,7 @@ namespace GOTHIC_ENGINE {
       bool internalToExternal = !sym->HasFlag( zPAR_FLAG_EXTERNAL ) && oldSym->HasFlag( zPAR_FLAG_EXTERNAL );
 
       if( internalToExternal || zParserExtender.MergeModeEnabled() ) {
-        RenameSymbol( oldSym, oldSym->GetName() + "_OLD", sym );
+        RenameSymbol( extParser, oldSym, oldSym->GetName() + "_OLD", sym );
 
         if( zCParserExtender::MessagesLevel >= 3 )
           cmd << colParse2 << "zParserExtender: " <<
@@ -408,12 +417,12 @@ namespace GOTHIC_ENGINE {
             string oldTypeName = SymbolTypeToString( oldSym->type );
             string newTypeName = SymbolTypeToString( sym->type );
             string errorText   = string::Combine( "The replacement symbol '%z' has incorrect type! Src '%z' != new '%z'", sym->name, oldTypeName, newTypeName );
-            zParserExtender.GetParser()->Error( Z errorText, 0 );
+            extParser->Error( Z errorText, 0 );
           }
 
           zTCallReplaceInfo::Create(
-            zParserExtender.GetParser()->stack.GetDynSize() - 4,
-            zParserExtender.GetParser(),
+            extParser->stack.GetDynSize() - 4,
+            extParser,
             oldSym,
             sym,
             index

@@ -565,9 +565,6 @@ namespace GOTHIC_ENGINE {
 
         // Search game parser by name
         zCParser* par = GetParserByParserName( scriptInfo.ParserName );
-        zCParser::cur_parser = par;
-        CurrentParser = par;
-        CurrentParser->InitializeNamespace( GetDefaultNamespace() );
 
         if( par == Null ) {
           if( zCParserExtender::MessagesLevel >= 1 )
@@ -579,6 +576,10 @@ namespace GOTHIC_ENGINE {
                    colWarn3 << endl;
           continue;
         }
+
+        zCParser::cur_parser = par;
+        CurrentParser = par;
+        CurrentParser->InitializeNamespace( GetDefaultNamespace() );
 
         ParStackMaxLength = parser->stack.GetDynSize() - 4;
 
@@ -599,7 +600,7 @@ namespace GOTHIC_ENGINE {
         CheckExtendedSymbolsEnd( par );
 
         if( parsed != 0 ) {
-          bool parsed = activeParsers & par;
+          parsed = activeParsers & par;
           if( !parsed )
             par->SetEnableParsing_Union( False );
 
@@ -617,7 +618,10 @@ namespace GOTHIC_ENGINE {
 
       // Compile parsed scripts...
       CurrentCompileInfo = DefaultCompileInfo;
-      activeParsers.Insert( parser );
+      if( !activeParsers.HasEqual( parser ) ) {
+        activeParsers.Insert( parser );
+      }
+
       for( uint i = 0; i < activeParsers.GetNum(); i++ ) {
         CurrentParser = activeParsers[i];
         CurrentParser->CreatePCode();
@@ -692,6 +696,11 @@ namespace GOTHIC_ENGINE {
         return par->GetSymbol( symName );
 
     return symbol;
+  }
+
+
+  int zCParserExtender::GetParseID() {
+    return zCParser::enableParsing;
   }
 
 
