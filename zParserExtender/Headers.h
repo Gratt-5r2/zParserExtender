@@ -3,6 +3,7 @@
 
 // Automatically generated block
 #pragma region Includes
+#include "oSteamworks.h"
 #include "zParserExtender.h"
 #include "ReferralToken.h"
 #include "zTriggerScript.h"

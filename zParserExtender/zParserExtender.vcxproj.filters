@@ -2871,6 +2871,9 @@
     <ClInclude Include="ReferralToken.h">
       <Filter>Plugin\zParserExtender</Filter>
     </ClInclude>
+    <ClInclude Include="oSteamworks.h">
+      <Filter>Plugin\zParserExtender</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".build_settings.inl">

@@ -187,8 +187,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MP Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\</OutDir>
-    <IncludePath>J:\Steam\public\sdk\public\steam\;$(SolutionDir)\$(ProjectName)\;$(SolutionDir)\$(ProjectName)\ZenGin\Gothic_UserAPI\;C:\ProgramData\Union\SDK\Union\v1.0l\Include;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>J:\Steam\public\sdk\public\steam\lib\;C:\ProgramData\Union\SDK\Union\v1.0l\Lib;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>J:\Steam\public\sdk\public\steam\;$(SolutionDir)\$(ProjectName)\;$(SolutionDir)\$(ProjectName)\ZenGin\Gothic_UserAPI\;C:\ProgramData\Union\SDK\Union\v1.0m\Include;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>J:\Steam\public\sdk\public\steam\lib\;C:\ProgramData\Union\SDK\Union\v1.0m\Lib;$(ALLUSERSPROFILE)\Union\SDK\DirectX7\Lib\;$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(ExecutablePath);$(MSBuildFrameworkToolsPath32);$(MSBuildProgramFiles32)\Windows Kits\8.0\bin\x86</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='G2A Release|Win32'">
@@ -361,7 +361,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0m\Build\beforebuild.exe $(SolutionDir)
 $(ProjectDir)\incver.exe</Command>
     </PreBuildEvent>
     <PostBuildEvent>
@@ -513,6 +513,7 @@ $(ProjectDir)\incver.exe</Command>
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="oSteamworks.h" />
     <ClInclude Include="OU.cpp">
       <SubType>
       </SubType>
