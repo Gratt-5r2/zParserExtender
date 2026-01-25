@@ -2874,6 +2874,9 @@
     <ClInclude Include="oSteamworks.h">
       <Filter>Plugin\zParserExtender</Filter>
     </ClInclude>
+    <ClInclude Include="RedefineExternalResolver.cpp">
+      <Filter>Plugin\zParserExtender\Externals</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".build_settings.inl">

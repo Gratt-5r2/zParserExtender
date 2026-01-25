@@ -10,6 +10,7 @@
 #include "zSymbol.cpp"
 #include "zSymbolTable.cpp"
 #include "zParser.cpp"
+#include "RedefineExternalResolver.cpp"
 #include "VaFunctions.cpp"
 #include "Namespace.cpp"
 #include "InfoMan.cpp"
